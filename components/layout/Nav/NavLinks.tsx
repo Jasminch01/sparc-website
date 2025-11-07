@@ -8,7 +8,7 @@ const poppins = Poppins({
 });
 
 const navs = [
-    { title: 'WHO WE ARE' },
+    { title: 'WHO WE ARE', },
     { title: 'OPPORTUNITY', icon: <IoIosArrowDown /> },
     { title: 'STORIES', icon: <IoIosArrowDown /> },
     { title: 'RESOURCES', icon: <IoIosArrowDown /> },
@@ -18,7 +18,7 @@ const navs = [
 ];
 
 const NavLinks = () => {
-    const [activeButton, setActiveButton] = useState('WHO WE ARE');
+    const [activeButton, setActiveButton] = useState('/');
     const [trackButton, setTrackButton] = useState(false);
     const [activeIndex, setActiveIndex] = useState(0);
 
