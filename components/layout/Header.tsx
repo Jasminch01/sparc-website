@@ -39,7 +39,7 @@ const Header = () => {
                     <h2 className='font-extrabold text-[51px]'>THE CHT <span className='text-[#FF951B]'>INDIGENOUS</span> WOMANIFESTO</h2>
                 </div>
                 <div>
-                    <p className='ml-15'>Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices.</p>
+                    <p style={{ fontFamily: '"Book Antiqua",  serif' }} className='ml-15'>Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices.</p>
                 </div>
             </section>
         </div>
