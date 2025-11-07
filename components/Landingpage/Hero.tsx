@@ -7,7 +7,7 @@ const poppins = Poppins({
 })
 const Hero = () => {
     return (
-        <div className={`mt-10 relative ${poppins.className}`}>
+        <div className={`my-5 relative ${poppins.className}`}>
             <Image src={Hero_img} alt="hero-img" height={800} width={800} className="w-full relative" />
             {/* Clip Path Wave */}
             {/* This position will be absolute */}
@@ -18,7 +18,7 @@ const Hero = () => {
             {/* Absoulute Test */}
             <div className="absolute left-0 right-0 bottom-1/8 px-10 w-lg text-white ">
                 <p className="font-extrabold text-5xl mb-5">PROTEST FOR EQUALITY</p>
-                <p className="mb-5">Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices.</p>
+                <p style={{fontFamily:'"Book Antiqua",  serif '}} className="mb-5">Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices.</p>
                 <button className="border-b-2 cursor-pointer">Read More</button>
             </div>
         </div>
