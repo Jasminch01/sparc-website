@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 
 
 const poppins = Poppins({
@@ -11,7 +12,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Sparc",
-  description: "",
+  description: "A simple website",
 };
 
 export default function RootLayout({
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} font-sans `}
       >
-        {children}
+        <LayoutWrapper>
+          {children}
+        </LayoutWrapper>
       </body>
     </html>
   );
