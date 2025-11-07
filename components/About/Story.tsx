@@ -54,7 +54,7 @@ const Story = () => {
               <div>
                 <div className="flex items-center space-x-5">
                   <Image
-                    src={"/about/story-icon1.png"}
+                    src={"/About/story-icon1.png"}
                     alt="icon"
                     width={50}
                     height={50}
@@ -73,7 +73,7 @@ const Story = () => {
               <div>
                 <div className="flex items-center space-x-5">
                   <Image
-                    src={"/about/story-icon2.png"}
+                    src={"/About/story-icon2.png"}
                     alt="icon"
                     width={50}
                     height={50}
