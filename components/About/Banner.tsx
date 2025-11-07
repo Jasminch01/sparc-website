@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
+import { antiquaFont, poppins } from "../utils/font";
 
 const Banner = () => {
   const scrollToContent = () => {
@@ -17,15 +18,15 @@ const Banner = () => {
         width={1000}
         height={1000}
         alt="about-image"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-cover"
       />
 
       {/* Center Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-        <h1 className="text-3xl font-bold mb-4 text-center">
+        <h1 className={`text-4xl font-black mb-4 text-center ${poppins.className}`}>
           WHO WE ARE
         </h1>
-        <p className="text-lg text-center max-w-2xl px-4">
+        <p className={`text-xl text-center max-w-2xl ${antiquaFont.className}`}>
           Gain hands-on exprience and make impact through out internship program
         </p>
       </div>
