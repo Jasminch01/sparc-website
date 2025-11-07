@@ -1,12 +1,11 @@
 import Image from "next/image";
-import Hero_img from '../../public/Hero/Hero_Img.png'
-import overlay from '../../public/Hero/Vector 10.png'
-
+import Hero_img from "../../public/Hero/Hero_Img.png";
 import { Poppins } from "next/font/google";
+import Container from "../Container";
 const poppins = Poppins({
-    subsets: ['latin'],
-    weight: ['400', '600', '700']
-})
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
 const Hero = () => {
     return (
         <div className={`my-5 relative ${poppins.className}`}>
