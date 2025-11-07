@@ -2,7 +2,7 @@ import { poppins } from "../utils/font";
 import wwdOne from '../../public/Whatwedo/wwd 1.png'
 import wwdTwo from '../../public/Whatwedo/wwd 2.png'
 import wwdThree from '../../public/Whatwedo/wwd 3.png'
-import vectorImage from '../../public/Whatwedo/Vector.png'
+// import vectorImage from '../../public/Whatwedo/Vector.png'
 import Image from "next/image";
 
 const whatwedoes = [
@@ -21,7 +21,7 @@ const whatwedoes = [
 ]
 const Whatwedo = () => {
     return (
-        <div className="bg-[#36133B] py-15 relative">
+        <div className="bg-[#36133B] py-15  relative ">
             <div className="max-w-7xl mx-auto flex flex-col gap-10 mb-10">
                 <div className="text-center text-white">
                     <h2 className={`${poppins.className} text-4xl`}>WHAT WE DO</h2>
@@ -47,7 +47,7 @@ const Whatwedo = () => {
             </div>
 
             {/* Vector Image */}
-            <Image className="absolute w-full" src={vectorImage} alt="vector-image" width={1000} height={600} />
+            {/* <Image className="absolute w-full hidden lg:block " src={vectorImage} alt="vector-image" width={1000} height={600} /> */}
         </div>
     );
 };

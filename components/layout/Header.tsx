@@ -6,8 +6,8 @@ import { Poppins } from "next/font/google";
 import Container from "../Container";
 
 const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+    subsets: ["latin"],
+    weight: ["400", "500", "700"],
 });
 
 const Header = () => {

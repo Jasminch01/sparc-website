@@ -13,7 +13,7 @@ import Whoweare from "@/components/Landingpage/Whoweare";
 
 export default function Home() {
   return (
-    <div>
+    <div className="overflow-hidden">
       <Hero />
       <Organization />
       <Whoweare />
@@ -25,7 +25,7 @@ export default function Home() {
       <Stories />
       <Wherewework />
       <Overview />
-      <Testimonials/>
+      <Testimonials />
     </div>
   );
 }
