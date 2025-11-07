@@ -9,6 +9,7 @@ const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
 });
+
 const Header = () => {
   return (
     <div className={`${poppins.className}`}>
@@ -24,7 +25,7 @@ const Header = () => {
             />
           </div>
 
-          <div className="">
+          <div>
             <Navbar />
           </div>
 
