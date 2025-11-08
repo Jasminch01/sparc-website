@@ -9,47 +9,39 @@ const poppins = Poppins({
 });
 
 const navs = [
-    { title: "WHO WE ARE" , path:'who-we-are'},
+    { title: "WHO WE ARE", path: 'who-we-are' },
     { title: "OPPORTUNITY", icon: IoIosArrowDown },
-    { title: "STORIES", icon: IoIosArrowDown, path:'stories' },
+    { title: "STORIES", icon: IoIosArrowDown },
     { title: "RESOURCES", icon: IoIosArrowDown },
-    { title: "PARTNERS" ,path:'partners'},
-    { title: "LEARN FROM US",path:'learn-from-us' },
-    { title: "BLOG",path:'blogs' },
+    { title: "PARTNERS", path: 'partners' },
+    { title: "LEARN FROM US", path: 'learn-from-us' },
+    { title: "BLOG", path: 'blogs' },
 ];
 
 const opportunities = [
-    {
-        title: 'Volunteer',
-        path: '/volunteer'
-    },
-    {
-        title: 'Be a Intern',
-        path: '/be-a-intern'
-    },
-    {
-        title: 'Fellowship',
-        path: '/fellowship'
-    },
+    { title: 'Volunteer', path: '/volunteer' },
+    { title: 'Be a Intern', path: '/be-a-intern' },
+    { title: 'Fellowship', path: '/fellowship' },
 ];
 
 const NavLinks = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
-    // Handle click outside to close the dropdown
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-                setActiveIndex(null)
+                setActiveIndex(null);
             }
-        }
-        document.addEventListener("mousedown", handleClickOutside)
-        return () => document.removeEventListener("mousedown", handleClickOutside)
-    }, [])
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
-    const handleClick = (index: number) => {
-        setActiveIndex(activeIndex === index ? null : index);
+    const handleClick = (index: number, hasDropdown: boolean) => {
+        if (hasDropdown) {
+            setActiveIndex(activeIndex === index ? null : index);
+        }
     };
 
     return (
@@ -57,22 +49,32 @@ const NavLinks = () => {
             {navs.map((nav, i) => {
                 const isActive = activeIndex === i;
                 const Icon = nav.icon;
+                const hasDropdown = !!Icon;
+
                 return (
                     <div key={i} className="relative">
-                        <Link href={`${nav?.path}`} onClick={() => handleClick(i)} className={`flex items-center gap-1 text-sm cursor-pointer transition-colors duration-200 ${isActive ? "text-[#FF951B]" : "text-black hover:text-[#FF951B]"}`}>
-                            {nav.title}
-                            {Icon && (
+                        {hasDropdown ? (
+                            <button onClick={() => handleClick(i, true)} className={`flex items-center gap-1 text-sm cursor-pointer transition-colors duration-200 ${isActive ? "text-[#FF951B]" : "text-black hover:text-[#FF951B]"}`} >
+                                {nav.title}
                                 <span className={`transition-transform duration-300 ${isActive ? "rotate-180" : "rotate-0"}`}>
                                     <Icon />
                                 </span>
-                            )}
-                        </Link>
+                            </button>
+                        ) : (
+                            <Link href={nav.path || "#"} className="flex items-center gap-1 text-sm cursor-pointer transition-colors duration-200 text-black hover:text-[#FF951B]">
+                                {nav.title}
+                            </Link>
+                        )}
 
                         {/* Dropdown Menu */}
                         {isActive && nav.title === "OPPORTUNITY" && (
-                            <div id="dropdown" className="absolute left-0 mt-3 w-44 bg-white shadow-lg  border border-gray-100 z-50">
+                            <div className="absolute left-0 mt-3 w-44 bg-white shadow-lg border border-gray-100 z-50">
                                 {opportunities.map((op, idx) => (
-                                    <Link onClick={() => setActiveIndex(null)} href={`${op.path}`} key={idx} className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white  cursor-pointer flex flex-col gap-3">
+                                    <Link
+                                        onClick={() => setActiveIndex(null)}
+                                        href={op.path}
+                                        key={idx}
+                                        className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white cursor-pointer flex flex-col gap-3">
                                         {op.title}
                                     </Link>
                                 ))}
