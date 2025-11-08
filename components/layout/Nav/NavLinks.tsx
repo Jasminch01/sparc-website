@@ -9,13 +9,13 @@ const poppins = Poppins({
 });
 
 const navs = [
-    { title: "WHO WE ARE" },
+    { title: "WHO WE ARE" , path:'who-we-are'},
     { title: "OPPORTUNITY", icon: IoIosArrowDown },
-    { title: "STORIES", icon: IoIosArrowDown },
+    { title: "STORIES", icon: IoIosArrowDown, path:'stories' },
     { title: "RESOURCES", icon: IoIosArrowDown },
-    { title: "PARTNERS" },
-    { title: "LEARN FROM US" },
-    { title: "BLOG" },
+    { title: "PARTNERS" ,path:'partners'},
+    { title: "LEARN FROM US",path:'learn-from-us' },
+    { title: "BLOG",path:'blogs' },
 ];
 
 const opportunities = [
@@ -59,14 +59,14 @@ const NavLinks = () => {
                 const Icon = nav.icon;
                 return (
                     <div key={i} className="relative">
-                        <button onClick={() => handleClick(i)} className={`flex items-center gap-1 text-sm cursor-pointer transition-colors duration-200 ${isActive ? "text-[#FF951B]" : "text-black hover:text-[#FF951B]"}`}>
+                        <Link href={`${nav?.path}`} onClick={() => handleClick(i)} className={`flex items-center gap-1 text-sm cursor-pointer transition-colors duration-200 ${isActive ? "text-[#FF951B]" : "text-black hover:text-[#FF951B]"}`}>
                             {nav.title}
                             {Icon && (
                                 <span className={`transition-transform duration-300 ${isActive ? "rotate-180" : "rotate-0"}`}>
                                     <Icon />
                                 </span>
                             )}
-                        </button>
+                        </Link>
 
                         {/* Dropdown Menu */}
                         {isActive && nav.title === "OPPORTUNITY" && (
