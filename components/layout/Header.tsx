@@ -12,6 +12,7 @@ const poppins = Poppins({
     subsets: ["latin"],
     weight: ["400", "500", "700"],
 });
+
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false)
     return (

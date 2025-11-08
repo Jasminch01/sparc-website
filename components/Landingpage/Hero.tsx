@@ -1,13 +1,11 @@
 import Image from "next/image";
-import Hero_img from '../../public/Hero/Hero_Img.png'
+import Hero_img from "../../public/Hero/Hero_Img.png";
 import overlay from '../../public/Hero/Vector 10.png'
-
 import { Poppins } from "next/font/google";
-
 const poppins = Poppins({
-    subsets: ['latin'],
-    weight: ['400', '600', '700']
-})
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+});
 const Hero = () => {
     return (
         <div className={`my-5  relative ${poppins.className}`}>
@@ -28,7 +26,7 @@ const Hero = () => {
             </div>
 
             {/* Absoulute Test */}
-            <div className="absolute left-0 right-0 bottom-[8%] sm:bottom-[10%] md:bottom-[12%] lg:bottom-[15%] px-10 w-lg text-white">
+            <div className="absolute left-0 right-0 bottom-[2%] sm:bottom-[5%] md:bottom-[8%] lg:bottom-[10%] px-10 w-lg text-white">
                 <p className="font-extrabold lg:text-5xl mb-5">PROTEST FOR EQUALITY</p>
                 <p style={{ fontFamily: '"Book Antiqua",  serif ' }} className="mb-5">Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices.</p>
                 <button className="border-b-2 cursor-pointer">Read More</button>
