@@ -1,35 +1,199 @@
 @import "tailwindcss";
 
-.clip-curve {
-  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+/* Form Responsive for voulunteer */
+@media (min-width:1000px) and (max-width:1200px) {
+  #form {
+    right: 20px
+  }
+
 }
 
-/* Target the dots container */
-.slick-dots {
-  bottom: 25px;
-  /* Position */
+@media (min-width:1200px) and (max-width:1300px) {
+  #form {
+    right: 20px
+  }
+
 }
 
-/* Style individual dots */
-.slick-dots li button:before {
-  font-size: 12px;
-  color: blue;
-  opacity: 0.5;
+@media (min-width:1300px) and (max-width:1350px) {
+  #form {
+    right: 40px
+  }
+
 }
 
-/* Active dot */
-.slick-dots li.slick-active button:before {
-  color: red;
-  opacity: 1;
+@media (min-width:1350px) and (max-width:1400px) {
+  #form {
+    right: 50px
+  }
+
 }
 
-/* Custom dot shapes */
-.slick-dots li button:before {
-  content: '●';
-  /* or use '' to remove default */
-  font-size: 20px;
+@media (min-width:1400px) and (max-width:1449px) {
+  #form {
+    right: 100px
+  }
+
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+@media (min-width:1450px) and (max-width:1500px) {
+  #form {
+    right: 115px
+  }
+
+}
+
+@media (min-width:1500px) and (max-width:1550px) {
+  #form {
+    right: 130px
+  }
+
+}
+
+@media (min-width:1550px) and (max-width:1580px) {
+  #form {
+    right: 150px
+  }
+
+}
+
+@media (min-width:1580px) and (max-width:1600px) {
+  #form {
+    right: 165px
+  }
+
+}
+
+@media (min-width:1600px) and (max-width:1650px) {
+  #form {
+    right: 175px
+  }
+
+}
+
+@media (min-width:1650px) and (max-width:1700px) {
+  #form {
+    right: 210px
+  }
+
+}
+
+@media (min-width:1700px) and (max-width:1750px) {
+  #form {
+    right: 230px
+  }
+
+}
+
+@media (min-width:1750px) and (max-width:1800px) {
+  #form {
+    right: 250px
+  }
+
+}
+
+@media (min-width:1800px) and (max-width:1850px) {
+  #form {
+    right: 270px
+  }
+
+}
+
+@media (min-width:1850px) and (max-width:1900px) {
+  #form {
+    right: 300px
+  }
+
+}
+
+@media (min-width:1900px) and (max-width:1950px) {
+  #form {
+    right: 330px
+  }
+}
+
+@media (min-width:1950px) and (max-width:2000px) {
+  #form {
+    right: 350px
+  }
+}
+
+@media (min-width:2000px) and (max-width:2050px) {
+  #form {
+    right: 380px
+  }
+}
+
+@media (min-width:2050px) and (max-width:2100px) {
+  #form {
+    right: 400px
+  }
+
+}
+
+@media (min-width:2100px) and (max-width:2150px) {
+  #form {
+    right: 430px
+  }
+}
+
+@media (min-width:2150px) and (max-width:2200px) {
+  #form {
+    right: 460px
+  }
+}
+
+@media (min-width:2200px) and (max-width:2250px) {
+  #form {
+    right: 480px
+  }
+}
+
+@media (min-width:2250px) and (max-width:2300px) {
+  #form {
+    right: 500px
+  }
+}
+
+@media (min-width:2300px) and (max-width:2350px) {
+  #form {
+    right: 530px
+  }
+}
+
+@media (min-width:2350px) and (max-width:2400px) {
+  #form {
+    right: 550px
+  }
+
+}
+
+@media (min-width:2400px) and (max-width:2450px) {
+  #form {
+    right: 570px
+  }
+}
+
+@media (min-width:2450px) and (max-width:2500px) {
+  #form {
+    right: 590px
+  }
+}
+
+@media (min-width:2500px) and (max-width:2550px) {
+  #form {
+    right: 620px
+  }
+}
+
+@media (min-width:2550px) and (max-width:2600px) {
+  #form {
+    right: 640px
+  }
+}
+
+@media (min-width: 2560px) {
+  .bottom-4xl {
+    bottom: -12rem;
+  }
 }

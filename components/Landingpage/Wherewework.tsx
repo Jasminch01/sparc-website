@@ -3,14 +3,14 @@ import map from "../../public/Wherewework/map.png";
 import { poppins } from "../utils/font";
 const Wherewework = () => {
   return (
-    <div className="my-20 max-w-7xl mx-auto">
+    <div className="my-20 max-w-7xl mx-auto px-3 md:px-0">
       <div className="text-center  mx-auto mb-20 space-y-5">
-        <h2 className={`${poppins.className} font-extrabold text-5xl`}>
+        <h2 className={`${poppins.className} font-black xl:text-4xl md:text-3xl text-2xl `}>
           WHERE WE WORK
         </h2>
         <p
           style={{ fontFamily: '"Book Antiqua' }}
-          className="text-[#6D6D6D] text-lg"
+          className="text-[#6D6D6D] md:text-lg text-base"
         >
           Community development is often linked with community <br /> work or
           community planning, and may involve stakeholders, foundations,

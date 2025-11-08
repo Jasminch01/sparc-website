@@ -28,26 +28,33 @@ const Team = () => {
   ];
 
   return (
-    <div className="mt-32">
+    <div className="mt-16 md:mt-24 lg:mt-32">
       <Container>
-        <div className="mb-20">
-          <p className="text-center font-black text-3xl mb-10">THE TEAM</p>
-          <div className="flex gap-4 mb-10">
-            <button className="px-6 py-2 bg-gray-200 text-white rounded-full hover:bg-gray-300 transition">
+        <div className="mb-12 md:mb-16 lg:mb-20 px-4 md:px-6 lg:px-0">
+          <p className="text-center font-black text-2xl md:text-3xl mb-6 md:mb-8 lg:mb-10">
+            THE TEAM
+          </p>
+
+          {/* Category Buttons */}
+          <div className="flex flex-wrap gap-3 md:gap-4 mb-8 md:mb-10 justify-center md:justify-start">
+            <button className="px-4 md:px-6 py-2 bg-gray-200 text-white rounded-full hover:bg-gray-300 transition text-sm md:text-base">
               Category 1
             </button>
-            <button className="px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition">
+            <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
               Category 2
             </button>
-            <button className="px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition">
+            <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
               Category 3
             </button>
-            <button className="px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition">
+            <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
               Category 4
             </button>
           </div>
-          <div className="space-y-10">
-            <div className="flex justify-between">
+
+          {/* Team Members */}
+          <div className="space-y-8 md:space-y-10">
+            {/* First Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-4">
               {socialWorkerTeam.map((member, index) => (
                 <div key={index} className="flex flex-col">
                   <Image
@@ -55,18 +62,24 @@ const Team = () => {
                     alt={member.name}
                     width={300}
                     height={250}
-                    className="object-cover w-full"
+                    className="object-cover w-full h-[250px] sm:h-[280px] md:h-[300px] lg:h-[250px]"
                   />
-                  <p className={`font-bold text-xl mt-4 ${poppins.className}`}>
+                  <p
+                    className={`font-bold text-lg md:text-xl mt-3 md:mt-4 ${poppins.className}`}
+                  >
                     {member.name}
                   </p>
-                  <p className={`text-gray-600 text-lg ${antiquaFont.className}`}>
+                  <p
+                    className={`text-gray-600 text-base md:text-lg ${antiquaFont.className}`}
+                  >
                     {member.title}
                   </p>
                 </div>
               ))}
             </div>
-            <div className="flex justify-between">
+
+            {/* Second Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-4">
               {socialWorkerTeam.map((member, index) => (
                 <div key={index} className="flex flex-col">
                   <Image
@@ -74,12 +87,16 @@ const Team = () => {
                     alt={member.name}
                     width={300}
                     height={250}
-                    className="object-cover w-full"
+                    className="object-cover w-full h-[250px] sm:h-[280px] md:h-[300px] lg:h-[250px]"
                   />
-                  <p className={`font-bold text-xl mt-4 ${poppins.className}`}>
+                  <p
+                    className={`font-bold text-lg md:text-xl mt-3 md:mt-4 ${poppins.className}`}
+                  >
                     {member.name}
                   </p>
-                  <p className={`text-gray-600 text-lg ${antiquaFont.className}`}>
+                  <p
+                    className={`text-gray-600 text-base md:text-lg ${antiquaFont.className}`}
+                  >
                     {member.title}
                   </p>
                 </div>

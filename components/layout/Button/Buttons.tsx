@@ -68,7 +68,7 @@ const Buttons = () => {
             </div>
 
             {/* Donate Button */}
-            <button className="px-10 py-4 bg-[#FF951B] text-[14px] text-white rounded-full font-semibold">
+            <button className="lg:px-10 px-3 py-2 lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full font-semibold">
                 DONATE NOW
             </button>
         </div>
