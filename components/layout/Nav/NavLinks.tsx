@@ -1,5 +1,6 @@
 import { Poppins } from "next/font/google";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 const poppins = Poppins({
@@ -17,16 +18,42 @@ const navs = [
     { title: "BLOG" },
 ];
 
-const opportunities = ["Volunteer", "Be an Intern", "Fellowship"];
+const opportunities = [
+    {
+        title: 'Volunteer',
+        path: '/volunteer'
+    },
+    {
+        title: 'Be a Intern',
+        path: '/be-a-intern'
+    },
+    {
+        title: 'Fellowship',
+        path: '/fellowship'
+    },
+];
 
 const NavLinks = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+    // Handle click outside to close the dropdown
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setActiveIndex(null)
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => document.removeEventListener("mousedown", handleClickOutside)
+    }, [])
+
     const handleClick = (index: number) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
     return (
-        <div className={`relative flex items-center gap-6 ${poppins.className}`}>
+        <div ref={dropdownRef} className={`relative flex flex-col lg:flex-row lg:items-center gap-6 ${poppins.className}`}>
             {navs.map((nav, i) => {
                 const isActive = activeIndex === i;
                 const Icon = nav.icon;
@@ -43,11 +70,11 @@ const NavLinks = () => {
 
                         {/* Dropdown Menu */}
                         {isActive && nav.title === "OPPORTUNITY" && (
-                            <div className="absolute left-0 mt-3 w-44 bg-white shadow-lg  border border-gray-100 z-50">
+                            <div id="dropdown" className="absolute left-0 mt-3 w-44 bg-white shadow-lg  border border-gray-100 z-50">
                                 {opportunities.map((op, idx) => (
-                                    <div key={idx} className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white  cursor-pointer">
-                                        {op}
-                                    </div>
+                                    <Link onClick={() => setActiveIndex(null)} href={`${op.path}`} key={idx} className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white  cursor-pointer flex flex-col gap-3">
+                                        {op.title}
+                                    </Link>
                                 ))}
                             </div>
                         )}
