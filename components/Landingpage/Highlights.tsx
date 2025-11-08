@@ -9,6 +9,7 @@ const Highlights = () => {
         <div className="relative">
             {/* First Image - Applied responsive top offset: small overlap on mobile, large on desktop */}
             <Image
+                id="top-vector-image"
                 className="absolute w-full top-[-140px] sm:top-[-150px] md:top-[-155px] lg:top-[-175px] "
                 src={vectorImage}
                 alt="vector-image"

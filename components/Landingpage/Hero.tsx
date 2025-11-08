@@ -3,13 +3,23 @@ import Hero_img from '../../public/Hero/Hero_Img.png'
 import overlay from '../../public/Hero/Vector 10.png'
 
 import { Poppins } from "next/font/google";
+
 const poppins = Poppins({
     subsets: ['latin'],
     weight: ['400', '600', '700']
 })
 const Hero = () => {
     return (
-        <div className={`my-5 relative ${poppins.className}`}>
+        <div className={`my-5  relative ${poppins.className}`}>
+            <section className='flex flex-col lg:flex-row items-center lg:gap-50 mt-10 mb-5 max-w-7xl mx-auto'>
+                <div className='lg:max-w-xl text-center lg:text-left'>
+                    <h2 className='font-extrabold text-2xl lg:text-[51px] '>THE CHT <span className='text-[#FF951B]'>INDIGENOUS</span> WOMANIFESTO</h2>
+                </div>
+                <div>
+                    <p style={{ fontFamily: '"Book Antiqua",  serif' }} className='lg:ml-15 w-full lg:w-auto text-center lg:text-left'>Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices.</p>
+                </div>
+            </section>
+
             <Image src={Hero_img} alt="hero-img" height={800} width={1000} className="w-full h-[250px] lg:h-auto relative" />
             {/* Clip Path Wave */}
             {/* This position will be absolute */}
