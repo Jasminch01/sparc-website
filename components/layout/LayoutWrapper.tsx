@@ -1,7 +1,7 @@
 'use client';
 
 import Footer from "./Footer";
-import Header from "./Header";
+// import Header from "./Header";
 
 export default function LayoutWrapper({
     children,
@@ -11,7 +11,7 @@ export default function LayoutWrapper({
 
     return (
         <div className="flex flex-col min-h-screen">
-            <Header />
+            {/* <Header /> */}
             <main className="grow">{children}</main>
             <Footer />
         </div>

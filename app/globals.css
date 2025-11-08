@@ -1,53 +1,7 @@
 @import "tailwindcss";
 
-/* Bottom Image  */
-@media (min-width: 800px) and (max-width: 870px) {
-  #bottom-vector-image {
-    bottom: -60px !important;
+@media (min-width: 2560px) {
+  .bottom-4xl {
+    bottom: -12rem;
   }
-}
-
-@media (min-width: 720px) and (max-width: 799px) {
-  #bottom-vector-image {
-    bottom: -55px !important;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 719px) {
-  #bottom-vector-image {
-    bottom: -48px !important;
-  }
-}
-
-@media (min-width: 500px) and (max-width: 600px) {
-  #bottom-vector-image {
-    bottom: -40px !important;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 500px) {
-  #bottom-vector-image {
-    bottom: -40px !important;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 500px) {
-  #bottom-vector-image {
-    bottom: -35px !important;
-  }
-}
-@media (min-width: 300px) and (max-width: 420px) {
-  #bottom-vector-image {
-    bottom: -30px !important;
-  }
-}
-@media (min-width: 200px) and (max-width: 380px) {
-  #bottom-vector-image {
-    bottom: -28px !important;
-  }
-}
-
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
 }
