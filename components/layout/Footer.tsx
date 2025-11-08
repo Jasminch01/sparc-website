@@ -1,6 +1,5 @@
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
-import vector from "../../public/Whatwedo/Vector.png";
 import Link from "next/link";
 import { poppins } from "../utils/font";
 
