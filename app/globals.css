@@ -1,134 +1,5 @@
 @import "tailwindcss";
 
-/* Bottom Vector Image  */
-
-@media (min-width: 2300px) and (max-width: 2600px) {
-  #bottom-vector-image {
-    bottom: -210px !important;
-  }
-}
-
-@media (min-width: 2000px) and (max-width: 2300px) {
-  #bottom-vector-image {
-    bottom: -200px !important;
-  }
-}
-
-@media (min-width: 1900px) and (max-width: 2000px) {
-  #bottom-vector-image {
-    bottom: -180px !important;
-  }
-}
-
-@media (min-width: 1700px) and (max-width: 1850px) {
-  #bottom-vector-image {
-    bottom: -170px !important;
-  }
-}
-
-@media (min-width: 1600px) and (max-width: 1700px) {
-  #bottom-vector-image {
-    bottom: -160px !important;
-  }
-}
-
-@media (min-width: 800px) and (max-width: 870px) {
-  #bottom-vector-image {
-    bottom: -60px !important;
-  }
-}
-
-@media (min-width: 720px) and (max-width: 799px) {
-  #bottom-vector-image {
-    bottom: -55px !important;
-  }
-}
-
-@media (min-width: 600px) and (max-width: 719px) {
-  #bottom-vector-image {
-    bottom: -48px !important;
-  }
-}
-
-@media (min-width: 500px) and (max-width: 600px) {
-  #bottom-vector-image {
-    bottom: -40px !important;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 500px) {
-  #bottom-vector-image {
-    bottom: -40px !important;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 500px) {
-  #bottom-vector-image {
-    bottom: -35px !important;
-  }
-}
-
-@media (min-width: 300px) and (max-width: 420px) {
-  #bottom-vector-image {
-    bottom: -30px !important;
-  }
-}
-
-@media (min-width: 200px) and (max-width: 380px) {
-  #bottom-vector-image {
-    bottom: -28px !important;
-  }
-}
-
-/* Top Vector Image */
-@media (min-width: 1500px) and (max-width:1700px) {
-  #top-vector-image {
-    top: -190px !important
-  }
-}
-
-@media (min-width: 1700px) and (max-width:1800px) {
-  #top-vector-image {
-    top: -200px !important
-  }
-}
-
-@media (min-width: 1800px) and (max-width:1900px) {
-  #top-vector-image {
-    top: -200px !important
-  }
-}
-
-@media (min-width: 1900px) and (max-width:2000px) {
-  #top-vector-image {
-    top: -205px !important
-  }
-}
-
-@media (min-width: 2000px) and (max-width:2100px) {
-  #top-vector-image {
-    top: -205px !important
-  }
-}
-
-@media (min-width: 2100px) and (max-width:2300px) {
-  #top-vector-image {
-    top: -213px !important
-  }
-}
-
-@media (min-width: 2300px) and (max-width:2500px) {
-  #top-vector-image {
-    top: -220px !important
-  }
-}
-
-@media (min-width: 2500px) and (max-width:2600px) {
-  #top-vector-image {
-    top: -230px !important
-  }
-}
-
 /* Form Responsive for voulunteer */
 @media (min-width:1000px) and (max-width:1200px) {
   #form {
@@ -143,6 +14,7 @@
   }
 
 }
+
 @media (min-width:1300px) and (max-width:1350px) {
   #form {
     right: 40px
@@ -163,6 +35,7 @@
   }
 
 }
+
 @media (min-width:1450px) and (max-width:1500px) {
   #form {
     right: 115px
@@ -238,73 +111,89 @@
     right: 330px
   }
 }
+
 @media (min-width:1950px) and (max-width:2000px) {
   #form {
     right: 350px
   }
 }
+
 @media (min-width:2000px) and (max-width:2050px) {
   #form {
     right: 380px
   }
 }
+
 @media (min-width:2050px) and (max-width:2100px) {
   #form {
     right: 400px
   }
 
 }
+
 @media (min-width:2100px) and (max-width:2150px) {
   #form {
     right: 430px
   }
 }
+
 @media (min-width:2150px) and (max-width:2200px) {
   #form {
     right: 460px
   }
 }
+
 @media (min-width:2200px) and (max-width:2250px) {
   #form {
     right: 480px
   }
 }
+
 @media (min-width:2250px) and (max-width:2300px) {
   #form {
     right: 500px
   }
 }
+
 @media (min-width:2300px) and (max-width:2350px) {
   #form {
     right: 530px
   }
 }
+
 @media (min-width:2350px) and (max-width:2400px) {
   #form {
     right: 550px
   }
 
 }
+
 @media (min-width:2400px) and (max-width:2450px) {
   #form {
     right: 570px
   }
 }
+
 @media (min-width:2450px) and (max-width:2500px) {
   #form {
     right: 590px
   }
 }
+
 @media (min-width:2500px) and (max-width:2550px) {
   #form {
     right: 620px
   }
 }
+
 @media (min-width:2550px) and (max-width:2600px) {
   #form {
     right: 640px
   }
 }
-body {
-  font-family: Arial, Helvetica, sans-serif;
+
+@media (min-width: 2560px) {
+  .bottom-4xl {
+    bottom: -12rem;
+  }
 }

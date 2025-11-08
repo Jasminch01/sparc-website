@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Hero_img from "../../public/Hero/Hero_Img.png";
-import overlay from '../../public/Hero/Vector 10.png'
+import overlay from '../../public/Hero/overlay.png'
 import { Poppins } from "next/font/google";
 const poppins = Poppins({
   subsets: ["latin"],
