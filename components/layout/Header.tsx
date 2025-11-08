@@ -7,6 +7,7 @@ import { Poppins } from "next/font/google";
 import Container from "../Container";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -15,6 +16,7 @@ const poppins = Poppins({
 
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false)
+    const router = useRouter()
     return (
         <div className={`${poppins.className}`}>
             <Container>
@@ -24,6 +26,7 @@ const Header = () => {
 
                         {/*This is for desktop  */}
                         <Image
+                            onClick={() => router.push('/')}
                             src={logo}
                             alt="sparc-logo"
                             width={149}
