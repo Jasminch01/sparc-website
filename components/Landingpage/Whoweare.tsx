@@ -12,7 +12,7 @@ const imagesTwo = [imageThree, imageTwo];
 
 const Whoweare = () => {
   return (
-    <div className="flex flex-col lg:flex-row max-w-7xl mx-auto my-10 md:my-16 lg:my-20 gap-10 lg:gap-20 px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col lg:flex-row max-w-7xl mx-auto my-10 md:my-16 lg:my-20 gap-10 lg:gap-20 px-5 lg:px-10 xl:px-0">
       {/* Left Section */}
       <section className="space-y-6 md:space-y-8 lg:space-y-10 w-full lg:w-1/2">
         {/* First Div */}
