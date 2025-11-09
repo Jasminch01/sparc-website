@@ -80,7 +80,7 @@ const page = () => {
 
             <div className="relative">
                 {/* Middle Part */}
-                <Image src={vector} alt="vector-image" width={1000} height={600} className="z-20 w-full absolute top-[-45px]" />
+                <Image id='volunteer-vector-image' src={vector} alt="vector-image" width={1000} height={600} className="z-20 w-full absolute top-[-45px]" />
                 {/* Bottom part */}
                 <Image src={hero} alt="hero" width={1000} height={600} className="relative z-10 object-contain w-full mt-20" />
             </div>

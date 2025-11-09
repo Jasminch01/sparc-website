@@ -26,7 +26,7 @@ const Highlights = () => {
           </div>
 
           {/* Content Section */}
-          <div className="space-y-4 md:space-y-5 w-full lg:w-1/2 flex flex-col justify-center">
+          <div className="space-y-4 md:space-y-10 w-full lg:w-1/2 flex flex-col justify-center">
             <h2
               className={`${poppins.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}
             >

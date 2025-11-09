@@ -14,7 +14,7 @@ const Hero = () => {
     <div className={`my-5 relative ${poppins.className}`}>
       {/* Top Section with Title and Description */}
       <Container>
-        <section className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-6 lg:gap-12 mt-10 mb-5">
+        <section className="flex flex-col lg:flex-row items-center md:items-start lg:justify-between gap-6 lg:gap-25 mt-10 mb-5">
           <div className="lg:max-w-xl text-center lg:text-left">
             <h2 className="font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-[51px] leading-tight">
               THE CHT <span className="text-[#FF951B]">INDIGENOUS</span>{" "}

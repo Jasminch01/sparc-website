@@ -95,7 +95,7 @@ const Footer = () => {
               style={{ fontFamily: '"Book Antiqua", serif' }}
               className="text-xs sm:text-sm"
             >
-              Sparce 2025. All rights reserved.
+              Sparc 2025. All rights reserved.
             </p>
           </div>
         </div>
