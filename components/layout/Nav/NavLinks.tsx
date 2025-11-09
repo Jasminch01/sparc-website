@@ -9,13 +9,13 @@ const poppins = Poppins({
 });
 
 const navs = [
-    { title: "WHO WE ARE", path: 'who-we-are' },
+    { title: "WHO WE ARE", path: '/who-we-are' },
     { title: "OPPORTUNITY", icon: IoIosArrowDown },
     { title: "STORIES", icon: IoIosArrowDown },
     { title: "RESOURCES", icon: IoIosArrowDown },
-    { title: "PARTNERS", path: 'partners' },
-    { title: "LEARN FROM US", path: 'learn-from-us' },
-    { title: "BLOG", path: 'blogs' },
+    { title: "PARTNERS", path: '/partners' },
+    { title: "LEARN FROM US", path: '/learn-from-us' },
+    { title: "BLOG", path: '/blogs' },
 ];
 
 const opportunities = [
