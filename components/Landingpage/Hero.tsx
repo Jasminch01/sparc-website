@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Hero_img from "../../public/Hero/Hero_Img.png";
-import overlay from "../../public/Hero/overlay.png";
+import Hero_img from "../../public/Hero/hero.png";
 import { Poppins } from "next/font/google";
 import Container from "../Container";
 
@@ -14,9 +13,9 @@ const Hero = () => {
     <div className={`my-5 relative ${poppins.className}`}>
       {/* Top Section with Title and Description */}
       <Container>
-        <section className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-6 lg:gap-12 mt-10 mb-5">
+        <section className="flex flex-col lg:flex-row items-center lg:items-start lg:justify-between gap-6 lg:gap-12 mt-10 mb-5 lg:px-10">
           <div className="lg:max-w-xl text-center lg:text-left">
-            <h2 className="font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-[51px] leading-tight">
+            <h2 className="font-extrabold text-2xl md:text-4xl lg:text-[51px] leading-tight">
               THE CHT <span className="text-[#FF951B]">INDIGENOUS</span>{" "}
               WOMANIFESTO
             </h2>
@@ -33,32 +32,22 @@ const Hero = () => {
         </section>
       </Container>
 
-      {/* Hero Image with Overlay */}
+      {/* Hero Image with CSS Wave Overlay */}
       <div className="relative w-full">
         <Image
           src={Hero_img}
           alt="hero-img"
           height={800}
           width={1000}
-          className="w-full h-[250px] sm:h-[350px] md:h-[450px] lg:h-[600px] xl:h-auto object-cover"
+          className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
         />
 
-        {/* Overlay Wave */}
-        <div className="absolute left-0 right-0 bottom-0 overflow-hidden w-full pointer-events-none">
-          <Image
-            src={overlay}
-            alt="overlay-image"
-            width={1000}
-            height={600}
-            className="w-full h-auto"
-          />
-        </div>
 
-        {/* Text Content Over Image */}
-        <div className="absolute inset-x-0 bottom-0 pb-4 sm:pb-8 md:pb-12 lg:pb-16">
-          <Container>
+        {/* Text Content Over Image with Left Padding for Mobile */}
+        <div className="absolute inset-x-0 bottom-0 pb-6 sm:pb-10 md:pb-14 lg:pb-20 xl:pb-24">
+          <div className="px-6 lg:px-10 max-w-7xl mx-auto">
             <div className="text-white max-w-2xl">
-              <p className="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 sm:mb-3 lg:mb-5">
+              <p className="font-extrabold text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 sm:mb-3 lg:mb-4">
                 PROTEST FOR EQUALITY
               </p>
               <p
@@ -72,7 +61,7 @@ const Hero = () => {
                 Read More
               </button>
             </div>
-          </Container>
+          </div>
         </div>
       </div>
     </div>
