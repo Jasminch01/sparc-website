@@ -9,7 +9,7 @@ const Logos = [logoOne, logoThree, logoTwo, logoFour, logoFive];
 
 const Organization = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto px-5 lg:px-10 xl:px-0">
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6 lg:gap-8 my-10 md:my-12 lg:my-16">
         {Logos.map((logo, index) => (
           <div

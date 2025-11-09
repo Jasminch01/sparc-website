@@ -52,11 +52,12 @@ const Testimonials = () => {
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 1 } },
       { breakpoint: 640, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+      { breakpoint: 420, settings: { slidesToShow: 1, slidesToScroll: 1 } },
     ],
   };
 
   return (
-    <div className="max-w-7xl mx-auto my-12 md:my-16 lg:my-20 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto my-12 md:my-16 lg:my-20 px-5 lg:px-10 xl:px-0">
       <style jsx global>{`
         .slick-dots {
           bottom: -40px;

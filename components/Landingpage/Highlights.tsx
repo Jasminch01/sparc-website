@@ -6,7 +6,7 @@ import vector from "../../public/Whatwedo/Frame1.png";
 const Highlights = () => {
   return (
     <div className="relative md:pt-10 md:pb-32 pb-20">
-      <div className="mt-20 sm:mt-24 md:mt-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mt-20 sm:mt-24 md:mt-30 max-w-7xl mx-auto px-5 lg:px-10 xl:px-0">
         <h2
           className={`${poppins.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
         >

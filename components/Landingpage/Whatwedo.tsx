@@ -23,7 +23,7 @@ const whatwedoes = [
 const Whatwedo = () => {
   return (
     <div className="bg-[#36133B] py-12 md:py-15 lg:py-20 relative pb-10 sm:pb-36 md:pb-40 lg:pb-44">
-      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10 mb-8 md:mb-10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10 mb-8 md:mb-10 px-5 lg:px-10 xl:px-0">
         {/* Header Section */}
         <div className="text-center text-white space-y-3 md:space-y-4">
           <h2

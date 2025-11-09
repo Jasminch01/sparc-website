@@ -28,7 +28,7 @@ const stories = [
 const Stories = () => {
   return (
     <div className="bg-[#36133B] py-12 md:py-16 lg:py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-5 lg:px-10 xl:px-0">
         {/* Header Section */}
         <div className="text-center max-w-xl mx-auto text-white space-y-3 md:space-y-4 mb-10 md:mb-12 lg:mb-16">
           <h2

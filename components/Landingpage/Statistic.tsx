@@ -21,7 +21,7 @@ const statistics = [
 
 const Statistic = () => {
     return (
-        <div className={`my-16 md:my-20 lg:my-24 space-y-8 md:space-y-10 lg:space-y-12 ${poppins.className} max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`}>
+        <div className={`my-16 md:my-20 lg:my-24 space-y-8 md:space-y-10 lg:space-y-12 ${poppins.className} max-w-7xl mx-auto px-5 lg:px-10 xl:px-0`}>
             <h2 className="text-center font-extrabold text-2xl md:text-3xl lg:text-4xl">
                 VARIOUS STATISTICS THAT WE HAVE
             </h2>
