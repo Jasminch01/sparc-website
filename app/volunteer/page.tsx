@@ -5,11 +5,17 @@ import countryimage from '../../public/Volunteer/country-image.png'
 import Image from "next/image";
 import Container from '@/components/Container';
 import icon from '../../public/Volunteer/icon.png'
+import whatyouwillgainimage from '../../public/Volunteer/gain-image.png'
 
 const opinions = [
     { title: 'Support community workshops and awareness programs', icon: icon },
     { title: 'Organize campaigns on women’s rights and cultural preservation', icon: icon },
     { title: 'Share stories that inspire change across generations', icon: icon },
+]
+const gain = [
+    { title: 'Real experience in advocacy and social impact work', icon: icon },
+    { title: 'Deeper understanding of Indigenous traditions and resilience', icon: icon },
+    { title: 'A sense of purpose and community that lasts a lifetime', icon: icon },
 ]
 
 const page = () => {
@@ -103,6 +109,33 @@ const page = () => {
                     </div>
                 </div>
             </Container>
+
+            {/* What you will gain */}
+            <Container>
+                <div className='flex mb-20'>
+                    <div className='w-1/2 space-y-5'>
+                        <h2 className={`${poppins.className} text-4xl font-extrabold`}>WHAT YOU’ll GAIN</h2>
+                        <p className={`${antiquaFont.className} text-[#2B2B2B] text-lg`}>Volunteering isn’t just an act of service — it’s a journey of learning, connection, and growth. You’ll work alongside dedicated leaders, experience Indigenous cultures firsthand, and become a voice for those who continue to fight for equality and recognition.</p>
+                        <div className='space-y-5'>
+                            <h2 className={`font-semibold ${poppins.className} text-xl`}>You’ll gain:</h2>
+                            <ul className='space-y-5'>
+                                {gain.map((op, index) =>
+                                    <div key={index} className='flex items-center gap-3'>
+                                        <Image src={op.icon} alt={op.title} height={10} width={20} className='' />
+                                        <p className={`${antiquaFont.className}`}>{op.title}</p>
+                                    </div>
+                                )}
+                            </ul>
+                        </div>
+                    </div>
+                    <div className='w-1/2'>
+                        <Image src={whatyouwillgainimage} alt='country-image' width={700} height={400} className=' ' />
+                    </div>
+                </div>
+            </Container>
+            <div className='flex items-center justify-center mb-15'>
+                <button className={`bg-[#FF951B] px-8 py-4 font-semibold text-sm text-white rounded-full cursor-pointer ${poppins.className}`}>APPLY FOR VOLUNTEER</button>
+            </div>
         </div>
     );
 };
