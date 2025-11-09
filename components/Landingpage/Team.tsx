@@ -39,16 +39,16 @@ const Team = () => {
             <div className="flex gap-2 items-start">
               <h2
                 style={{ fontFamily: '"Rowan", serif' }}
-                className="xl:text-4xl md:text-3xl text-2xl mt-2 md:mt-5"
+                className="xl:text-7xl font-bold md:text-5xl text-4xl mt-2 md:mt-5"
               >
                 O1
               </h2>
               <Image
                 src={leaf}
                 alt="team-leaf"
-                width={25}
-                height={25}
-                className="object-contain w-5 h-5 sm:w-6 sm:h-6 md:w-[25px] md:h-[25px]"
+                width={300}
+                height={300}
+                className="object-contain xl:size-28 size-12"
               />
             </div>
             <hr className="border-gray-400 border" />
@@ -59,6 +59,7 @@ const Team = () => {
             </p>
           </div>
         </div>
+
         <div className="w-full lg:w-1/2">
           <p
             className="text-justify text-sm sm:text-base md:text-lg leading-relaxed"
@@ -72,6 +73,21 @@ const Team = () => {
           </p>
         </div>
       </section>
+
+      <div className="flex flex-wrap gap-3 md:gap-4 mb-8 md:mb-10 justify-center md:justify-start">
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-white rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+          Category 1
+        </button>
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+          Category 2
+        </button>
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+          Category 3
+        </button>
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+          Category 4
+        </button>
+      </div>
 
       {/* Bottom Section - Team Grid */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-6">
