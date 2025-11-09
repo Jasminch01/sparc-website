@@ -31,7 +31,7 @@ const teamMembers = [
 
 const Team = () => {
   return (
-    <div className="max-w-7xl mx-auto my-12 md:my-16 lg:my-20 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-7xl mx-auto my-12 md:my-16 lg:my-20 px-5 lg:px-10 xl:px-0">
       {/* Top Section */}
       <section className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12 mb-12 md:mb-16 lg:mb-20">
         <div className="w-full lg:w-1/2">

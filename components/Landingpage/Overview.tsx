@@ -14,7 +14,7 @@ const Overview = () => {
       />
       <div className="absolute inset-0 bg-black/60 z-10"></div>
 
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-4 sm:px-6 md:px-8 lg:px-12">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center text-white px-5 lg:px-10 xl:px-0">
         <Image
           src={logo}
           alt="sparc-logo"
