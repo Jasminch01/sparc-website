@@ -69,7 +69,7 @@ const Story = () => {
                     alt="icon"
                     width={50}
                     height={50}
-                    className="w-10 h-10 md:w-12 md:h-12 lg:w-[50px] lg:h-[50px]"
+                    className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
                   <p className="text-xl md:text-2xl font-black">
                     WHAT WE STAND FOR
@@ -92,7 +92,7 @@ const Story = () => {
                     alt="icon"
                     width={50}
                     height={50}
-                    className="w-10 h-10 md:w-12 md:h-12 lg:w-[50px] lg:h-[50px]"
+                    className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
                   <p className="text-xl md:text-2xl font-black">
                     WHERE WE&apos;RE HEADED
