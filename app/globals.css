@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+
+/* Volunteer Vector image responsive */
+@media (min-width:1400px) and (max-width:1500px) {
+  #volunteer-vector-image {
+    top: -50px
+  }
+
+}
+
+@media (min-width:1500px) and (max-width:1600px) {
+  #volunteer-vector-image {
+    top: -60px
+  }
+
+}
+
+@media (min-width:1600px) and (max-width:1700px) {
+  #volunteer-vector-image {
+    top: -70px
+  }
+
+}
+
+@media (min-width:1700px) and (max-width:1900px) {
+  #volunteer-vector-image {
+    top: -80px
+  }
+
+}
+
+@media (min-width:1900px) and (max-width:2600px) {
+  #volunteer-vector-image {
+    top: -90px
+  }
+
+}
+
 /* Form Responsive for voulunteer */
 @media (min-width:1000px) and (max-width:1200px) {
   #form {

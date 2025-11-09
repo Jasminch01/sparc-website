@@ -11,20 +11,20 @@ const Story = () => {
           {/* First Section */}
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
             {/* Images */}
-            <div className="flex flex-col sm:flex-row gap-5 w-full lg:w-1/2">
+            <div className="flex flex-col xl:flex-row gap-5 w-full lg:w-1/2">
               <Image
                 src={"/About/our-story1.png"}
                 alt="our-story-image"
                 width={500}
                 height={500}
-                className="w-full sm:w-1/2 lg:w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] object-cover"
+                className="w-full xl:w-[290px]  h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] "
               />
               <Image
                 src={"/About/our-story2.png"}
                 alt="our-story-image"
                 width={500}
                 height={500}
-                className="w-full sm:w-1/2 lg:w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] object-cover"
+                className="w-full xl:w-[290px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px]"
               />
             </div>
 
@@ -56,12 +56,12 @@ const Story = () => {
                 alt="our-story-image"
                 width={500}
                 height={500}
-                className="w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] object-cover"
+                className="w-full rounded-lg h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] object-cover"
               />
             </div>
 
             {/* Text Content */}
-            <div className="w-full lg:w-1/2 space-y-5 md:space-y-6">
+            <div className="w-full lg:w-1/2 space-y-5 md:space-y-6 lg:space-y-17">
               <div>
                 <div className="flex items-center space-x-3 md:space-x-5 mb-2 md:mb-3">
                   <Image
