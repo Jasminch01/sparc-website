@@ -1,0 +1,20 @@
+[
+  {
+    "logo": "/Partners/logo1.png",
+    "image": "/Partners/Rectangle1.png",
+    "about": "interrogating arguments and (seemingly) rational thought. Axiology is a fancy term for the study of ethics and aesthetics; this type of philosophy seeks to understand what makes individuals and actions “good” or “right.” Epistemology examines belief, opinion, and objective knowledge; as such, it can help people understand whether their closely held beliefs derive from objective or subjective information. ",
+    "link": "https://www.company1.com"
+  },
+  {
+    "logo": "/Partners/logo2.png",
+    "image": "/Partners/Rectangle2.png",
+    "about": "interrogating arguments and (seemingly) rational thought. Axiology is a fancy term for the study of ethics and aesthetics; this type of philosophy seeks to understand what makes individuals and actions “good” or “right.” Epistemology examines belief, opinion, and objective knowledge; as such, it can help people understand whether their closely held beliefs derive from objective or subjective information. ",
+    "link": "https://www.company1.com"
+  },
+  {
+    "logo": "/Partners/logo3.png",
+    "image": "/Partners/Rectangle3.png",
+    "about": "interrogating arguments and (seemingly) rational thought. Axiology is a fancy term for the study of ethics and aesthetics; this type of philosophy seeks to understand what makes individuals and actions “good” or “right.” Epistemology examines belief, opinion, and objective knowledge; as such, it can help people understand whether their closely held beliefs derive from objective or subjective information. ",
+    "link": "https://www.company1.com"
+  }
+]
