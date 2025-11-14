@@ -67,7 +67,7 @@ const Whatwedo = () => {
       </div>
 
       {/* Bottom Vector Image - Fixed at bottom edge */}
-      <div className="absolute  2xl:-bottom-40 xl:-bottom-32 lg:-bottom-24 md:-bottom-16 -bottom-9 left-0 right-0 w-full pointer-events-none overflow-hidden bottom-4xl">
+      <div className="absolute 2xl:-bottom-40 xl:-bottom-32 lg:-bottom-24 md:-bottom-16 -bottom-9 left-0 right-0 w-full pointer-events-none overflow-hidden bottom">
         <Image
           className="w-full h-auto object-cover"
           src={vectorImage}
