@@ -20,11 +20,11 @@ const gain = [
 
 const page = () => {
     return (
-        <div className="relative">
+        <div className="relative mt-15">
             {/* Top Part */}
             <div className="max-w-7xl mx-auto flex">
-                <div className="w-1/2 pr-8 pt-16">
-                    <h2 className={`uppercase text-4xl font-extrabold mb-6 max-w-md ${poppins.className}`}>
+                <div className="w-1/2 pr-8 ">
+                    <h2 className={`uppercase text-5xl font-extrabold mb-6 max-w-xl ${poppins.className}`}>
                         Apply today to become a <span className="text-orange-500">volunteer</span>
                     </h2>
                     <p className={`text-[#4E4E4E] ${antiquaFont.className} text-lg leading-relaxed`}>
