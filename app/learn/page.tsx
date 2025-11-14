@@ -61,6 +61,12 @@ const Page = () => {
         }
     };
 
+    // Reset to first page when category changes
+    useEffect(() => {
+        const timeout = setTimeout(() => setCurrentPage(0), 0);
+        return () => clearTimeout(timeout);
+    }, [activeCategory]);
+
     return (
         <div className='mt-15'>
             <Container>
@@ -113,7 +119,7 @@ const Page = () => {
                         )}
                     </div>
 
-                    {/* Courses Section */}
+
                     {/* Navigation Buttons */}
                     {filteredCourses.length > coursesPerPage && (
                         <div className='flex justify-end items-center gap-4 mb-10'>
@@ -138,6 +144,7 @@ const Page = () => {
                             </button>
                         </div>
                     )}
+                    {/* Courses Section */}
                     <div className='grid grid-cols-1 lg:grid-cols-4 mb-10 gap-5'>
                         {currentCourses.map((course, index) => {
                             const isLastInRow = (index + 1) % 4 === 0;
