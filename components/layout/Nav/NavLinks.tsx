@@ -14,7 +14,7 @@ const navs = [
     { title: "STORIES", icon: IoIosArrowDown },
     { title: "RESOURCES", icon: IoIosArrowDown },
     { title: "PARTNERS", path: '/partners' },
-    { title: "LEARN FROM US", path: '/learn-from-us' },
+    { title: "LEARN FROM US", path: '/learn' },
     { title: "BLOG", path: '/blogs' },
 ];
 
