@@ -82,7 +82,7 @@ const Page = () => {
 
                     {/* Sorting button */}
                     <section className="flex gap-5 items-center">
-                        <select onChange={(e) => setActiveYear(e.target.value)} name="" id="" className="border border-[#B7B7B7] rounded-sm py-2 px-4">
+                        <select onChange={(e) => setActiveYear(e.target.value)} name="" id="" className={`border border-[#B7B7B7] rounded-sm py-2 px-4 ${poppins.className}`}>
                             <option value="2016-2017">2016-2017</option>
                             <option value="2017-2018">2017-2018</option>
                             <option value="2024-2025">2024-2025</option>

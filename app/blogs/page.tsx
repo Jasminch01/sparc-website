@@ -14,7 +14,8 @@ interface Blogs {
     writtenBy: string,
     img: string,
     category: string,
-    longdes: string
+    longdes: string,
+    subcategory: string
 }
 
 const categories = ['All', 'Jum Cultivation', 'Jum', 'Hill News', 'Photography', 'Indigenous Opinion', 'CHT People', 'Hill Tracts']
@@ -23,7 +24,7 @@ const BlogPage = () => {
     const [activeIndex, setActiveIndex] = useState(0)
     const [startIndex, setStartIndex] = useState(0)
     const [blogs, setBlogs] = useState<Blogs[]>([]);
-
+    const [activeSubcategory, setActiveSubcategory] = useState("latest")
     const [activeCategory, setActiveCategory] = useState("All")
 
     const visibleCount = 6
@@ -51,8 +52,13 @@ const BlogPage = () => {
     }, [])
 
     // Make a filter button to render the filter category data 
-    const filteredButton = activeCategory === 'All' ? blogs : blogs.filter((blog) => blog.category.toLowerCase() === activeCategory.toLowerCase()
-    );
+    const filteredButton = activeCategory === 'All' ? blogs : blogs.filter((blog) => blog.category.toLowerCase() === activeCategory.toLowerCase());
+
+    // Find the data based on subcategory ,,old, latest...
+    const filterdSubcategory = blogs.filter(b => b.subcategory === activeSubcategory)
+
+    // Combine both of them
+    const combineButtonAndSubcategory = filteredButton && filterdSubcategory
 
     return (
         <div>
@@ -93,10 +99,32 @@ const BlogPage = () => {
                     </button>
                 </section>
 
+                {/* Active categoru button */}
+                <p className={`text-center text-3xl text-[#303030] font-bold ${poppins.className}`}>{activeCategory}</p>
+
+                {/* Breadcrup Section */}
+                <Container>
+                    <div className="flex justify-between items-center mt-10">
+                        <section className={`flex gap-5  ${poppins.className}`}>
+                            <Link href='/'>Home</Link> <span>||</span>
+                            <p className="text-[#818181] uppercase" >blog</p>
+                        </section>
+
+                        {/* Sorting button */}
+                        <section className="flex gap-5 items-center">
+                            <select onChange={(e) => setActiveSubcategory(e.target.value)} name="" id="" className={`border border-[#B7B7B7] rounded-sm py-2 px-4 ${poppins.className}`}>
+                                <option value="latest">Latest</option>
+                                <option value="old">Old</option>
+                            </select>
+
+                        </section>
+                    </div>
+                </Container>
+
                 {/* This is blogs section where the blogs will load based on activeCategory */}
                 <section className="my-10 max-w-4xl mx-auto">
-                    {filteredButton.length > 0 ? (
-                        filteredButton.map((blog, index) => (
+                    {filteredButton.length > 0 && filterdSubcategory ? (
+                        combineButtonAndSubcategory.map((blog, index) => (
                             <Link href={`/blogs/${blog.title.replace(/\s+/g, '-').toLowerCase()}`} key={index} className="flex flex-col md:flex-row gap-5 pb-5 py-5 border-b-2 border-gray-300">
                                 <div className="flex-1 space-y-3">
                                     <p className={`text-gray-500 text-sm ${poppins.className}`}>

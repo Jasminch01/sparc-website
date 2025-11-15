@@ -23,6 +23,13 @@ const opportunities = [
     { title: 'Be a Intern', path: '/be-a-intern' },
     { title: 'Fellowship', path: '/fellowship' },
 ];
+const resources = [
+    { title: 'Reports and Publications', path: '/reports-publications' },
+    { title: 'Rebuild Communities', path: '/update' }
+]
+const stories = [
+    { title: 'Indespeak', path: '/indespeak' }
+]
 
 const NavLinks = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -70,6 +77,32 @@ const NavLinks = () => {
                         {isActive && nav.title === "OPPORTUNITY" && (
                             <div className="absolute left-0 mt-3 w-44 bg-white shadow-lg border border-gray-100 z-50">
                                 {opportunities.map((op, idx) => (
+                                    <Link
+                                        onClick={() => setActiveIndex(null)}
+                                        href={op.path}
+                                        key={idx}
+                                        className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white cursor-pointer flex flex-col gap-3">
+                                        {op.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                        {isActive && nav.title === "RESOURCES" && (
+                            <div className="absolute left-0 mt-3 w-52 bg-white shadow-lg border border-gray-100 z-50">
+                                {resources.map((op, idx) => (
+                                    <Link
+                                        onClick={() => setActiveIndex(null)}
+                                        href={op.path}
+                                        key={idx}
+                                        className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white cursor-pointer flex flex-col gap-3">
+                                        {op.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                        {isActive && nav.title === "STORIES" && (
+                            <div className="absolute left-0 mt-3 w-52 bg-white shadow-lg border border-gray-100 z-50">
+                                {stories.map((op, idx) => (
                                     <Link
                                         onClick={() => setActiveIndex(null)}
                                         href={op.path}
