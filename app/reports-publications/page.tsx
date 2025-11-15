@@ -130,7 +130,7 @@ const Page = () => {
                 <div className="flex justify-between items-center mt-10">
                     <section className={`flex gap-5  ${poppins.className}`}>
                         <Link href='/'>Home</Link> <span>||</span>
-                        <p className="text-[#818181]" >Reports and Publications</p>
+                        <p className="text-[#818181] uppercase" >Reports and Publications</p>
                     </section>
 
                     {/* Sorting button */}

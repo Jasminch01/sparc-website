@@ -7,7 +7,8 @@
         "img": "/Blogs/blog-image-1.png",
         "category": "indigenous opinion",
         "status": "latest",
-        "longdes": "We have often been asked: Why doesn’t the Partner Program pay for external traffic? Sharing on social media, getting referral traffic from search and direct sharing are all behaviors we want to reward, which is why our first change is adding an incentive to the Partner Program that rewards you when you share your writing externally and bring in brand new readers. The formal study of logic helps in decision-making and in interrogating arguments and (seemingly) rational thought. ..."
+        "longdes": "We have often been asked: Why doesn’t the Partner Program pay for external traffic? Sharing on social media, getting referral traffic from search and direct sharing are all behaviors we want to reward, which is why our first change is adding an incentive to the Partner Program that rewards you when you share your writing externally and bring in brand new readers. The formal study of logic helps in decision-making and in interrogating arguments and (seemingly) rational thought. ...",
+        "subcategory": "latest"
     },
     {
         "writtenBy": "Provash Chakma",
@@ -17,7 +18,8 @@
         "img": "/Blogs/blog-image-2.png",
         "category": "indigenous opinion",
         "status": "latest",
-        "longdes": "She was the organizing secretary of the Hill Women's Federation in Bangladesh. This long description can contain detailed information about the blog post, history, context, and related insights for readers who want to dive deeper."
+        "longdes": "She was the organizing secretary of the Hill Women's Federation in Bangladesh. This long description can contain detailed information about the blog post, history, context, and related insights for readers who want to dive deeper.",
+        "subcategory": "latest"
     },
     {
         "writtenBy": "Jesmin Chakma",
@@ -27,7 +29,8 @@
         "img": "/Blogs/blog-image-3.png",
         "category": "indigenous opinion",
         "status": "latest",
-        "longdes": "This blog post expands on the contributions of Kalpana Chakma to human rights and the Hill Women's Federation. Readers can learn about her activism, major accomplishments, and legacy in the community."
+        "longdes": "This blog post expands on the contributions of Kalpana Chakma to human rights and the Hill Women's Federation. Readers can learn about her activism, major accomplishments, and legacy in the community.",
+        "subcategory": "old"
     },
     {
         "writtenBy": "Alapottra Chakma",
@@ -37,7 +40,8 @@
         "img": "/Blogs/blog-image-4.png",
         "category": "indigenous opinion",
         "status": "latest",
-        "longdes": "Kalpana Chakma’s work is explored in this detailed blog. The long description covers her initiatives, challenges faced, and the impact of her advocacy on local communities and women’s rights in the region."
+        "longdes": "Kalpana Chakma’s work is explored in this detailed blog. The long description covers her initiatives, challenges faced, and the impact of her advocacy on local communities and women’s rights in the region.",
+        "subcategory": "old"
     },
     {
         "writtenBy": "Sumed Tapas Chakma",
@@ -47,6 +51,7 @@
         "img": "/Blogs/blog-image-5.png",
         "category": "indigenous opinion",
         "status": "latest",
-        "longdes": "This blog entry highlights Kalpana Chakma’s activism, her role in organizing women in the Hill Tracts, and her contributions to the promotion of human rights and justice in Bangladesh."
+        "longdes": "This blog entry highlights Kalpana Chakma’s activism, her role in organizing women in the Hill Tracts, and her contributions to the promotion of human rights and justice in Bangladesh.",
+        "subcategory": "latest"
     }
 ]
