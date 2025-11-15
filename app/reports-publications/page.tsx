@@ -19,7 +19,8 @@ const reports_publications = [
         des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activism. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – “Courage is Contagious”.',
         img: one,
         category: 'reports',
-        date: '2020-2021'
+        date: '2020-2021',
+        imgDes: 'A group photo after the Kamla Bhasin Fellowship (Bangladesh) 2017 award ceremony. '
     },
     {
         title: 'KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR',
@@ -27,7 +28,8 @@ const reports_publications = [
         des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activism. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – “Courage is Contagious”.',
         img: two,
         category: 'reports',
-        date: '2020-2021'
+        date: '2020-2021',
+        imgDes: 'A group photo after the Kamla Bhasin Fellowship (Bangladesh) 2017 award ceremony. '
     },
     {
         title: 'KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR',
@@ -35,7 +37,8 @@ const reports_publications = [
         des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activism. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – “Courage is Contagious”.',
         img: three,
         category: 'reports',
-        date: '2020-2021'
+        date: '2020-2021',
+        imgDes: 'A group photo after the Kamla Bhasin Fellowship (Bangladesh) 2017 award ceremony. '
     },
 
     //publications
@@ -182,7 +185,8 @@ const Page = () => {
                                     <p className={poppins.className}>{rep.writtenon}</p>
                                     <p className={`mb-4 text-lg text-justify ${antiquaFont.className}`}>{rep.des}</p>
                                     <Image src={rep.img} alt={rep.title} height={600} width={1000} />
-                                    <button className="self-start bg-[#36133B] text-white px-6 py-2 rounded-full">
+                                    <p className={`${antiquaFont.className} mt-5`}>{rep.imgDes}</p>
+                                    <button className="self-start bg-[#36133B] text-white px-6 py-2 mt-3 rounded-full">
                                         Read More
                                     </button>
                                 </div>}
