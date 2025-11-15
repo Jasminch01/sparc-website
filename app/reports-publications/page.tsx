@@ -155,7 +155,7 @@ const Page = () => {
                     </span>
                 ) : (
                     combineCategoryandDate.map((rep, index) => (
-                        <div key={index} className="flex flex-col gap-5">
+                        <div key={index} className="flex flex-col gap-5 mb-20 ">
                             {rep.category === 'publications' ?
                                 <div>
                                     <h2 className={`text-4xl font-bold mb-4 ${poppins.className}`}>{rep.title}</h2>
