@@ -47,7 +47,7 @@ const page = () => {
                     <p className={`mb-4 text-lg max-w-2xl mx-auto${antiquaFont.className}`}>
                         Gain hands-on experience and make an impact through our internship program.
                     </p>
-                    <button className={`bg-[#FF951B] text-white px-8 py-3 rounded-full text-sm ${poppins.className}`}>
+                    <button className={`bg-[#FF951B] text-white px-10 py-5 mt-10 rounded-full text-sm ${poppins.className}`}>
                         APPLY FOR INTERNSHIP
                     </button>
                 </div>
