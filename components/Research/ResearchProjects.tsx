@@ -12,7 +12,7 @@ const ResearchProjects = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/research/projects.json")
+    fetch("/research/data.json")
       .then((res) => res.json())
       .then((jsonData: ResearchData) => {
         setData(jsonData);
@@ -72,11 +72,10 @@ const ResearchProjects = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] font-medium transition-all ${
-                activeTab === tab.id
-                  ? "border border-gray-400"
-                  : "border border-transparent"
-              }`}
+              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] font-medium transition-all ${activeTab === tab.id
+                ? "border border-gray-400"
+                : "border border-transparent"
+                }`}
             >
               {tab.label}
             </button>

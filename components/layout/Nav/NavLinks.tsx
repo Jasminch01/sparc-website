@@ -1,6 +1,5 @@
 import { Poppins } from "next/font/google";
 import Link from "next/link";
-import path from "path";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -14,7 +13,7 @@ const navs = [
     { title: "OPPORTUNITY", icon: IoIosArrowDown },
     { title: "STORIES", icon: IoIosArrowDown },
     { title: "RESOURCES", icon: IoIosArrowDown },
-    { title: "PARTNERS", icon : IoIosArrowDown },
+    { title: "PARTNERS", icon: IoIosArrowDown },
     { title: "LEARN FROM US", path: '/learn' },
     { title: "BLOG", path: '/blogs' },
 ];
@@ -28,7 +27,7 @@ const opportunities = [
 const resources = [
     { title: 'Reports and Publications', path: '/reports-publications' },
     { title: 'Rebuild Communities', path: '/update' },
-    { title: 'Indigenous Archive', path: '/archive' }
+    { title: 'Indigenous Archive', path: '/archive' },
     { title: 'Our Research', path: '/our-research' }
 ]
 const stories = [
@@ -36,8 +35,8 @@ const stories = [
 ]
 
 const partner = [
-   { title : "How to partner", path: "/how-to-partner"},
-   { title : "Partners", path: "/partners"}
+    { title: "How to partner", path: "/how-to-partner" },
+    { title: "Partners", path: "/partners" }
 ]
 
 const NavLinks = () => {
