@@ -12,7 +12,7 @@ interface Data {
     des: string;
     date: string;
     category: string;
-    longdes: string
+    longdes: string;
 }
 
 const Page = () => {
@@ -43,6 +43,11 @@ const Page = () => {
         d.title.toLowerCase() === titleFromSlug?.toLowerCase()
     );
 
+    // Get related stories (exclude current article, limit to 3)
+    const relatedStories = data
+        .filter(d => d.title !== filteredData?.title)
+        .slice(0, 3);
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -65,19 +70,22 @@ const Page = () => {
     return (
         <div className="my-20">
             <Container>
-                <span className="text-3xl  uppercase text-center font-semibold flex items-center justify-center ">{filteredData.category}</span>
+                <span className="text-3xl uppercase text-center font-semibold flex items-center justify-center">
+                    {filteredData.category}
+                </span>
 
-                <section className={`flex justify-between  ${poppins.className} py-10`}>
+                <section className={`flex justify-between ${poppins.className} py-10`}>
                     <div className="flex gap-5">
-                        <Link href='/'>Home</Link> <span>||</span>
-                        <p className="text-[#818181] uppercase" >INDIGENOUS ARCHIVE</p> <span>||</span>
-                        <h2>{slug}</h2>
+                        <Link href='/' className="hover:underline">Home</Link>
+                        <span>||</span>
+                        <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
+                        <span>||</span>
+                        <h2 className="text-[#818181]">{slug}</h2>
                     </div>
-
                 </section>
             </Container>
 
-            <article className="max-w-5xl mx-auto ">
+            <article className="max-w-5xl mx-auto px-4">
                 <h1 className="text-3xl font-bold mt-2 mb-4">{filteredData.title}</h1>
                 <p className={`text-gray-500 mb-6 ${poppins.className}`}>{filteredData.date}</p>
                 <Image
@@ -88,7 +96,35 @@ const Page = () => {
                     className="w-full"
                 />
 
-                <p className={`text-[#252525]  ${antiquaFont.className} py-5`}>{filteredData.longdes}</p>
+                <p className={`text-[#252525] ${antiquaFont.className} py-5`}>
+                    {filteredData.longdes}
+                </p>
+
+                {/* Related Stories */}
+                <div className="mt-16 mb-10">
+                    <h2 className={`text-2xl font-semibold mb-8 text-center ${poppins.className}`}>
+                        Related Stories
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {relatedStories.map((story, index) => (
+                            <Link key={index} href={`/archive/${story.title.replace(/\s+/g, '-').toLowerCase()}`} className="group">
+                                <div className="overflow-hidden">
+                                    <Image
+                                        src={story.img}
+                                        alt={story.title}
+                                        width={400}
+                                        height={300}
+                                        className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                                    />
+                                </div>
+                                <h3 className={`mt-4 text-base font-medium leading-snug group-hover:text-[#36133B] transition-colors ${poppins.className}`}>
+                                    {story.title}
+                                </h3>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
             </article>
         </div>
     );
