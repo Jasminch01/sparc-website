@@ -1,5 +1,6 @@
 import { Poppins } from "next/font/google";
 import Link from "next/link";
+import path from "path";
 import { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -13,7 +14,7 @@ const navs = [
     { title: "OPPORTUNITY", icon: IoIosArrowDown },
     { title: "STORIES", icon: IoIosArrowDown },
     { title: "RESOURCES", icon: IoIosArrowDown },
-    { title: "PARTNERS", path: '/partners' },
+    { title: "PARTNERS", icon : IoIosArrowDown },
     { title: "LEARN FROM US", path: '/learn' },
     { title: "BLOG", path: '/blogs' },
 ];
@@ -25,10 +26,16 @@ const opportunities = [
 ];
 const resources = [
     { title: 'Reports and Publications', path: '/reports-publications' },
-    { title: 'Rebuild Communities', path: '/update' }
+    { title: 'Rebuild Communities', path: '/update' },
+    { title: 'Our Research', path: '/our-research' }
 ]
 const stories = [
     { title: 'Indespeak', path: '/indespeak' }
+]
+
+const partner = [
+   { title : "How to partner", path: "/how-to-partner"},
+   { title : "Partners", path: "/partners"}
 ]
 
 const NavLinks = () => {
@@ -103,6 +110,19 @@ const NavLinks = () => {
                         {isActive && nav.title === "STORIES" && (
                             <div className="absolute left-0 mt-3 w-52 bg-white shadow-lg border border-gray-100 z-50">
                                 {stories.map((op, idx) => (
+                                    <Link
+                                        onClick={() => setActiveIndex(null)}
+                                        href={op.path}
+                                        key={idx}
+                                        className="px-4 py-2 text-sm hover:bg-[#36133B] hover:text-white cursor-pointer flex flex-col gap-3">
+                                        {op.title}
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                        {isActive && nav.title === "PARTNERS" && (
+                            <div className="absolute left-0 mt-3 w-52 bg-white shadow-lg border border-gray-100 z-50">
+                                {partner.map((op, idx) => (
                                     <Link
                                         onClick={() => setActiveIndex(null)}
                                         href={op.path}
