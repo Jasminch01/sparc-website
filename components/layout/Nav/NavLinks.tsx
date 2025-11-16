@@ -27,6 +27,7 @@ const opportunities = [
 const resources = [
     { title: 'Reports and Publications', path: '/reports-publications' },
     { title: 'Rebuild Communities', path: '/update' },
+    { title: 'Indigenous Archive', path: '/archive' }
     { title: 'Our Research', path: '/our-research' }
 ]
 const stories = [
