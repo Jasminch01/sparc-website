@@ -20,7 +20,16 @@ const bottomBar = [
 
 const Footer = () => {
   return (
-    <div className="bg-[#3E1A43] text-white">
+    <div className="bg-[#36133B] text-white relative h-full md:mt-24 mt-12">
+      <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[6.1rem] md:-top-11 -top-6 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
+        <Image
+          className="w-full h-auto object-cover"
+          src={"/Whatwedo/Frame1.png"}
+          alt="vector-image"
+          width={1920}
+          height={700}
+        />
+      </div>
       <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 flex flex-col gap-8 lg:gap-10">
         {/* Logo */}
         <Image
