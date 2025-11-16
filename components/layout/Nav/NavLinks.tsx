@@ -23,6 +23,7 @@ const opportunities = [
     { title: 'Be a Intern', path: '/be-a-intern' },
     { title: 'Fellowship', path: '/fellowship' },
 ];
+// I am just checking
 const resources = [
     { title: 'Reports and Publications', path: '/reports-publications' },
     { title: 'Rebuild Communities', path: '/update' },
