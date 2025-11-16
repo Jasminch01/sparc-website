@@ -1,0 +1,30 @@
+[
+    {
+        "title":"Women’s Empowerment Workshop",
+        "status":"Ongoing",
+        "date":"October 2025",
+        "fundedBy":"SPARC",
+        "des":"Empowering indigenous women and communities to rise against systemic oppression,",
+        "img":"/rebuild/project1.png"
+
+    },
+    {
+        "title":"Cultural revitalization programs : Chittagong Hill Tracts",
+        "status":"Completed",
+        "date":"October 2025",
+        "fundedBy":"SPARC",
+        "des":"Empowering indigenous women and communities to rise against systemic oppression,",
+        "img":"/rebuild/project2.png"
+
+    },
+    {
+        "title":"Community rebuilding and livelihood restoration projects",
+        "status":"Completed",
+        "date":"October 2025",
+        "fundedBy":"SPARC",
+        "des":"Empowering indigenous women and communities to rise against systemic oppression,",
+        "img":"/rebuild/project3.png"
+
+    }
+
+]
