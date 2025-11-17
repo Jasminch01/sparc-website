@@ -20,3 +20,12 @@ export const antiquaFont = localFont({
     },
   ],
 });
+export const rowanFont = localFont({
+  src: [
+    {
+      path: "../../app/fonts/Rowan-Bold.otf",
+      weight: "700",
+      style: "bold",
+    },
+  ],
+});

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 
 const navs = [
   "Who we are",
@@ -20,8 +20,8 @@ const bottomBar = [
 
 const Footer = () => {
   return (
-    <div className="bg-[#36133B] text-white relative h-full md:mt-24 mt-12">
-      <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[6.1rem] md:-top-11 -top-6 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
+    <div className="bg-[#36133B] text-white relative h-full md:mt-24 mt-12 lg:pb-20">
+      <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[6.1rem] md:-top-11 -top-7 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
         <Image
           className="w-full h-auto object-cover"
           src={"/Whatwedo/Frame1.png"}
@@ -57,22 +57,20 @@ const Footer = () => {
           </div>
 
           {/* Newsletter Section */}
-          <div className="w-full lg:w-auto">
-            <h2
-              className={`font-semibold mb-3 text-base sm:text-lg ${poppins.className}`}
-            >
+          <div className={`w-full lg:w-auto ${poppins.className}`}>
+            <h2 className={`font-semibold mb-3 text-base sm:text-lg `}>
               Get the freshest news from us
             </h2>
             <form onSubmit={(e) => e.preventDefault()}>
-              <div className="flex flex-col sm:flex-row rounded overflow-hidden gap-2 sm:gap-0">
+              <div className="flex flex-row rounded overflow-hidden gap-2 sm:gap-0">
                 <input
                   type="email"
                   placeholder="Your email address"
-                  className={`px-3 py-2 w-full sm:w-64 outline-none bg-white text-gray-900 rounded sm:rounded-none sm:rounded-l ${poppins.className}`}
+                  className={`px-3 py-2 w-full sm:w-64 outline-none bg-white text-gray-500 rounded sm:rounded-none sm:rounded-l`}
                 />
                 <button
                   type="submit"
-                  className={`bg-[#FF951B] border border-[#FF951B] text-white px-4 py-2 hover:bg-[#e8851a] transition rounded sm:rounded-none sm:rounded-r ${poppins.className}`}
+                  className={`bg-[#FF951B] border border-[#FF951B] text-white px-4 py-2 hover:bg-[#e8851a] transition rounded sm:rounded-none xl:rounded-r`}
                 >
                   Subscribe
                 </button>
@@ -82,15 +80,16 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-2 mt-4 lg:mt-8">
+        <div
+          className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 xl:gap-2 mt-4 lg:mt-8 ${antiquaFont.className}`}
+        >
           {/* Bottom Bar Links */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full sm:w-auto">
+          <div className={`flex flex-row gap-x-5 w-full`}>
             {bottomBar.map((bottom, index) => (
               <div
-                style={{ fontFamily: '"Book Antiqua", serif' }}
                 key={index}
-                className={`text-sm sm:text-base ${
-                  index !== bottomBar.length - 1 ? "sm:border-r-2 sm:pr-4" : ""
+                className={`xl:text-base ${
+                  index !== bottomBar.length - 1 ? "xl:border-r-2 xl:pr-4" : ""
                 } hover:text-[#FF951B] transition-colors duration-300 cursor-pointer`}
               >
                 {bottom}
@@ -99,13 +98,8 @@ const Footer = () => {
           </div>
 
           {/* Copyright and Vector */}
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-start sm:justify-end">
-            <p
-              style={{ fontFamily: '"Book Antiqua", serif' }}
-              className="text-xs sm:text-sm"
-            >
-              Sparc 2025. All rights reserved.
-            </p>
+          <div className="flex items-center justify-center mt-10 gap-2 w-full md:justify-start xl:justify-end">
+            <p className="text-base">Sparc 2025. All rights reserved.</p>
           </div>
         </div>
 

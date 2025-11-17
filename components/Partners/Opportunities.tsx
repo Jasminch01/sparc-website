@@ -21,22 +21,24 @@ const opportunities = [
 
 const Opportunities = () => {
   return (
-    <div className="my-20 bg-[#36133B] py-20">
+    <div className=" bg-[#36133B] py-10 xl:py-20 my-20 px-5 md:px-0">
       <div>
-        <p className="text-3xl md:text-4xl font-bold text-center text-white px-4">
+        <p className="text-3xl lg:text-4xl font-bold text-center text-white px-4 mb-5">
           Partnership Opportunities
         </p>
         <Container>
-          <div className="flex flex-col lg:flex-row gap-5 items-stretch justify-center py-10 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-5 py-10 md:py-20">
             {opportunities.map((opportunite, index) => (
               <div
                 key={index}
-                className="text-white space-y-5 bg-white/10 border border-white/30 w-full p-6 md:p-10 rounded-xl"
+                className="text-white space-y-5 bg-white/10 border border-white/30 p-6 md:p-10 rounded-xl flex flex-col h-full"
               >
                 <p className="font-bold text-xl md:text-2xl">
                   {opportunite.title}
                 </p>
-                <p className={`${antiquaFont.className} text-base md:text-lg`}>
+                <p
+                  className={`${antiquaFont.className} text-lg lg:text-xl flex-grow`}
+                >
                   {opportunite.description}
                 </p>
               </div>
