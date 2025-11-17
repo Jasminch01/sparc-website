@@ -4,7 +4,7 @@ import teamThree from "../../public/Team/team 3.png";
 import teamFour from "../../public/Team/team 4.png";
 import leaf from "../../public/Team/Leaf.png";
 import Image from "next/image";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 
 const teamMembers = [
   {
@@ -62,8 +62,7 @@ const Team = () => {
 
         <div className="w-full lg:w-1/2">
           <p
-            className="text-justify text-sm sm:text-base md:text-lg leading-relaxed"
-            style={{ fontFamily: '"Book Antiqua", serif' }}
+            className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`}
           >
             Strong voices. Bold visions. Meet the women and allies driving
             equality and empowerment forward. Our strength lies in unity. The
@@ -75,16 +74,16 @@ const Team = () => {
       </section>
 
       <div className="flex flex-wrap gap-3 md:gap-4 mb-8 md:mb-10 justify-center md:justify-start">
-        <button className="px-4 md:px-6 py-2 bg-gray-200 text-white rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-white rounded-full hover:bg-gray-300 transition text-lg ">
           Category 1
         </button>
-        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-lg ">
           Category 2
         </button>
-        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-lg ">
           Category 3
         </button>
-        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-sm md:text-base">
+        <button className="px-4 md:px-6 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition text-lg ">
           Category 4
         </button>
       </div>

@@ -1,6 +1,6 @@
 // import Image from "next/image";
 // import vectorImage from '../../public/Whatwedo/Vector.png'
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 
 const Videos = () => {
   return (
@@ -13,8 +13,7 @@ const Videos = () => {
             VIDEOS
           </h2>
           <p
-            style={{ fontFamily: '"Book Antiqua", serif' }}
-            className="text-base  md:text-xl lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed"
+            className={`text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed ${antiquaFont.className}`}
           >
             Strong voices. Bold visions. Meet the women and allies driving
             equality and empowerment forward. Our strength lies in unity.

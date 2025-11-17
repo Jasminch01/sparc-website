@@ -2,7 +2,7 @@ import Image from "next/image";
 import storyTwo from "../../public/Stories/story 2.png";
 import storyThree from "../../public/Stories/story 3.png";
 import storyFour from "../../public/Stories/story 4.png";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 
 const stories = [
   {
@@ -37,8 +37,7 @@ const Stories = () => {
             STORIES AND NEWS
           </h2>
           <p
-            className="text-sm sm:text-base md:text-lg leading-relaxed px-4"
-            style={{ fontFamily: '"Book Antiqua", serif' }}
+            className={`text-lg lg:text-xl leading-relaxed px-4 ${antiquaFont.className}`}
           >
             Community development is often linked with community work or
             community planning, and may involve stakeholders, foundations.
@@ -60,25 +59,24 @@ const Stories = () => {
                   className="object-cover"
                 />
               </div>
-              <div className="bg-white py-5 md:py-6 px-6 md:px-8 lg:px-10 space-y-3 md:space-y-4 lg:space-y-5 grow flex flex-col">
-                <p
-                  className={`text-[#767676] ${poppins.className} text-xs sm:text-sm`}
-                >
+              <div
+                className={`bg-white py-5 md:py-6 px-6 md:px-8 lg:px-10 space-y-3 md:space-y-4 lg:space-y-5 grow flex flex-col ${poppins.className} `}
+              >
+                <p className={`text-[#767676] text-xs sm:text-sm`}>
                   {story.date}
                 </p>
                 <h2
-                  className={`${poppins.className} font-extrabold text-lg sm:text-xl md:text-2xl leading-tight`}
+                  className={`font-extrabold text-lg sm:text-xl md:text-2xl leading-tight`}
                 >
                   {story.title}
                 </h2>
                 <p
-                  className="text-sm sm:text-base md:text-md text-justify leading-relaxed text-[#4D4D4D] grow"
-                  style={{ fontFamily: '"Book Antiqua", serif' }}
+                  className={`text-lg lg:text-xl text-justify leading-relaxed text-[#4D4D4D] grow ${antiquaFont.className}`}
                 >
                   {story.des}
                 </p>
                 <button
-                  className={`text-[#FF7F00] border-b border-[#FF7F00] ${poppins.className} text-sm md:text-base hover:text-[#cc6600] hover:border-[#cc6600] transition-colors w-fit pb-1`}
+                  className={`text-[#FF7F00] border-b border-[#FF7F00] text-sm md:text-base hover:text-[#cc6600] hover:border-[#cc6600] transition-colors w-fit pb-1`}
                 >
                   Read More
                 </button>
