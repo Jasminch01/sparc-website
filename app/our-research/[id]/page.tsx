@@ -14,7 +14,7 @@ const ResearchDetailsPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/research/projects.json")
+    fetch("/research/data.json")
       .then((res) => res.json())
       .then((data: ResearchData) => {
         const selectedProject = data.projects.find((p) => p.id === Number(id));
