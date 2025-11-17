@@ -94,10 +94,10 @@ const ResearchProjects = () => {
               Ongoing Research Projects
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {ongoingProjects.map((project) => (
+              {ongoingProjects.map((project, idx) => (
                 <Link
                   href={`/our-research/${project.id}`}
-                  key={project.id}
+                  key={idx}
                   className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow bg-white block"
                 >
                   <div>
