@@ -238,6 +238,11 @@ const Page = () => {
                         </div>
                     )}
                 </section>
+
+
+
+
+                {/* research section updated */}
             </Container>
         </div>
     );
