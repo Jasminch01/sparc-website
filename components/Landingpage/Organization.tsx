@@ -18,7 +18,7 @@ const partners = [
 ];
 const Organization = () => {
   return (
-    <div className="">
+    <div className="border-b border-gray-300 pb-7">
       {/* Desktop/Tablet: Single Row */}
       <div className="hidden md:flex items-center justify-between xl:space-x-16 w-full">
         {partners.map((partner, index) => (
