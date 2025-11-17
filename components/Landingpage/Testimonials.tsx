@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import comma from "../../public/Testimonials/comma.png";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 import dynamic from "next/dynamic";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -102,13 +102,12 @@ const Testimonials = () => {
       {/* Header Section */}
       <div className="text-center max-w-xl mx-auto space-y-3 md:space-y-4 lg:space-y-5 mb-10 md:mb-12 lg:mb-16">
         <h2
-          className={`${poppins.className} font-black xl:text-4xl md:text-3xl text-2xl `}
+          className={`${poppins.className} font-black lg:text-4xl text-2xl `}
         >
           WHAT PEOPLE SAY
         </h2>
         <p
-          className="text-[#454545] text-base md:text-lg leading-relaxed px-4"
-          style={{ fontFamily: '"Book Antiqua", serif' }}
+          className={`text-[#454545] text-lg lg:text-xl leading-relaxed px-4 ${antiquaFont.className}`}
         >
           Community development is often linked with community work or community
           planning, and may involve stakeholders, foundations.
@@ -137,10 +136,10 @@ const Testimonials = () => {
                 <div
                   className={`${poppins.className} flex flex-col items-center mt-auto`}
                 >
-                  <h3 className="text-[#FF951B] font-bold text-base sm:text-lg md:text-xl">
+                  <h3 className="text-[#FF951B] font-bold text-lg lg:text-xl">
                     {testimonial.testimoniName}
                   </h3>
-                  <p className="text-[#4B4B4B] text-xs sm:text-sm md:text-base">
+                  <p className="text-[#4B4B4B] text-xs xl:text-base">
                     {testimonial.designation}
                   </p>
                 </div>

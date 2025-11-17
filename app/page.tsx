@@ -1,3 +1,4 @@
+import Container from "@/components/Container";
 import Hero from "@/components/Landingpage/Hero";
 import Highlights from "@/components/Landingpage/Highlights";
 import Organization from "@/components/Landingpage/Organization";
@@ -15,7 +16,9 @@ export default function Home() {
   return (
     <div className="overflow-hidden">
       <Hero />
-      <Organization />
+      <Container>
+        <Organization />
+      </Container>
       <Whoweare />
       <Statistic />
       <Whatwedo />

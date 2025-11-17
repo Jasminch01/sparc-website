@@ -1,6 +1,6 @@
 import Image from "next/image";
 import highlightImage from "../../public/Highlight/highlight.png";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 import vector from "../../public/Whatwedo/Frame1.png";
 
 const Highlights = () => {
@@ -34,8 +34,7 @@ const Highlights = () => {
               Indigenous people at risk
             </h2>
             <p
-              className="text-justify text-sm sm:text-base md:text-lg leading-relaxed"
-              style={{ fontFamily: '"Book Antiqua", serif' }}
+              className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`}
             >
               Empowering indigenous women and communities to rise against
               systemic oppression, reclaim their voices Empowering indigenous
@@ -44,7 +43,7 @@ const Highlights = () => {
               against systemic oppression, reclaim their voices Empowering
             </p>
             <button
-              className={`bg-[#36133B] cursor-pointer rounded-[33px] text-white px-6 sm:px-8 md:px-10 py-2.5 md:py-3 text-sm sm:text-base hover:bg-[#4a1a4f] transition-colors ${poppins.className} w-fit`}
+              className={`bg-[#36133B] cursor-pointer rounded-[33px] text-white px-6 sm:px-8 md:px-10 py-2.5 md:py-3 text-base hover:bg-[#4a1a4f] transition-colors ${poppins.className} w-fit`}
             >
               Read More
             </button>

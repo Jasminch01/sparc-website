@@ -24,7 +24,7 @@ const Overview = () => {
         />
         <p
           style={{ fontFamily: '"Book Antiqua", serif' }}
-          className="max-w-xs sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-3xl leading-relaxed text-sm sm:text-base md:text-lg lg:text-xl"
+          className="max-w-xs md:max-w-lg lg:max-w-2xl xl:max-w-3xl leading-relaxed text-lg md:text-lg lg:text-xl"
         >
           We&apos;re an Indigenous feminist organization with a specific focus
           on indigenous women, girls, and communities who are often ignored,

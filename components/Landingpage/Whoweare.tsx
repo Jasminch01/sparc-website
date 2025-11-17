@@ -5,7 +5,7 @@ import imageTwo from "../../public/Whoweare/Image 2.png";
 import imageThree from "../../public/Whoweare/Image 3.png";
 import imageFour from "../../public/Whoweare/Image 4.png";
 import Image from "next/image";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 
 const images = [imageFour, imageOne];
 const imagesTwo = [imageThree, imageTwo];
@@ -23,8 +23,7 @@ const Whoweare = () => {
             WHO WE ARE
           </h2>
           <p
-            className="text-base md:text-lg lg:text-xl text-justify"
-            style={{ fontFamily: '"Book Antiqua", serif' }}
+            className={`text-lg lg:text-xl text-justify ${antiquaFont.className}`}
           >
             SPaRC is an indigenous women-led feminist organisation established
             in Chittagong Hill Tracts (CHT), Bangladesh. SPaRC works with a
@@ -53,8 +52,7 @@ const Whoweare = () => {
             </h2>
           </div>
           <p
-            className="text-base md:text-lg lg:text-xl"
-            style={{ fontFamily: '"Book Antiqua", serif' }}
+            className={`text-lg lg:text-xl ${antiquaFont.className}`}
           >
             To ensure women and girls&apos; social, cultural, economic and political,
             sexual and spiritual rights without prejudice of any identity such
@@ -79,8 +77,7 @@ const Whoweare = () => {
             </h2>
           </div>
           <p
-            className="text-base md:text-lg lg:text-xl"
-            style={{ fontFamily: '"Book Antiqua", serif' }}
+            className={`text-lg lg:text-xl ${antiquaFont.className}`}
           >
             To create a world where all living beings enjoy their rights with
             dignity.

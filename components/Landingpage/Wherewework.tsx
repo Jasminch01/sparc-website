@@ -1,6 +1,6 @@
 import Image from "next/image";
 import map from "../../public/Wherewework/map.png";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
 const Wherewework = () => {
   return (
     <div className="my-20 max-w-7xl mx-auto px-3 md:px-0">
@@ -9,8 +9,7 @@ const Wherewework = () => {
           WHERE WE WORK
         </h2>
         <p
-          style={{ fontFamily: '"Book Antiqua' }}
-          className="text-[#6D6D6D] md:text-lg text-base"
+          className={`text-[#6D6D6D] lg:text-xl text-lg ${antiquaFont.className}`}
         >
           Community development is often linked with community <br /> work or
           community planning, and may involve stakeholders, foundations,
@@ -26,8 +25,7 @@ const Wherewework = () => {
 
       {/* Indicator */}
       <div
-        style={{ fontFamily: '"Book Antiqua' }}
-        className="mt-10 text-sm space-y-2"
+        className={`mt-10 text-sm space-y-2 ${antiquaFont}`}
       >
         <div className="flex items-center gap-5">
           <div className="w-5 h-5 bg-[#802390] text-lg "></div>
