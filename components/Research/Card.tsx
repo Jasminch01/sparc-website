@@ -3,7 +3,7 @@ import { antiquaFont } from "../utils/font";
 
 const Card = () => {
   return (
-    <div className="mt-20 pb-20 md:pb-40 px-4 md:px-8 lg:px-20">
+    <div className="mt-20 pb-20 md:pb-40 md:px-8 lg:px-20">
       <div className="flex flex-col lg:flex-row justify-center items-center border-gray-300 border-2 rounded-lg overflow-hidden bg-white  transition-shadow duration-300">
         {/* Image Section */}
         <div className="w-full lg:w-1/2 relative h-64 md:h-80 lg:h-[500px]">
@@ -16,7 +16,7 @@ const Card = () => {
         </div>
 
         {/* Content Section */}
-        <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-16 space-y-6">
+        <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-10 xl:p-16 space-y-6">
           <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl leading-tight text-gray-900">
             JOIN WITH OUR TEAM AND RESEARCH TOGETHER
           </h2>
@@ -27,10 +27,11 @@ const Card = () => {
             Indigenous young people who are emerging leaders, learners, or
             activists working to preserve their culture and rights.
           </p>
-
-          <button className="rounded-full px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base hover:bg-[#4a1a4f] transition-colors duration-300 shadow-md hover:shadow-lg">
-            Join Now
-          </button>
+          <div className="text-center lg:text-left">
+            <button className="rounded-full px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base hover:bg-[#4a1a4f] transition-colors duration-300 shadow-md">
+              Join Now
+            </button>
+          </div>
         </div>
       </div>
     </div>

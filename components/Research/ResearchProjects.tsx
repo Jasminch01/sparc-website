@@ -60,22 +60,23 @@ const ResearchProjects = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12">
+    <div className="py-12">
       <div className="mb-12">
         <p className="text-sm font-semibold text-gray-600 mb-6 tracking-wider">
           RESEARCH FOCUS AREA
         </p>
 
         {/* Tabs */}
-        <div className="flex gap-3 flex-wrap">
+        <div className="lg:flex gap-3 flex-wrap grid grid-cols-2">
           {data.tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] font-medium transition-all ${activeTab === tab.id
-                ? "border border-gray-400"
-                : "border border-transparent"
-                }`}
+              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] font-medium transition-all ${
+                activeTab === tab.id
+                  ? "border border-gray-400"
+                  : "border border-transparent"
+              }`}
             >
               {tab.label}
             </button>
@@ -93,8 +94,71 @@ const ResearchProjects = () => {
             <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
               Ongoing Research Projects
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {ongoingProjects.map((project, idx) => (
+                <Link
+                  href={`/our-research/${project.id}`}
+                  key={idx}
+                  className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow bg-white block"
+                >
+                  <div>
+                    <Image
+                      src={project.image}
+                      alt="project-image"
+                      width={300}
+                      height={300}
+                      className="w-full"
+                    />
+                  </div>
+                  <div className={`mt-5 ${poppins.className}`}>
+                    <h3 className="text-lg font-bold mb-3 text-gray-900">
+                      {project.title}
+                    </h3>
+                    <div className="text-xs text-gray-500 mb-4 flex space-x-1">
+                      <p className="mb-1">
+                        <span className="font-semibold">Status:</span>{" "}
+                        {project.status}
+                      </p>
+                      <p>|</p>
+                      <p className="mb-1">
+                        <span className="font-semibold">Duration:</span>{" "}
+                        {project.duration}
+                      </p>
+                      <p>|</p>
+                      <p>
+                        <span className="font-semibold">Author:</span>{" "}
+                        {project.fundedBy}
+                      </p>
+                    </div>
+                    <p
+                      className={`text-[18px] leading-relaxed mb-4 line-clamp-2 ${antiquaFont.className}`}
+                    >
+                      {project.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <button className=" lg:px-6 lg:py-3 p-4 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors">
+                        View Report →
+                      </button>
+                      <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border rounded-full text-sm font-semibold  transition-colors flex items-center space-x-0 lg:space-x-5">
+                        <p>Download PDF</p>
+                        <MdOutlineFileDownload size={20} />
+                      </button>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Completed Projects */}
+        {completedProjects.length > 0 && (
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
+              Completed Research Projects
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {completedProjects.map((project, idx) => (
                 <Link
                   href={`/our-research/${project.id}`}
                   key={idx}
@@ -138,62 +202,12 @@ const ResearchProjects = () => {
                       <button className=" px-6 py-3 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors">
                         View Report →
                       </button>
-                      <button className=" px-6 py-3 border-[#36133B] border rounded-full text-sm font-semibold  transition-colors flex items-center gap-x-5">
+                      <button className="px-6 py-3 border-[#36133B] border rounded-full text-sm font-semibold  transition-colors flex items-center gap-x-5">
                         <p>Download PDF</p>
                         <MdOutlineFileDownload size={20} />
                       </button>
                     </div>
                   </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Completed Projects */}
-        {completedProjects.length > 0 && (
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
-              Completed Research Projects
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {completedProjects.map((project) => (
-                <Link
-                  href={`/our-research/${project.id}`}
-                  key={project.id}
-                  className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow bg-white block"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-semibold text-blue-600 uppercase tracking-wider">
-                      {project.category}
-                    </span>
-                    <span className="px-2 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-700">
-                      {project.status}
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-3 text-gray-900">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  <div className="text-sm text-gray-500 mb-4">
-                    <p className="mb-1">
-                      <span className="font-semibold">Duration:</span>{" "}
-                      {project.duration}
-                    </p>
-                    <p>
-                      <span className="font-semibold">Location:</span>{" "}
-                      {project.location}
-                    </p>
-                  </div>
-
-                  <span className="text-blue-600 text-sm font-semibold hover:text-blue-700 transition-colors">
-                    View Details →
-                  </span>
                 </Link>
               ))}
             </div>
