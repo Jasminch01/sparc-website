@@ -5,6 +5,7 @@ import ResearchProjects from "@/components/Research/ResearchProjects";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import Image from "next/image";
 import Link from "next/link";
+import { IoSearch } from "react-icons/io5";
 
 const page = () => {
   return (
@@ -41,37 +42,25 @@ const page = () => {
       </div>
 
       <Container>
-        <div className="flex justify-between items-center mt-10">
-          <section className={`flex gap-5  ${poppins.className}`}>
+        <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
+          <section className={`flex  gap-5  ${poppins.className}`}>
             <Link href="/">Home</Link> <span>||</span>
             <p className="text-[#818181] uppercase">Our Research</p>
           </section>
 
           {/* Search bar */}
-          <section className="relative">
+          <div className="relative border-[#B7B7B7] rounded-sm border py-2 px-4 pr-10 focus-within:outline-none w-[300px]">
             <input
               type="text"
               placeholder="Search research..."
-              className="border border-[#B7B7B7] rounded-sm py-2 px-4 pr-10 focus:outline-none focus:border-[#818181]"
+              className="w-full pr-8 focus:outline-none border-none"
             />
-            <svg
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#818181]"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </section>
+            <IoSearch className="absolute right-3 top-1/2 transform -translate-y-1/2" />
+          </div>
         </div>
         <ResearchProjects />
-        <ResearchPartners/>
-        <Card/>
+        <ResearchPartners />
+        <Card />
       </Container>
     </div>
   );
