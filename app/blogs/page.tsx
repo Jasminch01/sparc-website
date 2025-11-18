@@ -27,13 +27,43 @@ const BlogPage = () => {
     const [activeSubcategory, setActiveSubcategory] = useState("latest")
     const [activeCategory, setActiveCategory] = useState("All")
 
-    const visibleCount = 6
+    // 1. New state for dynamically setting visibleCount
+    const [visibleCount, setVisibleCount] = useState(6);
+
     const visibleCategories = categories.slice(startIndex, startIndex + visibleCount)
+
+    // 2. Helper function to determine the correct visible count
+    const getVisibleCount = () => {
+        // Define your mobile breakpoint (e.g., 768px for md in Tailwind)
+        const mobileBreakpoint = 1000;
+        return window.innerWidth < mobileBreakpoint ? 3 : 6;
+    }
+
+
+    // 3. Effect to set initial visibleCount and listen for window resize
+    useEffect(() => {
+        // Set initial count
+        setVisibleCount(getVisibleCount());
+        // Handler function to call on resize event
+        const handleResize = () => {
+            setVisibleCount(getVisibleCount());
+        };
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup function to remove event listener
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []); // Empty dependency array ensures it runs only on mount and unmount
+
 
     // Helper function for prv button
     const handleBack = () => {
         if (startIndex > 0) {
-            setStartIndex((prev) => prev - 1)
+            // Note: When you go back, ensure you don't jump past 0
+            setStartIndex((prev) => Math.max(0, prev - 1))
         }
     }
 
@@ -63,9 +93,9 @@ const BlogPage = () => {
     return (
         <div>
             <Container>
-                <section className="flex justify-between items-center mt-10 mb-10 ">
-                    <h2 className={`${poppins.className} font-extrabold text-5xl`}>BLOG</h2>
-                    <div className="flex items-center border border-gray-300 rounded-full px-3 py-2 bg-white">
+                <section className="flex flex-col lg:flex-row justify-between items-center mt-5 mb-5 lg:mt-10 lg:mb-10 gap-10 ">
+                    <h2 className={`${poppins.className} font-extrabold text-3xl md:text-4xl lg:text-[51px]`}>BLOG</h2>
+                    <div className="flex items-center border border-gray-300 rounded-full px-3 py-1 lg:py-2 bg-white">
                         <input type="text" placeholder="Search..." className="px-2 py-1 text-gray-700 outline-none" />
                         <FaSearch className="text-gray-400 cursor-pointer hover:text-gray-600 transition" />
                     </div>
@@ -76,11 +106,11 @@ const BlogPage = () => {
                 {/* Category section */}
                 <section className="relative flex justify-center mb-15 items-center">
                     {/* Category container */}
-                    <div className="flex gap-3  overflow-hidden transition-all duration-300 items-center px-10">
+                    <div className="flex gap-3 overflow-hidden transition-all text-[10px] lg:text-base duration-300 items-center px-5 lg:px-10">
                         {visibleCategories.map((category, index) => {
                             const realIndex = startIndex + index;
                             return (
-                                <div key={realIndex} onClick={() => { setActiveIndex(realIndex); setActiveCategory(category) }} className={`px-8 py-2 rounded-full cursor-pointer transition ${poppins.className} ${activeIndex === realIndex ? "border-gray-700 border bg-gray-200"
+                                <div key={realIndex} onClick={() => { setActiveIndex(realIndex); setActiveCategory(category) }} className={`lg:px-8 px-3 py-2 rounded-full cursor-pointer transition ${poppins.className} ${activeIndex === realIndex ? "border-gray-700 border bg-gray-200"
                                     : "border-gray-200 bg-gray-100"}`}>
                                     {category}
                                 </div>
@@ -100,11 +130,11 @@ const BlogPage = () => {
                 </section>
 
                 {/* Active categoru button */}
-                <p className={`text-center text-3xl text-[#303030] font-bold ${poppins.className}`}>{activeCategory}</p>
+                <p className={`text-center text-xl lg:text-3xl text-[#303030] font-bold ${poppins.className}`}>{activeCategory}</p>
 
                 {/* Breadcrup Section */}
                 <Container>
-                    <div className="flex justify-between items-center mt-10">
+                    <div className="flex justify-between items-center mt-10 text-xs lg:text-base">
                         <section className={`flex gap-5  ${poppins.className}`}>
                             <Link href='/'>Home</Link> <span>||</span>
                             <p className="text-[#818181] uppercase" >blog</p>
@@ -130,7 +160,7 @@ const BlogPage = () => {
                                     <p className={`text-gray-500 text-sm ${poppins.className}`}>
                                         Written by <span className="text-black">{blog.writtenBy}</span>
                                     </p>
-                                    <h2 className={`text-3xl font-bold mb-2 max-w-xl ${poppins.className}`}>
+                                    <h2 className={`text-xl sm:text-2xl lg:text-3xl font-bold mb-2 max-w-xl ${poppins.className}`}>
                                         {blog.title}
                                     </h2>
                                     <p className={`text-gray-700 mb-2 max-w-[500px] ${antiquaFont.className}`}>
@@ -144,8 +174,8 @@ const BlogPage = () => {
                                         src={blog.img}
                                         alt={blog.title}
                                         height={400}
-                                        width={250}
-                                        className="object-cover"
+                                        width={280}
+                                        className="object-cover w-full lg:w-auto"
                                     />
                                 </div>
                             </Link>

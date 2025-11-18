@@ -68,14 +68,14 @@ const Page = () => {
     }
 
     return (
-        <div className="my-20">
+        <div className="lg:my-20 my-10">
             <Container>
-                <span className="text-3xl uppercase text-center font-semibold flex items-center justify-center">
+                <span className={`text-xl lg:text-3xl uppercase text-center font-semibold flex items-center justify-center ${poppins.className}`}>
                     {filteredData.category}
                 </span>
 
-                <section className={`flex justify-between ${poppins.className} py-10`}>
-                    <div className="flex gap-5">
+                <section className={`flex justify-between ${poppins.className} py-10 lg:py-15`}>
+                    <div className="flex gap-2 lg:gap-5 text-xs">
                         <Link href='/' className="hover:underline">Home</Link>
                         <span>||</span>
                         <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
