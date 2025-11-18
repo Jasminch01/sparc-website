@@ -149,7 +149,7 @@ const Page = () => {
 
           {/* Course Category */}
           <div className="py-5 md:py-10">
-            <div className="lg:border-gray-300 lg:border-b-2 w-full flex flex-wrap space-y-5 lg:space-y-0 lg:space-x-10 space-x-0">
+            <div className="lg:border-gray-300 lg:border-b-2 w-full flex flex-wrap space-y-5 lg:space-y-0 lg:space-x-10 md:space-x-4 space-x-0">
               {learnCategory.map((cat, index) => (
                 <div key={index} className="">
                   <button
