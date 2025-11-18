@@ -9,7 +9,7 @@ const Hero = () => {
       <Container>
         <section className="flex flex-col lg:flex-row items-center md:items-start lg:justify-between lg:space-x-25 mt-10 mb-5">
           <div className="lg:max-w-xl text-center lg:text-left flex-1">
-            <h2 className="font-extrabold text-2xl md:text-4xl lg:text-[51px]">
+            <h2 className="font-black text-2xl lg:text-[51px]">
               THE CHT <span className="text-[#FF951B]">INDIGENOUS</span>{" "}
               WOMANIFESTO
             </h2>

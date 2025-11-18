@@ -25,14 +25,14 @@ const Wherewework = () => {
 
       {/* Indicator */}
       <div
-        className={`mt-10 text-sm space-y-2 ${antiquaFont}`}
+        className={`mt-10 space-y-2 ${antiquaFont.className}`}
       >
         <div className="flex items-center gap-5">
-          <div className="w-5 h-5 bg-[#802390] text-lg "></div>
+          <div className="w-5 h-5 bg-[#802390] text-lg font-bold "></div>
           <p>Countries We Have Worked </p>
         </div>
         <div className="flex items-center gap-5">
-          <div className="w-5 h-5 bg-[#FF951B] text-lg"></div>
+          <div className="w-5 h-5 bg-[#FF951B] text-lg font-bold"></div>
           <p>Where We Belong </p>
         </div>
       </div>

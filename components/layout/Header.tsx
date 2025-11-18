@@ -57,7 +57,7 @@ const Header = () => {
           <section className="flex items-center justify-between h-16 sm:h-20 lg:h-24 gap-4">
             {/* Logo - Responsive sizing */}
             <div
-              className="shrink-0 cursor-pointer transition-transform hover:scale-105 active:scale-95"
+              className="shrink-0 cursor-pointer"
               onClick={() => {
                 router.push("/");
                 setMenuOpen(false);

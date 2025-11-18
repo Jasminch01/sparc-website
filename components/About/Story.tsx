@@ -2,12 +2,21 @@ import React from "react";
 import Container from "../Container";
 import Image from "next/image";
 import { antiquaFont, poppins } from "../utils/font";
+import Link from "next/link";
 
 const Story = () => {
   return (
-    <div className={`my-10 ${poppins.className}`}>
+    <div className={`my-20 ${poppins.className}`}>
       <Container>
-        <div className="flex flex-col gap-y-8 md:gap-y-10 lg:gap-y-5 px-4 md:px-6 lg:px-0">
+        <div className="flex justify-between items-center my-20">
+        <section
+          className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
+        >
+          <Link href="/">Home</Link> <span>||</span>
+          <p className="text-[#818181] ">WHO WE ARE</p>
+        </section>
+      </div>
+        <div className="flex flex-col gap-y-8 md:gap-y-10 lg:gap-y-5">
           {/* First Section */}
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
             {/* Images */}
@@ -34,7 +43,7 @@ const Story = () => {
                 OUR STORY
               </p>
               <p
-                className={`${antiquaFont.className} leading-relaxed text-base md:text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
               >
                 SPaRC is an indigenous women-led feminist organization
                 established in chittagong Hill Tracts (CHT), Bangladesh. SPaRC
@@ -76,7 +85,7 @@ const Story = () => {
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-base md:text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
                 >
                   To ensure women and girls&apos; social, cultural, economic and
                   political, sexual and spiritual rights without prejudice of
@@ -99,7 +108,7 @@ const Story = () => {
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-base md:text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
                 >
                   To create a world where all living beings enjoy their rights
                   with dignity.

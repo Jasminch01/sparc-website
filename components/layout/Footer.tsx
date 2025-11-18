@@ -21,7 +21,7 @@ const bottomBar = [
 const Footer = () => {
   return (
     <div className="bg-[#36133B] text-white relative h-full md:mt-24 mt-12 lg:pb-20">
-      <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[6.1rem] md:-top-11 -top-7 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
+      <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[4.3rem] md:-top-11 -top-7 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
         <Image
           className="w-full h-auto object-cover"
           src={"/Whatwedo/Frame1.png"}
