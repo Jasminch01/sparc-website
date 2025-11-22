@@ -54,12 +54,12 @@ const Page = () => {
         {/* Center Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-40 mt-20">
           <h1
-            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-black md:mb-4 text-center ${poppins.className}`}
           >
             OUR PARTNERS
           </h1>
           <p
-            className={`text-base md:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
+            className={`text-lg lg:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
           >
             Our research amplifies Indigenous voices, documents cultural wisdom,
             and supports evidence-based advocacy for equality and sustainability
@@ -73,7 +73,7 @@ const Page = () => {
       </div>
       <Container>
         <div className="px-5 md:px-0 py-20">
-          <p className="xl:text-4xl md:text-3xl text-2xl font-bold text-center">
+          <p className="lg:text-4xl text-2xl font-bold text-center">
             OUR PARTNERS SO FAR
           </p>
 
@@ -99,7 +99,7 @@ const Page = () => {
                   </div>
                   <div className="my-6 md:my-10">
                     <p
-                      className={`${antiquaFont.className} text-justify text-base md:text-lg`}
+                      className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
                     >
                       {partner.about}
                     </p>
