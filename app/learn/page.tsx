@@ -52,6 +52,7 @@ const Page = () => {
         fetch('/Learn/learn.json')
             .then(res => res.json())
             .then(data => setCourses(data))
+            .catch(error => console.error('Error fetching courses:', error))
     }, [])
 
     // Filter data based on active category
@@ -276,4 +277,4 @@ const Page = () => {
     );
 };
 
-export default Page
+export default Page;
