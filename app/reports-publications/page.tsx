@@ -119,7 +119,7 @@ const Page = () => {
                     <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
                         REPORTS AND PUBLICATIONS
                     </h2>
-                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
+                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
                         Our reports and publications highlight the voices, experiences, and resilience of Indigenous women across communities.
                     </p>
                     <div
@@ -127,17 +127,17 @@ const Page = () => {
                             document.getElementById("reports")?.scrollIntoView({ behavior: "smooth" });
                         }}
                         className="flex flex-col items-center justify-center mt-6 sm:mt-10 md:mt-20 lg:mt-30 cursor-pointer">
-                        <button className={`text-[#FF951B] px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full text-xs sm:text-sm ${poppins.className}`}>
+                        <button className={`text-[#FF951B] px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full text-xs lg:text-lg ${poppins.className}`}>
                             SCROLL DOWN
                         </button>
-                        <Image src={icon} alt="icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+                        <Image src={icon} alt="icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 animate-bounce" />
                     </div>
                 </div>
             </section>
 
             {/* Breadcrumb & Filter Section */}
             <Container>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 my-20 ">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 my-6 lg:my-20 ">
                     {/* Breadcrumb */}
                     <section className={`flex gap-3 sm:gap-5 py-5 lg:py-0 text-xs sm:text-base font-semibold ${poppins.className}`}>
                         <Link href='/' className="hover:text-[#FF951B] transition-colors uppercase font-semibold">Home</Link>

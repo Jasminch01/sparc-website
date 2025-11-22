@@ -1,6 +1,7 @@
 import { poppins } from "@/components/utils/font";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation"; // Import this
 import { IoIosArrowDown } from "react-icons/io";
 
 const navs = [
@@ -42,6 +43,7 @@ const dropdownContent: Record<string, typeof opportunities> = {
 const NavLinks = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -61,50 +63,67 @@ const NavLinks = () => {
       setActiveIndex(index);
     }
   };
-
   const handleClick = (index: number) => {
     if (window.innerWidth < 1280) {
       setActiveIndex(activeIndex === index ? null : index);
     }
   };
 
+  const isNavActive = (nav: typeof navs[0]) => {
+    // Direct path match
+    if (nav.path && pathname === nav.path) {
+      return true;
+    }
+
+    const dropdownItems = dropdownContent[nav.title];
+    if (dropdownItems) {
+      return dropdownItems.some(item => pathname === item.path);
+    }
+
+    return false;
+  };
+
   return (
-    <div ref={dropdownRef} className={`relative  ${poppins.className}`} onMouseLeave={()=>setActiveIndex(null)}>
+    <div ref={dropdownRef} className={`relative  ${poppins.className}`} onMouseLeave={() => setActiveIndex(null)}>
       <div className="flex flex-col xl:flex-row xl:items-center gap-1 xl:gap-6 py-5">
         {navs.map((nav, i) => {
-          const isActive = activeIndex === i;
+          const isHovered = activeIndex === i;
+          const isActive = isNavActive(nav);
           const Icon = nav.icon;
           const hasDropdown = !!Icon;
           const dropdownItems = hasDropdown ? dropdownContent[nav.title] : [];
 
           return (
             <div key={i}
-              className="relative w-full xl:w-auto"
+              className={` relative w-full xl:w-auto`}
               onMouseEnter={() => handleMouseEnter(i)}>
               {hasDropdown ? (
                 <button
                   onClick={() => handleClick(i)}
-                  className={`flex items-center justify-between w-full xl:w-auto px-3 xl:px-0 py-3 xl:py-2 text-sm font-medium transition-all duration-200 ${isActive
-                    ? "text-[#FF951B] bg-orange-50 xl:bg-transparent"
-                    : "text-gray-700 hover:text-[#FF951B] hover:bg-gray-50 xl:hover:bg-transparent"
+                  className={`flex items-center justify-between text-sm w-full xl:w-auto px-3 xl:px-0 py-3 xl:py-2 font-medium transition-all duration-200 ${isActive
+                    ? "text-[#36133b] bg-orange-50 xl:bg-transparent"
+                    : "hover:text-[#FF951B] hover:bg-gray-50 xl:hover:bg-transparent"
                     }`}>
                   <span className="tracking-wide">{nav.title}</span>
-                  <span className={`transition-transform duration-300 ease-out ${isActive ? "rotate-180" : "rotate-0"}`}>
+                  <span className={`transition-transform duration-300 ease-out ${isHovered ? "rotate-180" : "rotate-0"}`}>
                     <Icon className="text-lg" />
                   </span>
                 </button>
               ) : (
                 <Link
                   href={nav.path || "#"}
-                  className="flex items-center w-full xl:w-auto px-3 xl:px-0 py-3 xl:py-2 text-xs font-medium text-gray-700 hover:text-[#FF951B] hover:bg-gray-50 xl:hover:bg-transparent transition-all duration-200 tracking-wide" >
+                  className={`flex items-center text-sm w-full xl:w-auto px-3 xl:px-0 py-3 xl:py-2 font-medium transition-all duration-200 tracking-wide ${isActive
+                    ? "text-[#36133b] bg-orange-50 xl:bg-transparent"
+                    : " hover:text-[#FF951B] hover:bg-gray-50 xl:hover:bg-transparent"
+                    }`}>
                   {nav.title}
                 </Link>
               )}
 
               {/* Dropdown */}
-              {isActive && hasDropdown && (
+              {isHovered && hasDropdown && (
                 <div
-                  className={`xl:absolute left-0 xl:mt-5 w-full xl:w-56 bg-white xl:border xl:border-gray-100 overflow-hidden transition-all duration-300 ease-out ${isActive ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
+                  className={`xl:absolute left-0 xl:mt-5 w-full xl:w-56 bg-white xl:border xl:border-gray-100 overflow-hidden transition-all duration-300 ease-out ${isHovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
                   onMouseLeave={() => setActiveIndex(null)} >
                   <div>
                     {dropdownItems.map((item, idx) => (
@@ -112,7 +131,10 @@ const NavLinks = () => {
                         onClick={() => setActiveIndex(null)}
                         href={item.path}
                         key={idx}
-                        className="block  px-4 xl:px-5 py-2.5 xl:py-3 text-sm text-gray-700 hover:bg-[#36133B] hover:text-white transition-colors duration-200 border-l-3 border-transparent hover:border-l-[#FF951B] ml-4 xl:ml-0 xl:border-l-0">
+                        className={`block px-4 xl:px-5 py-2.5 xl:py-3 text-sm transition-colors duration-200 border-l-3 border-transparent hover:border-l-[#FF951B] ml-4 xl:ml-0 xl:border-l-0 ${pathname === item.path
+                          ? "bg-[#36133B] text-white"
+                          : "text-gray-700 hover:bg-[#36133B] hover:text-white"
+                          }`}>
                         {item.title}
                       </Link>
                     ))}

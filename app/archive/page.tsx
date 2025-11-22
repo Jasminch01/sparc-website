@@ -71,7 +71,7 @@ const Page = () => {
                     <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
                         INDIGENOUS ARCHIVE
                     </h2>
-                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
+                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
                         Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide.
                     </p>
                     <div
@@ -79,19 +79,19 @@ const Page = () => {
                             document.getElementById("data")?.scrollIntoView({ behavior: "smooth" });
                         }}
                         className="flex flex-col items-center justify-center mt-6 sm:mt-10 md:mt-20 lg:mt-30 cursor-pointer">
-                        <button className={`text-[#FF951B] px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full text-xs sm:text-sm ${poppins.className}`}>
+                        <button className={`text-[#FF951B] px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full text-xs lg:text-lg ${poppins.className}`}>
                             SCROLL DOWN
                         </button>
-                        <Image src={icon} alt="icon" width={40} height={40} className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
+                        <Image src={icon} alt="icon" width={40} height={40} className="animate-bounce w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
                     </div>
                 </div>
             </section>
 
             {/* Breadcrumb & Search Section */}
             <Container>
-                <section className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 ${poppins.className} py-6 sm:py-8 md:py-10`}>
+                <section className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 ${poppins.className} my-5 lg:my-20 font-semibold`}>
                     <div className="flex gap-3 sm:gap-5 text-xs sm:text-base py-5 lg:py-0">
-                        <Link href='/' className="hover:text-[#FF951B] transition-colors">Home</Link>
+                        <Link href='/' className="hover:text-[#FF951B] transition-colors">HOME</Link>
                         <span>||</span>
                         <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
                     </div>

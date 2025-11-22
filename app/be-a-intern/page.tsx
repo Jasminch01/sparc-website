@@ -72,7 +72,7 @@ const page = () => {
             program.
           </p>
           <button
-            className={`bg-[#FF951B] text-white px-5 lg:px-7 py-3 lg:py-5 mt-4 rounded-full text-base font-semibold transition duration-200 ${poppins.className}`}
+            className={`bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white px-5 lg:px-7 py-3 lg:py-5 mt-4 rounded-full text-sm lg:text-lg font-semibold transition duration-200 ${poppins.className}`}
           >
             APPLY FOR INTERNSHIP
           </button>
@@ -166,7 +166,7 @@ const page = () => {
         </p>
         <div className="pt-8 lg:pt-12">
           <button
-            className={`flex items-center justify-center text-center mx-auto bg-[#FF951B] px-5 lg:py-5 lg:px-7 py-4 text-white rounded-full text-sm font-semibold cursor-pointer ${poppins.className}`}
+            className={`flex items-center justify-center hover:bg-orange-400 text-center mx-auto bg-[#FF951B] px-5 lg:py-5 lg:px-7 py-4 text-white rounded-full text-sm lg:text-lg font-semibold cursor-pointer ${poppins.className}`}
           >
             APPLY FOR INTERNSHIP
           </button>

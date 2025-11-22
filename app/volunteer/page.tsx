@@ -41,7 +41,7 @@ const page = () => {
               className={`uppercase font-black text-3xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
             >
               Apply today to become a{" "}
-              <span className="text-orange-500">volunteer</span>
+              <span className="text-orange-400">volunteer</span>
             </h2>
             <p
               className={`text-[#4E4E4E] ${antiquaFont.className} text-lg leading-relaxed lg:text-xl`}
@@ -110,7 +110,7 @@ const page = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#FF951B] text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm hover:bg-orange-600 transition duration-200"
+                  className="w-full bg-[#FF951B] text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm hover:bg-orange-400 transition duration-200"
                 >
                   Submit
                 </button>
@@ -244,7 +244,7 @@ const page = () => {
 
       <div className="flex items-center justify-center mb-12 sm:mb-15 px-4">
         <button
-          className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-600 transition duration-200 ${poppins.className}`}
+          className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-400 transition duration-200 ${poppins.className}`}
         >
           APPLY FOR VOLUNTEER
         </button>
