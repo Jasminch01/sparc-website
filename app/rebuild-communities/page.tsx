@@ -101,12 +101,12 @@ const Page = () => {
                     <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
                         SPARC UPDATE
                     </h2>
-                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-lg max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
+                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
                         Stay connected with the latest updates from our organization — from local initiatives to global advocacy for Indigenous rights.
                     </p>
                     <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
-                        <button className={`bg-[#FF951B] px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs sm:text-sm hover:bg-[#e08417] transition-colors ${poppins.className}`}>
-                            View Projects
+                        <button className={`bg-[#FF951B] px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs sm:text-lg hover:bg-orange-400 transition-colors ${poppins.className}`}>
+                            VIEW PROJECTS
                         </button>
                     </div>
                 </div>
@@ -114,7 +114,7 @@ const Page = () => {
 
             {/* Breadcrumb Section */}
             <Container>
-                <section className={`flex gap-3 sm:gap-5 my-6 sm:my-8 md:my-20 text-xs sm:text-base font-semibold ${poppins.className}`}>
+                <section className={`flex gap-3 sm:gap-5 my-8 md:my-20 text-xs sm:text-base font-semibold ${poppins.className}`}>
                     <Link href='/' className="hover:text-[#FF951B] transition-colors">Home</Link>
                     <span>||</span>
                     <p className="text-[#818181] uppercase">Sparc Update</p>
@@ -299,7 +299,7 @@ const Page = () => {
                                             <p className={`${poppins.className}`}>Funded By {project.fundedBy}</p>
                                         </div>
                                         <div className="h-10">
-                                            <button className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:bg-[#cc6600] hover:text-white hover:px-5 hover:py-2 transition-all duration-400`}>
+                                            <button className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:text-[#ff951b]  transition-all duration-400`}>
                                                 View Report <IoIosArrowRoundForward size={20} />
                                             </button>
                                         </div>
@@ -366,7 +366,7 @@ const Page = () => {
                                             <p className={`${poppins.className}`}>{project.timeLeft} Left</p>
                                         </div>
                                         <div className="h-10">
-                                            <button className={`transition-all duration-400 text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:bg-[#cc6600] hover:text-white hover:px-5 hover:py-2 `}>
+                                            <button className={`transition-all duration-400 text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:text-[#ff951b] transition-all duration-400 `}>
                                                 View Report <IoIosArrowRoundForward size={20} />
                                             </button>
                                         </div>

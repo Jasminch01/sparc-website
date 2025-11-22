@@ -28,7 +28,7 @@ const Card = () => {
             activists working to preserve their culture and rights.
           </p>
           <div className="text-center lg:text-left">
-            <button className="rounded-full px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base hover:bg-[#4a1a4f] transition-colors duration-300 shadow-md">
+            <button className="rounded-full cursor-pointer hover:bg-[#FF951B] px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base transition-colors duration-300 shadow-md">
               Join Now
             </button>
           </div>

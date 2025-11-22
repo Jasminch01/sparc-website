@@ -10,7 +10,7 @@ import { IoSearch } from "react-icons/io5";
 const page = () => {
   return (
     <div>
-      <div className="w-full relative h-[50vh] sm:h-[70vh] md:h-[80vh] lg:h-screen">
+      <div className="w-full relative h-screen ">
         <Image
           src={"/Partners/banner.png"}
           width={1920}
@@ -21,7 +21,7 @@ const page = () => {
         />
 
         {/* Center Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-60 mt-20">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-30 mt-20">
           <h1
             className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${poppins.className}`}
           >
@@ -34,7 +34,7 @@ const page = () => {
             and supports evidence-based advocacy for equality and sustainability
           </p>
           <div className="md:mt-10 mt-5">
-            <button className="md:py-5 md:px-6 p-3 font-semibold rounded-full bg-[#FF951B] text-sm md:text-lg">
+            <button className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-semibold rounded-full cursor-pointer bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg">
               COLLABORATE WITH US
             </button>
           </div>
@@ -43,8 +43,8 @@ const page = () => {
 
       <Container>
         <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
-          <section className={`flex  gap-5  ${poppins.className}`}>
-            <Link href="/">Home</Link> <span>||</span>
+          <section className={`flex text-xs sm:text-base  gap-5  ${poppins.className} font-semibold`}>
+            <Link href="/">HOME</Link> <span>||</span>
             <p className="text-[#818181] uppercase">Our Research</p>
           </section>
 

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { poppins } from "../utils/font";
 import Link from "next/link";
+import Marquee from "react-fast-marquee";
 
 const partners = [
   {
@@ -28,41 +29,23 @@ const Partners = () => {
           Our Trusted Partners
         </h2>
 
-        {/* Desktop/Tablet: Single Row */}
-        <div className="hidden md:flex items-center justify-between xl:space-x-16 w-full">
-          {partners.map((partner, index) => (
-            <div
-              key={index}
-              className={`shrink-0 ${
-                partner.logo === "/how-to-partner/logo2.png" ||
-                partner.logo === "/how-to-partner/logo3.png"
-                  ? "size-28 xl:size-28"
-                  : "size-32 xl:size-40"
-              }`}
-            >
-              <Image
-                width={300}
-                height={300}
-                src={partner.logo}
-                alt={`Partner ${index + 1}`}
-                className="w-full h-full object-contain"
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile: Grid Layout */}
-        <div className="grid grid-cols-2 gap-6 md:hidden">
-          {partners.map((partner, index) => (
-            <div
-              key={index}
-              className={`flex items-center justify-center ${
-                index === partners.length - 1 && partners.length % 2 !== 0
-                  ? "col-span-2"
-                  : ""
-              }`}
-            >
-              <div className="w-28 h-16 sm:h-20">
+        {/* Marquee for all screen sizes */}
+        <div>
+          <Marquee
+            gradient={false}
+            speed={40}
+            pauseOnHover={true}
+            className="overflow-hidden"
+          >
+            {partners.map((partner, index) => (
+              <div
+                key={index}
+                className={`mx-6 md:mx-8 xl:mx-12 flex items-center justify-center ${partner.logo === "/how-to-partner/logo2.png" ||
+                    partner.logo === "/how-to-partner/logo3.png"
+                    ? "w-20 h-20 md:w-28 md:h-28 xl:w-28 xl:h-28"
+                    : "w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                  }`}
+              >
                 <Image
                   width={300}
                   height={300}
@@ -71,8 +54,8 @@ const Partners = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-            </div>
-          ))}
+            ))}
+          </Marquee>
         </div>
       </div>
 
@@ -81,7 +64,7 @@ const Partners = () => {
           className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
         >
           <Link href="/">Home</Link> <span>||</span>
-          <p className="text-[#818181] ">HOW TO PARTNER</p>
+          <p className="text-[#818181]">HOW TO PARTNER</p>
         </section>
       </div>
     </div>

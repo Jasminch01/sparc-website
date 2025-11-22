@@ -76,7 +76,7 @@ const page = () => {
             program.
           </p>
           <button
-            className={`bg-[#FF951B] text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full text-sm font-semibold ${poppins.className}`}
+            className={`bg-[#FF951B] hover:bg-orange-400 cursor-pointer  text-sm lg:text-lg text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full  font-semibold ${poppins.className}`}
           >
             APPLY NOW
           </button>
