@@ -46,7 +46,7 @@ const Banner = () => {
           SCROLL DOWN
         </span>
 
-        <FaAnglesDown size={24} />
+        <FaAnglesDown size={24} className="animate-bounce" />
       </button>
     </div>
   );

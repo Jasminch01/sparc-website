@@ -114,7 +114,7 @@ const Page = () => {
 
             {/* Breadcrumb Section */}
             <Container>
-                <section className={`flex gap-3 sm:gap-5 py-6 sm:py-8 md:py-10 text-xs sm:text-base ${poppins.className}`}>
+                <section className={`flex gap-3 sm:gap-5 my-6 sm:my-8 md:my-20 text-xs sm:text-base font-semibold ${poppins.className}`}>
                     <Link href='/' className="hover:text-[#FF951B] transition-colors">Home</Link>
                     <span>||</span>
                     <p className="text-[#818181] uppercase">Sparc Update</p>
@@ -273,7 +273,7 @@ const Page = () => {
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5'>
                         {combineProjects.map((project, index) => (
                             <div key={index} className='relative'>
-                                <div className='border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow'>
+                                <div className='border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow lg:h-[550px] '>
                                     <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4">
                                         <Image
                                             src={project.img}
@@ -298,9 +298,11 @@ const Page = () => {
                                             <span className="hidden sm:inline">|</span>
                                             <p className={`${poppins.className}`}>Funded By {project.fundedBy}</p>
                                         </div>
-                                        <button className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:text-[#FF951B] transition-colors`}>
-                                            View Report <IoIosArrowRoundForward size={20} />
-                                        </button>
+                                        <div className="h-10">
+                                            <button className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:bg-[#cc6600] hover:text-white hover:px-5 hover:py-2 transition-all duration-400`}>
+                                                View Report <IoIosArrowRoundForward size={20} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -338,7 +340,7 @@ const Page = () => {
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5'>
                         {combineEvents.map((project, index) => (
                             <div key={index} className='relative'>
-                                <div className='border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow'>
+                                <div className='border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow lg:h-[550px]'>
                                     <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4">
                                         <Image
                                             src={project.img}
@@ -363,9 +365,11 @@ const Page = () => {
                                             <span className="hidden sm:inline">|</span>
                                             <p className={`${poppins.className}`}>{project.timeLeft} Left</p>
                                         </div>
-                                        <button className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:text-[#FF951B] transition-colors`}>
-                                            View Report <IoIosArrowRoundForward size={20} />
-                                        </button>
+                                        <div className="h-10">
+                                            <button className={`transition-all duration-400 text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:bg-[#cc6600] hover:text-white hover:px-5 hover:py-2 `}>
+                                                View Report <IoIosArrowRoundForward size={20} />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

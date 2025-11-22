@@ -87,27 +87,27 @@ const Page = () => {
           <div
             onClick={() => {
               document
-                .getElementById("reports")
+                .getElementById("indispeak")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
             className="flex flex-col items-center justify-center mt-3 lg:mt-30 cursor-pointer"
           >
             <button
-              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm font-semibold ${poppins.className}`}
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-lg font-semibold ${poppins.className}`}
             >
               SCROLL DOWN
             </button>
-            <FaAnglesDown size={24} />
+            <FaAnglesDown className="animate-bounce" size={24} />
           </div>
         </div>
       </section>
 
       {/* Breadcrumb Section */}
       <Container>
-        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center mt-8 lg:mt-10">
-          <section className={`flex gap-3 lg:gap-5 ${poppins.className}`}>
-            <Link href="/">Home</Link> <span>||</span>
-            <p className="text-[#818181] uppercase">Indispeak</p>
+        <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center my-20">
+          <section className={`flex gap-3 lg:gap-5 ${poppins.className} font-semibold`}>
+            <Link href="/">HOME</Link> <span>||</span>
+            <p className="text-[#818181] uppercase ">Indispeak</p>
           </section>
 
           {/* Sorting button */}
@@ -128,7 +128,7 @@ const Page = () => {
 
       {/* Indispeak content section */}
       <Container>
-        <section className="flex flex-col gap-8 lg:gap-10 my-12 lg:my-20">
+        <section id="indispeak" className="flex flex-col gap-8 lg:gap-10 my-12 lg:my-20">
           {filteredData.map((ids, index) => (
             <div key={index} className="flex flex-col">
               <div className="flex flex-col xl:flex-row lg:justify-between gap-6 lg:gap-0">
@@ -139,13 +139,11 @@ const Page = () => {
                     {ids.title}
                   </h2>
                   <p
-                    className={`text-[#6B6B6B] ${poppins.className} font-medium uppercase text-sm lg:text-lg`}
-                  >
+                    className={`text-[#6B6B6B] ${poppins.className} font-medium uppercase text-sm lg:text-lg`}>
                     Written on {ids.writtenOn}
                   </p>
                   <p
-                    className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}
-                  >
+                    className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}>
                     {expandedIndex === index
                       ? ids.des
                       : ids.des.slice(0, 300) +
@@ -159,11 +157,9 @@ const Page = () => {
                             expandedIndex === index ? null : index
                           )
                         }
-                        className="flex items-center gap-2 cursor-pointer w-20"
-                      >
+                        className="flex items-center gap-2 cursor-pointer w-20">
                         <button
-                          className={`text-lg lg:text-xl ${antiquaFont.className}`}
-                        >
+                          className={`text-lg lg:text-xl ${antiquaFont.className} cursor-pointer hover:text-[#ff951b]`}>
                           {expandedIndex === index ? " Less" : "Expand"}
                         </button>
                         <IoMdArrowDropdown

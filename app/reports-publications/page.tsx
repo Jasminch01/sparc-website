@@ -137,9 +137,9 @@ const Page = () => {
 
             {/* Breadcrumb & Filter Section */}
             <Container>
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 mt-6 sm:mt-8 md:mt-10 ">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 my-20 ">
                     {/* Breadcrumb */}
-                    <section className={`flex gap-3 sm:gap-5 py-5 lg:py-0 text-xs sm:text-base ${poppins.className}`}>
+                    <section className={`flex gap-3 sm:gap-5 py-5 lg:py-0 text-xs sm:text-base font-semibold ${poppins.className}`}>
                         <Link href='/' className="hover:text-[#FF951B] transition-colors uppercase font-semibold">Home</Link>
                         <span>||</span>
                         <p className="text-[#818181] uppercase">Reports and Publications</p>
@@ -236,7 +236,7 @@ const Page = () => {
                                     <p className={`${antiquaFont.className} mt-3 sm:mt-5 text-sm sm:text-base text-gray-600 italic`}>
                                         {rep.imgDes}
                                     </p>
-                                    <button className="bg-[#36133B] text-white px-4 sm:px-6 py-2 mt-3 rounded-full text-sm sm:text-base hover:bg-[#4a1a50] transition-colors w-full sm:w-auto">
+                                    <button className="bg-[#36133B] cursor-pointer text-white px-4 sm:px-6 py-2 mt-3 rounded-full text-sm sm:text-base hover:bg-[#4a1a50] transition-colors w-full sm:w-auto">
                                         Read More
                                     </button>
                                 </div>
