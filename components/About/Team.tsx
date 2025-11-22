@@ -4,6 +4,7 @@ import Image from "next/image";
 import { antiquaFont, poppins } from "../utils/font";
 
 const Team = () => {
+
   const socialWorkerTeam = [
     {
       name: "Arthur Morgan",

@@ -2,6 +2,7 @@ import Image from "next/image";
 import highlightImage from "../../public/Highlight/highlight.png";
 import { antiquaFont, poppins } from "../utils/font";
 import vector from "../../public/Whatwedo/Frame1.png";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 const Highlights = () => {
   return (
@@ -28,14 +29,12 @@ const Highlights = () => {
           {/* Content Section */}
           <div className="space-y-4 md:space-y-10 w-full lg:w-1/2 flex flex-col justify-center">
             <h2
-              className={`${poppins.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}
-            >
+              className={`${poppins.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}>
               Chittagong Hill Tracts: <br className="hidden sm:block" />
               Indigenous people at risk
             </h2>
             <p
-              className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`}
-            >
+              className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`} >
               Empowering indigenous women and communities to rise against
               systemic oppression, reclaim their voices Empowering indigenous
               women and communities to rise against systemic oppression, reclaim
@@ -43,10 +42,16 @@ const Highlights = () => {
               against systemic oppression, reclaim their voices Empowering
             </p>
             <button
-              className={`bg-[#36133B] cursor-pointer rounded-[33px] text-white px-6 sm:px-8 md:px-10 py-2.5 md:py-3 text-base hover:bg-[#4a1a4f] transition-colors ${poppins.className} w-fit`}
+              className={`group relative bg-[#36133B] hover:bg-[#ff951b] flex items-center gap-3 cursor-pointer rounded-[33px] text-white px-6 sm:px-8 md:px-10 py-2.5 md:py-3 text-base transition-colors ${poppins.className} w-fit`}
             >
               Read More
+              <IoIosArrowRoundForward
+                size={25}
+                className="absolute right-4 top-1/2 -translate-y-1/2 transform translate-x-3 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300"
+              />
             </button>
+
+
           </div>
         </div>
       </div>

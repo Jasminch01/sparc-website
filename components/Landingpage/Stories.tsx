@@ -49,8 +49,7 @@ const Stories = () => {
           {stories.map((story, index) => (
             <div
               key={index}
-              className="flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
-            >
+              className="flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow">
               <div className="relative w-full h-[200px] sm:h-[220px] md:h-60 lg:h-[260px]">
                 <Image
                   src={story.img}
@@ -59,27 +58,21 @@ const Stories = () => {
                   className="object-cover"
                 />
               </div>
-              <div
-                className={`bg-white py-5 md:py-6 px-6 md:px-8 lg:px-10 space-y-3 md:space-y-4 lg:space-y-5 grow flex flex-col ${poppins.className} `}
-              >
+              <div className={`bg-white py-5 md:py-6 px-6 md:px-8 lg:px-10 space-y-3 md:space-y-4 lg:space-y-5 grow flex flex-col ${poppins.className} `} >
                 <p className={`text-[#767676] text-xs sm:text-sm`}>
                   {story.date}
                 </p>
-                <h2
-                  className={`font-extrabold text-lg sm:text-xl md:text-2xl leading-tight`}
-                >
+                <h2 className={`font-extrabold text-lg sm:text-xl md:text-2xl leading-tight`}>
                   {story.title}
                 </h2>
-                <p
-                  className={`text-lg lg:text-xl text-justify leading-relaxed text-[#4D4D4D] grow ${antiquaFont.className}`}
-                >
+                <p className={`text-lg lg:text-xl text-justify leading-relaxed text-[#4D4D4D] grow ${antiquaFont.className}`}>
                   {story.des}
                 </p>
-                <button
-                  className={`text-[#FF7F00] border-b border-[#FF7F00] text-sm md:text-base hover:text-[#cc6600] hover:border-[#cc6600] transition-colors w-fit pb-1`}
-                >
-                  Read More
-                </button>
+                <div className="h-10">
+                  <button className={`text-[#FF7F00] hover:px-5 hover:py-2 cursor-pointer text-sm md:text-base  hover:bg-[#cc6600] hover:text-white  transition-all duration-400 w-fit pb-1`}>
+                    Read More
+                  </button>
+                </div>
               </div>
             </div>
           ))}
