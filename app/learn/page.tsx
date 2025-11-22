@@ -264,7 +264,7 @@ const Page = () => {
                         })}
                     </div>
                     <hr className='mb-10 text-gray-300' />
-
+                    {/* Learn page is updated */}
 
                 </section>
 
