@@ -110,7 +110,7 @@ const page = () => {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-[#FF951B] text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm hover:bg-orange-400 transition duration-200"
+                  className="w-full bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm transition duration-200"
                 >
                   Submit
                 </button>

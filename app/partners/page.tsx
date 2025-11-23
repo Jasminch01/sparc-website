@@ -41,7 +41,7 @@ const Page = () => {
 
   return (
     <div>
-      <div className="w-full relative h-screen overflow-hidden">
+      <div className="w-full relative h-[400px] md:h-[500px] lg:h-screen overflow-hidden">
         <Image
           src={"/Partners/banner.png"}
           width={1920}

@@ -9,7 +9,7 @@ import Image from "next/image";
 const page = () => {
   return (
     <div>
-      <div className={`w-full relative h-screen  ${poppins.className}`}>
+      <div className={`w-full relative h-[400px] md:h-[500px] lg:h-screen  ${poppins.className}`}>
         <Image
           src={"/Partners/banner.png"}
           width={1920}

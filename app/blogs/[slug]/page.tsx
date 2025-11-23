@@ -37,9 +37,9 @@ const BlogPage = () => {
     return (
         <Container>
             {/* BreadCrump */}
-            <div className={`flex items-center gap-5 my-10  ${poppins.className} text-xs lg:text-base`}>
-                <Link href='/' className="font-bold">Home</Link><span>||</span>
-                <Link href='/blogs' className="text-[#818181]">Blogs</Link><span>||</span>
+            <div className={`flex items-center gap-5 my-5 lg:my-10  ${poppins.className} text-[8px] lg:text-base`}>
+                <Link href='/' className="font-bold">HOME</Link><span>||</span>
+                <Link href='/blogs' className="text-[#818181]">BLOGS</Link><span>||</span>
                 <p className="text-[#818181]">{blog.title}</p>
             </div>
 
@@ -48,7 +48,7 @@ const BlogPage = () => {
                 <p className={`${antiquaFont.className} text-[#505050] mb-5`}>{blog.description}</p>
                 <div className={`flex items-center justify-between text-sm ${poppins.className} mb-10`}>
                     <p className={`text-gray-500 `}>Written by <span className="text-black">{blog.writtenBy}</span></p>
-                    <p>{blog.date}</p>
+                    <p className="text-sm md:text-base">{blog.date}</p>
                 </div>
                 <Image
                     src={blog.img}
