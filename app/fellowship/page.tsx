@@ -76,7 +76,7 @@ const page = () => {
             program.
           </p>
           <button
-            className={`bg-[#FF951B] text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full text-sm font-semibold ${poppins.className}`}
+            className={`bg-[#FF951B] hover:bg-orange-400 cursor-pointer  text-sm lg:text-lg text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full  font-semibold ${poppins.className}`}
           >
             APPLY NOW
           </button>
@@ -236,7 +236,7 @@ const page = () => {
             activists working to preserve their culture and rights.
           </p>
           <button
-            className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 lg:px-8 py-3 rounded-full hover:bg-purple-900 transition duration-200`}
+            className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 lg:px-8 py-3 rounded-full hover:bg-[#ff951b] transition duration-200`}
           >
             Apply Now
           </button>

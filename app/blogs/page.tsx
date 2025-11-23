@@ -106,7 +106,7 @@ const BlogPage = () => {
                 {/* Category section */}
                 <section className="relative flex justify-center mb-15 items-center">
                     {/* Category container */}
-                    <div className="flex gap-3 overflow-hidden transition-all text-[10px] lg:text-base duration-300 items-center px-5 lg:px-10">
+                    <div className="flex gap-3 overflow-hidden transition-all text-[8px] lg:text-base duration-300 items-center px-5 lg:px-10">
                         {visibleCategories.map((category, index) => {
                             const realIndex = startIndex + index;
                             return (
@@ -134,9 +134,9 @@ const BlogPage = () => {
 
                 {/* Breadcrup Section */}
                 <Container>
-                    <div className="flex justify-between items-center mt-10 text-xs lg:text-base">
+                    <div className="flex justify-between items-center my-5 lg:my-10 text-xs lg:text-base font-semibold">
                         <section className={`flex gap-5  ${poppins.className}`}>
-                            <Link href='/'>Home</Link> <span>||</span>
+                            <Link href='/'>HOME</Link> <span>||</span>
                             <p className="text-[#818181] uppercase" >blog</p>
                         </section>
 

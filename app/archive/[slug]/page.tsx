@@ -75,8 +75,8 @@ const Page = () => {
                 </span>
 
                 <section className={`flex justify-between ${poppins.className} py-10 lg:py-15`}>
-                    <div className="flex gap-2 lg:gap-5 text-xs">
-                        <Link href='/' className="hover:underline">Home</Link>
+                    <div className="flex gap-2 lg:gap-5 text-xs md:text-md lg:text-lg font-semibold">
+                        <Link href='/' className="hover:underline">HOME</Link>
                         <span>||</span>
                         <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
                         <span>||</span>
@@ -86,7 +86,7 @@ const Page = () => {
             </Container>
 
             <article className="max-w-5xl mx-auto px-4">
-                <h1 className="text-3xl font-bold mt-2 mb-4">{filteredData.title}</h1>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4">{filteredData.title}</h1>
                 <p className={`text-gray-500 mb-6 ${poppins.className}`}>{filteredData.date}</p>
                 <Image
                     src={filteredData.img}

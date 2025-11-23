@@ -81,10 +81,10 @@ const Footer = () => {
 
         {/* Bottom Section */}
         <div
-          className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 xl:gap-2 mt-4 lg:mt-8 ${antiquaFont.className}`}
+          className={`flex flex-col sm:flex-row justify-between items-start w-full sm:items-center gap-4 xl:gap-2 mt-4 lg:mt-8 ${antiquaFont.className}`}
         >
           {/* Bottom Bar Links */}
-          <div className={`flex flex-row gap-x-5 w-full`}>
+          <div className={`flex flex-col lg:flex-row gap-5 w-full`}>
             {bottomBar.map((bottom, index) => (
               <div
                 key={index}

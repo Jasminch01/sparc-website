@@ -72,7 +72,7 @@ const ResearchProjects = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] font-medium transition-all ${
+              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] text-sm sm:text-base font-medium transition-all ${
                 activeTab === tab.id
                   ? "border border-gray-400"
                   : "border border-transparent"
@@ -86,7 +86,7 @@ const ResearchProjects = () => {
 
       {/* Projects Section */}
       <div>
-        <h2 className="text-3xl font-bold mb-2 text-center">{activeTab}</h2>
+        <h2 className="text-3xl font-bold  text-center mb-10 ">{activeTab}</h2>
 
         {/* Ongoing Projects */}
         {ongoingProjects.length > 0 && (
@@ -136,10 +136,10 @@ const ResearchProjects = () => {
                       {project.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <button className=" lg:px-6 lg:py-3 p-4 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors">
+                      <button className="cursor-pointer hover:bg-[#ff951b] lg:px-6 lg:py-3 p-4 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors">
                         View Report →
                       </button>
-                      <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border rounded-full text-sm font-semibold  transition-colors flex items-center space-x-0 lg:space-x-5">
+                      <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border hover:bg-[#36133B] hover:text-white cursor-pointer rounded-full text-sm font-semibold  transition-colors flex items-center space-x-0 lg:space-x-5">
                         <p>Download PDF</p>
                         <MdOutlineFileDownload size={20} />
                       </button>
