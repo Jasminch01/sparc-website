@@ -2,11 +2,12 @@
 import Image from "next/image";
 import comma from "../../public/Testimonials/comma.png";
 import { antiquaFont, poppins } from "../utils/font";
-import dynamic from "next/dynamic";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
 
-const Slider = dynamic(() => import("react-slick"), { ssr: false });
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 const testimonials = [
   {
@@ -42,80 +43,54 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2
-        }
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ],
-  };
-
   return (
     <div className="max-w-7xl mx-auto my-12 md:my-16 lg:my-20 px-5 lg:px-10 xl:px-0">
       <style jsx global>{`
-        .slick-dots {
-          bottom: -40px;
+        .testimonial-swiper {
+          padding-bottom: 50px;
         }
 
-        .slick-dots li button:before {
-          font-size: 12px;
-          color: #9ca3af;
+        .testimonial-swiper .swiper-pagination {
+          bottom: 0 !important;
+          position: relative !important;
+          margin-top: 40px;
+        }
+
+        .testimonial-swiper .swiper-pagination-bullet {
+          width: 12px;
+          height: 12px;
+          background: #9ca3af;
           opacity: 1;
+          margin: 0 6px;
         }
 
         @media (min-width: 640px) {
-          .slick-dots li button:before {
-            font-size: 14px;
+          .testimonial-swiper .swiper-pagination-bullet {
+            width: 14px;
+            height: 14px;
           }
         }
 
-        .slick-dots li.slick-active button:before {
-          color: #f26522;
-          opacity: 1;
-          font-size: 14px;
+        .testimonial-swiper .swiper-pagination-bullet-active {
+          background: #f26522;
+          width: 14px;
+          height: 14px;
         }
 
         @media (min-width: 640px) {
-          .slick-dots li.slick-active button:before {
-            font-size: 16px;
+          .testimonial-swiper .swiper-pagination-bullet-active {
+            width: 16px;
+            height: 16px;
           }
         }
 
-        .slick-dots li button:hover:before {
-          color: #f26522;
-          opacity: 0.7;
-        }
-
-        @media (max-width: 768px) {
-          .slick-dots {
-            bottom: -30px;
+        @media (max-width: 640px) {
+          .testimonial-swiper {
+            padding-bottom: 40px;
+          }
+          
+          .testimonial-swiper .swiper-pagination {
+            margin-top: 30px;
           }
         }
       `}</style>
@@ -136,10 +111,35 @@ const Testimonials = () => {
       </div>
 
       {/* Testimonials Slider */}
-      <div className="slider-container pb-12 md:pb-16">
-        <Slider {...settings}>
+      <div className="">
+        <Swiper
+          modules={[Pagination, Autoplay]}
+          spaceBetween={24}
+          slidesPerView={1}
+          pagination={{ clickable: true }}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+          breakpoints={{
+            640: {
+              slidesPerView: 1,
+              spaceBetween: 24,
+            },
+            1024: {
+              slidesPerView: 2,
+              spaceBetween: 24,
+            },
+            1280: {
+              slidesPerView: 3,
+              spaceBetween: 24,
+            },
+          }}
+          className="testimonial-swiper"
+        >
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="px-3">
+            <SwiperSlide key={index}>
               <div className="border-2 border-[#F26522] rounded-lg p-6 md:p-8 lg:p-10 flex flex-col items-center gap-4 md:gap-5 h-full min-h-[300px] md:min-h-80 hover:shadow-lg transition-shadow">
                 <Image
                   src={testimonial.icon}
@@ -165,9 +165,9 @@ const Testimonials = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper>
       </div>
     </div>
   );
