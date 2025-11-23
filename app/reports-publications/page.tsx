@@ -120,7 +120,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-base :text-lg ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify  lg:text-xl text-lg ${antiquaFont.className}`}
             >
               Every project we run begins with one goal — to uplift Indigenous
               women and their communities through action, awareness, and
@@ -193,21 +193,43 @@ const Page = () => {
           </section>
 
           {/* Sorting buttons */}
-          <section className="flex flex-col :flex-row gap-3 :gap-5 items-stretch :items-center w-full md:w-auto">
-            <select
-              onChange={(e) => setActiveCategory(e.target.value)}
-              className="border border-[#B7B7B7] rounded- py-2 px-3 :px-4 text- :text-base w-full :w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B]"
-            >
-              <option value="reports">ANNUAL REPORTS</option>
-              <option value="publications">PUBLICATIONS</option>
-            </select>
-            <select
-              onChange={(e) => setActiveYear(e.target.value)}
-              className="border border-[#B7B7B7] rounded- py-2 px-3 :px-4 text- :text-base w-full :w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B]"
-            >
-              <option value="2020-2021">2020-2021</option>
-              <option value="2024-2025">2024-2025</option>
-            </select>
+          <section className="flex flex-col md:flex-row gap-3 md:gap-5 items-stretch md:items-center w-full md:w-auto">
+            <div className="relative w-full md:w-auto">
+              <select
+                onChange={(e) => setActiveCategory(e.target.value)}
+                className="border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
+              >
+                <option value="reports">ANNUAL REPORTS</option>
+                <option value="publications">PUBLICATIONS</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 md:px-3 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+            <div className="relative w-full md:w-auto">
+              <select
+                onChange={(e) => setActiveYear(e.target.value)}
+                className="border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
+              >
+                <option value="2020-2021">2020-2021</option>
+                <option value="2024-2025">2024-2025</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 md:px-3 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
           </section>
         </div>
       </Container>
@@ -285,9 +307,7 @@ const Page = () => {
                         </span>
                         : {rep.releaseMonth}
                       </h2>
-                      <p
-                        className={`mb-6 text-base lg:text-lg text-justify`}
-                      >
+                      <p className={`mb-6 text-base lg:text-lg text-justify`}>
                         {rep.des}
                       </p>
                       <Link

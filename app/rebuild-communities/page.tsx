@@ -76,12 +76,12 @@ const Page = () => {
                 {/* Top Section */}
                 <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
                     <div className="w-full lg:w-1/2">
-                        <h2 className={`text-2xl sm:text-3xl text-center lg:text-start md:text-4xl lg:text-5xl max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
+                        <h2 className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
                             REBUILDING COMMUNITIES
                         </h2>
                     </div>
                     <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-base sm:text-lg ${antiquaFont.className}`}>
+                        <p className={`lg:ml-30 text-justify lg:text-xl text-lg ${antiquaFont.className}`}>
                             To share the latest news, activities, and milestones from your organization — keeping visitors informed about ongoing advocacy, events, and community progress.
                         </p>
                     </div>
@@ -123,7 +123,7 @@ const Page = () => {
 
             {/* Data Content Section */}
             <Container>
-                <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
+                <section className="grid border grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
                     {/* Left Column - Highlight */}
                     <div>
                         <div className="bg-[#303030] text-white px-4 py-2 inline-block mb-4 sm:mb-6">

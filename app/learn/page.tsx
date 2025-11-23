@@ -101,7 +101,7 @@ const Page = () => {
                         </h2>
                     </div>
                     <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-base sm:text-lg ${antiquaFont.className}`}>
+                        <p className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}>
                             Learning their history and present challenges is the first step toward justice, equality, and empowerment.
                         </p>
                     </div>
@@ -121,7 +121,7 @@ const Page = () => {
                     <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
                         LEARN
                     </h2>
-                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-2xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
+                    <p className={`mb-3 sm:mb-4 text-lg lg:text-xl md:text-2xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
                         Our reports and publications highlight the voices, experiences, and resilience of Indigenous women across communities.
                     </p>
 

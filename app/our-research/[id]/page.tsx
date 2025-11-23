@@ -71,9 +71,9 @@ const ResearchDetailsPage = () => {
         </p>
         <Container>
           <div className="my-20">
-            <section className={`flex gap-5  ${poppins.className}`}>
+            <section className={`flex gap-5 uppercase text-sm font-semibold ${poppins.className}`}>
               <Link href="/">Home</Link> <span>||</span>
-              <Link href="/our-research" className="uppercase">
+              <Link href="/our-research">
                 Our Research
               </Link>
               <span>||</span>
