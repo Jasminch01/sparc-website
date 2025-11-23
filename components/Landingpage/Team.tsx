@@ -37,14 +37,14 @@ const Team = () => {
   return (
     <div className="max-w-7xl mx-auto my-12 md:my-16 lg:my-20 px-5 lg:px-10 xl:px-0">
       {/* Top Section */}
-      <section className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12 mb-12 md:mb-16 lg:mb-20">
+      <section className="flex flex-col xl:flex-row items-start xl:items-center gap-8 lg:gap-12 mb-12 md:mb-16 lg:mb-20">
         <div className="w-full lg:w-1/2">
           <div className="max-w-md space-y-3 md:space-y-4">
             <div className="flex gap-2 items-start">
               <h2 style={{ fontFamily: '"Rowan", serif' }} className="xl:text-7xl font-bold md:text-5xl text-4xl mt-2 md:mt-5">
                 01
               </h2>
-              <Image src={leaf} alt="team-leaf" width={80} height={80} className="object-contain" />
+              <Image src={leaf} alt="team-leaf" width={80} height={80} className="object-contain lg:size-28 size-14 md:size-20" />
             </div>
             <hr className="border-gray-400 border" />
             <p className={`${poppins.className} font-bold xl:text-4xl md:text-3xl text-2xl leading-tight`}>
@@ -53,7 +53,7 @@ const Team = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2">
+        <div className="w-full xl:w-1/2">
           <p className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`}>
             Strong voices. Bold visions. Meet the women and allies driving
             equality and empowerment forward. Our strength lies in unity. The
