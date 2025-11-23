@@ -177,7 +177,7 @@ const Page = () => {
                                         </div>
                                         <Link
                                             href={`/archive/${project.title.replace(/\s+/g, '-').toLowerCase()}`}
-                                            className={`${poppins.className} flex items-center gap-2 mt-3 sm:mt-5 text-[#36133B] cursor-pointer hover:text-[#4a1a50] transition-colors text-sm sm:text-base`}
+                                            className={`${poppins.className} flex items-center gap-2 mt-3 sm:mt-5 text-[#36133B] cursor-pointer hover:text-[#ff951b] transition-colors text-sm sm:text-base`}
                                         >
                                             Read More <IoIosArrowRoundForward size={20} />
                                         </Link>

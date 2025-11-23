@@ -236,7 +236,7 @@ const page = () => {
             activists working to preserve their culture and rights.
           </p>
           <button
-            className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 lg:px-8 py-3 rounded-full hover:bg-purple-900 transition duration-200`}
+            className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 lg:px-8 py-3 rounded-full hover:bg-[#ff951b] transition duration-200`}
           >
             Apply Now
           </button>

@@ -10,7 +10,7 @@ import { IoSearch } from "react-icons/io5";
 const page = () => {
   return (
     <div>
-      <div className="w-full relative h-screen ">
+      <div className="w-full relative h-[400px] md:h-[500px] lg:h-screen ">
         <Image
           src={"/Partners/banner.png"}
           width={1920}

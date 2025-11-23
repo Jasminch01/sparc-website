@@ -16,6 +16,7 @@ import { useState } from "react";
 const reports_publications = [
     {
         title: 'KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR',
+        pathTitle: 'KAMLA BHASIN FELLOWSHIP',
         writtenon: '13 October, 2025',
         des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activism. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – "Courage is Contagious".',
         img: one,
@@ -26,6 +27,7 @@ const reports_publications = [
     {
         title: 'KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR',
         writtenon: '13 October, 2025',
+        pathTitle: 'KAMLA BHASIN FELLOWSHIP',
         des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activism. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – "Courage is Contagious".',
         img: two,
         category: 'reports',
@@ -34,6 +36,7 @@ const reports_publications = [
     },
     {
         title: 'KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR',
+        pathTitle: 'KAMLA BHASIN FELLOWSHIP',
         writtenon: '13 October, 2025',
         des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activism. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – "Courage is Contagious".',
         img: three,
@@ -45,6 +48,7 @@ const reports_publications = [
     //publications
     {
         title: 'THE SILENCE THEY LEFT BEHIND STILL BLEEDS',
+        pathTitle: 'THE SILENCE THEY LEFT BEHIND STILL BLEEDS',
         writtenon: '13 October, 2025',
         publisher: 'SPARC, Indigenous Womenfesto',
         author: 'Tufan Chakma',
@@ -59,6 +63,7 @@ const reports_publications = [
     },
     {
         title: 'THE SILENCE THEY LEFT BEHIND STILL BLEEDS',
+        pathTitle: 'THE SILENCE THEY LEFT BEHIND STILL BLEEDS',
         writtenon: '13 October, 2025',
         publisher: 'SPARC, Indigenous Womenfesto',
         author: 'Tufan Chakma',
@@ -73,6 +78,7 @@ const reports_publications = [
     },
     {
         title: 'THE SILENCE THEY LEFT BEHIND STILL BLEEDS',
+        pathTitle: 'THE SILENCE THEY LEFT BEHIND STILL BLEEDS',
         writtenon: '13 October, 2025',
         publisher: 'SPARC, Indigenous Womenfesto',
         author: 'Tufan Chakma',
@@ -209,9 +215,9 @@ const Page = () => {
                                             <p className={`mb-3 sm:mb-4 text-base sm:text-lg text-justify`}>
                                                 {rep.des}
                                             </p>
-                                            <button className="bg-[#36133B] px-4 sm:px-6 py-2 rounded-full cursor-pointer text-white text-sm sm:text-base hover:bg-[#4a1a50] transition-colors w-full sm:w-auto">
+                                            <Link href={`/reports-publications/${rep.pathTitle?.replace(/\s+/g, '-').toLowerCase()}`} className="bg-[#36133B] hover:bg-[#ff951b] px-4 sm:px-6 py-2 rounded-full cursor-pointer text-white text-sm sm:text-base transition-colors w-full sm:w-auto">
                                                 Read More
-                                            </button>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
@@ -236,9 +242,9 @@ const Page = () => {
                                     <p className={`${antiquaFont.className} mt-3 sm:mt-5 text-sm sm:text-base text-gray-600 italic`}>
                                         {rep.imgDes}
                                     </p>
-                                    <button className="bg-[#36133B] cursor-pointer text-white px-4 sm:px-6 py-2 mt-3 rounded-full text-sm sm:text-base hover:bg-[#4a1a50] transition-colors w-full sm:w-auto">
+                                    <Link href={`/reports-publications/${rep.pathTitle?.replace(/\s+/g, '-').toLowerCase()}`} className="bg-[#36133B] hover:bg-[#ff951b] cursor-pointer text-white px-4 sm:px-6 py-2 mt-3 rounded-full text-sm sm:text-base  transition-colors w-full sm:w-auto">
                                         Read More
-                                    </button>
+                                    </Link>
                                 </div>
                             )}
                         </div>
