@@ -62,7 +62,7 @@ const Team = () => {
                     alt={member.name}
                     width={300}
                     height={250}
-                    className="object-cover w-full h-[250px] sm:h-[280px] md:h-[300px] lg:h-[250px]"
+                    className="object-cover w-full h-[250px] md:h-[300px] lg:h-auto"
                   />
                   <p className={`font-bold text-lg md:text-xl mt-3 md:mt-4`}>
                     {member.name}
@@ -85,7 +85,7 @@ const Team = () => {
                     alt={member.name}
                     width={300}
                     height={250}
-                    className="object-cover w-full h-[250px] sm:h-[280px] md:h-[300px] lg:h-[250px]"
+                    className="object-cover w-full h-[250px] md:h-[300px] lg:h-auto"
                   />
                   <p
                     className={`font-bold text-lg md:text-xl mt-3 md:mt-4 ${poppins.className}`}

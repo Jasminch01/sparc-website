@@ -215,7 +215,7 @@ const Page = () => {
             <div className="relative w-full md:w-auto">
               <select
                 onChange={(e) => setActiveYear(e.target.value)}
-                className="border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
+                className="border border-[#B7B7B7] rounded-sm py-2 pl-3 lg:pl-4 pr-8 lg:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
               >
                 <option value="2020-2021">2020-2021</option>
                 <option value="2024-2025">2024-2025</option>
@@ -237,7 +237,7 @@ const Page = () => {
       {/* Reports section */}
       <section
         id="reports"
-        className="w-full max-w-5xl mx-auto space-y-8 :space-y-10 mt-10 :mt-15 md:mt-20 mb-12 :mb-16 md:mb-20 px-4 :px-6 lg:px-8"
+        className="w-full max-w-7xl mx-auto px-5 lg:px-0 space-y-8 lg:space-y-10 mt-10 lg:mt-15 md:mt-20 mb-12 lg:mb-16"
       >
         {combineCategoryandDate.length === 0 ? (
           <span
@@ -249,91 +249,87 @@ const Page = () => {
           combineCategoryandDate.map((rep, index) => (
             <div
               key={index}
-              className="flex flex-col gap-4 :gap-5 mb-12 :mb-16 md:mb-20"
+              className="flex flex-col gap-4 lg:gap-5 pb-5 lg:pb-16 border-b border-gray-300"
             >
               {rep.category === "publications" ? (
-                <div className="space-y-4 :space-y-5">
-                  <h2
-                    className={`text-2xl :text-3xl md:text-4xl font-bold mb-3 :mb-4 ${poppins.className}`}
-                  >
+                <div className="space-y-4 lg:space-y-5">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4">
                     {rep.title}
                   </h2>
-                  <p
-                    className={`${poppins.className} uppercase text- :text-base`}
-                  >
+                  <p className="uppercase text-sm">
                     <span className="text-[#6B6B6B]">Written on</span>{" "}
                     {rep.writtenon}
                   </p>
-                  <div className="flex flex-col md:flex-row justify-between items-start gap-6 :gap-8 mt-4 :mt-5">
-                    <div className="w-full md:w-1/2">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4 lg:mt-5">
+                    <div className="w-full lg:w-1/2">
                       <Image
                         src={rep.img}
                         alt={rep.title}
-                        height={200}
-                        width={400}
-                        className="w-full h-auto rounded-lg shadow-md"
+                        height={500}
+                        width={500}
+                        className="w-full md:w-[550px] h-auto md:h-[500px] rounded-lg object-cover"
                       />
                     </div>
-                    <div
-                      className={`${antiquaFont.className} w-full md:w-1/2 space-y-3 :space-y-4 md:space-y-5 text- :text-base`}
-                    >
-                      <h2>
-                        <span className="text-[#272727] font-semibold text-base :text-lg">
-                          Publisher
-                        </span>
-                        : {rep.publisher}
-                      </h2>
-                      <h2>
-                        <span className="font-semibold text-base :text-lg">
-                          Author
-                        </span>
-                        : {rep.author}
-                      </h2>
-                      <h2>
-                        <span className="font-semibold text-base :text-lg">
-                          Publication Language
-                        </span>
-                        : {rep.publicationLanguage}
-                      </h2>
-                      <h2>
-                        <span className="font-semibold text-base :text-lg">
-                          Release Year
-                        </span>
-                        : {rep.relaseYear}
-                      </h2>
-                      <h2>
-                        <span className="font-semibold text-base lg:text-lg">
-                          Release Month | Day
-                        </span>
-                        : {rep.releaseMonth}
-                      </h2>
-                      <p className={`mb-6 text-base lg:text-lg text-justify`}>
-                        {rep.des}
-                      </p>
-                      <Link
-                        href={`/reports-publications/${rep.pathTitle
-                          ?.replace(/\s+/g, "-")
-                          .toLowerCase()}`}
-                        className="bg-[#36133B] px-4  py-2 rounded-full cursor-pointer text-white text-base transition-colors w-full :w-auto"
-                      >
-                        Read More
-                      </Link>
+                    <div className={`"w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${antiquaFont.className}`}>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                        <p className="font-bold text-lg md:text-xl">
+                          Publisher:
+                        </p>
+                        <p className="text-base md:text-xl">{rep.publisher}</p>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                        <p className="font-bold text-lg md:text-xl">Author:</p>
+                        <p className="text-base md:text-xl">{rep.author}</p>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                        <p className="font-bold text-lg md:text-xl">
+                          Publication Language:
+                        </p>
+                        <p className="text-base md:text-xl">
+                          {rep.publicationLanguage}
+                        </p>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                        <p className="font-bold text-lg md:text-xl">
+                          Release Year:
+                        </p>
+                        <p className="text-base md:text-xl">{rep.relaseYear}</p>
+                      </div>
+                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                        <p className="font-bold text-lg md:text-xl">
+                          Release Month | Day:
+                        </p>
+                        <p className="text-base md:text-xl">
+                          {rep.releaseMonth}
+                        </p>
+                      </div>
+                      <div className="mt-6 md:mt-10">
+                        <div>
+                          <p className="text-base md:text-lg lg:text-xl text-justify leading-relaxed">
+                            {rep.des}
+                          </p>
+                        </div>
+                        <div className={`mt-6 md:mt-10 ${poppins.className}`}>
+                          <Link
+                            href={`/reports-publications/${rep.pathTitle
+                              ?.replace(/\s+/g, "-")
+                              .toLowerCase()}`}
+                            className="inline-block bg-[#36133B] rounded-full cursor-pointer text-white text-sm md:text-base transition-colors uppercase py-3 md:py-4 font-semibold px-6 md:px-7 hover:bg-[#4a1a50]"
+                          >
+                            Read More
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               ) : (
-                <div className="space-y-3 :space-y-4">
-                  <h2
-                    className={`text-2xl :text-3xl md:text-4xl font-bold mb-3 ${poppins.className}`}
-                  >
+                <div className="space-y-3 md:space-y-4">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
                     {rep.title}
                   </h2>
-                  <p className={`${poppins.className} text-base`}>
-                    {rep.writtenon}
-                  </p>
-                  <p
-                    className={`mb-4  text-lg text-justify ${antiquaFont.className}`}
-                  >
+                  <p className="text-base">{rep.writtenon}</p>
+                  <p className="mb-4 text-base md:text-lg text-justify">
                     {rep.des}
                   </p>
                   <Image
@@ -343,16 +339,14 @@ const Page = () => {
                     width={1000}
                     className="w-full h-auto rounded-lg shadow-md"
                   />
-                  <p
-                    className={`${antiquaFont.className} mt-5 mb-6 text-base text-gray-600 italic`}
-                  >
+                  <p className="mt-5 mb-6 text-sm md:text-base text-gray-600 italic">
                     {rep.imgDes}
                   </p>
                   <Link
                     href={`/reports-publications/${rep.pathTitle
                       ?.replace(/\s+/g, "-")
                       .toLowerCase()}`}
-                    className="bg-[#36133B] cursor-pointer text-white px-6 py-3 rounded-full text-base transition-colors w-full "
+                    className="inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50]"
                   >
                     Read More
                   </Link>

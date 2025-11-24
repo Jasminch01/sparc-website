@@ -69,9 +69,9 @@ const Page = () => {
           alt="indospeak-hero"
           width={1000}
           height={600}
-          className="w-full lg:flex h-[350px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+          className="w-full lg:flex h-[350px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover"
         />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center text-white px-4 w-full">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/3 lg:-translate-y-1/4  text-center text-white px-4 w-full">
           <h2
             className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-4 ${poppins.className}`}
           >
@@ -93,7 +93,7 @@ const Page = () => {
             className="flex flex-col items-center justify-center mt-3 lg:mt-30 cursor-pointer"
           >
             <button
-              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-lg font-semibold ${poppins.className}`}
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
             >
               SCROLL DOWN
             </button>
@@ -105,30 +105,46 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <div className="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center my-6 lg:my-20">
-          <section className={`flex gap-3 lg:gap-5 ${poppins.className} font-semibold`}>
+          <section
+            className={`flex gap-3 lg:gap-5 ${poppins.className} font-semibold`}
+          >
             <Link href="/">HOME</Link> <span>||</span>
             <p className="text-[#818181] uppercase ">Indispeak</p>
           </section>
 
           {/* Sorting button */}
-          <section className="flex gap-5 items-center">
-            <select
-              onChange={(e) => setActiveYear(e.target.value)}
-              name=""
-              id=""
-              className={`border border-[#B7B7B7] rounded-sm py-2 px-3 lg:px-4 text-sm lg:text-base ${poppins.className}`}
-            >
-              <option value="2016-2017">2016-2017</option>
-              <option value="2017-2018">2017-2018</option>
-              <option value="2024-2025">2024-2025</option>
-            </select>
-          </section>
+          <div className="flex gap-5 items-center">
+            <div className="relative">
+              <select
+                onChange={(e) => setActiveYear(e.target.value)}
+                name=""
+                id=""
+                className={`border border-[#B7B7B7] rounded-sm py-2 pl-4 pr-10 cursor-pointer appearance-none ${poppins.className}`}
+              >
+                <option value="2016-2017">2016-2017</option>
+                <option value="2017-2018">2017-2018</option>
+                <option value="2024-2025">2024-2025</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
 
       {/* Indispeak content section */}
       <Container>
-        <section id="indispeak" className="flex flex-col gap-8 lg:gap-10  lg:my-20">
+        <section
+          id="indispeak"
+          className="flex flex-col gap-8 lg:gap-10  lg:my-20"
+        >
           {filteredData.map((ids, index) => (
             <div key={index} className="flex flex-col">
               <div className="flex flex-col xl:flex-row lg:justify-between gap-6 lg:gap-0">
@@ -139,11 +155,13 @@ const Page = () => {
                     {ids.title}
                   </h2>
                   <p
-                    className={`text-[#6B6B6B] ${poppins.className} font-medium uppercase text-sm lg:text-lg`}>
+                    className={`text-[#6B6B6B] ${poppins.className} font-medium uppercase text-sm lg:text-lg`}
+                  >
                     Written on {ids.writtenOn}
                   </p>
                   <p
-                    className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}>
+                    className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}
+                  >
                     {expandedIndex === index
                       ? ids.des
                       : ids.des.slice(0, 300) +
@@ -157,9 +175,11 @@ const Page = () => {
                             expandedIndex === index ? null : index
                           )
                         }
-                        className="flex items-center gap-2 cursor-pointer w-20">
+                        className="flex items-center gap-2 cursor-pointer w-20"
+                      >
                         <button
-                          className={`text-lg lg:text-xl ${antiquaFont.className} cursor-pointer hover:text-[#ff951b]`}>
+                          className={`text-lg lg:text-xl ${antiquaFont.className} cursor-pointer hover:text-[#ff951b]`}
+                        >
                           {expandedIndex === index ? " Less" : "Expand"}
                         </button>
                         <IoMdArrowDropdown

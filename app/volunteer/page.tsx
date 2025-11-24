@@ -57,7 +57,7 @@ const page = () => {
                 alt="hero-img"
                 height={800}
                 width={1000}
-                className="w-full h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+                className="w-full h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover"
               />
             </div>
 
@@ -129,7 +129,7 @@ const page = () => {
           alt="hero-img"
           height={800}
           width={1000}
-          className="w-full hidden lg:flex h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+          className="w-full hidden lg:flex h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-"
         />
       </div>
 

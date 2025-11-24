@@ -51,7 +51,7 @@ const Stories = () => {
             {stories.map((story, index) => (
               <div
                 key={index}
-                className="flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
+                className="flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer "
               >
                 <div className="relative w-full h-[200px] sm:h-[220px] md:h-60 lg:h-[260px]">
                   <Image
@@ -68,7 +68,7 @@ const Stories = () => {
                     {story.date}
                   </p>
                   <h2
-                    className={`font-extrabold text-lg sm:text-xl md:text-2xl leading-tight`}
+                    className={`font-extrabold text-lg lg:text-xl group-hover:text-[#FF7F00] transition-all duration-300 leading-tight`}
                   >
                     {story.title}
                   </h2>
@@ -79,7 +79,7 @@ const Stories = () => {
                   </p>
                   <div className="h-10">
                     <button
-                      className={`text-[#FF7F00] hover:px-5 hover:py-2 cursor-pointer text-sm md:text-base  hover:bg-[#cc6600] hover:text-white  transition-all duration-400 w-fit pb-1`}
+                      className={`text-[#FF7F00] group-hover:px-5 group-hover:py-2 cursor-pointer text-sm md:text-base  group-hover:bg-[#cc6600] group-hover:text-white  transition-all duration-400 w-fit pb-1`}
                     >
                       Read More
                     </button>

@@ -42,7 +42,7 @@ const Banner = () => {
         className="absolute bottom-8 md:bottom-12 lg:bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center text-white cursor-pointer z-10"
         aria-label="Scroll down"
       >
-        <span className="text-lg text-[#FF951B] font-bold lg:text-xl mb-2">
+        <span className="text-sm text-[#FF951B] font-bold lg:text-xl mb-2">
           SCROLL DOWN
         </span>
 

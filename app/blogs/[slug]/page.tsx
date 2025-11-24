@@ -37,9 +37,9 @@ const BlogPage = () => {
     return (
         <Container>
             {/* BreadCrump */}
-            <div className={`flex items-center gap-5 my-5 lg:my-10  ${poppins.className} text-[8px] lg:text-base`}>
+            <div className={`flex uppercase items-center gap-5 my-5 lg:my-10  ${poppins.className} text-[8px] lg:text-base`}>
                 <Link href='/' className="font-bold">HOME</Link><span>||</span>
-                <Link href='/blogs' className="text-[#818181]">BLOGS</Link><span>||</span>
+                <Link href='/blogs' className="font-bold">BLOGS</Link><span>||</span>
                 <p className="text-[#818181]">{blog.title}</p>
             </div>
 
@@ -57,7 +57,7 @@ const BlogPage = () => {
                     height={200}
                     className="rounded-lg object-contain w-full mb-10"
                 />
-                <p className={`text-gray-700 ${antiquaFont.className} `}>{blog.longdes}</p>
+                <p className={`text-gray-700 text-lg lg:text-xl ${antiquaFont.className} `}>{blog.longdes}</p>
             </div>
         </Container>
     );

@@ -88,12 +88,12 @@ const Page = () => {
             <h2
               className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${poppins.className}`}
             >
-              REBUILDING COMMUNITIES
+             SPARC UPDATE
             </h2>
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}
             >
               To share the latest news, activities, and milestones from your
               organization — keeping visitors informed about ongoing advocacy,
@@ -114,19 +114,19 @@ const Page = () => {
         />
         <div className="absolute top-2/3 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 ${poppins.className}`}
           >
             SPARC UPDATE
           </h2>
           <p
-            className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+            className={`mb-3 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
           >
             Stay connected with the latest updates from our organization — from
             local initiatives to global advocacy for Indigenous rights.
           </p>
           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
             <button
-              className={`bg-[#FF951B] px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs sm:text-lg hover:bg-orange-400 transition-colors ${poppins.className}`}
+              className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${poppins.className}`}
             >
               VIEW PROJECTS
             </button>
@@ -172,8 +172,8 @@ const Page = () => {
               {data
                 .filter((item) => item.category === "highlight")
                 .map((item, index) => (
-                  <div key={index}>
-                    <div className="relative w-full h-[250px] sm:h-[300px] mb-4">
+                  <div key={index} className="cursor-pointer group">
+                    <div className="relative w-full h-[250px] lg:h-[300px] mb-4">
                       <Image
                         src={item.img}
                         alt={item.title}
@@ -182,7 +182,7 @@ const Page = () => {
                       />
                     </div>
                     <h2
-                      className={`text-xl lg:text-2xl font-bold mb-3 leading-tight ${poppins.className}`}
+                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
                     >
                       {item.title}
                     </h2>
@@ -200,7 +200,7 @@ const Page = () => {
                       href={`/update/${item.title
                         .replace(/\s+/g, "-")
                         .toLowerCase()}`}
-                      className={`text-sm font-medium flex items-center gap-2 hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                      className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
                     >
                       Read More <span>→</span>
                     </Link>
@@ -231,7 +231,7 @@ const Page = () => {
               {data
                 .filter((item) => item.category === "FEATURED_STORIES")
                 .map((item, index) => (
-                  <div key={index} className="mb-6 last:mb-0">
+                  <div key={index} className="mb-6 last:mb-0 group cursor-pointer">
                     <div className="relative w-full h-[300px] mb-3">
                       <Image
                         src={item.img}
@@ -241,7 +241,7 @@ const Page = () => {
                       />
                     </div>
                     <h3
-                      className={`text-base lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
+                      className={`text-base group-hover:text-[#FF951B] t lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
                     >
                       {item.title}
                     </h3>
@@ -260,7 +260,7 @@ const Page = () => {
                         href={`/update/${item.title
                           .replace(/\s+/g, "-")
                           .toLowerCase()}`}
-                        className={`text-sm font-medium flex items-center gap-2 hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                        className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
                       >
                         Read More <span>→</span>
                       </Link>
@@ -289,8 +289,8 @@ const Page = () => {
               {data
                 .filter((item) => item.category === "LATEST_NEWS")
                 .map((item, index) => (
-                  <div key={index}>
-                    <div className="relative w-full h-[300px] mb-3">
+                  <div key={index} className="group cursor-pointer">
+                    <div className="relative w-full h-[300px] mb-3 ">
                       {item.img ? (
                         <Image
                           src={item.img}
@@ -308,7 +308,7 @@ const Page = () => {
                       )}
                     </div>
                     <h3
-                      className={`text-xl lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
+                      className={`text-xl lg:text-2xl group-hover:text-[#FF951B] font-bold mb-2 leading-tight ${poppins.className}`}
                     >
                       {item.title}
                     </h3>
@@ -325,7 +325,7 @@ const Page = () => {
                       </p>
                       <Link
                         href="https://www.youtube.com/embed/OFAXpf9wxgI"
-                        className={`text-sm font-medium flex items-center gap-2 hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                        className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
                       >
                         Watch Video <span>→</span>
                       </Link>
@@ -342,12 +342,12 @@ const Page = () => {
         <section className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
+              className={`text-2xl lg:text-5xl font-bold mb-3 ${poppins.className}`}
             >
               FUNDING & PROJECT UPDATES
             </h2>
             <p
-              className={`mb-3 sm:mb-4 text-base sm:text-lg ${antiquaFont.className} text-gray-500`}
+              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-gray-500`}
             >
               Each update reflects our commitment to accountability,
               collaboration, and positive impact across Indigenous regions.
@@ -381,7 +381,7 @@ const Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
             {combineProjects.map((project, index) => (
               <div key={index} className="relative">
-                <div className="border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow lg:h-[550px] ">
+                <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px] ">
                   <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4">
                     <Image
                       src={project.img}
@@ -392,7 +392,7 @@ const Page = () => {
                   </div>
                   <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
                     <h2
-                      className={`${poppins.className} text-base sm:text-lg font-semibold`}
+                      className={`${poppins.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
                     >
                       {project.title}
                     </h2>
@@ -420,7 +420,7 @@ const Page = () => {
                     </div>
                     <div className="h-10">
                       <button
-                        className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:text-[#ff951b]  transition-all duration-400`}
+                        className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#FF951B]  transition-all duration-400`}
                       >
                         View Report <IoIosArrowRoundForward size={20} />
                       </button>
@@ -477,8 +477,8 @@ const Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
             {combineEvents.map((project, index) => (
               <div key={index} className="relative">
-                <div className="border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow lg:h-[550px]">
-                  <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4">
+                <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
+                  <div className="relative w-full h-[250px] lg:h-[300px] mb-3 sm:mb-4">
                     <Image
                       src={project.img}
                       alt={project.title}
@@ -488,16 +488,16 @@ const Page = () => {
                   </div>
                   <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
                     <h2
-                      className={`${poppins.className} text-base sm:text-lg font-semibold`}
+                      className={`${poppins.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
                     >
                       {project.title}
                     </h2>
                     <p
-                      className={`${antiquaFont.className} text-sm sm:text-base text-justify line-clamp-3`}
+                      className={`${antiquaFont.className} text-sm lg:text-base text-justify line-clamp-3`}
                     >
                       {project.des}
                     </p>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
+                    <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
                       <p
                         className={`font-bold ${
                           project.status === "Upcoming"
@@ -516,7 +516,7 @@ const Page = () => {
                     </div>
                     <div className="h-10">
                       <button
-                        className={`transition-all duration-400 text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 hover:text-[#ff951b] transition-all duration-400 `}
+                        className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#ff951b] transition-all duration-400 `}
                       >
                         View Report <IoIosArrowRoundForward size={20} />
                       </button>
@@ -530,8 +530,8 @@ const Page = () => {
         <Image
           src={frame}
           alt="frame"
-          width={600}
-          height={400}
+          width={2000}
+          height={2000}
           className="w-full my-16 sm:my-20 md:my-30"
         />
       </Container>
