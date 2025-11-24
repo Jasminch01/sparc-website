@@ -66,7 +66,7 @@ const page = () => {
             START YOUR JOURNEY WITH US
           </h2>
           <p
-            className={`mb-3 lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto ${antiquaFont.className}`}
+            className={`mb-3 lg:mb-4 text-lg lg:text-xl max-w-3xl mx-auto ${antiquaFont.className}`}
           >
             Gain hands-on experience and make an impact through our internship
             program.
@@ -80,7 +80,7 @@ const page = () => {
       </section>
 
       {/* Career Journey Section */}
-      <section className="max-w-5xl mx-auto space-y-6 lg:space-y-10 mt-12 lg:mt-20 px-4 lg:px-0">
+      <section className="max-w-6xl mx-auto space-y-6 lg:space-y-10 mt-12 lg:mt-20 px-4 lg:px-0">
         <h2
           className={`text-2xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}
         >

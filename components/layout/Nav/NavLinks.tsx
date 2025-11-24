@@ -22,14 +22,14 @@ const opportunities = [
 
 const resources = [
   { title: "Reports and Publications", path: "/reports-publications" },
-  { title: "Rebuild Communities", path: "/rebuild-communities" },
+  { title: "Sparc Update", path: "/sparc-update" },
   { title: "Indigenous Archive", path: "/archive" },
   { title: "Our Research", path: "/our-research" },
 ];
 
 const stories = [{ title: "Indespeak", path: "/indespeak" }];
 const partner = [
-  { title: "How to partner", path: "/how-to-partner" },
+  { title: "How to Partner", path: "/how-to-partner" },
   { title: "Partners", path: "/partners" },
 ];
 

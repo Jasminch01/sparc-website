@@ -9,13 +9,13 @@ const Story = () => {
     <div className={`my-20 ${poppins.className}`}>
       <Container>
         <div className="flex justify-between items-center my-20">
-        <section
-          className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
-        >
-          <Link href="/">Home</Link> <span>||</span>
-          <p className="text-[#818181] ">WHO WE ARE</p>
-        </section>
-      </div>
+          <section
+            className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
+          >
+            <Link href="/">Home</Link> <span>||</span>
+            <p className="text-[#818181] ">WHO WE ARE</p>
+          </section>
+        </div>
         <div className="flex flex-col gap-y-8 md:gap-y-10 lg:gap-y-5">
           {/* First Section */}
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
@@ -26,14 +26,14 @@ const Story = () => {
                 alt="our-story-image"
                 width={500}
                 height={500}
-                className="w-full xl:w-[290px]  h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] "
+                className="w-full xl:w-full h-[250px] md:h-[350px]"
               />
               <Image
                 src={"/About/our-story2.png"}
                 alt="our-story-image"
                 width={500}
                 height={500}
-                className="w-full xl:w-[290px] h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px]"
+                className="w-full xl:w-full h-[250px] md:h-[350px]"
               />
             </div>
 
@@ -65,7 +65,7 @@ const Story = () => {
                 alt="our-story-image"
                 width={500}
                 height={500}
-                className="w-full rounded-lg h-[250px] sm:h-[300px] md:h-[350px] lg:h-[380px] object-cover"
+                className="w-full rounded-lg h-[250px] md:h-[350px] lg:h-[380px] object-cover"
               />
             </div>
 

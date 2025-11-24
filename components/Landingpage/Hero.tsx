@@ -32,7 +32,7 @@ const Hero = () => {
           alt="hero-img"
           height={800}
           width={1000}
-          className="w-full hidden lg:flex h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+          className="w-full hidden lg:flex h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover"
         />
 
         <Image
@@ -40,7 +40,7 @@ const Hero = () => {
           alt="hero-img"
           height={800}
           width={1000}
-          className="w-full lg:hidden h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+          className="w-full lg:hidden h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover"
         />
 
         {/* Dark overlay for better text readability on small screens */}

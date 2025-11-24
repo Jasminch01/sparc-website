@@ -174,7 +174,7 @@ const Page = () => {
               <select
                 name=""
                 id=""
-                className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm md:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
+                className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm md:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none uppercase`}
               >
                 <option value="modified">Data Modified</option>
                 <option value="original">Original</option>
@@ -213,7 +213,7 @@ const Page = () => {
           </div>
         </div>
 
-        <section className="pb-8 lg:pb-10">
+        <section className="pb-8 lg:pb-32">
           {filterdData.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {filterdData.map((project, index) => (
@@ -257,7 +257,8 @@ const Page = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center py-12 md:py-16 lg:py-20">
+            <div className="text-center h-screen
+            flex justify-center items-center">
               <p
                 className={`text-gray-500 text-lg md:text-xl ${poppins.className}`}
               >

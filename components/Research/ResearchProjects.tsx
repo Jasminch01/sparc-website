@@ -36,7 +36,7 @@ const ResearchProjects = () => {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="max-w-7xl mx-auto px-4 py-12 h-screen">
         <div className="animate-pulse">
           <div className="h-6 bg-gray-200 rounded w-48 mb-6"></div>
           <div className="flex gap-3 mb-12">
@@ -72,7 +72,7 @@ const ResearchProjects = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-2.5 rounded-full bg-[#F6F6F6] text-sm sm:text-base font-medium transition-all ${
+              className={`px-6 py-2.5 rounded-full cursor-pointer bg-[#F6F6F6] text-sm sm:text-base font-medium transition-all ${
                 activeTab === tab.id
                   ? "border border-gray-400"
                   : "border border-transparent"
@@ -99,7 +99,7 @@ const ResearchProjects = () => {
                 <Link
                   href={`/our-research/${project.id}`}
                   key={idx}
-                  className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow bg-white block"
+                  className="border border-gray-200 rounded-lg p-6 group bg-white block"
                 >
                   <div>
                     <Image
@@ -111,7 +111,7 @@ const ResearchProjects = () => {
                     />
                   </div>
                   <div className={`mt-5 ${poppins.className}`}>
-                    <h3 className="text-lg font-bold mb-3 text-gray-900">
+                    <h3 className="text-lg group-hover:text-[#ff951b] transition-colors duration-300 font-bold mb-3 text-gray-900">
                       {project.title}
                     </h3>
                     <div className="text-xs text-gray-500 mb-4 flex space-x-1">
@@ -136,7 +136,7 @@ const ResearchProjects = () => {
                       {project.description}
                     </p>
                     <div className="flex items-center justify-between">
-                      <button className="cursor-pointer hover:bg-[#ff951b] lg:px-6 lg:py-3 p-4 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors">
+                      <button className="cursor-pointer group-hover:bg-[#ff951b] lg:px-6 lg:py-3 p-4 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors duration-300">
                         View Report →
                       </button>
                       <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border hover:bg-[#36133B] hover:text-white cursor-pointer rounded-full text-sm font-semibold  transition-colors flex items-center space-x-0 lg:space-x-5">
@@ -216,7 +216,7 @@ const ResearchProjects = () => {
 
         {/* Empty State */}
         {ongoingProjects.length === 0 && completedProjects.length === 0 && (
-          <div className="text-center py-12">
+          <div className="text-center py-12 h-screen flex justify-center items-center">
             <p className="text-gray-500 text-lg">
               No projects found in this category.
             </p>

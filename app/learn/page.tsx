@@ -186,7 +186,7 @@ const Page = () => {
                             const isHovered = hoveredIndex === index;
                             return (
                                 <div key={index} className='relative'>
-                                    <div className={`border p-4 rounded-lg transition-all duration-300 ${isMobile ? 'cursor-pointer' : ''} ${isHovered
+                                    <div className={`border p-4 cursor-pointer rounded-lg transition-all duration-300 ${isMobile ? 'cursor-pointer' : ''} ${isHovered
                                         ? 'border-[#FF951B] shadow-lg scale-105 bg-orange-50/30'
                                         : 'border-gray-200 hover:border-gray-400'
                                         }`}

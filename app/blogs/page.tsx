@@ -232,7 +232,7 @@ const BlogPage = () => {
               <Link
                 href={`/blogs/${blog.title.replace(/\s+/g, "-").toLowerCase()}`}
                 key={index}
-                className="flex flex-col md:flex-row gap-5 pb-5 py-5 border-b-2 border-gray-300"
+                className="flex flex-col md:flex-row gap-5 pb-5 py-5 lg:border-b border-gray-300"
               >
                 <div className="flex-1 space-y-3">
                   <p className={`text-gray-500 text-sm ${poppins.className}`}>
@@ -254,21 +254,23 @@ const BlogPage = () => {
                   </p>
                 </div>
 
-                <div>
+                <div className="">
                   <Image
                     src={blog.img}
                     alt={blog.title}
                     height={400}
                     width={280}
-                    className="object-cover w-full lg:w-auto"
+                    className="object-cover w-full h-full rounded"
                   />
                 </div>
               </Link>
             ))
           ) : (
-            <p className="text-center text-gray-500">
-              No blogs found for this category.
-            </p>
+            <div className="h-screen flex justify-center items-center">
+              <p className="text-center text-gray-500">
+                No blogs found for this category.
+              </p>
+            </div>
           )}
         </section>
       </Container>
