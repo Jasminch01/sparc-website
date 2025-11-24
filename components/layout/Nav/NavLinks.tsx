@@ -100,7 +100,7 @@ const NavLinks = () => {
               {hasDropdown ? (
                 <button
                   onClick={() => handleClick(i)}
-                  className={`flex items-center justify-between text-sm w-full xl:w-auto px-3 xl:px-0 py-3 xl:py-2 font-medium transition-all duration-200 ${isActive
+                  className={`flex items-center justify-between text-sm w-full xl:w-auto px-3 xl:px-0 py-3 xl:py-2 font-medium transition-all cursor-pointer duration-200 ${isActive
                     ? "text-[#36133b] bg-orange-50 xl:bg-transparent"
                     : "hover:text-[#FF951B] hover:bg-gray-50 xl:hover:bg-transparent"
                     }`}>

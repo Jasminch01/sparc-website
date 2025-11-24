@@ -20,7 +20,7 @@ const Overview = () => {
           alt="sparc-logo"
           width={100}
           height={100}
-          className="object-contain w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] mb-4 md:mb-6 lg:mb-8"
+          className="object-contain w-16 md:size-24 lg:size-32 mb-4 md:mb-6 lg:mb-8"
         />
         <p
           style={{ fontFamily: '"Book Antiqua", serif' }}

@@ -68,7 +68,7 @@ const Header = () => {
                 alt="sparc-logo"
                 width={149}
                 height={84}
-                className="w-20 h-11 sm:w-24 sm:h-14 lg:w-32 lg:h-18 xl:w-[149px] xl:h-[84px]"
+                className="w-20 h-11 lg:w-32 lg:h-18 xl:w-[140px] xl:h-20"
                 priority
               />
             </div>
