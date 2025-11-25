@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Container from "../Container";
 import { antiquaFont, poppins } from "../utils/font";
+import hero from '../../public/Hero/hero.png'
 
 const Hero = () => {
   return (
@@ -28,7 +29,7 @@ const Hero = () => {
       {/* Hero Image with CSS Wave Overlay */}
       <div className="relative w-full">
         <Image
-          src={"/Hero/hero.png"}
+          src={hero}
           alt="hero-img"
           height={800}
           width={1000}
