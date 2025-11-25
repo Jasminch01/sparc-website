@@ -108,7 +108,7 @@ const BlogPage = () => {
   return (
     <div>
       <Container>
-        <section className="flex flex-col lg:flex-row justify-between items-center mt-5 mb-5 lg:mt-10 lg:mb-10 gap-10 ">
+        <section className="flex flex-col lg:flex-row justify-between items-center mt-5 mb-5 lg:mt-10 gap-10 ">
           <h2
             className={`${poppins.className} font-extrabold text-3xl md:text-4xl lg:text-[51px]`}
           >
@@ -190,7 +190,6 @@ const BlogPage = () => {
         </p>
 
         {/* Breadcrup Section */}
-        <Container>
           <div className="flex justify-between items-center my-5 lg:my-10 text-xs lg:text-base ">
             <section
               className={`flex gap-5 font-semibold  ${poppins.className}`}
@@ -223,10 +222,9 @@ const BlogPage = () => {
               </div>
             </section>
           </div>
-        </Container>
 
         {/* This is blogs section where the blogs will load based on activeCategory */}
-        <section className="my-10 max-w-7xl mx-auto">
+        <section className="mt-20 lg:mb-56 max-w-7xl mx-auto">
           {filteredButton.length > 0 && filterdSubcategory ? (
             combineButtonAndSubcategory.map((blog, index) => (
               <Link

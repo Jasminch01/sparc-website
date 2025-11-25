@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { FaAnglesDown } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 interface Data {
@@ -76,12 +77,12 @@ const Page = () => {
         />
         <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-xl md:text-2xl lg:text-4xl font-bold mb-3 md:mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-4xl font-bold mb-2 lg:mb-4 ${poppins.className}`}
           >
             INDIGENOUS ARCHIVE
           </h2>
           <p
-            className={`mb-3 md:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
           >
             Explore stories, documents, and visual archives celebrating the
             heritage, resilience, and identity of Indigenous communities
@@ -93,20 +94,14 @@ const Page = () => {
                 .getElementById("data")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="flex flex-col items-center justify-center mt-6 md:mt-10 lg:mt-30 cursor-pointer"
+            className="flex flex-col items-center justify-center lg:mt-30 cursor-pointer"
           >
             <button
-              className={`text-[#FF951B] px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full text-xs lg:text-lg ${poppins.className}`}
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
             >
               SCROLL DOWN
             </button>
-            <Image
-              src={icon}
-              alt="icon"
-              width={40}
-              height={40}
-              className="animate-bounce w-6 md:w-8 lg:w-10 lg:h-10"
-            />
+            <FaAnglesDown className="animate-bounce" size={24} />
           </div>
         </div>
       </section>
@@ -257,8 +252,10 @@ const Page = () => {
               ))}
             </div>
           ) : (
-            <div className="text-center h-screen
-            flex justify-center items-center">
+            <div
+              className="text-center h-screen
+            flex justify-center items-center"
+            >
               <p
                 className={`text-gray-500 text-lg md:text-xl ${poppins.className}`}
               >

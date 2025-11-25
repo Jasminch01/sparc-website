@@ -52,7 +52,7 @@ const Page = () => {
         />
 
         {/* Center Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-40 mt-20">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 lg:px-0 xl:mt-40 mt-20">
           <h1
             className={`text-2xl lg:text-5xl font-black md:mb-4 text-center ${poppins.className}`}
           >
@@ -72,12 +72,12 @@ const Page = () => {
         </div>
       </div>
       <Container>
-        <div className="px-5 md:px-0 py-20">
+        <div className="py-20">
           <p className="lg:text-4xl text-2xl font-bold text-center">
             OUR PARTNERS SO FAR
           </p>
 
-          <div className="py-10 md:py-20">
+          <div className="py-10 lg:py-20">
             <div className="grid grid-cols-1 gap-8 lg:gap-12">
               {partners.map((partner, index) => (
                 <div key={index} className="p-6 md:p-12 lg:p-20 border rounded">
