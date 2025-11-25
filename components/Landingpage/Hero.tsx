@@ -36,7 +36,7 @@ const Hero = () => {
         />
 
         <Image
-          src={"/Hero/Hero_img.png"}
+          src={"/Hero/banner.png"}
           alt="hero-img"
           height={800}
           width={1000}

@@ -211,37 +211,40 @@ const page = () => {
         </div>
         <hr className="border-gray-300" />
       </section>
-
-      {/* Career Section */}
-      <section className="mt-12 lg:mt-15 mb-20 lg:mb-30 rounded-md max-w-6xl mx-auto bg-gray-100 flex flex-col lg:flex-row items-center border border-gray-200 overflow-hidden">
-        <div className="w-full lg:w-1/2">
-          <Image
-            src={women}
-            alt="women"
-            width={450}
-            height={300}
-            className="w-full h-auto object-cover"
-          />
-        </div>
-        <div className="w-full lg:w-1/2 space-y-6 lg:space-y-10 p-6 lg:p-8">
-          <h2
-            className={`text-[#2D2D2D] ${poppins.className} font-bold text-xl lg:text-3xl`}
-          >
-            YOUR CAREER JOURNEY BEGINS HERE. LEARN, GROW
-          </h2>
-          <p
-            className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
-          >
-            Indigenous young people who are emerging leaders, learners, or
-            activists working to preserve their culture and rights.
-          </p>
-          <button
-            className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 lg:px-8 py-3 rounded-full hover:bg-[#ff951b] transition duration-200`}
-          >
-            Apply Now
-          </button>
-        </div>
-      </section>
+      <Container>
+        {/* Career Section */}
+        <section className="mt-12 lg:mt-15 mb-20 lg:mb-30 rounded-md bg-gray-100 flex flex-col lg:flex-row items-center border border-gray-200 overflow-hidden">
+          <div className="w-full lg:w-1/2">
+            <Image
+              src={women}
+              alt="women"
+              width={450}
+              height={300}
+              className="w-full h-auto object-cover"
+            />
+          </div>
+          <div className="w-full lg:w-1/2 space-y-6 lg:space-y-10 p-6 lg:p-8">
+            <h2
+              className={`text-[#2D2D2D] ${poppins.className} font-bold text-xl lg:text-3xl`}
+            >
+              YOUR CAREER JOURNEY BEGINS HERE. LEARN, GROW
+            </h2>
+            <p
+              className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
+            >
+              Indigenous young people who are emerging leaders, learners, or
+              activists working to preserve their culture and rights.
+            </p>
+            <div className="text-center lg:text-left">
+              <button
+                className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 py-2 lg:px-8 lg:py-3 rounded-full uppercase hover:bg-[#ff951b] transition duration-200`}
+              >
+                Apply Now
+              </button>
+            </div>
+          </div>
+        </section>
+      </Container>
     </div>
   );
 };

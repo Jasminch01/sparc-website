@@ -5,13 +5,13 @@ import hero from "@/public/reports/reports-hero.png";
 import one from "@/public/reports/reports-1.png";
 import two from "@/public/reports/reports-2.png";
 import three from "@/public/reports/reports-3.png";
-import icon from "@/public/reports/icon.png";
 import publicationOne from "@/public/publications/publications1.png";
 import publicationTwo from "@/public/publications/publications2.png";
 import publicationThree from "@/public/publications/publications3.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { FaAnglesDown } from "react-icons/fa6";
 
 const reports_publications = [
   {
@@ -141,12 +141,12 @@ const Page = () => {
         />
         <div className="absolute top-2/3 :top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-xl :text-2xl md:text-3xl lg:text-4xl font-bold mb-3 :mb-4 ${poppins.className}`}
+            className={`text-2xl  lg:text-5xl font-bold mb-3 :mb-4 ${poppins.className}`}
           >
             REPORTS AND PUBLICATIONS
           </h2>
           <p
-            className={`mb-3 :mb-4 text- :text-base md:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
           >
             Our reports and publications highlight the voices, experiences, and
             resilience of Indigenous women across communities.
@@ -157,20 +157,14 @@ const Page = () => {
                 .getElementById("reports")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="flex flex-col items-center justify-center mt-6 :mt-10 md:mt-20 lg:mt-30 cursor-pointer"
+            className="flex flex-col items-center justify-center lg:mt-30 cursor-pointer"
           >
             <button
-              className={`text-[#FF951B] px-4 :px-6 md:px-8 py-2 :py-3 rounded-full text-xs lg:text-lg ${poppins.className}`}
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
             >
               SCROLL DOWN
             </button>
-            <Image
-              src={icon}
-              alt="icon"
-              width={40}
-              height={40}
-              className="w-6 h-6 :w-8 :h-8 md:w-10 md:h-10 animate-bounce"
-            />
+            <FaAnglesDown className="animate-bounce" size={24} />
           </div>
         </div>
       </section>
@@ -270,7 +264,9 @@ const Page = () => {
                         className="w-full md:w-[550px] h-auto md:h-[500px] rounded-lg object-cover"
                       />
                     </div>
-                    <div className={`"w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${antiquaFont.className}`}>
+                    <div
+                      className={`"w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${antiquaFont.className}`}
+                    >
                       <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
                         <p className="font-bold text-lg md:text-xl">
                           Publisher:
