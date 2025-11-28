@@ -1,201 +1,272 @@
-"use client"
-import Container from '@/components/Container';
-import { antiquaFont, poppins } from '@/components/utils/font';
-import hero from "@/public/Archive/hero.png"
-import icon from "@/public/reports/icon.png"
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import { IoIosArrowRoundForward } from 'react-icons/io';
+"use client";
+import Container from "@/components/Container";
+import { antiquaFont, poppins } from "@/components/utils/font";
+import hero from "@/public/Archive/hero.png";
+import icon from "@/public/reports/icon.png";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { FaAnglesDown } from "react-icons/fa6";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 interface Data {
-    img: string,
-    title: string,
-    des: string,
-    date: string,
-    category: string
+  img: string;
+  title: string;
+  des: string;
+  date: string;
+  category: string;
 }
 
 const categories: string[] = [
-    'Historical Records',
-    'Community Stories',
-    'News and Update',
-]
+  "Historical Records",
+  "Community Stories",
+  "News and Update",
+];
 
 const Page = () => {
-    const [activeIndex, setActiveIndex] = useState(0)
-    const [activeCategory, setActiveCategory] = useState("Historical Records")
-    const [data, setData] = useState<Data[]>([])
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeCategory, setActiveCategory] = useState("Historical Records");
+  const [data, setData] = useState<Data[]>([]);
 
-    // Fetch data
-    useEffect(() => {
-        fetch('/Archive/data.json')
-            .then(res => res.json())
-            .then(data => setData(data))
-    }, [])
+  // Fetch data
+  useEffect(() => {
+    fetch("/Archive/data.json")
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  }, []);
 
-    // Filter data
-    const filterdData = data.filter(d =>
-        d.category.toLowerCase().includes(activeCategory.toLowerCase())
-    );
+  // Filter data
+  const filterdData = data.filter((d) =>
+    d.category.toLowerCase().includes(activeCategory.toLowerCase())
+  );
 
-    return (
-        <div className='mt-10 sm:mt-12 md:mt-15'>
-            <Container>
-                {/* Top Section */}
-                <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-10">
-                    <div className="w-full lg:w-1/2">
-                        <h2 className={`text-xl sm:text-3xl md:text-4xl lg:text-[45px] text-center lg:text-start max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
-                            <span className='text-[#FF951B]'>INDIGENOUS KNOWLEDGE</span> FOR FUTURE GENERATIONS
-                        </h2>
-                    </div>
-                    <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-base sm:text-lg ${antiquaFont.className}`}>
-                            Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide
-                        </p>
-                    </div>
-                </section>
-            </Container>
+  return (
+    <div className="mt-10 md:mt-15">
+      <Container>
+        {/* Top Section */}
+        <section className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-10">
+          <div className="w-full lg:w-1/2">
+            <h2
+              className={`text-xl md:text-3xl lg:text-[45px] text-center lg:text-start max-w-2xl font-extrabold leading-tight ${poppins.className}`}
+            >
+              <span className="text-[#FF951B]">INDIGENOUS KNOWLEDGE</span> FOR
+              FUTURE GENERATIONS
+            </h2>
+          </div>
+          <div className="w-full lg:w-1/2">
+            <p
+              className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}
+            >
+              Explore stories, documents, and visual archives celebrating the
+              heritage, resilience, and identity of Indigenous communities
+              worldwide
+            </p>
+          </div>
+        </section>
+      </Container>
 
-            {/* Hero Section */}
-            <section className="relative w-full">
-                <Image
-                    src={hero}
-                    alt="indospeak-hero"
-                    width={1000}
-                    height={600}
-                    className="w-full h-[350px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
-                />
-                <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
-                    <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
-                        INDIGENOUS ARCHIVE
-                    </h2>
-                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
-                        Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide.
-                    </p>
-                    <div
-                        onClick={() => {
-                            document.getElementById("data")?.scrollIntoView({ behavior: "smooth" });
-                        }}
-                        className="flex flex-col items-center justify-center mt-6 sm:mt-10 md:mt-20 lg:mt-30 cursor-pointer">
-                        <button className={`text-[#FF951B] px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full text-xs lg:text-lg ${poppins.className}`}>
-                            SCROLL DOWN
-                        </button>
-                        <Image src={icon} alt="icon" width={40} height={40} className="animate-bounce w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10" />
-                    </div>
-                </div>
-            </section>
-
-            {/* Breadcrumb & Search Section */}
-            <Container>
-                <section className={`flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 ${poppins.className} my-5 lg:my-20 font-semibold`}>
-                    <div className="flex gap-3 sm:gap-5 text-xs sm:text-base py-5 lg:py-0">
-                        <Link href='/' className="hover:text-[#FF951B] transition-colors">HOME</Link>
-                        <span>||</span>
-                        <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
-                    </div>
-                    <div className="border-2 border-gray-300 rounded-md flex items-center w-full sm:w-auto">
-                        <input
-                            type="text"
-                            placeholder="Search here"
-                            className="px-3 sm:px-5 py-2 outline-none w-full text-sm sm:text-base"
-                        />
-                        <FaSearch className="mr-2 text-gray-400" />
-                    </div>
-                </section>
-            </Container>
-
-            <Container>
-                <section id='data' className="my-6 sm:my-8 md:my-10">
-                    {/* Category container */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 overflow-hidden transition-all duration-300 items-center">
-                        {categories.map((item, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    onClick={() => { setActiveIndex(index); setActiveCategory(item) }}
-                                    className={`px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm sm:text-base ${poppins.className} ${activeIndex === index ? "border-gray-700 border bg-gray-200"
-                                        : "border-gray-200 bg-gray-100 hover:bg-gray-200"}`}>
-                                    {item}
-                                </div>
-                            );
-                        })}
-                    </div>
-                </section>
-            </Container>
-
-            <Container>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6 py-6 sm:py-8 md:py-10">
-                    <h2 className={`flex items-center gap-2 text-2xl sm:text-3xl md:text-4xl font-semibold ${poppins.className}`}>
-                        {activeCategory}
-                    </h2>
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-                        <select
-                            name=""
-                            id=""
-                            className={`${poppins.className} border border-gray-300 rounded-sm px-3 sm:px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF951B] w-full sm:w-auto`}>
-                            <option value="modified">Data Modified</option>
-                            <option value="original">Original</option>
-                        </select>
-                        <select
-                            name=""
-                            id=""
-                            className={`${poppins.className} border border-gray-300 rounded-sm px-3 sm:px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF951B] w-full sm:w-auto`}>
-                            <option value="2021-2022">2021-2022</option>
-                            <option value="2022-2023">2022-2023</option>
-                            <option value="2023-2024">2023-2024</option>
-                            <option value="2024-2025">2024-2025</option>
-                        </select>
-                    </div>
-                </div>
-
-                <section className="pb-8 sm:pb-10">
-                    {filterdData.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
-                            {filterdData.map((project, index) => (
-                                <div key={index} className='relative'>
-                                    <div className='border-2 border-gray-300 p-3 sm:p-4 rounded-lg hover:shadow-lg transition-shadow'>
-                                        <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4">
-                                            <Image
-                                                src={project.img}
-                                                alt={project.title}
-                                                fill
-                                                className="object-cover rounded-lg"
-                                            />
-                                        </div>
-                                        <div className='mt-4 sm:mt-5 space-y-2 sm:space-y-3'>
-                                            <h2 className={`${poppins.className} text-base sm:text-lg font-semibold line-clamp-2`}>
-                                                {project.title}
-                                            </h2>
-                                            <p className={`${poppins.className} text-[#6B6B6B] text-xs sm:text-sm`}>
-                                                {project.date}
-                                            </p>
-                                            <p className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm sm:text-base line-clamp-3`}>
-                                                {project.des}
-                                            </p>
-                                        </div>
-                                        <Link
-                                            href={`/archive/${project.title.replace(/\s+/g, '-').toLowerCase()}`}
-                                            className={`${poppins.className} flex items-center gap-2 mt-3 sm:mt-5 text-[#36133B] cursor-pointer hover:text-[#ff951b] transition-colors text-sm sm:text-base`}
-                                        >
-                                            Read More <IoIosArrowRoundForward size={20} />
-                                        </Link>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="text-center py-12 sm:py-16 md:py-20">
-                            <p className={`text-gray-500 text-lg sm:text-xl ${poppins.className}`}>
-                                No projects found in this category.
-                            </p>
-                        </div>
-                    )}
-                </section>
-            </Container>
+      {/* Hero Section */}
+      <section className="relative w-full">
+        <Image
+          src={hero}
+          alt="indospeak-hero"
+          width={1000}
+          height={600}
+          className="w-full h-[350px] md:h-[500px] lg:h-full object-cover"
+        />
+        <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
+          <h2
+            className={`text-2xl lg:text-4xl font-bold mb-2 lg:mb-4 ${poppins.className}`}
+          >
+            INDIGENOUS ARCHIVE
+          </h2>
+          <p
+            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+          >
+            Explore stories, documents, and visual archives celebrating the
+            heritage, resilience, and identity of Indigenous communities
+            worldwide.
+          </p>
+          <div
+            onClick={() => {
+              document
+                .getElementById("data")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="flex flex-col items-center justify-center lg:mt-30 cursor-pointer"
+          >
+            <button
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
+            >
+              SCROLL DOWN
+            </button>
+            <FaAnglesDown className="animate-bounce" size={24} />
+          </div>
         </div>
-    );
+      </section>
+
+      {/* Breadcrumb & Search Section */}
+      <Container>
+        <section
+          className={`flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 ${poppins.className} my-5 lg:my-20 font-semibold`}
+        >
+          <div className="flex gap-3 md:gap-5 text-xs md:text-base py-5 lg:py-0">
+            <Link href="/" className="hover:text-[#FF951B] transition-colors">
+              HOME
+            </Link>
+            <span>||</span>
+            <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
+          </div>
+          <div className="border-2 border-gray-300 rounded-md flex items-center w-full md:w-auto">
+            <input
+              type="text"
+              placeholder="Search here"
+              className="px-3 md:px-5 py-2 outline-none w-full text-sm md:text-base"
+            />
+            <FaSearch className="mr-2 text-gray-400" />
+          </div>
+        </section>
+      </Container>
+
+      <Container>
+        <section id="data" className="my-6 md:my-8 lg:my-10">
+          {/* Category container */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 overflow-hidden transition-all duration-300 items-center">
+            {categories.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    setActiveCategory(item);
+                  }}
+                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${
+                    poppins.className
+                  } ${
+                    activeIndex === index
+                      ? "border-gray-700 border bg-gray-200"
+                      : "border-gray-200 bg-gray-100 hover:bg-gray-200"
+                  }`}
+                >
+                  {item}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      </Container>
+
+      <Container>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 py-6 md:py-8 lg:py-10">
+          <h2
+            className={`flex items-center gap-2 text-2xl md:text-3xl lg:text-4xl font-semibold ${poppins.className}`}
+          >
+            {activeCategory}
+          </h2>
+          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
+            <div className="relative w-full md:w-auto">
+              <select
+                name=""
+                id=""
+                className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm md:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none uppercase`}
+              >
+                <option value="modified">Data Modified</option>
+                <option value="original">Original</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 md:px-3 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+            <div className="relative w-full md:w-auto">
+              <select
+                name=""
+                id=""
+                className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm lg:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
+              >
+                <option value="2021-2022">2021-2022</option>
+                <option value="2022-2023">2022-2023</option>
+                <option value="2023-2024">2023-2024</option>
+                <option value="2024-2025">2024-2025</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 md:px-3 text-gray-700">
+                <svg
+                  className="fill-current h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section className="pb-8 lg:pb-32">
+          {filterdData.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+              {filterdData.map((project, index) => (
+                <div key={index} className="relative h-full">
+                  <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
+                    <div className="relative w-full h-[250px] md:h-[300px] mb-3 md:mb-4 shrink-0">
+                      <Image
+                        src={project.img}
+                        alt={project.title}
+                        fill
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
+                      <h2
+                        className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
+                      >
+                        {project.title}
+                      </h2>
+                      <p
+                        className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
+                      >
+                        {project.date}
+                      </p>
+                      <p
+                        className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
+                      >
+                        {project.des}
+                      </p>
+                      <Link
+                        href={`/archive/${project.title
+                          .replace(/\s+/g, "-")
+                          .toLowerCase()}`}
+                        className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
+                      >
+                        Read More <IoIosArrowRoundForward size={20} />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="text-center h-screen
+            flex justify-center items-center"
+            >
+              <p
+                className={`text-gray-500 text-lg md:text-xl ${poppins.className}`}
+              >
+                No projects found in this category.
+              </p>
+            </div>
+          )}
+        </section>
+      </Container>
+    </div>
+  );
 };
 
 export default Page;

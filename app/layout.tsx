@@ -22,6 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <link rel="icon" href="/Overview/logocopy.png" sizes="64*64"></link>
       <body
         className={`${poppins.variable} font-sans `}
       >

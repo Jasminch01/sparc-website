@@ -96,12 +96,12 @@ const Page = () => {
                 {/* Top Section */}
                 <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
                     <div className="w-full lg:w-1/2">
-                        <h2 className={`text-2xl sm:text-3xl text-center lg:text-start md:text-4xl lg:text-5xl max-w-2xl font-extrabold leading-tight  ${poppins.className}`}>
+                        <h2 className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight  ${poppins.className}`}>
                             LEARN <span className='text-[#ff951b]'>ANYTHING</span>, EVERYTHING
                         </h2>
                     </div>
                     <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-base sm:text-lg ${antiquaFont.className}`}>
+                        <p className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}>
                             Learning their history and present challenges is the first step toward justice, equality, and empowerment.
                         </p>
                     </div>
@@ -117,11 +117,11 @@ const Page = () => {
                     height={600}
                     className="w-full h-[300px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
                 />
-                <div className="absolute top-1/2 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
-                    <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
+                <div className="absolute top-1/2 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center text-white w-full px-4">
+                    <h2 className={`text-xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}>
                         LEARN
                     </h2>
-                    <p className={`mb-3 sm:mb-4 text-sm sm:text-base md:text-2xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
+                    <p className={`mb-3 text-lg lg:text-xl md:text-2xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
                         Our reports and publications highlight the voices, experiences, and resilience of Indigenous women across communities.
                     </p>
 
@@ -186,7 +186,7 @@ const Page = () => {
                             const isHovered = hoveredIndex === index;
                             return (
                                 <div key={index} className='relative'>
-                                    <div className={`border p-4 rounded-lg transition-all duration-300 ${isMobile ? 'cursor-pointer' : ''} ${isHovered
+                                    <div className={`border p-4 cursor-pointer rounded-lg transition-all duration-300 ${isMobile ? 'cursor-pointer' : ''} ${isHovered
                                         ? 'border-[#FF951B] shadow-lg scale-105 bg-orange-50/30'
                                         : 'border-gray-200 hover:border-gray-400'
                                         }`}
@@ -269,7 +269,7 @@ const Page = () => {
                 </section>
 
                 <section className='mb-20'>
-                    <Image src={banner} alt='banner' width={1000} height={600} className='w-full' />
+                    <Image src={banner} alt='banner' width={1000} height={1000} className='w-full' />
                 </section>
             </Container>
 

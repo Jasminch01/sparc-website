@@ -43,7 +43,7 @@ const page = () => {
 
       <Container>
         <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
-          <section className={`flex text-xs sm:text-base  gap-5  ${poppins.className} font-semibold`}>
+          <section className={`flex text-sm gap-5  ${poppins.className} font-semibold`}>
             <Link href="/">HOME</Link> <span>||</span>
             <p className="text-[#818181] uppercase">Our Research</p>
           </section>

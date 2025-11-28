@@ -33,92 +33,94 @@ const page = () => {
   return (
     <div className="relative mt-8 lg:mt-15">
       {/* Top Part - Hero Section with Form */}
-      <div className="lg:max-w-7xl lg:mx-auto lg:px-8">
-        <div className="flex flex-col lg:flex-row  lg:gap-0">
-          {/* Left Content */}
-          <div className="w-full lg:w-1/2 lg:pr-8 px-5 lg:px-0">
-            <h2
-              className={`uppercase font-black text-2xl sm:text-4xl lg:text-[51px] text-center lg:text-left text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
-            >
-              Apply today to become a{" "}
-              <span className="text-orange-400">volunteer</span>
-            </h2>
-            <p
-              className={`text-[#4E4E4E] ${antiquaFont.className} text-lg leading-relaxed lg:text-xl`}
-            >
-              Every action counts when it comes to protecting the rights,
-              voices, and dignity of Indigenous women. By volunteering with us
-            </p>
-          </div>
-          <div className="lg:hidden w-full">
-            <Image
-              src={hero}
-              alt="hero-img"
-              height={600}
-              width={1000}
-              className="h-[200px]"
-            />
-          </div>
-
-          {/* Right Form */}
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start lg:mt-15 px-5 lg:px-0">
-            <form
-              id="form"
-              action=""
-              className="relative lg:absolute z-30 bg-white rounded-xl px-6 sm:px-8 lg:px-12 py-8 lg:py-10 border border-gray-200 w-full sm:max-w-md lg:w-[500px] shadow-lg"
-            >
+      <Container>
+        <div className="">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-0">
+            {/* Left Content */}
+            <div className="w-full lg:w-1/2 lg:pr-8 px-5 lg:px-0">
               <h2
-                className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${poppins.className}`}
+                className={`uppercase font-black text-3xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
               >
-                Become a volunteer
+                Apply today to become a{" "}
+                <span className="text-orange-400">volunteer</span>
               </h2>
-              <div className="space-y-4">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                  />
-                </div>
-                <div>
-                  <textarea
-                    placeholder="Message"
-                    rows={4}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white resize-none text-sm"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="w-full bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm transition duration-200"
+              <p
+                className={`text-[#4E4E4E] ${antiquaFont.className} text-lg leading-relaxed lg:text-xl`}
+              >
+                Every action counts when it comes to protecting the rights,
+                voices, and dignity of Indigenous women. By volunteering with us
+              </p>
+            </div>
+            <div className=" lg:hidden w-full">
+              <Image
+                src={hero}
+                alt="hero-img"
+                height={800}
+                width={1000}
+                className="w-full h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover"
+              />
+            </div>
+
+            {/* Right Form */}
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+              <form
+                id="form"
+                action=""
+                className="relative lg:absolute z-30 bg-white rounded-xl px-6 lg:px-12 py-8 lg:py-10 border border-gray-200 w-full sm:max-w-md lg:w-[500px] shadow-lg"
+              >
+                <h2
+                  className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${poppins.className}`}
                 >
-                  Submit
-                </button>
-              </div>
-            </form>
+                  Become a volunteer
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Full Name"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="tel"
+                      placeholder="Phone Number"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Address"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
+                    />
+                  </div>
+                  <div>
+                    <textarea
+                      placeholder="Message"
+                      rows={4}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white resize-none text-sm"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm transition duration-200"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/* Banner Images Section */}
       <div className="relative w-full">
@@ -127,13 +129,13 @@ const page = () => {
           alt="hero-img"
           height={800}
           width={1000}
-          className="w-full hidden lg:flex h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+          className="w-full hidden lg:flex h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-"
         />
       </div>
 
       {/* Why Volunteers */}
       <Container>
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 py-12 sm:py-16 lg:py-20">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 py-12 lg:py-20">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
             <Image
               src={countryimage}
@@ -157,7 +159,7 @@ const page = () => {
               heard, support community-led initiatives, and advocate for
               justice, education, and equality for Indigenous women.
             </p>
-            <div className="space-y-4 sm:space-y-5 pt-4">
+            <div className="space-y-4 lg:space-y-5 pt-4">
               <h2
                 className={`font-semibold ${poppins.className} text-xl lg:text-2xl`}
               >
