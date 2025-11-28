@@ -39,7 +39,7 @@ const Page = () => {
   });
 
   return (
-    <div className="mt-15">
+    <div className="mt-10 md:mt-12 lg:mt-15">
       <Container>
         {/* Top Section */}
         <section className="flex flex-col lg:spacy-x-8 space-y-5 lg:space-y-0 lg:flex-row lg:justify-between">
@@ -52,7 +52,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 lg:text-justify text-center text-lg md:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 lg:text-justify text-center text-md md:text-xl ${antiquaFont.className}`}
             >
               Stories of Resistance is a robust and meaningful collection,
               weaving threads of the personal, professional and political into a
@@ -78,7 +78,7 @@ const Page = () => {
             INDISPEAK
           </h2>
           <p
-            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto ${antiquaFont.className}`}
+            className={`lg:mb-4 text-sm lg:text-xl max-w-2xl mx-auto ${antiquaFont.className}`}
           >
             Explore stories, documents, and visual archives celebrating the
             heritage, resilience, and identity of Indigenous communities
@@ -165,7 +165,7 @@ const Page = () => {
                     {expandedIndex === index
                       ? ids.des
                       : ids.des.slice(0, 300) +
-                        (ids.des.length > 300 ? "..." : "")}
+                      (ids.des.length > 300 ? "..." : "")}
                   </p>
                   <div className="w-20">
                     <div className="flex items-center gap-2 cursor-pointer">
@@ -183,9 +183,8 @@ const Page = () => {
                           {expandedIndex === index ? " Less" : "Expand"}
                         </button>
                         <IoMdArrowDropdown
-                          className={`mt-1 transition-transform duration-300 ${
-                            expandedIndex === index ? "rotate-180" : ""
-                          }`}
+                          className={`mt-1 transition-transform duration-300 ${expandedIndex === index ? "rotate-180" : ""
+                            }`}
                         />
                       </div>
                       <hr className="text-gray-400" />

@@ -104,7 +104,7 @@ const Page = () => {
       </Container>
 
       {/* Hero Section */}
-      <section className="relative w-full mt-6 sm:mt-8 md:mt-10">
+      <section className="relative w-full mt-6 sm:mt-8 md:mt-10 ">
         <Image
           src={hero}
           alt="fellowship-hero"
@@ -137,10 +137,10 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <section
-          className={`flex gap-3 sm:gap-5 my-8 md:my-20 text-xs sm:text-base font-semibold ${poppins.className}`}
+          className={`flex gap-3 sm:gap-5 m text-xs sm:text-base font-semibold mt-5  sm:mt-10 ${poppins.className}`}
         >
           <Link href="/" className="hover:text-[#FF951B] transition-colors">
-            Home
+            HOME
           </Link>
           <span>||</span>
           <p className="text-[#818181] uppercase">Sparc Update</p>
@@ -149,7 +149,7 @@ const Page = () => {
 
       {/* Data Content Section */}
       <Container>
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 border border-gray-300 mt-12">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10  border border-gray-300 mt-10 sm:mt-20">
           {/* Left Column - Highlight */}
           <div className="border-r border-gray-300 relative">
             {/* Header with diagonal cut - positioned outside/above the border */}
@@ -197,7 +197,7 @@ const Page = () => {
                       {item.des}
                     </p>
                     <Link
-                      href={`/update/${item.title
+                      href={`/sparc-update/${item.title
                         .replace(/\s+/g, "-")
                         .toLowerCase()}`}
                       className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}

@@ -2,7 +2,6 @@
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import hero from "@/public/Archive/hero.png";
-import icon from "@/public/reports/icon.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
