@@ -105,25 +105,6 @@ const Page = () => {
     (f) => f.category === activeCategory && f.date === activeYear
   );
 
-<<<<<<< HEAD
-    return (
-        <div className="mt-10 sm:mt-12 md:mt-15">
-            <Container>
-                {/* Top Section */}
-                <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
-                    <div className="w-full lg:w-1/2">
-                        <h2 className={`text-2xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
-                            KNOWLEDGE THAT <span className="text-[#FF951B]">INSPIRE </span>CHANGE
-                        </h2>
-                    </div>
-                    <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-md md:text-xl ${antiquaFont.className}`}>
-                            Every project we run begins with one goal — to uplift Indigenous women and their communities through action, awareness, and empowerment.
-                        </p>
-                    </div>
-                </section>
-            </Container>
-=======
   return (
     <div className="mt-10 :mt-12 md:mt-15">
       <Container>
@@ -148,7 +129,6 @@ const Page = () => {
           </div>
         </section>
       </Container>
->>>>>>> acd418343cbee63ded309e2a847d669feb9074a8
 
       {/* Hero Section */}
       <section className="relative w-full">
