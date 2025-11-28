@@ -43,7 +43,7 @@ const Page = () => {
                     <div>
                         <Image src={filterData.img} alt={filterData.title} width={1000} height={600} className="w-full object-cover" />
                         <div className="flex items-center gap-5 justify-between">
-                            <h1 className={`${poppins.className} w-64 mt-10 mb-5 text-sm sm:text-lg`}>{filterData.title}</h1>
+                            <h1 className={`${poppins.className} w-64 sm:w-full mt-10 mb-5 text-sm sm:text-lg`}>{filterData.title}</h1>
                             <p className={`${poppins.className} text-sm sm:text-lg`}>{filterData.date}</p>
                         </div>
                         <p className={`${antiquaFont.className} text-sm sm:text-lg`}>{filterData.des}</p>

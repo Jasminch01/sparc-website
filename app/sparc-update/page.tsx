@@ -257,7 +257,7 @@ const Page = () => {
                         {item.date}
                       </p>
                       <Link
-                        href={`/update/${item.title
+                        href={`/sparc-update/${item.title
                           .replace(/\s+/g, "-")
                           .toLowerCase()}`}
                         className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
