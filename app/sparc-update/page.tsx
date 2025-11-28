@@ -137,7 +137,7 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <section
-          className={`flex gap-3 sm:gap-5 m text-xs sm:text-base font-semibold mt-5  sm:mt-10 ${poppins.className}`}
+          className={`flex gap-3 sm:gap-5  text-xs sm:text-base font-semibold mt-5  sm:mt-10 ${poppins.className}`}
         >
           <Link href="/" className="hover:text-[#FF951B] transition-colors">
             HOME
@@ -149,7 +149,7 @@ const Page = () => {
 
       {/* Data Content Section */}
       <Container>
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10  border border-gray-300 mt-10 sm:mt-20">
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 mt-15 border border-gray-300  sm:mt-20">
           {/* Left Column - Highlight */}
           <div className="border-r border-gray-300 relative">
             {/* Header with diagonal cut - positioned outside/above the border */}

@@ -35,7 +35,7 @@ const Page = () => {
                 {/* BreadCrump */}
                 <div className={`flex uppercase items-center gap-5 my-5 lg:my-10  ${poppins.className} text-[8px] lg:text-base`}>
                     <Link href='/' className="font-bold">HOME</Link><span>||</span>
-                    <Link href='/blogs' className="font-bold">SPARC-UPDATE</Link><span>||</span>
+                    <Link href='/sparc-update' className="font-bold">SPARC-UPDATE</Link><span>||</span>
                     <p className="text-[#818181]">{slug}</p>
                 </div>
 
