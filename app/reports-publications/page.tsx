@@ -106,12 +106,12 @@ const Page = () => {
                 {/* Top Section */}
                 <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
                     <div className="w-full lg:w-1/2">
-                        <h2 className={`text-3xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
+                        <h2 className={`text-2xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
                             KNOWLEDGE THAT <span className="text-[#FF951B]">INSPIRE </span>CHANGE
                         </h2>
                     </div>
                     <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-base sm:text-lg ${antiquaFont.className}`}>
+                        <p className={`lg:ml-30 text-justify text-md md:text-xl ${antiquaFont.className}`}>
                             Every project we run begins with one goal — to uplift Indigenous women and their communities through action, awareness, and empowerment.
                         </p>
                     </div>

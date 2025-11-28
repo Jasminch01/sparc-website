@@ -34,11 +34,11 @@ const page = () => {
     <div className="relative mt-8 lg:mt-15">
       {/* Top Part - Hero Section with Form */}
       <div className="lg:max-w-7xl lg:mx-auto lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-0">
+        <div className="flex flex-col lg:flex-row  lg:gap-0">
           {/* Left Content */}
           <div className="w-full lg:w-1/2 lg:pr-8 px-5 lg:px-0">
             <h2
-              className={`uppercase font-black text-3xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
+              className={`uppercase font-black text-2xl sm:text-4xl lg:text-[51px] text-center lg:text-left text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
             >
               Apply today to become a{" "}
               <span className="text-orange-400">volunteer</span>
@@ -50,13 +50,13 @@ const page = () => {
               voices, and dignity of Indigenous women. By volunteering with us
             </p>
           </div>
-          <div className=" lg:hidden w-full">
+          <div className="lg:hidden w-full">
             <Image
               src={hero}
               alt="hero-img"
-              height={800}
+              height={600}
               width={1000}
-              className="w-full h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-fill"
+              className="h-[200px]"
             />
           </div>
 

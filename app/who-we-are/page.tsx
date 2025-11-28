@@ -7,24 +7,18 @@ import { antiquaFont, poppins } from "@/components/utils/font";
 
 const page = () => {
   return (
-    <div>
+    <div className="mt-10 md:mt-12 lg:mt-15">
       <Container>
-        <section className="flex flex-col xl:flex-row xl:items-center xl:gap-x-50 gap-y-6 xl:gap-y-0 mt-8 xl:mt-32 px-4 xl:px-0">
-          <div className="w-full xl:w-auto">
-            <h2
-              className={`font-black text-2xl lg:text-[51px] xl:whitespace-nowrap ${poppins.className}`}
-            >
-              EMPOWERING <span className="text-[#FF951B]">WOMEN</span>, <br />{" "}
-              BUILDING
+        {/* Top Section */}
+        <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
+          <div className="w-full lg:w-1/2">
+            <h2 className={`text-2xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] lg:max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
+              EMPOWERING  <span className="text-[#FF951B]">WOMEN , </span>BUILDING
             </h2>
           </div>
-          <div className="w-full xl:w-auto">
-            <p
-              className={`text-lg lg:text-xl text-justify ${antiquaFont.className}`}
-            >
-              Every project we run begins with one goal - to uplift Indigenous
-              woman and their communities through action, awarness, and
-              empowerment.
+          <div className="w-full lg:w-1/2">
+            <p className={`lg:ml-30 text-justify text-md md:text-xl ${antiquaFont.className}`}>
+              Every project we run begins with one goal - to uplift Indigenous woman and their communities through action, awarness, and empowerment.
             </p>
           </div>
         </section>

@@ -81,7 +81,7 @@ const Page = () => {
                         </h2>
                     </div>
                     <div className="w-full lg:w-1/2">
-                        <p className={`lg:ml-30 text-justify text-base sm:text-lg ${antiquaFont.className}`}>
+                        <p className={`lg:ml-30 text-justify text-md sm:text-xl ${antiquaFont.className}`}>
                             To share the latest news, activities, and milestones from your organization — keeping visitors informed about ongoing advocacy, events, and community progress.
                         </p>
                     </div>
