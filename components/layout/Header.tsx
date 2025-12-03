@@ -48,9 +48,8 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-40 bg-white transition-shadow duration-300 ${
-        scrolled ? "shadow-md" : ""
-      }`}
+      className={`sticky top-0 z-40 bg-white transition-shadow duration-300 ${scrolled ? "shadow-md" : ""
+        }`}
     >
       <Container>
         <div className={`${poppins.className}`}>
@@ -99,9 +98,8 @@ const Header = () => {
             {/* Mobile Menu Overlay */}
             <div
               onClick={() => setMenuOpen(false)}
-              className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300 xl:hidden ${
-                menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-              }`}
+              className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300 xl:hidden ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                }`}
               aria-hidden={!menuOpen}
               role="button"
               tabIndex={-1}
@@ -109,9 +107,8 @@ const Header = () => {
 
             {/* Mobile Menu Drawer */}
             <aside
-              className={`fixed xl:hidden top-0 left-0 h-full w-80 sm:w-96 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-out ${
-                menuOpen ? "translate-x-0" : "-translate-x-full"
-              }`}
+              className={`fixed xl:hidden top-0 left-0 h-full w-80 sm:w-96 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-out ${menuOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
               aria-label="Mobile navigation"
             >
               {/* Drawer Header */}

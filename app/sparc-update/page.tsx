@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import { client } from "@/sanity/lib/client";
 
 interface Data {
   category: string;
@@ -15,6 +16,9 @@ interface Data {
   title: string;
   date: string;
   video: string;
+  slug: {
+    current: string;
+  };
 }
 interface Project {
   title: string;
@@ -23,6 +27,7 @@ interface Project {
   status: string;
   des: string;
   fundedBy: string;
+
 }
 interface Events {
   title: string;
@@ -43,41 +48,98 @@ const Page = () => {
   const [activeProjectCategory, setActiveProjectCategory] = useState(0);
   const [activeEventCategory, setActiveEventCategory] = useState(0);
 
-  // Fetch the data
+  // Fetch News, Highlight, 
+
   useEffect(() => {
-    fetch("/rebuild/update.json")
-      .then((res) => res.json())
-      .then((data) => setData(data));
+    const fetchUpdates = async () => {
+      try {
+        const data = await client.fetch(`
+          *[_type == "newsUpdate"] | order(date desc){
+            title,
+            category,
+            date,
+            des,
+            slug,
+          "img": img.asset->url,
+            video
+          }
+        `);
+        setData(data);
+      } catch (err) {
+        console.error("Error fetching updates:", err);
+      }
+    };
+
+    fetchUpdates();
   }, []);
 
-  // Fetch the projects
+  // Fetch projects
   useEffect(() => {
-    fetch("/rebuild/projects.json")
-      .then((res) => res.json())
-      .then((data) => setProjects(data));
+    const fetchProjects = async () => {
+      try {
+        const query = `
+        *[_type == "project"] | order(date desc) {
+          title,
+          date,
+          "slug": slug.current,
+          status,
+          des,
+          fundedBy,
+          description,
+          "img": img.asset->url,
+        }`;
+
+        const result: Project[] = await client.fetch(query);
+        setProjects(result);
+      } catch (error) {
+        console.error("Error fetching projects from Sanity:", error);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
-  // Fetch events data
+  // Fetch events
   useEffect(() => {
-    fetch("/rebuild/events.json")
-      .then((res) => res.json())
-      .then((data) => setEvents(data));
+    const fetchEvents = async () => {
+      try {
+        const query = `
+        *[_type == "event"] | order(date desc) {
+          title,
+          "slug": slug.current,
+          date,
+          status,
+          des,
+          timeLeft,
+          description,
+          "img": img.asset->url,
+        }`;
+
+        const result: Events[] = await client.fetch(query);
+        setEvents(result);
+      } catch (error) {
+        console.error("Error fetching events from Sanity:", error);
+      }
+    };
+
+    fetchEvents();
   }, []);
+
 
   const combineProjects =
     projectsCategory[activeProjectCategory] === "All Projects"
       ? projects
       : projects.filter(
-          (project) =>
-            project.status === projectsCategory[activeProjectCategory]
-        );
+        (project) =>
+          project.status === projectsCategory[activeProjectCategory]
+      );
 
   const combineEvents =
     eventsCategory[activeEventCategory] === "All Events"
       ? events
       : events.filter(
-          (project) => project.status === eventsCategory[activeEventCategory]
-        );
+        (project) => project.status === eventsCategory[activeEventCategory]
+      );
 
   return (
     <div className="mt-10 sm:mt-12 md:mt-15">
@@ -88,7 +150,7 @@ const Page = () => {
             <h2
               className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${poppins.className}`}
             >
-             SPARC UPDATE
+              SPARC UPDATE
             </h2>
           </div>
           <div className="w-full lg:w-1/2">
@@ -197,9 +259,7 @@ const Page = () => {
                       {item.des}
                     </p>
                     <Link
-                      href={`/sparc-update/${item.title
-                        .replace(/\s+/g, "-")
-                        .toLowerCase()}`}
+                      href={`/sparc-update/${item?.slug.current}`}
                       className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
                     >
                       Read More <span>→</span>
@@ -363,13 +423,11 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveProjectCategory(index)}
-                  className={`${
-                    poppins.className
-                  } cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
-                    activeProjectCategory === index
+                  className={`${poppins.className
+                    } cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeProjectCategory === index
                       ? "border-b-2 border-black"
                       : ""
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>
@@ -403,11 +461,10 @@ const Page = () => {
                     </p>
                     <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
                       <p
-                        className={`font-bold ${
-                          project.status === "Ongoing"
-                            ? "text-[#F26522]"
-                            : "text-[#018F44]"
-                        } ${poppins.className}`}
+                        className={`font-bold ${project.status === "Ongoing"
+                          ? "text-[#F26522]"
+                          : "text-[#018F44]"
+                          } ${poppins.className}`}
                       >
                         {project.status}
                       </p>
@@ -459,13 +516,11 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveEventCategory(index)}
-                  className={`${
-                    poppins.className
-                  } cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
-                    activeEventCategory === index
+                  className={`${poppins.className
+                    } cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeEventCategory === index
                       ? "border-b-2 border-black"
                       : ""
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>
@@ -499,11 +554,10 @@ const Page = () => {
                     </p>
                     <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
                       <p
-                        className={`font-bold ${
-                          project.status === "Upcoming"
-                            ? "text-[#36133B]"
-                            : "text-[#018F44]"
-                        } ${poppins.className}`}
+                        className={`font-bold ${project.status === "Upcoming"
+                          ? "text-[#36133B]"
+                          : "text-[#018F44]"
+                          } ${poppins.className}`}
                       >
                         {project.status}
                       </p>

@@ -2,16 +2,18 @@
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import hero from "@/public/indespeak/hero.png";
+import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaAnglesDown } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 
+
 interface Indespeak {
   title: string;
   des: string;
-  img: string;
+  img: string; // Sanity image object
   writtenOn: string;
   imgAlt: string;
   imgName: string;
@@ -21,18 +23,37 @@ const Page = () => {
   const [activeYear, setActiveYear] = useState("2016-2017");
   const [indiSpeakData, setIndeSpeakData] = useState<Indespeak[]>([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  //  Fetch the data from array json
+  // Fetch the data from Sanity
   useEffect(() => {
-    fetch("/indespeak/indispeak.json")
-      .then((res) => res.json())
-      .then((data) => setIndeSpeakData(data));
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const query = `*[_type == "indispeak"] | order(writtenOn desc) {
+          title,
+          des,
+           "img": img.asset->url,
+          writtenOn,
+          imgAlt,
+          imgName
+        }`;
+
+        const data = await client.fetch(query);
+        setIndeSpeakData(data);
+      } catch (error) {
+        console.error("Error fetching data from Sanity:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   // Filter the data based on year
-
   const filteredData = indiSpeakData.filter((item) => {
-    const itemYear = item.writtenOn.slice(-4);
+    const itemYear = new Date(item.writtenOn).getFullYear().toString();
     const [start, end] = activeYear.split("-");
 
     return itemYear >= start && itemYear <= end;
@@ -141,84 +162,105 @@ const Page = () => {
 
       {/* Indispeak content section */}
       <Container>
-        <section
-          id="indispeak"
-          className="flex flex-col gap-8 lg:gap-10  lg:my-20"
-        >
-          {filteredData.map((ids, index) => (
-            <div key={index} className="flex flex-col">
-              <div className="flex flex-col xl:flex-row lg:justify-between gap-6 lg:gap-0">
-                <div className="w-full xl:w-2/3 space-y-4 lg:space-y-5">
-                  <h2
-                    className={`uppercase ${poppins.className} font-bold text-2xl md:text-3xl lg:text-[44px]`}
-                  >
-                    {ids.title}
-                  </h2>
-                  <p
-                    className={`text-[#6B6B6B] ${poppins.className} font-medium uppercase text-sm lg:text-lg`}
-                  >
-                    Written on {ids.writtenOn}
-                  </p>
-                  <p
-                    className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}
-                  >
-                    {expandedIndex === index
-                      ? ids.des
-                      : ids.des.slice(0, 300) +
-                      (ids.des.length > 300 ? "..." : "")}
-                  </p>
-                  <div className="w-20">
-                    <div className="flex items-center gap-2 cursor-pointer">
-                      <div
-                        onClick={() =>
-                          setExpandedIndex(
-                            expandedIndex === index ? null : index
-                          )
-                        }
-                        className="flex items-center gap-2 cursor-pointer w-20"
-                      >
-                        <button
-                          className={`text-lg lg:text-xl ${antiquaFont.className} cursor-pointer hover:text-[#ff951b]`}
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <p className={`text-xl ${poppins.className}`}>Loading stories...</p>
+          </div>
+        ) : filteredData.length === 0 ? (
+          <div className="flex justify-center items-center h-64">
+            <p className={`text-xl ${poppins.className}`}>
+              No stories found for the selected year range.
+            </p>
+          </div>
+        ) : (
+          <section
+            id="indispeak"
+            className="flex flex-col gap-8 lg:gap-10  lg:my-20"
+          >
+            {filteredData.map((ids, index) => (
+              <div key={index} className="flex flex-col">
+                <div className="flex flex-col xl:flex-row lg:justify-between gap-6 lg:gap-0">
+                  <div className="w-full xl:w-2/3 space-y-4 lg:space-y-5">
+                    <h2
+                      className={`uppercase ${poppins.className} font-bold text-2xl md:text-3xl lg:text-[44px]`}
+                    >
+                      {ids.title}
+                    </h2>
+                    <p
+                      className={`text-[#6B6B6B] ${poppins.className} font-medium uppercase text-sm lg:text-lg`}
+                    >
+                      Written on{" "}
+                      {new Date(ids.writtenOn).toLocaleDateString("en-US", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </p>
+                    <p
+                      className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}
+                    >
+                      {expandedIndex === index
+                        ? ids.des
+                        : ids.des.slice(0, 300) +
+                        (ids.des.length > 300 ? "..." : "")}
+                    </p>
+                    <div className="w-20">
+                      <div className="flex items-center gap-2 cursor-pointer">
+                        <div
+                          onClick={() =>
+                            setExpandedIndex(
+                              expandedIndex === index ? null : index
+                            )
+                          }
+                          className="flex items-center gap-2 cursor-pointer w-20"
                         >
-                          {expandedIndex === index ? " Less" : "Expand"}
-                        </button>
-                        <IoMdArrowDropdown
-                          className={`mt-1 transition-transform duration-300 ${expandedIndex === index ? "rotate-180" : ""
-                            }`}
-                        />
-                      </div>
-                      <hr className="text-gray-400" />
+                          <button
+                            className={`text-lg lg:text-xl ${antiquaFont.className} cursor-pointer hover:text-[#ff951b]`}
+                          >
+                            {expandedIndex === index ? " Less" : "Expand"}
+                          </button>
+                          <IoMdArrowDropdown
+                            className={`mt-1 transition-transform duration-300 ${expandedIndex === index ? "rotate-180" : ""
+                              }`}
+                          />
+                        </div>
+                        <hr className="text-gray-400" />
 
-                      <IoMdArrowDropdown className="mt-1" />
+                        <IoMdArrowDropdown className="mt-1" />
+                      </div>
+                      <hr className="text-gray-400 " />
                     </div>
-                    <hr className="text-gray-400 " />
+                  </div>
+                  <div className="w-full xl:w-1/3">
+                    {ids.img && (
+                      <Image
+                        src={ids.img}
+                        alt={ids.title}
+                        width={500}
+                        height={500}
+                        className="w-full h-auto"
+                      />
+                    )}
+                    {ids.imgName && (
+                      <h2
+                        className={`${poppins.className} mt-4 text-lg xl:text-[22px] font-bold`}
+                      >
+                        {ids.imgName}
+                      </h2>
+                    )}
+                    <p
+                      className={`${antiquaFont.className} text-[#252525] text-lg xl:text-xl `}
+                    >
+                      {ids.imgAlt}
+                    </p>
                   </div>
                 </div>
-                <div className="w-full xl:w-1/3">
-                  <Image
-                    src={ids.img}
-                    alt={ids.title}
-                    width={500}
-                    height={500}
-                    className="w-full h-auto"
-                  />
-                  <h2
-                    className={`${poppins.className} mt-4 text-lg xl:text-[22px] font-bold`}
-                  >
-                    {ids?.imgName}
-                  </h2>
-                  <p
-                    className={`${antiquaFont.className} text-[#252525] text-lg xl:text-xl `}
-                  >
-                    {ids.imgAlt}
-                  </p>
-                </div>
-              </div>
 
-              <hr className="my-6 lg:my-10 text-gray-300" />
-            </div>
-          ))}
-        </section>
+                <hr className="my-6 lg:my-10 text-gray-300" />
+              </div>
+            ))}
+          </section>
+        )}
       </Container>
     </div>
   );

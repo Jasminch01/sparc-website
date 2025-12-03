@@ -1,52 +1,86 @@
-"use client"
+"use client";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
+import { client } from "@/sanity/lib/client"; // Import Sanity client
 
 interface Data {
-    img: string;
+    _id: string; // Added _id for consistency and potential use
+    img: string; // Now a string URL from Sanity
     title: string;
     des: string;
     date: string;
     category: string;
     longdes: string;
+    slug: string; // Added slug for related stories link generation
 }
+
+// Function to format the date (copied from your main page)
+const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+    });
+};
 
 const Page = () => {
     const { slug } = useParams();
-    const [data, setData] = useState<Data[]>([]);
+    const [filteredData, setFilteredData] = useState<Data | null>(null);
+    const [relatedStories, setRelatedStories] = useState<Data[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // Fetch data
-    useEffect(() => {
-        fetch('/Archive/data.json')
-            .then(res => res.json())
-            .then(data => {
-                setData(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error('Error fetching data:', err);
-                setLoading(false);
-            });
-    }, []);
-
-    // Convert slug back to title format for comparison
     const slugString = Array.isArray(slug) ? slug[0] : slug;
-    const titleFromSlug = slugString?.replace(/-/g, ' ');
 
-    // Filter data by slug
-    const filteredData = data.find(d =>
-        d.title.toLowerCase() === titleFromSlug?.toLowerCase()
-    );
+    // Fetch data from Sanity
+    useEffect(() => {
+        if (!slugString) return;
 
-    // Get related stories (exclude current article, limit to 3)
-    const relatedStories = data
-        .filter(d => d.title !== filteredData?.title)
-        .slice(0, 3);
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+
+                // 1. Fetch the main article data
+                const articleQuery = `*[_type == "archivePost" && slug.current == $slug][0] {
+                    _id,
+                    title,
+                    "img": img.asset->url,
+                    des,
+                    date,
+                    category,
+                    longdes,
+                    "slug": slug.current
+                }`;
+                const mainArticle: Data = await client.fetch(articleQuery, { slug: slugString });
+                setFilteredData(mainArticle);
+
+                // 2. Fetch related stories (all except the current one, limit to 3)
+                const relatedQuery = `*[_type == "archivePost" && slug.current != $slug] | order(date desc) [0..2] {
+                    _id,
+                    title,
+                    "img": img.asset->url,
+                    des,
+                    date,
+                    category,
+                    "slug": slug.current
+                }`;
+                const relatedResults: Data[] = await client.fetch(relatedQuery, { slug: slugString });
+                setRelatedStories(relatedResults);
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [slugString]);
+
 
     if (loading) {
         return (
@@ -80,23 +114,25 @@ const Page = () => {
                         <span>||</span>
                         <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
                         <span>||</span>
-                        <h2 className="text-[#818181]">{slug}</h2>
+                        {/* Displaying the title here is often better than the raw slug */}
+                        <h2 className="text-[#818181] line-clamp-1">{filteredData.title}</h2>
                     </div>
                 </section>
             </Container>
 
             <article className="max-w-5xl mx-auto px-4">
-                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4">{filteredData.title}</h1>
-                <p className={`text-gray-500 mb-6 ${poppins.className}`}>{filteredData.date}</p>
+                <h1 className={`text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4 ${poppins.className}`}>{filteredData.title}</h1>
+                <p className={`text-gray-500 mb-6 ${poppins.className}`}>{formatDate(filteredData.date)}</p>
                 <Image
                     src={filteredData.img}
                     alt={filteredData.title}
                     width={1000}
                     height={1000}
-                    className="w-full"
+                    className="w-full object-cover max-h-[60vh]"
                 />
 
-                <p className={`text-[#252525] ${antiquaFont.className} py-5`}>
+                {/* You may need to handle rich text/portable text here if longdes is not a plain string in Sanity */}
+                <p className={`text-[#252525] ${antiquaFont.className} py-5 whitespace-pre-line`}>
                     {filteredData.longdes}
                 </p>
 
@@ -106,9 +142,11 @@ const Page = () => {
                         Related Stories
                     </h2>
 
+                    {/* Note: relatedStories array now contains data from Sanity via the second query */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {relatedStories.map((story, index) => (
-                            <Link key={index} href={`/archive/${story.title.replace(/\s+/g, '-').toLowerCase()}`} className="group">
+                        {relatedStories.map((story) => (
+                            // Use story.slug for the Link href, which is more reliable
+                            <Link key={story._id} href={`/archive/${story.slug}`} className="group">
                                 <div className="overflow-hidden">
                                     <Image
                                         src={story.img}

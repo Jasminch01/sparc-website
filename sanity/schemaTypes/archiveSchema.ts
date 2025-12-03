@@ -28,8 +28,8 @@ const archiveSchema = {
       validation: (Rule: {
         required: () => {
           (): any;
-          new (): any;
-          max: { (arg0: number): any; new (): any };
+          new(): any;
+          max: { (arg0: number): any; new(): any };
         };
       }) => Rule.required().max(200),
     },
@@ -79,12 +79,8 @@ const archiveSchema = {
         maxLength: 96,
         slugify: (input: string) =>
           input
-            .toLowerCase()
             .replace(/\s+/g, "-")
-            .replace(/[^\w\-]+/g, "")
-            .replace(/\-\-+/g, "-")
-            .replace(/^-+/, "")
-            .replace(/-+$/, ""),
+            .toLowerCase()
       },
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
@@ -110,4 +106,4 @@ const archiveSchema = {
   ],
 };
 
-export {archiveSchema };
+export { archiveSchema };

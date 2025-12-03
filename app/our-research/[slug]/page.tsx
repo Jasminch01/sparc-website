@@ -5,27 +5,79 @@ import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import Image from "next/image";
 import { antiquaFont, poppins } from "@/components/utils/font";
-import { Project, ResearchData } from "@/components/utils/types";
+import { client } from "@/sanity/lib/client";
+
+
+interface Project {
+  title: string;
+  slug: {
+    current: string;
+  };
+  date: string;
+  image: string;
+  category: string;
+  description: string;
+  status: string;
+  duration: string;
+  authors: string[];
+  objectives: string[];
+  location: string;
+  fundedBy: string;
+  researchers: string[];
+  methodology: string;
+  impact: string;
+}
 
 const ResearchDetailsPage = () => {
-  const params = useParams();
-  const id = params.id;
+  const { slug } = useParams();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/research/data.json")
-      .then((res) => res.json())
-      .then((data: ResearchData) => {
-        const selectedProject = data.projects.find((p) => p.id === Number(id));
-        setProject(selectedProject || null);
-        setLoading(false);
-      })
-      .catch((error) => {
+    const fetchProject = async () => {
+      try {
+        setLoading(true);
+
+        // Query Sanity for the specific research project by slug
+        const query = `*[_type == "research" && slug.current == $slug][0] {
+          title,
+          slug,
+          date,
+        "image": image.asset->url,
+          category,
+          description,
+          status,
+          duration,
+          authors,
+          objectives,
+          location,
+          fundedBy,
+          researchers,
+          methodology,
+          impact
+        }`;
+
+        console.log("Searching for slug:", slug); // Debug log
+        const result = await client.fetch(query, { slug });
+        console.log("Found project:", result); // Debug log
+
+        if (result) {
+          setProject(result);
+        } else {
+          setProject(null);
+        }
+      } catch (error) {
         console.error("Error fetching project:", error);
+        setProject(null);
+      } finally {
         setLoading(false);
-      });
-  }, [id]);
+      }
+    };
+
+    if (slug) {
+      fetchProject();
+    }
+  }, [slug]);
 
   if (loading) {
     return (
@@ -87,19 +139,27 @@ const ResearchDetailsPage = () => {
               {project.title}
             </h1>
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-600">
-              <span className="font-medium">13 OCTOBER 1999</span>
+              <span className="font-medium">
+                {new Date(project.date).toLocaleDateString("en-US", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                }).toUpperCase()}
+              </span>
             </div>
           </div>
 
           {/* Featured Image */}
           <div className="my-8 sm:my-10 lg:my-12 rounded-lg overflow-hidden shadow-lg">
-            <Image
-              alt={project.title}
-              src={project.image}
-              width={1200}
-              height={600}
-              className="w-full h-auto object-cover"
-            />
+            {project.image && (
+              <Image
+                alt={project.title}
+                src={project.image}
+                width={1200}
+                height={600}
+                className="w-full h-auto object-cover"
+              />
+            )}
           </div>
 
           {/* Content Section */}

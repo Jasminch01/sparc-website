@@ -1,0 +1,158 @@
+import { Rule } from '@sanity/types';
+import { StringComponents } from 'sanity';
+
+export const ReportsPublications = {
+    name: 'reports',
+    title: 'Reports',
+    type: 'document',
+    fields: [
+        {
+            name: 'title',
+            title: 'Title',
+            type: 'string',
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'pathTitle',
+            title: 'Path Title',
+            type: 'string',
+            description: 'Title used in URL paths',
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'slug',
+            title: 'Slug',
+            type: 'slug',
+            options: {
+                source: 'pathTitle',
+                maxLength: 96,
+                slugify: (input: string) => input
+                    .toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w\-]+/g, '')
+                    .replace(/\-\-+/g, '-')
+                    .replace(/^-+/, '')
+                    .replace(/-+$/, '')
+            },
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: "writtenOn",
+            title: "Written On",
+            type: "date",
+            options: {
+                dateFormat: "DD MMMM YYYY",
+            },
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'category',
+            title: 'Category',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Reports', value: 'reports' },
+                    { title: 'Publications', value: 'publications' }
+                ],
+                layout: 'radio'
+            },
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'date',
+            title: 'Date Range',
+            type: 'string',
+            description: 'Year or year range (e.g., "2020-2021")',
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'des',
+            title: 'Description',
+            type: 'text',
+            rows: 5,
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'img',
+            title: 'Cover Image',
+            type: 'image',
+            options: {
+                hotspot: true
+            },
+            validation: (Rule: Rule) => Rule.required(),
+        },
+        {
+            name: 'imgDes',
+            title: 'Image Description',
+            type: 'string',
+            description: 'Caption or description for the image',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category === 'publications'
+        },
+        // Publications-specific fields
+        {
+            name: 'publisher',
+            title: 'Publisher',
+            type: 'string',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
+        },
+        {
+            name: 'author',
+            title: 'Author',
+            type: 'string',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
+        },
+        {
+            name: 'publicationLanguage',
+            title: 'Publication Language',
+            type: 'string',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
+        },
+        {
+            name: 'financialSupportBy',
+            title: 'Financial Support By',
+            type: 'string',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
+        },
+        {
+            name: 'relaseYear',
+            title: 'Release Year',
+            type: 'number',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
+        },
+        {
+            name: 'releaseMonth',
+            title: 'Release Month',
+            type: 'string',
+            description: 'e.g., "19 October"',
+            hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
+        }
+    ],
+    preview: {
+        select: {
+            title: 'title',
+            category: 'category',
+            date: 'date',
+            media: 'img'
+        },
+        prepare(selection: { title: string; category: string; date: string; media: StringComponents }) {
+            const { title, category, date, media } = selection;
+            return {
+                title: title,
+                subtitle: `${category} - ${date}`,
+                media: media
+            }
+        }
+    },
+    orderings: [
+        {
+            title: 'Category',
+            name: 'categoryAsc',
+            by: [{ field: 'category', direction: 'asc' }]
+        },
+        {
+            title: 'Date Range, New',
+            name: 'dateDesc',
+            by: [{ field: 'date', direction: 'desc' }]
+        }
+    ]
+}
