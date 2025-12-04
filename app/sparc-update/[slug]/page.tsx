@@ -72,7 +72,7 @@ const Page = () => {
 
         {filterData ? (
           <div className="mb-20 sm:mb-32 lg:mb-40">
-            <div className="relative w-full aspect-video sm:aspect-[16/10] lg:aspect-[16/9] overflow-hidden rounded-lg">
+            <div className="relative w-full aspect-video overflow-hidden rounded-lg">
               <Image
                 src={filterData.img}
                 alt={filterData.title}
