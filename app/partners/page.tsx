@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import Image from "next/image";
+import { client } from "@/sanity/lib/client";
 
 interface Partner {
+  name: string;
   logo: string;
   image: string;
   about: string;
   link: string;
+  order?: number;
 }
 
 const Page = () => {
@@ -17,23 +20,41 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/Partners/partners.json")
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch all partners from Sanity, ordered by display order
+        const query = `*[_type == "partner"] | order(order asc, name asc) {
+          name,
+          "logo": logo.asset->url,
+          "image": image.asset->url,
+          about,
+          link,
+          order
+        }`;
+
+        const data = await client.fetch(query);
+        console.log("Fetched partners:", data); // Debug log
         setPartners(data);
+      } catch (error) {
+        console.error("Error fetching partners from Sanity:", error);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching partners:", error);
-        setLoading(false);
-      });
+      }
+    };
+
+    fetchPartners();
   }, []);
 
   if (loading) {
     return (
       <Container>
         <div className="text-center py-20">
-          <p className="text-2xl">Loading partners...</p>
+          <div className="flex flex-col items-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
+            <p className={`text-2xl ${poppins.className}`}>Loading partners...</p>
+          </div>
         </div>
       </Container>
     );
@@ -77,50 +98,62 @@ const Page = () => {
             OUR PARTNERS SO FAR
           </p>
 
-          <div className="py-10 lg:py-20">
-            <div className="grid grid-cols-1 gap-8 lg:gap-12">
-              {partners.map((partner, index) => (
-                <div key={index} className="p-6 md:p-12 lg:p-20 border rounded">
-                  <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 lg:gap-20">
-                    <Image
-                      src={partner.logo}
-                      alt="partner logo"
-                      width={300}
-                      height={300}
-                      className="w-full max-w-[100px] md:max-w-[250px] lg:max-w-[300px] h-auto object-contain"
-                    />
-                    <Image
-                      src={partner.image}
-                      alt="partner image"
-                      width={500}
-                      height={500}
-                      className="w-full max-w-[200px] md:max-w-[250px] lg:max-w-[500px] h-auto object-contain"
-                    />
-                  </div>
-                  <div className="my-6 md:my-10">
-                    <p
-                      className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
-                    >
-                      {partner.about}
-                    </p>
-                  </div>
-                  <div className="text-center">
-                    <a
-                      href={partner.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <button
-                        className={`px-6 md:px-8 py-3 md:py-4 cursor-pointer hover:bg-[#ff951b] bg-[#36133B] rounded-full text-white ${poppins.className} hover:bg-[#4a1a50] transition-colors cursor-pointer`}
-                      >
-                        Visit Partner Website
-                      </button>
-                    </a>
-                  </div>
-                </div>
-              ))}
+          {partners.length === 0 ? (
+            <div className="text-center py-20">
+              <p className={`text-xl text-gray-600 ${antiquaFont.className}`}>
+                No partners found. Check back soon!
+              </p>
             </div>
-          </div>
+          ) : (
+            <div className="py-10 lg:py-20">
+              <div className="grid grid-cols-1 gap-8 lg:gap-12">
+                {partners.map((partner, index) => (
+                  <div key={index} className="p-6 md:p-12 lg:p-20 border rounded">
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 lg:gap-20">
+                      {partner.logo && (
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name || "partner logo"}
+                          width={300}
+                          height={300}
+                          className="w-full max-w-[100px] md:max-w-[250px] lg:max-w-[300px] h-auto object-contain"
+                        />
+                      )}
+                      {partner.image && (
+                        <Image
+                          src={partner.image}
+                          alt={partner.name || "partner image"}
+                          width={500}
+                          height={500}
+                          className="w-full max-w-[200px] md:max-w-[250px] lg:max-w-[500px] h-auto object-contain"
+                        />
+                      )}
+                    </div>
+                    <div className="my-6 md:my-10">
+                      <p
+                        className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
+                      >
+                        {partner.about}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <a
+                        href={partner.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button
+                          className={`px-6 md:px-8 py-3 md:py-4 cursor-pointer hover:bg-[#ff951b] bg-[#36133B] rounded-full text-white ${poppins.className} hover:bg-[#4a1a50] transition-colors`}
+                        >
+                          Visit Partner Website
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </Container>
     </div>

@@ -2,6 +2,7 @@
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import hero from "@/public/Archive/hero.png";
+import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -10,11 +11,13 @@ import { FaAnglesDown } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
 interface Data {
+  _id: string;
   img: string;
   title: string;
   des: string;
   date: string;
   category: string;
+  slug: string;
 }
 
 const categories: string[] = [
@@ -27,18 +30,57 @@ const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeCategory, setActiveCategory] = useState("Historical Records");
   const [data, setData] = useState<Data[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  // Fetch data
+  // Fetch data from Sanity
   useEffect(() => {
-    fetch("/Archive/data.json")
-      .then((res) => res.json())
-      .then((data) => setData(data));
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const query = `*[_type == "archivePost"] | order(date desc) {
+          _id,
+          title,
+          "img": img.asset->url,
+          des,
+          date,
+          category,
+          "slug": slug.current
+        }`;
+
+        const result = await client.fetch(query);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  // Filter data
-  const filterdData = data.filter((d) =>
-    d.category.toLowerCase().includes(activeCategory.toLowerCase())
-  );
+  // Filter data by category and search
+  const filterdData = data.filter((d) => {
+    const matchesCategory = d.category
+      ?.toLowerCase()
+      .includes(activeCategory.toLowerCase());
+    const matchesSearch =
+      searchTerm === "" ||
+      d.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      d.des?.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  // Format date
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
 
   return (
     <div className="mt-10 md:mt-15">
@@ -121,6 +163,8 @@ const Page = () => {
             <input
               type="text"
               placeholder="Search here"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="px-3 md:px-5 py-2 outline-none w-full text-sm md:text-base"
             />
             <FaSearch className="mr-2 text-gray-400" />
@@ -208,53 +252,58 @@ const Page = () => {
         </div>
 
         <section className="pb-8 lg:pb-32">
-          {filterdData.length > 0 ? (
+          {loading ? (
+            <div className="text-center h-screen flex justify-center items-center">
+              <p
+                className={`text-gray-500 text-lg md:text-xl ${poppins.className}`}
+              >
+                Loading...
+              </p>
+            </div>
+          ) : filterdData.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-              {filterdData.map((project, index) => (
-                <div key={index} className="relative h-full">
-                  <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
-                    <div className="relative w-full h-[250px] md:h-[300px] mb-3 md:mb-4 shrink-0">
-                      <Image
-                        src={project.img}
-                        alt={project.title}
-                        fill
-                        className="object-cover rounded-lg"
-                      />
-                    </div>
-                    <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
-                      <h2
-                        className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
-                      >
-                        {project.title}
-                      </h2>
-                      <p
-                        className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
-                      >
-                        {project.date}
-                      </p>
-                      <p
-                        className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
-                      >
-                        {project.des}
-                      </p>
-                      <Link
-                        href={`/archive/${project.title
-                          .replace(/\s+/g, "-")
-                          .toLowerCase()}`}
-                        className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
-                      >
-                        Read More <IoIosArrowRoundForward size={20} />
-                      </Link>
+              {filterdData.map((project) => (
+                <Link href={`/archive/${project.slug}`} key={project._id}>
+                  <div className="relative h-full group">
+                    <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
+                      <div className="relative w-full h-[250px] md:h-[300px] mb-3 md:mb-4 shrink-0">
+                        <Image
+                          src={project.img}
+                          alt={project.title}
+                          width={500}
+                          height={500}
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
+                        <h2
+                          className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
+                        >
+                          {project.title}
+                        </h2>
+                        <p
+                          className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
+                        >
+                          {formatDate(project.date)}
+                        </p>
+                        <p
+                          className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
+                        >
+                          {project.des}
+                        </p>
+                        <button
+                          className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer group-hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
+                        >
+                          Read More <IoIosArrowRoundForward size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
-            <div
-              className="text-center h-screen
-            flex justify-center items-center"
-            >
+            <div className="text-center h-screen flex justify-center items-center">
               <p
                 className={`text-gray-500 text-lg md:text-xl ${poppins.className}`}
               >

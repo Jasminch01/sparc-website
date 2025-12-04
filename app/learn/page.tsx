@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
+import { client } from '@/sanity/lib/client';
 
 type Course = {
     title: string;
@@ -47,13 +48,33 @@ const Page = () => {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Fetch the courses from json
     useEffect(() => {
-        fetch('/Learn/learn.json')
-            .then(res => res.json())
-            .then(data => setCourses(data))
-            .catch(error => console.error('Error fetching courses:', error))
-    }, [])
+        const fetchCourses = async () => {
+            try {
+                const data = await client.fetch(`
+                    *[_type == "learn"]{
+                        title,
+                        des,
+                        longDes,
+                        category,
+                        itemsSold,
+                        rating,
+                        price,
+                        updated,
+                        whatYouLearn,
+                        "img": img.asset->url
+                    }
+                `);
+
+                setCourses(data);
+            } catch (error) {
+                console.error("Error fetching courses:", error);
+            }
+        };
+
+        fetchCourses();
+    }, []);
+
 
     // Filter data based on active category
     const filteredCourses = courses.filter(course => course.category === learnCategory[activeCategory]);

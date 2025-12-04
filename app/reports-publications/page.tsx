@@ -2,111 +2,81 @@
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import hero from "@/public/reports/reports-hero.png";
-import one from "@/public/reports/reports-1.png";
-import two from "@/public/reports/reports-2.png";
-import three from "@/public/reports/reports-3.png";
-import publicationOne from "@/public/publications/publications1.png";
-import publicationTwo from "@/public/publications/publications2.png";
-import publicationThree from "@/public/publications/publications3.png";
+import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaAnglesDown } from "react-icons/fa6";
 
-const reports_publications = [
-  {
-    title: "KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR",
-    pathTitle: "KAMLA BHASIN FELLOWSHIP",
-    writtenon: "13 October, 2025",
-    des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activi. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – "Courage is Contagious".',
-    img: one,
-    category: "reports",
-    date: "2020-2021",
-    imgDes:
-      "A group photo after the Kamla Bhasin Fellowship (Bangladesh) 2017 award ceremony. ",
-  },
-  {
-    title: "KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR",
-    writtenon: "13 October, 2025",
-    pathTitle: "KAMLA BHASIN FELLOWSHIP",
-    des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activi. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – "Courage is Contagious".',
-    img: two,
-    category: "reports",
-    date: "2020-2021",
-    imgDes:
-      "A group photo after the Kamla Bhasin Fellowship (Bangladesh) 2017 award ceremony. ",
-  },
-  {
-    title: "KAMLA BHASIN - SPARC FELLOWSHIP: A LONG - TERM ENDEAVOUR",
-    pathTitle: "KAMLA BHASIN FELLOWSHIP",
-    writtenon: "13 October, 2025",
-    des: 'The Kamla Bhasin Fellowship, an initiative of SPaRC, aims to recognize and empower women advocates who fearlessly champion the cause of gender equality, raise their voices against violence against women, and challenge patriarchal dominance in their own lives or in the lives of other women, be it through their writings, by creating awareness in society or through any other means of activi. With this aim, SPaRC identifies and honors women residing in the Chittagong Hill Tracts who have actively worked to combat violence against women and gender inequality. Through this initiative, SPaRC seeks to provide recognition and support to these courageous advocates and inspire others to follow suit with its slogan – "Courage is Contagious".',
-    img: three,
-    category: "reports",
-    date: "2020-2021",
-    imgDes:
-      "A group photo after the Kamla Bhasin Fellowship (Bangladesh) 2017 award ceremony. ",
-  },
 
-  //publications
-  {
-    title: "THE SILENCE THEY LEFT BEHIND STILL BLEEDS",
-    pathTitle: "THE SILENCE THEY LEFT BEHIND STILL BLEEDS",
-    writtenon: "13 October, 2025",
-    publisher: "SPARC, Indigenous Womenfesto",
-    author: "Tufan Chakma",
-    publicationLanguage: "English",
-    financialSupportBy: "SPARC, Indigenous Womenfesto",
-    relaseYear: 2025,
-    des: "Skill-building sessions that provide education, leadership training, and emotional support to Indigenous women in local communities. Volunteer roles: Event assistance, teaching support, translation, and logistics. ",
-    img: publicationOne,
-    releaseMonth: "19 October",
-    category: "publications",
-    date: "2024-2025",
-  },
-  {
-    title: "THE SILENCE THEY LEFT BEHIND STILL BLEEDS",
-    pathTitle: "THE SILENCE THEY LEFT BEHIND STILL BLEEDS",
-    writtenon: "13 October, 2025",
-    publisher: "SPARC, Indigenous Womenfesto",
-    author: "Tufan Chakma",
-    publicationLanguage: "English",
-    financialSupportBy: "SPARC, Indigenous Womenfesto",
-    relaseYear: 2025,
-    releaseMonth: "19 October",
-    des: "Skill-building sessions that provide education, leadership training, and emotional support to Indigenous women in local communities. Volunteer roles: Event assistance, teaching support, translation, and logistics. ",
-    img: publicationTwo,
-    category: "publications",
-    date: "2024-2025",
-  },
-  {
-    title: "THE SILENCE THEY LEFT BEHIND STILL BLEEDS",
-    pathTitle: "THE SILENCE THEY LEFT BEHIND STILL BLEEDS",
-    writtenon: "13 October, 2025",
-    publisher: "SPARC, Indigenous Womenfesto",
-    author: "Tufan Chakma",
-    publicationLanguage: "English",
-    financialSupportBy: "SPARC, Indigenous Womenfesto",
-    relaseYear: 2025,
-    releaseMonth: "19 October",
-    des: "Skill-building sessions that provide education, leadership training, and emotional support to Indigenous women in local communities. Volunteer roles: Event assistance, teaching support, translation, and logistics. ",
-    img: publicationThree,
-    category: "publications",
-    date: "2024-2025",
-  },
-];
+interface Report {
+  title: string;
+  pathTitle: string;
+  writtenOn: string;
+  des: string;
+  img: string;
+  category: "reports" | "publications";
+  date: string;
+  imgDes?: string;
+  publisher?: string;
+  author?: string;
+  publicationLanguage?: string;
+  financialSupportBy?: string;
+  relaseYear?: number;
+  releaseMonth?: string;
+  slug: {
+    current: string;
+  };
+}
 
 const Page = () => {
   const [activeCategory, setActiveCategory] = useState("reports");
   const [activeYear, setActiveYear] = useState("2020-2021");
+  const [reportsData, setReportsData] = useState<Report[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Find the filtered category and date from the array of objects
-  const combineCategoryandDate = reports_publications.filter(
+  // Fetch data from Sanity
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const query = `*[_type == "reports"] | order(writtenOn desc) {
+          title,
+          pathTitle,
+          writtenOn,
+          des,
+          "img": img.asset->url,
+          category,
+          date,
+          imgDes,
+          publisher,
+          author,
+          publicationLanguage,
+          financialSupportBy,
+          relaseYear,
+          releaseMonth,
+          slug
+        }`;
+
+        const data = await client.fetch(query);
+        setReportsData(data);
+      } catch (error) {
+        console.error("Error fetching data from Sanity:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Filter data by category and date
+  const combineCategoryandDate = reportsData.filter(
     (f) => f.category === activeCategory && f.date === activeYear
   );
 
   return (
-    <div className="mt-10 :mt-12 md:mt-15">
+    <div className="mt-10 sm:mt-12 md:mt-15">
       <Container>
         {/* Top Section */}
         <section className="flex flex-col lg:flex-row justify-between gap-6 :gap-8 lg:gap-20">
@@ -233,7 +203,13 @@ const Page = () => {
         id="reports"
         className="w-full max-w-7xl mx-auto px-5 lg:px-0 space-y-8 lg:space-y-10 mt-10 lg:mt-15 md:mt-20 mb-12 lg:mb-16"
       >
-        {combineCategoryandDate.length === 0 ? (
+        {loading ? (
+          <div className="flex justify-center items-center h-64">
+            <p className={`text-xl ${poppins.className}`}>
+              Loading reports...
+            </p>
+          </div>
+        ) : combineCategoryandDate.length === 0 ? (
           <span
             className={`text-center block text-lg :text-xl ${poppins.className}`}
           >
@@ -252,53 +228,75 @@ const Page = () => {
                   </h2>
                   <p className="uppercase text-sm">
                     <span className="text-[#6B6B6B]">Written on</span>{" "}
-                    {rep.writtenon}
+                    {new Date(rep.writtenOn).toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
                   </p>
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mt-4 lg:mt-5">
                     <div className="w-full lg:w-1/2">
-                      <Image
-                        src={rep.img}
-                        alt={rep.title}
-                        height={500}
-                        width={500}
-                        className="w-full md:w-[550px] h-auto md:h-[500px] rounded-lg object-cover"
-                      />
+                      {rep.img && (
+                        <Image
+                          src={rep.img}
+                          alt={rep.title}
+                          height={500}
+                          width={500}
+                          className="w-full md:w-[550px] h-auto md:h-[500px] rounded-lg object-cover"
+                        />
+                      )}
                     </div>
                     <div
-                      className={`"w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${antiquaFont.className}`}
+                      className={`w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${antiquaFont.className}`}
                     >
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                        <p className="font-bold text-lg md:text-xl">
-                          Publisher:
-                        </p>
-                        <p className="text-base md:text-xl">{rep.publisher}</p>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                        <p className="font-bold text-lg md:text-xl">Author:</p>
-                        <p className="text-base md:text-xl">{rep.author}</p>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                        <p className="font-bold text-lg md:text-xl">
-                          Publication Language:
-                        </p>
-                        <p className="text-base md:text-xl">
-                          {rep.publicationLanguage}
-                        </p>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                        <p className="font-bold text-lg md:text-xl">
-                          Release Year:
-                        </p>
-                        <p className="text-base md:text-xl">{rep.relaseYear}</p>
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-                        <p className="font-bold text-lg md:text-xl">
-                          Release Month | Day:
-                        </p>
-                        <p className="text-base md:text-xl">
-                          {rep.releaseMonth}
-                        </p>
-                      </div>
+                      {rep.publisher && (
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                          <p className="font-bold text-lg md:text-xl">
+                            Publisher:
+                          </p>
+                          <p className="text-base md:text-xl">
+                            {rep.publisher}
+                          </p>
+                        </div>
+                      )}
+                      {rep.author && (
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                          <p className="font-bold text-lg md:text-xl">
+                            Author:
+                          </p>
+                          <p className="text-base md:text-xl">{rep.author}</p>
+                        </div>
+                      )}
+                      {rep.publicationLanguage && (
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                          <p className="font-bold text-lg md:text-xl">
+                            Publication Language:
+                          </p>
+                          <p className="text-base md:text-xl">
+                            {rep.publicationLanguage}
+                          </p>
+                        </div>
+                      )}
+                      {rep.relaseYear && (
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                          <p className="font-bold text-lg md:text-xl">
+                            Release Year:
+                          </p>
+                          <p className="text-base md:text-xl">
+                            {rep.relaseYear}
+                          </p>
+                        </div>
+                      )}
+                      {rep.releaseMonth && (
+                        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
+                          <p className="font-bold text-lg md:text-xl">
+                            Release Month | Day:
+                          </p>
+                          <p className="text-base md:text-xl">
+                            {rep.releaseMonth}
+                          </p>
+                        </div>
+                      )}
                       <div className="mt-6 md:mt-10">
                         <div>
                           <p className="text-base md:text-lg lg:text-xl text-justify leading-relaxed">
@@ -307,9 +305,7 @@ const Page = () => {
                         </div>
                         <div className={`mt-6 md:mt-10 ${poppins.className}`}>
                           <Link
-                            href={`/reports-publications/${rep.pathTitle
-                              ?.replace(/\s+/g, "-")
-                              .toLowerCase()}`}
+                            href={`/reports-publications/${rep.slug.current}`}
                             className="inline-block bg-[#36133B] rounded-full cursor-pointer text-white text-sm md:text-base transition-colors uppercase py-3 md:py-4 font-semibold px-6 md:px-7 hover:bg-[#4a1a50]"
                           >
                             Read More
@@ -324,24 +320,32 @@ const Page = () => {
                   <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
                     {rep.title}
                   </h2>
-                  <p className="text-base">{rep.writtenon}</p>
+                  <p className="text-base">
+                    {new Date(rep.writtenOn).toLocaleDateString("en-US", {
+                      day: "2-digit",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
                   <p className="mb-4 text-base md:text-lg text-justify">
                     {rep.des}
                   </p>
-                  <Image
-                    src={rep.img}
-                    alt={rep.title}
-                    height={600}
-                    width={1000}
-                    className="w-full h-auto rounded-lg shadow-md"
-                  />
-                  <p className="mt-5 mb-6 text-sm md:text-base text-gray-600 italic">
-                    {rep.imgDes}
-                  </p>
+                  {rep.img && (
+                    <Image
+                      src={rep.img}
+                      alt={rep.title}
+                      height={600}
+                      width={1000}
+                      className="w-full h-auto rounded-lg shadow-md"
+                    />
+                  )}
+                  {rep.imgDes && (
+                    <p className="mt-5 mb-6 text-sm md:text-base text-gray-600 italic">
+                      {rep.imgDes}
+                    </p>
+                  )}
                   <Link
-                    href={`/reports-publications/${rep.pathTitle
-                      ?.replace(/\s+/g, "-")
-                      .toLowerCase()}`}
+                    href={`/reports-publications/${rep.slug.current}`}
                     className="inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50]"
                   >
                     Read More
