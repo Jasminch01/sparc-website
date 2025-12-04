@@ -113,14 +113,14 @@ const Page = () => {
         </span>
 
         <section
-          className={`flex justify-between ${poppins.className} py-10 lg:py-15`}
+          className={`flex justify-between uppercase text-xs md:text-base font-semibold ${poppins.className} py-10 lg:py-15`}
         >
-          <div className="flex gap-2 lg:gap-5 text-xs md:text-md lg:text-lg font-semibold">
+          <div className="flex gap-2 lg:gap-5 ">
             <Link href="/" className="hover:underline">
               HOME
             </Link>
             <span>||</span>
-            <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
+            <p className="text-[#818181] ">INDIGENOUS ARCHIVE</p>
             <span>||</span>
             {/* Displaying the title here is often better than the raw slug */}
             <h2 className="text-[#818181] line-clamp-1">
@@ -130,7 +130,7 @@ const Page = () => {
         </section>
       </Container>
 
-      <article className="max-w-5xl mx-auto px-4">
+      <article className="max-w-7xl mx-auto px-4">
         <h1
           className={`text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4 ${poppins.className}`}
         >
@@ -149,13 +149,13 @@ const Page = () => {
 
         {/* You may need to handle rich text/portable text here if longdes is not a plain string in Sanity */}
         <p
-          className={`text-[#252525] ${antiquaFont.className} py-5 whitespace-pre-line`}
+          className={`text-[#252525] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line`}
         >
           {filteredData.longdes}
         </p>
 
         {/* Related Stories */}
-        <div className="mt-16 mb-10">
+        <div className="mt-16 mb-40">
           <h2
             className={`text-2xl font-semibold mb-8 text-center ${poppins.className}`}
           >
@@ -169,7 +169,7 @@ const Page = () => {
               <Link
                 key={story._id}
                 href={`/archive/${story.slug}`}
-                className="group"
+                className="border border-gray-300 rounded-sm p-5 group"
               >
                 <div className="overflow-hidden">
                   <Image
@@ -177,14 +177,19 @@ const Page = () => {
                     alt={story.title}
                     width={400}
                     height={300}
-                    className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                    className="w-full h-auto rounded-sm object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <h3
-                  className={`mt-4 text-base font-medium leading-snug group-hover:text-[#36133B] transition-colors ${poppins.className}`}
-                >
-                  {story.title}
-                </h3>
+                <div className="mt-4 space-y-2">
+                  <h3
+                    className={`text-lg group-hover:text-[#ff951b] duration-300 font-semibold leading-snug transition-colors ${poppins.className}`}
+                  >
+                    {story.title}
+                  </h3>
+                  <p className={`text-lg ${antiquaFont.className}`}>
+                    {story.des}
+                  </p>
+                </div>
               </Link>
             ))}
           </div>

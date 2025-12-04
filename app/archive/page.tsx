@@ -184,11 +184,13 @@ const Page = () => {
                     setActiveIndex(index);
                     setActiveCategory(item);
                   }}
-                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${poppins.className
-                    } ${activeIndex === index
+                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${
+                    poppins.className
+                  } ${
+                    activeIndex === index
                       ? "border-gray-700 border bg-gray-200"
                       : "border-gray-200 bg-gray-100 hover:bg-gray-200"
-                    }`}
+                  }`}
                 >
                   {item}
                 </div>
@@ -261,41 +263,43 @@ const Page = () => {
           ) : filterdData.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {filterdData.map((project) => (
-                <div key={project._id} className="relative h-full">
-                  <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
-                    <div className="relative w-full h-[250px] md:h-[300px] mb-3 md:mb-4 shrink-0">
-                      <Image
-                        src={project.img}
-                        alt={project.title}
-                        fill
-                        className="object-cover rounded-lg"
-                      />
-                    </div>
-                    <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
-                      <h2
-                        className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
-                      >
-                        {project.title}
-                      </h2>
-                      <p
-                        className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
-                      >
-                        {formatDate(project.date)}
-                      </p>
-                      <p
-                        className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
-                      >
-                        {project.des}
-                      </p>
-                      <Link
-                        href={`/archive/${project.slug}`}
-                        className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
-                      >
-                        Read More <IoIosArrowRoundForward size={20} />
-                      </Link>
+                <Link href={`/archive/${project.slug}`} key={project._id}>
+                  <div className="relative h-full group">
+                    <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
+                      <div className="relative w-full h-[250px] md:h-[300px] mb-3 md:mb-4 shrink-0">
+                        <Image
+                          src={project.img}
+                          alt={project.title}
+                          width={500}
+                          height={500}
+                          className="object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
+                        <h2
+                          className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
+                        >
+                          {project.title}
+                        </h2>
+                        <p
+                          className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
+                        >
+                          {formatDate(project.date)}
+                        </p>
+                        <p
+                          className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
+                        >
+                          {project.des}
+                        </p>
+                        <button
+                          className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer group-hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
+                        >
+                          Read More <IoIosArrowRoundForward size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           ) : (
