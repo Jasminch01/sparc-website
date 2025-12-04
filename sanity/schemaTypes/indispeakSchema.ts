@@ -59,17 +59,12 @@ export const indiSpeak = {
             media: "img",
             date: "writtenOn",
         },
-        prepare(selection: {
-            title: string;
-            subtitle: string;
-            media: any;
-            date: string;
-        }) {
+        prepare(selection: Record<string, any>) {
             const { title, subtitle, media, date } = selection;
 
             return {
-                title,
-                subtitle: `${subtitle} - ${date}`,
+                title: title || "Untitled",
+                subtitle: `${subtitle || "No description"} - ${date || "No date"}`,
                 media,
             };
         },

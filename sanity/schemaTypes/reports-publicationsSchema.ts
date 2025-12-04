@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from '@sanity/types';
-import { StringComponents } from 'sanity';
 
 export const ReportsPublications = {
     name: 'reports',
@@ -134,11 +134,11 @@ export const ReportsPublications = {
             date: 'date',
             media: 'img'
         },
-        prepare(selection: { title: string; category: string; date: string; media: StringComponents }) {
+        prepare(selection: Record<string, any>) {
             const { title, category, date, media } = selection;
             return {
-                title: title,
-                subtitle: `${category} - ${date}`,
+                title: title || 'Untitled',
+                subtitle: `${category || 'No category'} - ${date || 'No date'}`,
                 media: media
             }
         }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
 
 export const Research = {
@@ -159,17 +160,11 @@ export const Research = {
       date: "date",
       media: "image",
     },
-    prepare(selection: {
-      title: string;
-      category: string;
-      status: string;
-      date: string;
-      media: unknown;
-    }) {
+    prepare(selection: Record<string, any>) {
       const { title, category, status, date, media } = selection;
       return {
-        title: title,
-        subtitle: `${category} - ${status} - ${date}`,
+        title: title || "Untitled",
+        subtitle: `${category || "No category"} - ${status || "No status"} - ${date || "No date"}`,
         media: media,
       };
     },

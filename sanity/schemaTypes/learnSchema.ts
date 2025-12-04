@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Rule } from '@sanity/types';
 
 // Learn schema
 export const Learn = {
@@ -10,21 +11,21 @@ export const Learn = {
             name: 'title',
             title: 'Title',
             type: 'string',
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'des',
             title: 'Short Description',
             type: 'text',
             rows: 3,
-            validation: (Rule: { required: () => { (): any; new(): any; max: { (arg0: number): any; new(): any; }; }; }) => Rule.required().max(200)
+            validation: (Rule: Rule) => Rule.required().max(200)
         },
         {
             name: 'longDes',
             title: 'Long Description',
             type: 'text',
             rows: 6,
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'category',
@@ -39,7 +40,7 @@ export const Learn = {
                 ],
                 layout: 'dropdown'
             },
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'img',
@@ -55,14 +56,14 @@ export const Learn = {
                     type: 'string'
                 }
             ],
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'price',
             title: 'Price',
             type: 'string',
             description: 'Price in your currency (e.g., "4999")',
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'rating',
@@ -77,14 +78,14 @@ export const Learn = {
                 ],
                 layout: 'radio'
             },
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'itemsSold',
             title: 'Items Sold',
             type: 'number',
             description: 'Number of enrollments or items sold',
-            validation: (Rule: { required: () => { (): any; new(): any; integer: { (): { (): any; new(): any; min: { (arg0: number): any; new(): any; }; }; new(): any; }; }; }) => Rule.required().integer().min(0)
+            validation: (Rule: Rule) => Rule.required().integer().min(0)
         },
         {
             name: 'updated',
@@ -94,7 +95,7 @@ export const Learn = {
                 dateFormat: "DD MMMM YYYY",
             },
             description: 'e.g., "October 2025"',
-            validation: (Rule: { required: () => any; }) => Rule.required()
+            validation: (Rule: Rule) => Rule.required()
         },
         {
             name: 'whatYouLearn',
@@ -102,7 +103,7 @@ export const Learn = {
             type: 'array',
             of: [{ type: 'string' }],
             description: 'List of learnings or target audience points',
-            validation: (Rule: { required: () => { (): any; new(): any; min: { (arg0: number): any; new(): any; }; }; }) => Rule.required().min(1)
+            validation: (Rule: Rule) => Rule.required().min(1)
         }
     ],
     preview: {
@@ -113,11 +114,11 @@ export const Learn = {
             price: 'price',
             media: 'img'
         },
-        prepare(selection: { title: any; category: any; rating: any; price: any; media: any; }) {
+        prepare(selection: Record<string, any>) {
             const { title, category, rating, price, media } = selection;
             return {
-                title: title,
-                subtitle: `${category} - ${rating} - ৳${price}`,
+                title: title || 'Untitled',
+                subtitle: `${category || 'No category'} - ${rating || 'No rating'} - ৳${price || '0'}`,
                 media: media
             }
         }
