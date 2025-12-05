@@ -33,7 +33,6 @@ const Page = () => {
   const [filteredData, setFilteredData] = useState<Data | null>(null);
   const [relatedStories, setRelatedStories] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
-
   const slugString = Array.isArray(slug) ? slug[0] : slug;
 
   // Fetch data from Sanity

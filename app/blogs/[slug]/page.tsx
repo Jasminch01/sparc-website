@@ -71,7 +71,7 @@ const BlogPage = () => {
   if (loading) {
     return (
       <Container>
-        <div className="max-w-5xl mx-auto py-20 text-center">
+        <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-20 text-center">
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
             <p className={`text-xl text-gray-600 ${poppins.className}`}>
@@ -87,7 +87,7 @@ const BlogPage = () => {
   if (notFound || !blog) {
     return (
       <Container>
-        <div className="max-w-5xl mx-auto py-20 text-center">
+        <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-20 text-center">
           <h1 className={`text-3xl font-bold text-gray-800 mb-4 ${poppins.className}`}>
             Blog Not Found
           </h1>
@@ -124,7 +124,7 @@ const BlogPage = () => {
         </p>
       </div>
 
-      <div className="max-w-5xl mx-auto py-5 mb-15">
+      <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-5 mb-40">
         {/* Title */}
         <h1 className={`text-2xl lg:text-4xl font-bold mb-5 ${poppins.className}`}>
           {blog.title}
