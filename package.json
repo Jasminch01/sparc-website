@@ -13,7 +13,7 @@
     "@sanity/desk-tool": "^2.36.2",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.19.0",
-    "next": "16.0.1",
+    "next": "^16.0.7",
     "next-sanity": "^11.6.10",
     "react": "19.2.0",
     "react-countup": "^6.5.3",
