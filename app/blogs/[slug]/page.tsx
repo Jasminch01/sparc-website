@@ -7,20 +7,27 @@ import { antiquaFont, poppins } from "@/components/utils/font";
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 
-
 interface Blog {
+  _id: string;
   title: string;
   description: string;
   date: string;
   writtenBy: string;
   img: string;
   category: string;
-  slug: {
-    current: string;
-  };
   longdes: string;
   status: string;
 }
+
+// Convert TITLE → SLUG internally
+const makeSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 
 const BlogPage = () => {
   const { slug } = useParams();
@@ -29,42 +36,47 @@ const BlogPage = () => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    if (!slug) return;
+
     const fetchBlog = async () => {
       try {
         setLoading(true);
         setNotFound(false);
 
-        // Query Sanity for the specific blog by slug
-        const query = `*[_type == "blog" && slug.current == $slug][0] {
-          title,
-          description,
-          date,
-          writtenBy,
-          "img": img.asset->url,
-          category,
-          slug,
-          longdes,
-          status
-        }`;
+        // Fetch all blogs from Sanity
+        const allBlogs: Blog[] = await client.fetch(`
+          *[_type == "blog"]{
+            _id,
+            title,
+            description,
+            writtenBy,
+            date,
+            "img": img.asset->url,
+            category,
+            longdes,
+            status
+          }
+        `);
 
-        const result = await client.fetch(query, { slug });
+        // Match blog by internal slug
+        const mainBlog = allBlogs.find(
+          (b) => makeSlug(b.title) === slug
+        );
 
-        if (result) {
-          setBlog(result);
-        } else {
+        if (!mainBlog) {
           setNotFound(true);
+        } else {
+          setBlog(mainBlog);
         }
       } catch (error) {
-        console.error("Error fetching blog from Sanity:", error);
+        console.error("Error fetching blog:", error);
         setNotFound(true);
       } finally {
         setLoading(false);
       }
     };
 
-    if (slug) {
-      fetchBlog();
-    }
+    fetchBlog();
   }, [slug]);
 
   // Loading state
@@ -83,7 +95,7 @@ const BlogPage = () => {
     );
   }
 
-  // Not found state
+  // Not found
   if (notFound || !blog) {
     return (
       <Container>
@@ -111,13 +123,9 @@ const BlogPage = () => {
       <div
         className={`flex uppercase items-center gap-5 my-5 lg:my-10 ${poppins.className} text-[8px] lg:text-base`}
       >
-        <Link href="/" className="font-bold hover:text-[#FF951B] transition-colors">
-          HOME
-        </Link>
+        <Link href="/" className="font-bold hover:text-[#FF951B]">HOME</Link>
         <span>||</span>
-        <Link href="/blogs" className="font-bold hover:text-[#FF951B] transition-colors">
-          BLOGS
-        </Link>
+        <Link href="/blogs" className="font-bold hover:text-[#FF951B]">BLOGS</Link>
         <span>||</span>
         <p className="text-[#818181] truncate max-w-xs lg:max-w-md">
           {blog.title}
@@ -130,12 +138,12 @@ const BlogPage = () => {
           {blog.title}
         </h1>
 
-        {/* Short Description */}
+        {/* Description */}
         <p className={`${antiquaFont.className} text-[#505050] text-lg mb-5`}>
           {blog.description}
         </p>
 
-        {/* Meta Information */}
+        {/* Meta Info */}
         <div
           className={`flex flex-col md:flex-row md:items-center justify-between gap-3 text-sm ${poppins.className} mb-10`}
         >
@@ -143,12 +151,11 @@ const BlogPage = () => {
             <p className="text-gray-500">
               Written by <span className="text-black font-semibold">{blog.writtenBy}</span>
             </p>
-            <span
-              className={`px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs`}
-            >
+            <span className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs">
               {blog.category}
             </span>
           </div>
+
           <p className="text-sm md:text-base text-gray-600">
             {new Date(blog.date).toLocaleDateString("en-US", {
               day: "2-digit",
@@ -158,7 +165,7 @@ const BlogPage = () => {
           </p>
         </div>
 
-        {/* Featured Image */}
+        {/* Feature Image */}
         {blog.img && (
           <div className="mb-10">
             <Image

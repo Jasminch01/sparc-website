@@ -24,9 +24,7 @@ interface Report {
   financialSupportBy?: string;
   relaseYear?: number;
   releaseMonth?: string;
-  slug: {
-    current: string;
-  };
+
 }
 
 const Page = () => {
@@ -55,7 +53,6 @@ const Page = () => {
           financialSupportBy,
           relaseYear,
           releaseMonth,
-          slug
         }`;
 
         const data = await client.fetch(query);
@@ -305,7 +302,12 @@ const Page = () => {
                         </div>
                         <div className={`mt-6 md:mt-10 ${poppins.className}`}>
                           <Link
-                            href={`/reports-publications/${rep.slug.current}`}
+                            href={`/reports-publications/${rep.title.toLowerCase()
+                              .replace(/\s+/g, '-')
+                              .replace(/[^\w\-]+/g, '')
+                              .replace(/\-\-+/g, '-')
+                              .replace(/^-+/, '')
+                              .replace(/-+$/, '')}`}
                             className="inline-block bg-[#36133B] rounded-full cursor-pointer text-white text-sm md:text-base transition-colors uppercase py-3 md:py-4 font-semibold px-6 md:px-7 hover:bg-[#4a1a50]"
                           >
                             Read More
@@ -345,7 +347,12 @@ const Page = () => {
                     </p>
                   )}
                   <Link
-                    href={`/reports-publications/${rep.slug.current}`}
+                    href={`/reports-publications/${rep.title.toLowerCase()
+                      .replace(/\s+/g, '-')
+                      .replace(/[^\w\-]+/g, '')
+                      .replace(/\-\-+/g, '-')
+                      .replace(/^-+/, '')
+                      .replace(/-+$/, '')}`}
                     className="inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50]"
                   >
                     Read More

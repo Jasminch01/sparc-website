@@ -14,24 +14,6 @@ export const Blogs = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-        slugify: (input: string) =>
-          input
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replace(/[^\w\-]+/g, "")
-            .replace(/\-\-+/g, "-")
-            .replace(/^-+/, "")
-            .replace(/-+$/, ""),
-      },
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
       name: "writtenBy",
       title: "Written By",
       type: "string",

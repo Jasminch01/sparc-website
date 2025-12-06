@@ -230,7 +230,7 @@ const Page = () => {
                                             }
                                         }}>
                                         <div className={`transition-all duration-300 ${isHovered ? 'opacity-90' : 'opacity-100'}`}>
-                                            <Image src={course.img} alt={course.title} height={400} width={400} />
+                                            <Image src={course.img} alt={course.title} height={400} width={400} className='h-[187px]' />
                                             <div className='mt-5 space-y-3'>
                                                 <h2 className={`${poppins.className} text-lg font-semibold`}>{course.title}</h2>
                                                 <p className={`${antiquaFont.className} text-justify`}>{course.des}</p>

@@ -70,20 +70,7 @@ const archiveSchema = {
       rows: 10,
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
-    {
-      name: "slug",
-      title: "Slug",
-      type: "slug",
-      options: {
-        source: "title",
-        maxLength: 96,
-        slugify: (input: string) =>
-          input
-            .replace(/\s+/g, "-")
-            .toLowerCase()
-      },
-      validation: (Rule: { required: () => any }) => Rule.required(),
-    },
+  
   ],
   preview: {
     select: {

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 
 interface ReportDetail {
+  _id: string;
   title: string;
   pathTitle: string;
   writtenOn: string;
@@ -21,10 +22,17 @@ interface ReportDetail {
   financialSupportBy?: string;
   relaseYear?: number;
   releaseMonth?: string;
-  slug: {
-    current: string;
-  };
 }
+
+// Function to convert title → slug internally
+const makeSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
 
 const Page = () => {
   const { slug } = useParams();
@@ -33,48 +41,51 @@ const Page = () => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    if (!slug) return;
+
     const fetchData = async () => {
       try {
         setLoading(true);
         setNotFound(false);
 
-        // Query Sanity for the specific document by slug
-        const query = `*[_type == "reports" && slug.current == $slug][0] {
-          title,
-          pathTitle,
-          writtenOn,
-          des,
-          "img": img.asset->url,
-          category,
-          date,
-          imgDes,
-          publisher,
-          author,
-          publicationLanguage,
-          financialSupportBy,
-          relaseYear,
-          releaseMonth,
-          slug
-        }`;
+        // Fetch all reports/publications
+        const allData: ReportDetail[] = await client.fetch(`
+          *[_type == "reports" || _type == "publications"]{
+            _id,
+            title,
+            pathTitle,
+            writtenOn,
+            des,
+            "img": img.asset->url,
+            category,
+            date,
+            imgDes,
+            publisher,
+            author,
+            publicationLanguage,
+            financialSupportBy,
+            relaseYear,
+            releaseMonth
+          }
+        `);
 
-        const result = await client.fetch(query, { slug });
+        // Find the current item using internal slug
+        const currentItem = allData.find((item) => makeSlug(item.title) === slug);
 
-        if (result) {
-          setData(result);
-        } else {
+        if (!currentItem) {
           setNotFound(true);
+        } else {
+          setData(currentItem);
         }
       } catch (error) {
-        console.error("Error fetching data from Sanity:", error);
+        console.error("Error fetching data:", error);
         setNotFound(true);
       } finally {
         setLoading(false);
       }
     };
 
-    if (slug) {
-      fetchData();
-    }
+    fetchData();
   }, [slug]);
 
   // Loading state
@@ -91,7 +102,7 @@ const Page = () => {
     );
   }
 
-  // Not found state
+  // Not found
   if (notFound || !data) {
     return (
       <div className="max-w-7xl mx-auto px-5 py-20 text-center">
@@ -129,7 +140,7 @@ const Page = () => {
         <p className="text-[#818181]">{data.category.toUpperCase()}</p>
       </div>
 
-      {/* Display the content */}
+      {/* Content */}
       <div className="space-y-8">
         <h1 className={`text-2xl md:text-4xl lg:text-5xl font-bold ${poppins.className}`}>
           {data.title}
@@ -181,41 +192,17 @@ const Page = () => {
           {data.des}
         </div>
 
-        {/* Show publication-specific fields if category is publications */}
+        {/* Publications-specific fields */}
         {data.category === "publications" && (
           <div
             className={`border-t border-gray-400 pt-8 space-y-3 ${antiquaFont.className} text-lg`}
           >
-            {data.author && (
-              <p>
-                <strong>Author:</strong> {data.author}
-              </p>
-            )}
-            {data.publisher && (
-              <p>
-                <strong>Publisher:</strong> {data.publisher}
-              </p>
-            )}
-            {data.publicationLanguage && (
-              <p>
-                <strong>Language:</strong> {data.publicationLanguage}
-              </p>
-            )}
-            {data.financialSupportBy && (
-              <p>
-                <strong>Financial Support By:</strong> {data.financialSupportBy}
-              </p>
-            )}
-            {data.relaseYear && (
-              <p>
-                <strong>Release Year:</strong> {data.relaseYear}
-              </p>
-            )}
-            {data.releaseMonth && (
-              <p>
-                <strong>Release Month:</strong> {data.releaseMonth}
-              </p>
-            )}
+            {data.author && <p><strong>Author:</strong> {data.author}</p>}
+            {data.publisher && <p><strong>Publisher:</strong> {data.publisher}</p>}
+            {data.publicationLanguage && <p><strong>Language:</strong> {data.publicationLanguage}</p>}
+            {data.financialSupportBy && <p><strong>Financial Support By:</strong> {data.financialSupportBy}</p>}
+            {data.relaseYear && <p><strong>Release Year:</strong> {data.relaseYear}</p>}
+            {data.releaseMonth && <p><strong>Release Month:</strong> {data.releaseMonth}</p>}
           </div>
         )}
       </div>

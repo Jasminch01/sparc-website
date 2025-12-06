@@ -11,7 +11,6 @@ interface Project {
   _id: string;
   id: string;
   title: string;
-  slug: string; // This is slug.current from Sanity
   date: string;
   category: string;
   description: string;
@@ -47,7 +46,6 @@ const ResearchProjects = () => {
           *[_type == "research"] | order(date desc) {
             _id,
             title,
-            "slug": slug.current,
             date,
             category,
             description,
@@ -154,7 +152,12 @@ const ResearchProjects = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {ongoingProjects.map((project, idx) => (
                 <Link
-                  href={`/our-research/${project.slug}`}
+                  href={`/our-research/${project.title.toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/[^\w\-]+/g, "")
+                    .replace(/\-\-+/g, "-")
+                    .replace(/^-+/, "")
+                    .replace(/-+$/, "")}`}
                   key={idx}
                   className="border border-gray-200 rounded-lg p-6 group bg-white block"
                 >
@@ -212,7 +215,12 @@ const ResearchProjects = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {completedProjects.map((project, idx) => (
                 <Link
-                  href={`/our-research/${project.slug}`}
+                  href={`/our-research/${project.title.toLowerCase()
+                    .replace(/\s+/g, "-")
+                    .replace(/[^\w\-]+/g, "")
+                    .replace(/\-\-+/g, "-")
+                    .replace(/^-+/, "")
+                    .replace(/-+$/, "")}`}
                   key={idx}
                   className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow bg-white block"
                 >
