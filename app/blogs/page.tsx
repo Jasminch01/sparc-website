@@ -34,19 +34,24 @@ const BlogPage = () => {
   // State for dynamically setting visibleCount
   const [visibleCount, setVisibleCount] = useState(6);
 
-  const visibleCategories = categories.slice(
+  const visibleCategories = (categories || ["All"]).slice(
     startIndex,
     startIndex + visibleCount
   );
 
   // Helper function to determine the correct visible count
   const getVisibleCount = () => {
+    // Check if window is available (client-side only)
+    if (typeof window === 'undefined') return 6;
     const mobileBreakpoint = 1000;
     return window.innerWidth < mobileBreakpoint ? 3 : 6;
   };
 
   // Effect to set initial visibleCount and listen for window resize
   useEffect(() => {
+    // Check if window is defined (client-side only)
+    if (typeof window === 'undefined') return;
+
     const handleResize = () => {
       setVisibleCount(getVisibleCount());
     };
@@ -74,7 +79,6 @@ const BlogPage = () => {
           category,
           longdes,
           subcategory,
-          slug,
           status
         }`;
 
@@ -161,7 +165,7 @@ const BlogPage = () => {
           <div className="flex justify-center items-center py-10">
             <p className={`text-xl ${poppins.className}`}>Loading categories...</p>
           </div>
-        ) : (
+        ) : categories && categories.length > 0 ? (
           <section className="relative flex justify-center mb-15 items-center">
             {/* Category container */}
             <div className="flex gap-3 overflow-hidden transition-all text-[8px] lg:text-base duration-300 items-center px-5 lg:px-10">
@@ -212,7 +216,7 @@ const BlogPage = () => {
               <IoIosArrowForward size={20} />
             </button>
           </section>
-        )}
+        ) : null}
 
         {/* Active category button */}
         <p
