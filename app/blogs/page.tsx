@@ -136,6 +136,7 @@ const BlogPage = () => {
         blog.writtenBy.toLowerCase().includes(searchQuery.toLowerCase())
     )
     : filteredBySubcategory;
+    console.log(filteredBlogs)
 
   return (
     <div>
