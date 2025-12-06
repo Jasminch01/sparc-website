@@ -74,7 +74,6 @@ const BlogPage = () => {
           category,
           longdes,
           subcategory,
-          slug,
           status
         }`;
 

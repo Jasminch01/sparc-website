@@ -90,7 +90,7 @@ export const ReportsPublications = {
             hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'
         },
         {
-            name: 'relaseYear',
+            name: 'releaseYear', // FIXED: Changed from 'relaseYear' to 'releaseYear'
             title: 'Release Year',
             type: 'number',
             hidden: ({ parent }: { parent?: { category?: string } }) => parent?.category !== 'publications'

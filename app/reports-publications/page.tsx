@@ -8,10 +8,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaAnglesDown } from "react-icons/fa6";
 
-
 interface Report {
   title: string;
-  pathTitle: string;
   writtenOn: string;
   des: string;
   img: string;
@@ -22,9 +20,8 @@ interface Report {
   author?: string;
   publicationLanguage?: string;
   financialSupportBy?: string;
-  relaseYear?: number;
+  releaseYear?: number;
   releaseMonth?: string;
-
 }
 
 const Page = () => {
@@ -32,15 +29,16 @@ const Page = () => {
   const [activeYear, setActiveYear] = useState("2020-2021");
   const [reportsData, setReportsData] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch data from Sanity
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);
         const query = `*[_type == "reports"] | order(writtenOn desc) {
           title,
-          pathTitle,
           writtenOn,
           des,
           "img": img.asset->url,
@@ -51,14 +49,15 @@ const Page = () => {
           author,
           publicationLanguage,
           financialSupportBy,
-          relaseYear,
+          releaseYear,
           releaseMonth,
         }`;
 
         const data = await client.fetch(query);
-        setReportsData(data);
+        setReportsData(data || []);
       } catch (error) {
         console.error("Error fetching data from Sanity:", error);
+        setError("Failed to load reports. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -66,6 +65,17 @@ const Page = () => {
 
     fetchData();
   }, []);
+
+  // Helper function to create URL slug
+  const createSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  };
 
   // Filter data by category and date
   const combineCategoryandDate = reportsData.filter(
@@ -87,7 +97,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify  lg:text-xl text-lg ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify lg:text-xl text-lg ${antiquaFont.className}`}
             >
               Every project we run begins with one goal — to uplift Indigenous
               women and their communities through action, awareness, and
@@ -108,7 +118,7 @@ const Page = () => {
         />
         <div className="absolute top-2/3 :top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-2xl  lg:text-5xl font-bold mb-3 :mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 :mb-4 ${poppins.className}`}
           >
             REPORTS AND PUBLICATIONS
           </h2>
@@ -138,7 +148,7 @@ const Page = () => {
 
       {/* Breadcrumb & Filter Section */}
       <Container>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 :gap-6 my-6 lg:my-20 ">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 :gap-6 my-6 lg:my-20">
           {/* Breadcrumb */}
           <section
             className={`flex gap-3 :gap-5 py-5 lg:py-0 text-xs :text-base font-semibold ${poppins.className}`}
@@ -158,6 +168,7 @@ const Page = () => {
             <div className="relative w-full md:w-auto">
               <select
                 onChange={(e) => setActiveCategory(e.target.value)}
+                value={activeCategory}
                 className="border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
               >
                 <option value="reports">ANNUAL REPORTS</option>
@@ -176,6 +187,7 @@ const Page = () => {
             <div className="relative w-full md:w-auto">
               <select
                 onChange={(e) => setActiveYear(e.target.value)}
+                value={activeYear}
                 className="border border-[#B7B7B7] rounded-sm py-2 pl-3 lg:pl-4 pr-8 lg:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
               >
                 <option value="2020-2021">2020-2021</option>
@@ -206,6 +218,12 @@ const Page = () => {
               Loading reports...
             </p>
           </div>
+        ) : error ? (
+          <div className="flex justify-center items-center h-64">
+            <p className={`text-xl text-red-600 ${poppins.className}`}>
+              {error}
+            </p>
+          </div>
         ) : combineCategoryandDate.length === 0 ? (
           <span
             className={`text-center block text-lg :text-xl ${poppins.className}`}
@@ -215,7 +233,7 @@ const Page = () => {
         ) : (
           combineCategoryandDate.map((rep, index) => (
             <div
-              key={index}
+              key={`${rep.title}-${index}`}
               className="flex flex-col gap-4 lg:gap-5 pb-5 lg:pb-16 border-b border-gray-300"
             >
               {rep.category === "publications" ? (
@@ -274,13 +292,13 @@ const Page = () => {
                           </p>
                         </div>
                       )}
-                      {rep.relaseYear && (
+                      {rep.releaseYear && (
                         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
                           <p className="font-bold text-lg md:text-xl">
                             Release Year:
                           </p>
                           <p className="text-base md:text-xl">
-                            {rep.relaseYear}
+                            {rep.releaseYear}
                           </p>
                         </div>
                       )}
@@ -302,12 +320,7 @@ const Page = () => {
                         </div>
                         <div className={`mt-6 md:mt-10 ${poppins.className}`}>
                           <Link
-                            href={`/reports-publications/${rep.title.toLowerCase()
-                              .replace(/\s+/g, '-')
-                              .replace(/[^\w\-]+/g, '')
-                              .replace(/\-\-+/g, '-')
-                              .replace(/^-+/, '')
-                              .replace(/-+$/, '')}`}
+                            href={`/reports-publications/${createSlug(rep.title)}`}
                             className="inline-block bg-[#36133B] rounded-full cursor-pointer text-white text-sm md:text-base transition-colors uppercase py-3 md:py-4 font-semibold px-6 md:px-7 hover:bg-[#4a1a50]"
                           >
                             Read More
@@ -347,12 +360,7 @@ const Page = () => {
                     </p>
                   )}
                   <Link
-                    href={`/reports-publications/${rep.title.toLowerCase()
-                      .replace(/\s+/g, '-')
-                      .replace(/[^\w\-]+/g, '')
-                      .replace(/\-\-+/g, '-')
-                      .replace(/^-+/, '')
-                      .replace(/-+$/, '')}`}
+                    href={`/reports-publications/${createSlug(rep.title)}`}
                     className="inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50]"
                   >
                     Read More

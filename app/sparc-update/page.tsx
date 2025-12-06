@@ -11,28 +11,29 @@ import { client } from "@/sanity/lib/client";
 
 interface Data {
   category: string;
-  img: string;
+  img?: string;
   des: string;
   title: string;
   date: string;
-  video: string;
+  video?: string;
 }
+
 interface Project {
   title: string;
-  img: string;
+  img?: string;
   date: string;
   status: string;
   des: string;
   fundedBy: string;
-
 }
+
 interface Events {
   title: string;
-  img: string;
+  img?: string;
   date: string;
   status: string;
   des: string;
-  timeLeft: string;
+  timeLeft?: string;
 }
 
 const projectsCategory = ["All Projects", "Ongoing", "Completed"];
@@ -44,25 +45,65 @@ const Page = () => {
   const [events, setEvents] = useState<Events[]>([]);
   const [activeProjectCategory, setActiveProjectCategory] = useState(0);
   const [activeEventCategory, setActiveEventCategory] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch News, Highlight, 
+  // Helper function to create URL slug
+  const createSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  };
 
+  // Helper function to extract YouTube video ID
+  const getYouTubeEmbedUrl = (url: string): string => {
+    try {
+      const videoId = url.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([^&\n?#]+)/)?.[1];
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    } catch {
+      return url;
+    }
+  };
+
+  // Helper function to format date
+  const formatDate = (dateString: string): string => {
+    try {
+      return new Date(dateString).toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  // Fetch News, Highlight, Featured Stories, Latest News
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
-        const data = await client.fetch(`
+        setLoading(true);
+        setError(null);
+        const result = await client.fetch(`
           *[_type == "newsUpdate"] | order(date desc){
             title,
             category,
             date,
             des,
-          "img": img.asset->url,
+            "img": img.asset->url,
             video
           }
         `);
-        setData(data);
+        setData(result || []);
       } catch (err) {
         console.error("Error fetching updates:", err);
+        setError("Failed to load updates");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -80,12 +121,11 @@ const Page = () => {
           status,
           des,
           fundedBy,
-          description,
           "img": img.asset->url,
         }`;
 
         const result: Project[] = await client.fetch(query);
-        setProjects(result);
+        setProjects(result || []);
       } catch (error) {
         console.error("Error fetching projects from Sanity:", error);
       }
@@ -105,12 +145,11 @@ const Page = () => {
           status,
           des,
           timeLeft,
-          description,
           "img": img.asset->url,
         }`;
 
         const result: Events[] = await client.fetch(query);
-        setEvents(result);
+        setEvents(result || []);
       } catch (error) {
         console.error("Error fetching events from Sanity:", error);
       }
@@ -118,7 +157,6 @@ const Page = () => {
 
     fetchEvents();
   }, []);
-
 
   const combineProjects =
     projectsCategory[activeProjectCategory] === "All Projects"
@@ -132,8 +170,13 @@ const Page = () => {
     eventsCategory[activeEventCategory] === "All Events"
       ? events
       : events.filter(
-        (project) => project.status === eventsCategory[activeEventCategory]
+        (event) => event.status === eventsCategory[activeEventCategory]
       );
+
+  // Get filtered data by category
+  const highlightData = data.filter((item) => item.category === "highlight");
+  const featuredStoriesData = data.filter((item) => item.category === "FEATURED_STORIES");
+  const latestNewsData = data.filter((item) => item.category === "LATEST_NEWS");
 
   return (
     <div className="mt-10 sm:mt-12 md:mt-15">
@@ -160,13 +203,14 @@ const Page = () => {
       </Container>
 
       {/* Hero Section */}
-      <section className="relative w-full mt-6 sm:mt-8 md:mt-10 ">
+      <section className="relative w-full mt-6 sm:mt-8 md:mt-10">
         <Image
           src={hero}
           alt="fellowship-hero"
           width={1000}
           height={600}
           className="w-full h-[350px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
+          priority
         />
         <div className="absolute top-2/3 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
@@ -182,6 +226,11 @@ const Page = () => {
           </p>
           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
             <button
+              onClick={() => {
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" });
+              }}
               className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${poppins.className}`}
             >
               VIEW PROJECTS
@@ -193,9 +242,9 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <section
-          className={`flex gap-3 sm:gap-5  text-xs sm:text-base font-semibold mt-5  sm:mt-10 ${poppins.className}`}
+          className={`flex gap-3 sm:gap-5 text-xs sm:text-base font-semibold mt-5 sm:mt-10 ${poppins.className}`}
         >
-          <Link href="/" className="hover:text-[#FF951B] transition-colors">
+          <Link href="/" className="hover:text-[#FF951B] transition-colors uppercase">
             HOME
           </Link>
           <span>||</span>
@@ -205,215 +254,207 @@ const Page = () => {
 
       {/* Data Content Section */}
       <Container>
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 mt-15 border border-gray-300  sm:mt-20">
-          {/* Left Column - Highlight */}
-          <div className="border-r border-gray-300 relative">
-            {/* Header with diagonal cut - positioned outside/above the border */}
-            <div
-              className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
-              }}
-            >
-              <h3
-                className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
-              >
-                HIGHLIGHT
-              </h3>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 pt-8">
-              {data
-                .filter((item) => item.category === "highlight")
-                .map((item, index) => (
-                  <div key={index} className="cursor-pointer group">
-                    <div className="relative w-full h-[250px] lg:h-[300px] mb-4">
-                      <Image
-                        src={item.img}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <h2
-                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
-                    >
-                      {item.title}
-                    </h2>
-                    <p
-                      className={`text-xs text-gray-500 mb-4 uppercase ${poppins.className}`}
-                    >
-                      {item.date}
-                    </p>
-                    <p
-                      className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}
-                    >
-                      {item.des}
-                    </p>
-                    <Link
-                      href={`/sparc-update/${item.title.toLowerCase()
-                        .replace(/\s+/g, '-')
-                        .replace(/[^\w\-]+/g, '')
-                        .replace(/\-\-+/g, '-')
-                        .replace(/^-+/, '')
-                        .replace(/-+$/, '')}`}
-                      className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                    >
-                      Read More <span>→</span>
-                    </Link>
-                  </div>
-                ))}
-            </div>
+        {loading ? (
+          <div className="flex justify-center items-center h-64 my-20">
+            <p className={`text-xl ${poppins.className}`}>Loading updates...</p>
           </div>
-
-          {/* Right Column - Featured Stories & Latest News */}
-          <div className="relative">
-            {/* Featured Stories Header with diagonal cut - positioned outside/above the border */}
-            <div
-              className="absolute -top-[45px] left-0 w-60 bg-[#E5E5E5] text-black px-6 py-3 z-10"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
-              }}
-            >
-              <h3
-                className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
+        ) : error ? (
+          <div className="flex justify-center items-center h-64 my-20">
+            <p className={`text-xl text-red-600 ${poppins.className}`}>{error}</p>
+          </div>
+        ) : (
+          <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 mt-15 border border-gray-300 sm:mt-20">
+            {/* Left Column - Highlight */}
+            <div className="border-r border-gray-300 relative">
+              <div
+                className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
+                style={{
+                  clipPath: "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
+                }}
               >
-                FEATURED_STORIES
-              </h3>
-            </div>
+                <h3 className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}>
+                  HIGHLIGHT
+                </h3>
+              </div>
 
-            {/* Featured Stories Content */}
-            <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
-              {data
-                .filter((item) => item.category === "FEATURED_STORIES")
-                .map((item, index) => (
-                  <div key={index} className="mb-6 last:mb-0 group cursor-pointer">
-                    <div className="relative w-full h-[300px] mb-3">
-                      <Image
-                        src={item.img}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <h3
-                      className={`text-base group-hover:text-[#FF951B] t lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}
-                    >
-                      {item.des.substring(0, 100)}...
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p
-                        className={`text-xs text-gray-500 uppercase ${poppins.className}`}
+              <div className="p-6 pt-8">
+                {highlightData.length > 0 ? (
+                  highlightData.map((item, index) => (
+                    <div key={`highlight-${index}`} className="cursor-pointer group">
+                      {item.img && (
+                        <div className="relative w-full h-[250px] lg:h-[300px] mb-4 overflow-hidden">
+                          <Image
+                            src={item.img}
+                            alt={item.title || "Highlight image"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      <h2
+                        className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
                       >
-                        {item.date}
+                        {item.title}
+                      </h2>
+                      <p className={`text-xs text-gray-500 mb-4 uppercase ${poppins.className}`}>
+                        {formatDate(item.date)}
+                      </p>
+                      <p className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}>
+                        {item.des}
                       </p>
                       <Link
-                        href={`/sparc-update/${item.title
-                          .replace(/\s+/g, "-")
-                          .toLowerCase()}`}
+                        href={`/sparc-update/${createSlug(item.title)}`}
                         className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
                       >
                         Read More <span>→</span>
                       </Link>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className={`text-center text-gray-500 ${poppins.className}`}>No highlights available</p>
+                )}
+              </div>
             </div>
 
-            {/* Latest News Header with diagonal cut - positioned normally in the flow */}
-            <div
-              className="w-60 bg-[#E5E5E5] text-black px-6 py-3"
-              style={{
-                clipPath:
-                  "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
-              }}
-            >
-              <h3
-                className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
+            {/* Right Column - Featured Stories & Latest News */}
+            <div className="relative">
+              <div
+                className="absolute -top-[45px] left-0 w-60 bg-[#E5E5E5] text-black px-6 py-3 z-10"
+                style={{
+                  clipPath: "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
+                }}
               >
-                LATEST_NEWS
-              </h3>
-            </div>
+                <h3 className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}>
+                  FEATURED STORIES
+                </h3>
+              </div>
 
-            {/* Latest News Content */}
-            <div className="p-6 border-t border-gray-300">
-              {data
-                .filter((item) => item.category === "LATEST_NEWS")
-                .map((item, index) => (
-                  <div key={index} className="group cursor-pointer">
-                    <div className="relative w-full h-[300px] mb-3 ">
-                      {item.img ? (
-                        <Image
-                          src={item.img}
-                          alt={item.title}
-                          fill
-                          className="object-cover"
-                        />
-                      ) : (
-                        <iframe
-                          src="https://www.youtube.com/embed/OFAXpf9wxgI"
-                          className="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
+              <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
+                {featuredStoriesData.length > 0 ? (
+                  featuredStoriesData.map((item, index) => (
+                    <div key={`featured-${index}`} className="mb-6 last:mb-0 group cursor-pointer">
+                      {item.img && (
+                        <div className="relative w-full h-[300px] mb-3 overflow-hidden">
+                          <Image
+                            src={item.img}
+                            alt={item.title || "Featured story image"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        </div>
                       )}
-                    </div>
-                    <h3
-                      className={`text-xl lg:text-2xl group-hover:text-[#FF951B] font-bold mb-2 leading-tight ${poppins.className}`}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}
-                    >
-                      {item.des.substring(0, 80)}...
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p
-                        className={`text-xs text-gray-500 uppercase ${poppins.className}`}
-                      >
-                        {item.date}
+                      <h3 className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}>
+                        {item.title}
+                      </h3>
+                      <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
+                        {item.des.substring(0, 100)}...
                       </p>
-                      <Link
-                        href="https://www.youtube.com/embed/OFAXpf9wxgI"
-                        className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                      >
-                        Watch Video <span>→</span>
-                      </Link>
+                      <div className="flex justify-between items-center">
+                        <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
+                          {formatDate(item.date)}
+                        </p>
+                        <Link
+                          href={`/sparc-update/${createSlug(item.title)}`}
+                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                        >
+                          Read More <span>→</span>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className={`text-center text-gray-500 ${poppins.className}`}>No featured stories available</p>
+                )}
+              </div>
+
+              <div
+                className="w-60 bg-[#E5E5E5] text-black px-6 py-3"
+                style={{
+                  clipPath: "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
+                }}
+              >
+                <h3 className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}>
+                  LATEST NEWS
+                </h3>
+              </div>
+
+              <div className="p-6 border-t border-gray-300">
+                {latestNewsData.length > 0 ? (
+                  latestNewsData.map((item, index) => (
+                    <div key={`latest-${index}`} className="group cursor-pointer">
+                      <div className="relative w-full h-[300px] mb-3 overflow-hidden">
+                        {item.video ? (
+                          <iframe
+                            src={getYouTubeEmbedUrl(item.video)}
+                            className="w-full h-full"
+                            title={item.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        ) : item.img ? (
+                          <Image
+                            src={item.img}
+                            alt={item.title || "Latest news image"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        ) : null}
+                      </div>
+                      <h3 className={`text-xl lg:text-2xl group-hover:text-[#FF951B] font-bold mb-2 leading-tight ${poppins.className}`}>
+                        {item.title}
+                      </h3>
+                      <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
+                        {item.des.substring(0, 80)}...
+                      </p>
+                      <div className="flex justify-between items-center">
+                        <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
+                          {formatDate(item.date)}
+                        </p>
+                        {item.video ? (
+                          <Link
+                            href={item.video}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                          >
+                            Watch Video <span>→</span>
+                          </Link>
+                        ) : (
+                          <Link
+                            href={`/sparc-update/${createSlug(item.title)}`}
+                            className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                          >
+                            Read More <span>→</span>
+                          </Link>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className={`text-center text-gray-500 ${poppins.className}`}>No latest news available</p>
+                )}
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </Container>
 
       {/* Funding and project update section */}
       <Container>
-        <section className="my-12 sm:my-16 md:my-20">
+        <section id="projects" className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-            <h2
-              className={`text-2xl lg:text-5xl font-bold mb-3 ${poppins.className}`}
-            >
+            <h2 className={`text-2xl lg:text-5xl font-bold mb-3 ${poppins.className}`}>
               FUNDING & PROJECT UPDATES
             </h2>
-            <p
-              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-gray-500`}
-            >
+            <p className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-gray-500`}>
               Each update reflects our commitment to accountability,
               collaboration, and positive impact across Indigenous regions.
             </p>
           </div>
 
-          {/* project Category */}
           <div className="grid grid-cols-1 sm:grid-cols-3 py-6 sm:py-8 md:py-10 gap-2 sm:gap-0">
             {projectsCategory.map((cat, index) => (
               <div
@@ -422,10 +463,7 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveProjectCategory(index)}
-                  className={`${poppins.className
-                    } cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeProjectCategory === index
-                      ? "border-b-2 border-black"
-                      : ""
+                  className={`${poppins.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeProjectCategory === index ? "border-b-2 border-black" : ""
                     }`}
                 >
                   {cat}
@@ -434,57 +472,57 @@ const Page = () => {
             ))}
           </div>
 
-          {/* projects Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
-            {combineProjects.map((project, index) => (
-              <div key={index} className="relative">
-                <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px] ">
-                  <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4">
-                    <Image
-                      src={project.img}
-                      alt={project.title}
-                      fill
-                      className="object-cover rounded-lg"
-                    />
-                  </div>
-                  <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
-                    <h2
-                      className={`${poppins.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
-                    >
-                      {project.title}
-                    </h2>
-                    <p
-                      className={`${antiquaFont.className} text-sm sm:text-base text-justify line-clamp-3`}
-                    >
-                      {project.des}
-                    </p>
-                    <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
-                      <p
-                        className={`font-bold ${project.status === "Ongoing"
-                          ? "text-[#F26522]"
-                          : "text-[#018F44]"
-                          } ${poppins.className}`}
-                      >
-                        {project.status}
+            {combineProjects.length > 0 ? (
+              combineProjects.map((project, index) => (
+                <div key={`project-${index}`} className="relative">
+                  <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px]">
+                    {project.img && (
+                      <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
+                        <Image
+                          src={project.img}
+                          alt={project.title || "Project image"}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
+                      <h2 className={`${poppins.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}>
+                        {project.title}
+                      </h2>
+                      <p className={`${antiquaFont.className} text-sm sm:text-base text-justify line-clamp-3`}>
+                        {project.des}
                       </p>
-                      <span className="hidden sm:inline">|</span>
-                      <p className={`${poppins.className}`}>{project.date}</p>
-                      <span className="hidden sm:inline">|</span>
-                      <p className={`${poppins.className}`}>
-                        Funded By {project.fundedBy}
-                      </p>
-                    </div>
-                    <div className="h-10">
-                      <button
-                        className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#FF951B]  transition-all duration-400`}
-                      >
-                        View Report <IoIosArrowRoundForward size={20} />
-                      </button>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
+                        <p
+                          className={`font-bold ${project.status === "Ongoing" ? "text-[#F26522]" : "text-[#018F44]"
+                            } ${poppins.className}`}
+                        >
+                          {project.status}
+                        </p>
+                        <span className="hidden sm:inline">|</span>
+                        <p className={`${poppins.className}`}>{formatDate(project.date)}</p>
+                        <span className="hidden sm:inline">|</span>
+                        <p className={`${poppins.className}`}>Funded By {project.fundedBy}</p>
+                      </div>
+                      <div className="h-10">
+                        <button
+                          className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
+                        >
+                          View Report <IoIosArrowRoundForward size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-10">
+                <p className={`text-gray-500 ${poppins.className}`}>No projects available</p>
               </div>
-            ))}
+            )}
           </div>
         </section>
       </Container>
@@ -493,20 +531,15 @@ const Page = () => {
       <Container>
         <section className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
-            <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
-            >
+            <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}>
               EVENT ANNOUNCEMENTS
             </h2>
-            <p
-              className={`mb-3 sm:mb-4 text-base sm:text-lg ${antiquaFont.className} text-gray-500`}
-            >
+            <p className={`mb-3 sm:mb-4 text-base sm:text-lg ${antiquaFont.className} text-gray-500`}>
               Explore our latest gatherings, campaigns, and community programs
               supporting Indigenous voices
             </p>
           </div>
 
-          {/* event Category */}
           <div className="grid grid-cols-1 sm:grid-cols-3 py-6 sm:py-8 md:py-10 gap-2 sm:gap-0">
             {eventsCategory.map((cat, index) => (
               <div
@@ -515,10 +548,7 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveEventCategory(index)}
-                  className={`${poppins.className
-                    } cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeEventCategory === index
-                      ? "border-b-2 border-black"
-                      : ""
+                  className={`${poppins.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeEventCategory === index ? "border-b-2 border-black" : ""
                     }`}
                 >
                   {cat}
@@ -527,57 +557,61 @@ const Page = () => {
             ))}
           </div>
 
-          {/* events Section */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
-            {combineEvents.map((project, index) => (
-              <div key={index} className="relative">
-                <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
-                  <div className="relative w-full h-[250px] lg:h-[300px] mb-3 sm:mb-4">
-                    <Image
-                      src={project.img}
-                      alt={project.title}
-                      fill
-                      className="object-cover rounded-lg"
-                    />
-                  </div>
-                  <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
-                    <h2
-                      className={`${poppins.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
-                    >
-                      {project.title}
-                    </h2>
-                    <p
-                      className={`${antiquaFont.className} text-sm lg:text-base text-justify line-clamp-3`}
-                    >
-                      {project.des}
-                    </p>
-                    <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
-                      <p
-                        className={`font-bold ${project.status === "Upcoming"
-                          ? "text-[#36133B]"
-                          : "text-[#018F44]"
-                          } ${poppins.className}`}
-                      >
-                        {project.status}
+            {combineEvents.length > 0 ? (
+              combineEvents.map((event, index) => (
+                <div key={`event-${index}`} className="relative">
+                  <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
+                    {event.img && (
+                      <div className="relative w-full h-[250px] lg:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
+                        <Image
+                          src={event.img}
+                          alt={event.title || "Event image"}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
+                      <h2 className={`${poppins.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}>
+                        {event.title}
+                      </h2>
+                      <p className={`${antiquaFont.className} text-sm lg:text-base text-justify line-clamp-3`}>
+                        {event.des}
                       </p>
-                      <span className="hidden sm:inline">|</span>
-                      <p className={`${poppins.className}`}>{project.date}</p>
-                      <span className="hidden sm:inline">|</span>
-                      <p className={`${poppins.className}`}>
-                        {project.timeLeft} Left
-                      </p>
-                    </div>
-                    <div className="h-10">
-                      <button
-                        className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#ff951b] transition-all duration-400 `}
-                      >
-                        View Report <IoIosArrowRoundForward size={20} />
-                      </button>
+                      <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
+                        <p
+                          className={`font-bold ${event.status === "Upcoming" ? "text-[#36133B]" : "text-[#018F44]"
+                            } ${poppins.className}`}
+                        >
+                          {event.status}
+                        </p>
+                        <span className="hidden sm:inline">|</span>
+                        <p className={`${poppins.className}`}>{formatDate(event.date)}</p>
+                        {event.timeLeft && (
+                          <>
+                            <span className="hidden sm:inline">|</span>
+                            <p className={`${poppins.className}`}>{event.timeLeft} Left</p>
+                          </>
+                        )}
+                      </div>
+                      <div className="h-10">
+                        <button
+                          className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
+                        >
+                          View Report <IoIosArrowRoundForward size={20} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-10">
+                <p className={`text-gray-500 ${poppins.className}`}>No events available</p>
               </div>
-            ))}
+            )}
           </div>
         </section>
         <Image
