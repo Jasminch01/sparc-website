@@ -71,14 +71,26 @@ const Page = () => {
 
   // Helper function to format date
   const formatDate = (dateString: string): string => {
+    if (!dateString) return "Date unavailable";
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+
+      return date.toLocaleDateString("en-US", {
         day: "2-digit",
         month: "long",
         year: "numeric",
       });
     } catch {
       return dateString;
+    }
+  };
+
+  // Smooth scroll handler
+  const handleScrollToProjects = () => {
+    const element = document.getElementById("projects");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -226,11 +238,7 @@ const Page = () => {
           </p>
           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
             <button
-              onClick={() => {
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
+              onClick={handleScrollToProjects}
               className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${poppins.className}`}
             >
               VIEW PROJECTS
@@ -256,7 +264,10 @@ const Page = () => {
       <Container>
         {loading ? (
           <div className="flex justify-center items-center h-64 my-20">
-            <p className={`text-xl ${poppins.className}`}>Loading updates...</p>
+            <div className="flex flex-col items-center gap-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
+              <p className={`text-xl ${poppins.className}`}>Loading updates...</p>
+            </div>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-64 my-20">
@@ -278,7 +289,7 @@ const Page = () => {
               </div>
 
               <div className="p-6 pt-8">
-                {highlightData.length > 0 ? (
+                {highlightData && highlightData.length > 0 ? (
                   highlightData.map((item, index) => (
                     <div key={`highlight-${index}`} className="cursor-pointer group">
                       {item.img && (
@@ -331,7 +342,7 @@ const Page = () => {
               </div>
 
               <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
-                {featuredStoriesData.length > 0 ? (
+                {featuredStoriesData && featuredStoriesData.length > 0 ? (
                   featuredStoriesData.map((item, index) => (
                     <div key={`featured-${index}`} className="mb-6 last:mb-0 group cursor-pointer">
                       {item.img && (
@@ -349,7 +360,7 @@ const Page = () => {
                         {item.title}
                       </h3>
                       <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
-                        {item.des.substring(0, 100)}...
+                        {item.des.length > 100 ? `${item.des.substring(0, 100)}...` : item.des}
                       </p>
                       <div className="flex justify-between items-center">
                         <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
@@ -381,7 +392,7 @@ const Page = () => {
               </div>
 
               <div className="p-6 border-t border-gray-300">
-                {latestNewsData.length > 0 ? (
+                {latestNewsData && latestNewsData.length > 0 ? (
                   latestNewsData.map((item, index) => (
                     <div key={`latest-${index}`} className="group cursor-pointer">
                       <div className="relative w-full h-[300px] mb-3 overflow-hidden">
@@ -407,7 +418,7 @@ const Page = () => {
                         {item.title}
                       </h3>
                       <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
-                        {item.des.substring(0, 80)}...
+                        {item.des.length > 80 ? `${item.des.substring(0, 80)}...` : item.des}
                       </p>
                       <div className="flex justify-between items-center">
                         <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
@@ -473,7 +484,7 @@ const Page = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
-            {combineProjects.length > 0 ? (
+            {combineProjects && combineProjects.length > 0 ? (
               combineProjects.map((project, index) => (
                 <div key={`project-${index}`} className="relative">
                   <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px]">
@@ -558,7 +569,7 @@ const Page = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
-            {combineEvents.length > 0 ? (
+            {combineEvents && combineEvents.length > 0 ? (
               combineEvents.map((event, index) => (
                 <div key={`event-${index}`} className="relative">
                   <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
