@@ -17,7 +17,6 @@ interface Data {
   des: string;
   date: string;
   category: string;
-  slug: string;
 }
 
 const categories: string[] = [
@@ -45,7 +44,6 @@ const Page = () => {
           des,
           date,
           category,
-          "slug": slug.current
         }`;
 
         const result = await client.fetch(query);
@@ -184,13 +182,11 @@ const Page = () => {
                     setActiveIndex(index);
                     setActiveCategory(item);
                   }}
-                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${
-                    poppins.className
-                  } ${
-                    activeIndex === index
+                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${poppins.className
+                    } ${activeIndex === index
                       ? "border-gray-700 border bg-gray-200"
                       : "border-gray-200 bg-gray-100 hover:bg-gray-200"
-                  }`}
+                    }`}
                 >
                   {item}
                 </div>
@@ -263,10 +259,15 @@ const Page = () => {
           ) : filterdData.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
               {filterdData.map((project) => (
-                <Link href={`/archive/${project.slug}`} key={project._id}>
+                <Link href={`/archive/${project.title.toLowerCase()
+                  .replace(/\s+/g, '-')
+                  .replace(/[^\w\-]+/g, '')
+                  .replace(/\-\-+/g, '-')
+                  .replace(/^-+/, '')
+                  .replace(/-+$/, '')}`} key={project._id}>
                   <div className="relative h-full group">
                     <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
-                      <div className="relative w-full h-[250px] md:h-[300px] mb-3 md:mb-4 shrink-0">
+                      <div className="relative w-full h-[250px] md:h-[250px] mb-3 md:mb-4 shrink-0">
                         <Image
                           src={project.img}
                           alt={project.title}

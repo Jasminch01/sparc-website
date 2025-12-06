@@ -18,9 +18,6 @@ interface Blog {
   category: string;
   longdes: string;
   subcategory: string;
-  slug: {
-    current: string;
-  };
   status: string;
 }
 
@@ -269,7 +266,12 @@ const BlogPage = () => {
           ) : filteredBlogs.length > 0 ? (
             filteredBlogs.map((blog, index) => (
               <Link
-                href={`/blogs/${blog.slug.current}`}
+                href={`/blogs/${blog.title.toLowerCase()
+                  .replace(/\s+/g, '-')
+                  .replace(/[^\w\-]+/g, '')
+                  .replace(/\-\-+/g, '-')
+                  .replace(/^-+/, '')
+                  .replace(/-+$/, '')}`}
                 key={index}
                 className="flex flex-col md:flex-row gap-5 pb-5 py-5 lg:border-b border-gray-300 hover:bg-gray-50 transition-colors rounded-lg p-4"
               >
@@ -296,7 +298,7 @@ const BlogPage = () => {
                         year: "numeric",
                       })}
                     </p>
-                    
+
                   </div>
                 </div>
 

@@ -16,9 +16,6 @@ interface Data {
   title: string;
   date: string;
   video: string;
-  slug: {
-    current: string;
-  };
 }
 interface Project {
   title: string;
@@ -59,7 +56,6 @@ const Page = () => {
             category,
             date,
             des,
-            slug,
           "img": img.asset->url,
             video
           }
@@ -81,7 +77,6 @@ const Page = () => {
         *[_type == "project"] | order(date desc) {
           title,
           date,
-          "slug": slug.current,
           status,
           des,
           fundedBy,
@@ -106,7 +101,6 @@ const Page = () => {
         const query = `
         *[_type == "event"] | order(date desc) {
           title,
-          "slug": slug.current,
           date,
           status,
           des,
@@ -259,7 +253,12 @@ const Page = () => {
                       {item.des}
                     </p>
                     <Link
-                      href={`/sparc-update/${item?.slug.current}`}
+                      href={`/sparc-update/${item.title.toLowerCase()
+                        .replace(/\s+/g, '-')
+                        .replace(/[^\w\-]+/g, '')
+                        .replace(/\-\-+/g, '-')
+                        .replace(/^-+/, '')
+                        .replace(/-+$/, '')}`}
                       className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
                     >
                       Read More <span>→</span>

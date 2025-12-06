@@ -5,20 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
-import { client } from "@/sanity/lib/client"; // Import Sanity client
+import { client } from "@/sanity/lib/client";
 
 interface Data {
-  _id: string; // Added _id for consistency and potential use
-  img: string; // Now a string URL from Sanity
+  _id: string;
+  img: string;
   title: string;
   des: string;
   date: string;
   category: string;
   longdes: string;
-  slug: string; // Added slug for related stories link generation
 }
 
-// Function to format the date (copied from your main page)
+// Format date
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", {
@@ -28,51 +27,54 @@ const formatDate = (dateString: string) => {
   });
 };
 
+// Convert TITLE → SLUG internally
+const makeSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-")
+    .replace(/^-+/, "")
+    .replace(/-+$/, "");
+
 const Page = () => {
   const { slug } = useParams();
   const [filteredData, setFilteredData] = useState<Data | null>(null);
   const [relatedStories, setRelatedStories] = useState<Data[]>([]);
   const [loading, setLoading] = useState(true);
-  const slugString = Array.isArray(slug) ? slug[0] : slug;
 
-  // Fetch data from Sanity
   useEffect(() => {
-    if (!slugString) return;
+    if (!slug) return;
 
     const fetchData = async () => {
+      setLoading(true);
       try {
-        setLoading(true);
+        // Fetch ALL posts from Sanity
+        const allPosts: Data[] = await client.fetch(`
+          *[_type == "archivePost"]{
+            _id,
+            title,
+            "img": img.asset->url,
+            des,
+            date,
+            category,
+            longdes
+          }
+        `);
 
-        // 1. Fetch the main article data
-        const articleQuery = `*[_type == "archivePost" && slug.current == $slug][0] {
-                    _id,
-                    title,
-                    "img": img.asset->url,
-                    des,
-                    date,
-                    category,
-                    longdes,
-                    "slug": slug.current
-                }`;
-        const mainArticle: Data = await client.fetch(articleQuery, {
-          slug: slugString,
-        });
-        setFilteredData(mainArticle);
+        // Find current article using INTERNAL SLUG
+        const mainArticle = allPosts.find(
+          (post) => makeSlug(post.title) === slug
+        );
 
-        // 2. Fetch related stories (all except the current one, limit to 3)
-        const relatedQuery = `*[_type == "archivePost" && slug.current != $slug] | order(date desc) [0..2] {
-                    _id,
-                    title,
-                    "img": img.asset->url,
-                    des,
-                    date,
-                    category,
-                    "slug": slug.current
-                }`;
-        const relatedResults: Data[] = await client.fetch(relatedQuery, {
-          slug: slugString,
-        });
-        setRelatedStories(relatedResults);
+        setFilteredData(mainArticle || null);
+
+        // Generate related posts
+        const related = allPosts
+          .filter((post) => post._id !== mainArticle?._id)
+          .slice(0, 3);
+
+        setRelatedStories(related);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -81,8 +83,9 @@ const Page = () => {
     };
 
     fetchData();
-  }, [slugString]);
+  }, [slug]);
 
+  // Loading State
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -91,6 +94,7 @@ const Page = () => {
     );
   }
 
+  // If article is missing
   if (!filteredData) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
@@ -121,7 +125,6 @@ const Page = () => {
             <span>||</span>
             <p className="text-[#818181] ">INDIGENOUS ARCHIVE</p>
             <span>||</span>
-            {/* Displaying the title here is often better than the raw slug */}
             <h2 className="text-[#818181] line-clamp-1">
               {filteredData.title}
             </h2>
@@ -135,9 +138,11 @@ const Page = () => {
         >
           {filteredData.title}
         </h1>
+
         <p className={`text-gray-500 mb-6 ${poppins.className}`}>
           {formatDate(filteredData.date)}
         </p>
+
         <Image
           src={filteredData.img}
           alt={filteredData.title}
@@ -146,7 +151,6 @@ const Page = () => {
           className="w-full object-cover max-h-[60vh]"
         />
 
-        {/* You may need to handle rich text/portable text here if longdes is not a plain string in Sanity */}
         <p
           className={`text-[#252525] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line`}
         >
@@ -161,13 +165,11 @@ const Page = () => {
             Related Stories
           </h2>
 
-          {/* Note: relatedStories array now contains data from Sanity via the second query */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedStories.map((story) => (
-              // Use story.slug for the Link href, which is more reliable
               <Link
                 key={story._id}
-                href={`/archive/${story.slug}`}
+                href={`/archive/${makeSlug(story.title)}`}
                 className="border border-gray-300 rounded-sm p-5 group"
               >
                 <div className="overflow-hidden">
@@ -179,12 +181,14 @@ const Page = () => {
                     className="w-full h-auto rounded-sm object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
+
                 <div className="mt-4 space-y-2">
                   <h3
                     className={`text-lg group-hover:text-[#ff951b] duration-300 font-semibold leading-snug transition-colors ${poppins.className}`}
                   >
                     {story.title}
                   </h3>
+
                   <p className={`text-lg ${antiquaFont.className}`}>
                     {story.des}
                   </p>

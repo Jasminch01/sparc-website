@@ -13,30 +13,6 @@ export const ReportsPublications = {
             validation: (Rule: Rule) => Rule.required(),
         },
         {
-            name: 'pathTitle',
-            title: 'Path Title',
-            type: 'string',
-            description: 'Title used in URL paths',
-            validation: (Rule: Rule) => Rule.required(),
-        },
-        {
-            name: 'slug',
-            title: 'Slug',
-            type: 'slug',
-            options: {
-                source: 'pathTitle',
-                maxLength: 96,
-                slugify: (input: string) => input
-                    .toLowerCase()
-                    .replace(/\s+/g, '-')
-                    .replace(/[^\w\-]+/g, '')
-                    .replace(/\-\-+/g, '-')
-                    .replace(/^-+/, '')
-                    .replace(/-+$/, '')
-            },
-            validation: (Rule: Rule) => Rule.required(),
-        },
-        {
             name: "writtenOn",
             title: "Written On",
             type: "date",
