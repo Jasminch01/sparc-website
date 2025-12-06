@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { HiOutlineShieldCheck } from "react-icons/hi";
-import { poppins } from "../utils/font";
+import { antiquaFont, poppins } from "../utils/font";
+import Image from "next/image";
+import Link from "next/link";
 
 interface DonationModalProps {
   isOpen: boolean;
@@ -59,8 +61,53 @@ const DonationModal = ({ isOpen, onClose }: DonationModalProps) => {
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div>
+      <div className="flex justify-center items-center space-x-5">
         {/* Modal */}
+        <div
+          className={` relative bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto pb-10`}
+        >
+          <div>
+            <Image
+              src={"/Stories/modal1.png"}
+              width={500}
+              height={500}
+              alt="modal-image"
+              className="w-full object-cover"
+            />
+          </div>
+          <div className="px-10 mt-5 space-y-5">
+            <div className="flex justify-center ">
+              <Image
+                src={"/Header/Sparce-logo.png"}
+                alt="sparc-logo"
+                width={149}
+                height={84}
+                className="w-20 h-11 lg:w-32 lg:h-18 xl:w-[90px] xl:h-14"
+                priority
+              />
+            </div>
+            <p className={`font-semibold text-xl ${poppins.className}`}>
+              Every woman deserves safety, dignity, and opportunity
+            </p>
+            <p className={`text-lg leading-relaxed ${antiquaFont.className}`}>
+              Your support can transform lives. SPaRC is an indigenous women-led
+              organization working to ensure that women, girls, and marginalized
+              communities in the Chittagong Hill Tracts (CHT) can grow, thrive,
+              and live free from violence and discrimination. By donating today,
+              you’re helping provide essential resources, community education,
+              crisis support, and leadership opportunities for women and girls
+              who need it most. Together, we can build stronger, safer, and more
+              empowered communities across the CHT. Donations can be made using
+              mobile banking, debit, or credit card. Your generosity creates
+              real change.
+            </p>
+          <div className={`space-x-5 ${antiquaFont.className} mt-10`}>
+            <Link href={"/volunteer"} className="border-b">Volunteer</Link>
+            <Link href={"/learn"} className="border-b">Learn with us</Link>
+            <Link href={"/be-a-intern"} className="border-b">Be an intern</Link>
+          </div>
+          </div>
+        </div>
         <div
           className={`relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto ${poppins.className} p-10`}
         >
