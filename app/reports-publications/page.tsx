@@ -82,14 +82,22 @@ const Page = () => {
     (f) => f.category === activeCategory && f.date === activeYear
   );
 
+  // Smooth scroll handler
+  const handleScrollToReports = () => {
+    const element = document.getElementById("reports");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <div className="mt-10 sm:mt-12 md:mt-15">
       <Container>
         {/* Top Section */}
-        <section className="flex flex-col lg:flex-row justify-between gap-6 :gap-8 lg:gap-20">
+        <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-3xl :text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}
+              className={`text-3xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}
             >
               KNOWLEDGE THAT <span className="text-[#FF951B]">INSPIRE </span>
               CHANGE
@@ -114,11 +122,12 @@ const Page = () => {
           alt="fellowship-hero"
           width={1000}
           height={600}
-          className="w-full h-[300px] :h-[500px] md:h-[600px] lg:h-full object-cover"
+          className="w-full h-[300px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
+          priority
         />
-        <div className="absolute top-2/3 :top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
+        <div className="absolute top-2/3 sm:top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-2xl lg:text-5xl font-bold mb-3 :mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
           >
             REPORTS AND PUBLICATIONS
           </h2>
@@ -129,11 +138,7 @@ const Page = () => {
             resilience of Indigenous women across communities.
           </p>
           <div
-            onClick={() => {
-              document
-                .getElementById("reports")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={handleScrollToReports}
             className="flex flex-col items-center justify-center lg:mt-30 cursor-pointer"
           >
             <button
@@ -148,10 +153,10 @@ const Page = () => {
 
       {/* Breadcrumb & Filter Section */}
       <Container>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 :gap-6 my-6 lg:my-20">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 my-6 lg:my-20">
           {/* Breadcrumb */}
           <section
-            className={`flex gap-3 :gap-5 py-5 lg:py-0 text-xs :text-base font-semibold ${poppins.className}`}
+            className={`flex gap-3 sm:gap-5 py-5 lg:py-0 text-xs sm:text-base font-semibold ${poppins.className}`}
           >
             <Link
               href="/"
@@ -169,7 +174,7 @@ const Page = () => {
               <select
                 onChange={(e) => setActiveCategory(e.target.value)}
                 value={activeCategory}
-                className="border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
+                className={`border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none ${poppins.className}`}
               >
                 <option value="reports">ANNUAL REPORTS</option>
                 <option value="publications">PUBLICATIONS</option>
@@ -188,7 +193,7 @@ const Page = () => {
               <select
                 onChange={(e) => setActiveYear(e.target.value)}
                 value={activeYear}
-                className="border border-[#B7B7B7] rounded-sm py-2 pl-3 lg:pl-4 pr-8 lg:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none"
+                className={`border border-[#B7B7B7] rounded-sm py-2 pl-3 lg:pl-4 pr-8 lg:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer appearance-none ${poppins.className}`}
               >
                 <option value="2020-2021">2020-2021</option>
                 <option value="2024-2025">2024-2025</option>
@@ -214,9 +219,12 @@ const Page = () => {
       >
         {loading ? (
           <div className="flex justify-center items-center h-64">
-            <p className={`text-xl ${poppins.className}`}>
-              Loading reports...
-            </p>
+            <div className="flex flex-col items-center gap-4">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
+              <p className={`text-xl ${poppins.className}`}>
+                Loading reports...
+              </p>
+            </div>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-64">
@@ -225,11 +233,13 @@ const Page = () => {
             </p>
           </div>
         ) : combineCategoryandDate.length === 0 ? (
-          <span
-            className={`text-center block text-lg :text-xl ${poppins.className}`}
-          >
-            No Data Found!
-          </span>
+          <div className="flex justify-center items-center h-64">
+            <span
+              className={`text-center block text-lg sm:text-xl ${poppins.className}`}
+            >
+              No Data Found!
+            </span>
+          </div>
         ) : (
           combineCategoryandDate.map((rep, index) => (
             <div
@@ -238,10 +248,10 @@ const Page = () => {
             >
               {rep.category === "publications" ? (
                 <div className="space-y-4 lg:space-y-5">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4">
+                  <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}>
                     {rep.title}
                   </h2>
-                  <p className="uppercase text-sm">
+                  <p className={`uppercase text-sm ${poppins.className}`}>
                     <span className="text-[#6B6B6B]">Written on</span>{" "}
                     {new Date(rep.writtenOn).toLocaleDateString("en-US", {
                       day: "2-digit",
@@ -332,17 +342,17 @@ const Page = () => {
                 </div>
               ) : (
                 <div className="space-y-3 md:space-y-4">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
+                  <h2 className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 ${poppins.className}`}>
                     {rep.title}
                   </h2>
-                  <p className="text-base">
+                  <p className={`text-base ${poppins.className}`}>
                     {new Date(rep.writtenOn).toLocaleDateString("en-US", {
                       day: "2-digit",
                       month: "long",
                       year: "numeric",
                     })}
                   </p>
-                  <p className="mb-4 text-base md:text-lg text-justify">
+                  <p className={`mb-4 text-base md:text-lg text-justify ${antiquaFont.className}`}>
                     {rep.des}
                   </p>
                   {rep.img && (
@@ -355,13 +365,13 @@ const Page = () => {
                     />
                   )}
                   {rep.imgDes && (
-                    <p className="mt-5 mb-6 text-sm md:text-base text-gray-600 italic">
+                    <p className={`mt-5 mb-6 text-sm md:text-base text-gray-600 italic ${antiquaFont.className}`}>
                       {rep.imgDes}
                     </p>
                   )}
                   <Link
                     href={`/reports-publications/${createSlug(rep.title)}`}
-                    className="inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50]"
+                    className={`inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50] ${poppins.className}`}
                   >
                     Read More
                   </Link>

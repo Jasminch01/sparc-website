@@ -36,14 +36,20 @@ const makeSlug = (title: string) =>
     .replace(/-+$/, "");
 
 const Page = () => {
-  const { slug } = useParams();
+  const params = useParams();
+  const slug = params?.slug as string | undefined;
+
   const [data, setData] = useState<ReportDetail | null>(null);
   const [relatedItems, setRelatedItems] = useState<ReportDetail[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!slug) return;
+    if (!slug) {
+      setNotFound(true);
+      setLoading(false);
+      return;
+    }
 
     const fetchData = async () => {
       try {
@@ -69,6 +75,12 @@ const Page = () => {
             releaseMonth
           }
         `);
+
+        // Safety check
+        if (!allData || allData.length === 0) {
+          setNotFound(true);
+          return;
+        }
 
         // Find the current item using internal slug
         const currentItem = allData.find(
@@ -104,8 +116,12 @@ const Page = () => {
 
   // Format date helper
   const formatDate = (dateString: string): string => {
+    if (!dateString) return "Date unavailable";
     try {
-      return new Date(dateString).toLocaleDateString("en-US", {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+
+      return date.toLocaleDateString("en-US", {
         day: "2-digit",
         month: "long",
         year: "numeric",
@@ -182,7 +198,6 @@ const Page = () => {
           <p className="text-[#818181] uppercase">{data.category}</p>
         </div>
 
-
         {/* Content */}
         <div className="space-y-6 lg:space-y-8">
           {/* Category Badge */}
@@ -191,8 +206,7 @@ const Page = () => {
               className={`inline-block px-4 py-2 ${data.category === "reports"
                   ? "bg-blue-100 text-blue-600"
                   : "bg-purple-100 text-purple-600"
-                } rounded-full text-sm font-semibold uppercase ${poppins.className
-                }`}
+                } rounded-full text-sm font-semibold uppercase ${poppins.className}`}
             >
               {data.category}
             </span>
@@ -313,7 +327,7 @@ const Page = () => {
         </div>
 
         {/* Related Items */}
-        {relatedItems.length > 0 && (
+        {relatedItems && relatedItems.length > 0 && (
           <div className="mt-16 lg:mt-20 pt-12 border-t border-gray-200">
             <h2
               className={`text-2xl lg:text-3xl font-bold mb-8 ${poppins.className}`}
@@ -344,8 +358,7 @@ const Page = () => {
                         className={`inline-block px-3 py-1 ${item.category === "reports"
                             ? "bg-blue-100 text-blue-600"
                             : "bg-purple-100 text-purple-600"
-                          } rounded-full text-xs font-semibold mb-2 uppercase ${poppins.className
-                          }`}
+                          } rounded-full text-xs font-semibold mb-2 uppercase ${poppins.className}`}
                       >
                         {item.category}
                       </span>
