@@ -1,3 +1,4 @@
+"use client"
 import { poppins } from "@/components/utils/font";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
