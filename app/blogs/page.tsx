@@ -34,6 +34,8 @@ const BlogPage = () => {
   // State for dynamically setting visibleCount
   const [visibleCount, setVisibleCount] = useState(6);
 
+  //test bolog page deploy error vercel
+
   const visibleCategories = (categories || ["All"]).slice(
     startIndex,
     startIndex + visibleCount
@@ -136,7 +138,6 @@ const BlogPage = () => {
         blog.writtenBy.toLowerCase().includes(searchQuery.toLowerCase())
     )
     : filteredBySubcategory;
-    console.log(filteredBlogs)
 
   return (
     <div>
