@@ -22,6 +22,7 @@ type Course = {
     longDes: string;
     rating: string;
     whatYouLearn: string[];
+    form: string; // Google Form URL
 };
 
 
@@ -62,6 +63,7 @@ const Page = () => {
                         price,
                         updated,
                         whatYouLearn,
+                        form,
                         "img": img.asset->url
                     }
                 `);
@@ -108,6 +110,14 @@ const Page = () => {
         if (isMobile) {
             const slug = course.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
             router.push(`/learn/${slug}?id=${index}`);
+        }
+    };
+
+    // Handle enroll button click
+    const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent triggering card click
+        if (formUrl) {
+            window.open(formUrl, '_blank');
         }
     };
 
@@ -276,7 +286,11 @@ const Page = () => {
                                                         <p>{item}</p>
                                                     </div>
                                                 ))}
-                                                <button className='flex justify-center mx-auto bg-[#5B1E63] rounded-full px-10 py-2 text-white mt-5 cursor-pointer hover:bg-[#7a2887] transition-all duration-300 transform hover:scale-105'>Enroll Now</button>
+                                                <button
+                                                    onClick={(e) => handleEnrollClick(course.form, e)}
+                                                    className='flex justify-center mx-auto bg-[#5B1E63] rounded-full px-10 py-2 text-white mt-5 cursor-pointer hover:bg-[#7a2887] transition-all duration-300 transform hover:scale-105'>
+                                                    Enroll Now
+                                                </button>
                                             </div>
                                         </div>
                                     )}

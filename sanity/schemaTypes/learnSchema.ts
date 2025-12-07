@@ -43,6 +43,16 @@ export const Learn = {
             validation: (Rule: Rule) => Rule.required()
         },
         {
+            name: "form",
+            title: "Form Link",
+            type: "url",
+            description: "Google form  URL",
+            validation: (Rule: Rule) =>
+                Rule.required().uri({
+                    scheme: ["http", "https"],
+                }),
+        },
+        {
             name: 'img',
             title: 'Course Image',
             type: 'image',

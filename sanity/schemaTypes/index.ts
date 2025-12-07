@@ -21,6 +21,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Projects,
     Events,
     Highlight_Stories_Features,
-    Partners,
+    Partners
   ],
 };
