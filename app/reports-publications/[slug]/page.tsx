@@ -204,8 +204,8 @@ const Page = () => {
           <div className="mb-4">
             <span
               className={`inline-block px-4 py-2 ${data.category === "reports"
-                  ? "bg-blue-100 text-blue-600"
-                  : "bg-purple-100 text-purple-600"
+                ? "bg-blue-100 text-blue-600"
+                : "bg-purple-100 text-purple-600"
                 } rounded-full text-sm font-semibold uppercase ${poppins.className}`}
             >
               {data.category}
@@ -356,8 +356,8 @@ const Page = () => {
                     <div className="p-4">
                       <span
                         className={`inline-block px-3 py-1 ${item.category === "reports"
-                            ? "bg-blue-100 text-blue-600"
-                            : "bg-purple-100 text-purple-600"
+                          ? "bg-blue-100 text-blue-600"
+                          : "bg-purple-100 text-purple-600"
                           } rounded-full text-xs font-semibold mb-2 uppercase ${poppins.className}`}
                       >
                         {item.category}
