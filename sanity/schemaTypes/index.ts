@@ -9,6 +9,7 @@ import { Projects } from "./sparc-update-ProjectSchema";
 import { Events } from "./sparc-update-EventSchema";
 import { Highlight_Stories_Features } from "./sparc-update-HighlightNewsFeaturesSchema";
 import { Partners } from "./parthnerSchema";
+import { socialWorkerTeamSchema } from "./teamSchema";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -21,6 +22,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Projects,
     Events,
     Highlight_Stories_Features,
-    Partners
+    Partners,
+    socialWorkerTeamSchema
   ],
 };
