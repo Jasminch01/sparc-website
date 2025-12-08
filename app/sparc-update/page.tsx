@@ -291,7 +291,7 @@ const Page = () => {
               <div className="p-6 pt-8">
                 {highlightData && highlightData.length > 0 ? (
                   highlightData.map((item, index) => (
-                    <div key={`highlight-${index}`} className="cursor-pointer group">
+                    <Link href={`/sparc-update/${createSlug(item.title)}`} key={`highlight-${index}`} className="cursor-pointer group">
                       {item.img && (
                         <div className="relative w-full h-[250px] lg:h-[300px] mb-4 overflow-hidden">
                           <Image
@@ -314,13 +314,8 @@ const Page = () => {
                       <p className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}>
                         {item.des}
                       </p>
-                      <Link
-                        href={`/sparc-update/${createSlug(item.title)}`}
-                        className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                      >
-                        Read More <span>→</span>
-                      </Link>
-                    </div>
+                      Read More <span>→</span>
+                    </Link>
                   ))
                 ) : (
                   <p className={`text-center text-gray-500 ${poppins.className}`}>No highlights available</p>
@@ -344,7 +339,7 @@ const Page = () => {
               <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
                 {featuredStoriesData && featuredStoriesData.length > 0 ? (
                   featuredStoriesData.map((item, index) => (
-                    <div key={`featured-${index}`} className="mb-6 last:mb-0 group cursor-pointer">
+                    <Link href={`/sparc-update/${createSlug(item.title)}`} key={`featured-${index}`} className="mb-6 last:mb-0 group cursor-pointer">
                       {item.img && (
                         <div className="relative w-full h-[300px] mb-3 overflow-hidden">
                           <Image
@@ -366,14 +361,11 @@ const Page = () => {
                         <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
                           {formatDate(item.date)}
                         </p>
-                        <Link
-                          href={`/sparc-update/${createSlug(item.title)}`}
-                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                        >
-                          Read More <span>→</span>
-                        </Link>
+
+                        Read More <span>→</span>
+
                       </div>
-                    </div>
+                    </Link>
                   ))
                 ) : (
                   <p className={`text-center text-gray-500 ${poppins.className}`}>No featured stories available</p>
@@ -486,7 +478,7 @@ const Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
             {combineProjects && combineProjects.length > 0 ? (
               combineProjects.map((project, index) => (
-                <div key={`project-${index}`} className="relative">
+                <Link href={`/sparc-update/${createSlug(project.title)}`} key={`project-${index}`} className="relative">
                   <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px]">
                     {project.img && (
                       <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
@@ -527,7 +519,7 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
               <div className="col-span-full text-center py-10">
@@ -571,7 +563,7 @@ const Page = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
             {combineEvents && combineEvents.length > 0 ? (
               combineEvents.map((event, index) => (
-                <div key={`event-${index}`} className="relative">
+                <Link href={`/sparc-update/${createSlug(event.title)}`} key={`event-${index}`} className="relative">
                   <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
                     {event.img && (
                       <div className="relative w-full h-[250px] lg:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
@@ -616,7 +608,7 @@ const Page = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
               <div className="col-span-full text-center py-10">

@@ -1,66 +1,69 @@
 "use client";
-import React, { useState } from "react";
-import teamOne from "../../public/Team/team 1.png";
-import teamTwo from "../../public/Team/team 2.png";
-import teamThree from "../../public/Team/team 3.png";
-import teamFour from "../../public/Team/team 4.png";
+import React, { useState, useEffect } from "react";
 import leaf from "../../public/Team/Leaf.png";
 import Image from "next/image";
 import { antiquaFont, poppins } from "../utils/font";
 import Container from "../Container";
+import { client } from "@/sanity/lib/client";
 
-const teamMembers = [
-  {
-    name: "Arthur Morgan",
-    designation: "Social Worker, MD",
-    img: teamOne,
-    category: "Category1",
-  },
-  {
-    name: "Jane Smith",
-    designation: "Social Worker, PhD",
-    img: teamTwo,
-    category: "Category1",
-  },
-  {
-    name: "John Doe",
-    designation: "Social Worker, MSW",
-    img: teamThree,
-    category: "Category2",
-  },
-  {
-    name: "John Snow",
-    designation: "Social Worker, MSW",
-    img: teamFour,
-    category: "Category3",
-  },
-];
-
-const categoryTeam = [
-  "All",
-  "Category1",
-  "Category2",
-  "Category3",
-  "Category4",
-];
+interface TeamMember {
+  _id: string;
+  name: string;
+  title: string;
+  image: string;
+  imageAlt?: string;
+  category: string;
+}
 
 const Team = () => {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [categories, setCategories] = useState<string[]>(["All"]);
+
+  // Fetch team members from Sanity
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        setLoading(true);
+        const query = `*[_type == "socialWorkerTeam"] | order(_createdAt desc) {
+          _id,
+          name,
+          title,
+          "image": image.asset->url,
+          "imageAlt": image.alt,
+          category
+        }`;
+
+        const data = await client.fetch(query);
+        setTeamMembers(data);
+
+        // Extract unique categories
+        const uniqueCategories = Array.from(
+          new Set(data.map((member: TeamMember) => member.category))
+        ) as string[];
+        setCategories(["All", ...uniqueCategories]);
+      } catch (error) {
+        console.error("Error fetching team members:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeamMembers();
+  }, []);
 
   const handleCategoryClick = (category: string) => {
     setActiveCategory(category);
-    setLoading(true);
-    setTimeout(() => setLoading(false), 300);
   };
 
   const filteredTeam =
     activeCategory === "All"
       ? teamMembers
       : teamMembers.filter(
-          (member) =>
-            member.category?.toLowerCase() === activeCategory.toLowerCase()
-        );
+        (member) =>
+          member.category?.toLowerCase() === activeCategory.toLowerCase()
+      );
 
   return (
     <Container>
@@ -108,17 +111,15 @@ const Team = () => {
 
         {/* Category Buttons */}
         <div className="flex flex-wrap gap-3 md:gap-4 mb-8 md:mb-10 justify-center md:justify-start">
-          {categoryTeam.map((ct, index) => (
+          {categories.map((ct, index) => (
             <button
               key={index}
               onClick={() => handleCategoryClick(ct)}
-              className={`${
-                poppins.className
-              } px-4 md:px-6 py-2 rounded-full text-lg transition-all duration-200 cursor-pointer ${
-                activeCategory === ct
+              className={`${poppins.className
+                } px-4 md:px-6 py-2 rounded-full text-lg transition-all duration-200 cursor-pointer ${activeCategory === ct
                   ? "bg-[#772E82] text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-[#772E82] hover:text-white"
-              }`}
+                }`}
             >
               {ct}
             </button>
@@ -142,15 +143,15 @@ const Team = () => {
           ) : filteredTeam.length > 0 ? (
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-6">
               {filteredTeam.map((team, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={team._id}
                   className="flex flex-col opacity-0 animate-fadeIn"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="relative w-full aspect-3/4 rounded-lg overflow-hidden bg-gray-100">
                     <Image
-                      src={team.img}
-                      alt={team.name}
+                      src={team.image}
+                      alt={team.imageAlt || team.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover"
@@ -167,7 +168,7 @@ const Team = () => {
                       className="text-sm md:text-base text-gray-600"
                       style={{ fontFamily: '"Book Antiqua", serif' }}
                     >
-                      {team.designation}
+                      {team.title}
                     </p>
                   </div>
                 </div>
