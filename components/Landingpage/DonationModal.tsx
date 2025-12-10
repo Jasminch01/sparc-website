@@ -1,255 +1,441 @@
-"use client";
+import React, { useState, ChangeEvent, useEffect } from 'react';
+import bikashLogo from '../../public/donation/BKash-Icon-Logo.wine 1.png';
+import bracLogo from '../../public/donation/brac.png';
+import nagadLogo from '../../public/donation/Nagad-Logo.wine 1.png';
+import upayLogo from '../../public/donation/Upay_logo_freekaj 1.png';
+import visalogo from '../../public/donation/visa.png';
+import master from '../../public/donation/mastercard.png';
+import ucb from '../../public/donation/ucb-bank-seeklogo 1.png';
+import paypal from '../../public/donation/paypal-seeklogo 1.png';
+import Image, { StaticImageData } from 'next/image';
 
-import { useState } from "react";
-import { HiOutlineShieldCheck } from "react-icons/hi";
-import { antiquaFont, poppins } from "../utils/font";
-import Image from "next/image";
-import Link from "next/link";
+interface FormData {
+  name: string;
+  transactionId: string;
+  honoredName: string;
+  donatedFor: string;
+  cardNumber: string;
+  cardHolder: string;
+  expiryDate: string;
+  cvv: string;
+  accountNumber: string;
+  bankName: string;
+  branchName: string;
+  referenceNumber: string;
+  email: string;
+  paypalTransactionId: string;
+}
+
+type PaymentType = 'mobile' | 'card' | 'bank' | 'paypal';
+type PaymentColor = 'pink' | 'orange' | 'blue' | 'red';
+
+interface PaymentDetail {
+  name: string;
+  color: PaymentColor;
+  img: StaticImageData;
+  type: PaymentType;
+  numbers: string[];
+  fields: (keyof FormData)[];
+}
+
+type PaymentMethod =
+  | 'bkash'
+  | 'nagad'
+  | 'upay'
+  | 'mastercard'
+  | 'visa'
+  | 'ucb'
+  | 'bracbank'
+  | 'paypal';
+
+interface FieldConfig {
+  placeholder: string;
+  type: string;
+  maxLength?: number;
+}
 
 interface DonationModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const DonationModal = ({ isOpen, onClose }: DonationModalProps) => {
-  const [amount, setAmount] = useState<string>("");
-  const [customAmount, setCustomAmount] = useState<string>("");
-  const [honoreeName, setHonoreeName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>('bkash');
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    transactionId: '',
+    honoredName: '',
+    donatedFor: '',
+    cardNumber: '',
+    cardHolder: '',
+    expiryDate: '',
+    cvv: '',
+    accountNumber: '',
+    bankName: '',
+    branchName: '',
+    referenceNumber: '',
+    email: '',
+    paypalTransactionId: ''
+  });
 
-  console.log(honoreeName);
+  // ESC key closes modal
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
 
-  const predefinedAmounts: number[] = [10, 25, 50, 100, 250, 500];
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
 
-  const handleAmountSelect = (value: number): void => {
-    setAmount(value.toString());
-    setCustomAmount("");
-  };
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
 
-  const handleCustomAmountChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const value = e.target.value;
-    if (value === "" || /^\d+$/.test(value)) {
-      setCustomAmount(value);
-      setAmount(value);
+  // PAYMENT DETAILS
+  const paymentDetails: Record<PaymentMethod, PaymentDetail> = {
+    bkash: {
+      name: 'Bkash',
+      color: 'pink',
+      img: bikashLogo,
+      type: 'mobile',
+      numbers: ['01871888764', '01871888764'],
+      fields: ['name', 'transactionId', 'honoredName', 'donatedFor']
+    },
+    nagad: {
+      name: 'Nagad',
+      color: 'orange',
+      img: nagadLogo,
+      type: 'mobile',
+      numbers: ['01712345678', '01712345678'],
+      fields: ['name', 'transactionId', 'honoredName', 'donatedFor']
+    },
+    upay: {
+      name: 'Upay',
+      color: 'blue',
+      img: upayLogo,
+      type: 'mobile',
+      numbers: ['01898765432', '01898765432'],
+
+      fields: ['name', 'transactionId', 'honoredName', 'donatedFor']
+    },
+    mastercard: {
+      name: '',
+      color: 'red',
+      img: master,
+      type: 'card',
+      numbers: [],
+
+      fields: [
+        'cardNumber',
+        'cardHolder',
+        'expiryDate',
+        'cvv',
+        'honoredName',
+        'donatedFor'
+      ]
+    },
+    visa: {
+      name: '',
+      color: 'blue',
+      img: visalogo,
+      type: 'card',
+      numbers: [],
+
+      fields: [
+        'cardNumber',
+        'cardHolder',
+        'expiryDate',
+        'cvv',
+        'honoredName',
+        'donatedFor'
+      ]
+    },
+    ucb: {
+      name: '',
+      color: 'red',
+      img: ucb,
+      type: 'bank',
+      numbers: [
+        'Account: 1234567890123',
+        'Account Name: Donation Fund',
+        'Branch: Gulshan, Dhaka'
+      ],
+
+      fields: [
+        'name',
+        'accountNumber',
+        'bankName',
+        'branchName',
+        'referenceNumber',
+        'honoredName',
+        'donatedFor'
+      ]
+    },
+    bracbank: {
+      name: '',
+      color: 'blue',
+      img: bracLogo,
+      type: 'bank',
+      numbers: [
+        'Account: 9876543210987',
+        'Account Name: Donation Fund',
+        'Branch: Dhanmondi, Dhaka'
+      ],
+
+      fields: [
+        'name',
+        'accountNumber',
+        'bankName',
+        'branchName',
+        'referenceNumber',
+        'honoredName',
+        'donatedFor'
+      ]
+    },
+    paypal: {
+      name: '',
+      color: 'blue',
+      img: paypal,
+      type: 'paypal',
+      numbers: ['Email: donations@example.com'],
+
+      fields: ['name', 'email', 'paypalTransactionId', 'honoredName', 'donatedFor']
     }
   };
 
-  const handleSubmit = (): void => {
-    // Handle donation submission here
-    console.log({
-      amount: amount || customAmount,
-      honoreeName,
-      email,
-    });
+  const currentPayment = paymentDetails[selectedMethod];
 
-    // Reset and close
-    setAmount("");
-    setCustomAmount("");
-    setHonoreeName("");
-    setEmail("");
+  // Input change formatting
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+    const name = e.target.name as keyof FormData;
+
+    if (name === 'cardNumber') {
+      value = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+      if (value.length > 19) value = value.slice(0, 19);
+    }
+
+    if (name === 'expiryDate') {
+      value = value.replace(/\D/g, '');
+      if (value.length >= 2) value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      if (value.length > 5) value = value.slice(0, 5);
+    }
+
+    if (name === 'cvv') value = value.replace(/\D/g, '').slice(0, 3);
+
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = () => {
+    console.log('Form submitted:', { method: selectedMethod, ...formData });
+    alert('Payment submitted successfully!');
     onClose();
+  };
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
+  const getColorClasses = (color: PaymentColor, isSelected: boolean): string => {
+    const colors: Record<PaymentColor, string> = {
+      pink: isSelected ? 'border-pink-500 bg-pink-50' : 'border-gray-200',
+      orange: isSelected ? 'border-orange-500 bg-orange-50' : 'border-gray-200',
+      blue: isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200',
+      red: isSelected ? 'border-red-500 bg-red-50' : 'border-gray-200'
+    };
+    return colors[color];
+  };
+
+  const getButtonColorClasses = (color: PaymentColor): string => {
+    const colors: Record<PaymentColor, string> = {
+      pink: 'bg-pink-500 hover:bg-pink-600',
+      orange: 'bg-orange-400 hover:bg-orange-500',
+      blue: 'bg-blue-500 hover:bg-blue-600',
+      red: 'bg-red-500 hover:bg-red-600'
+    };
+    return colors[color];
+  };
+
+  // NEW FUNCTION TO CONDITIONALLY APPLY IMAGE SIZE CLASSES
+  const getImageSizeClasses = (method: PaymentMethod): string => {
+    const customSizes: PaymentMethod[] = [
+      'bracbank',
+      'ucb',
+      'mastercard',
+      'visa',
+      'paypal'
+    ];
+
+    // Apply different classes for wider/flatter logos
+    if (customSizes.includes(method)) {
+      // Example: Max width of 80p, height of 48px (h-12) to contain non-square logos better
+      return 'w-auto h-12 ';
+    }
+
+    // Default size for square logos like Bkash, Nagad, Upay (w-16, h-16 is 64px)
+    return 'w-16 h-16';
+  };
+  // END NEW FUNCTION
+
+  const MOBILE_METHODS: PaymentMethod[] = ['bkash', 'nagad', 'upay'];
+  const CARD_METHODS: PaymentMethod[] = ['mastercard', 'visa'];
+  const BANK_METHODS: PaymentMethod[] = ['ucb', 'bracbank'];
+  const INTERNATIONAL_METHODS: PaymentMethod[] = ['paypal'];
+
+  const renderFormField = (fieldName: keyof FormData) => {
+    const fieldConfig: Record<keyof FormData, FieldConfig> = {
+      name: { placeholder: 'Enter Name', type: 'text' },
+      transactionId: { placeholder: 'Enter Transaction ID', type: 'text' },
+      honoredName: { placeholder: 'Honored Name (Optional)', type: 'text' },
+      donatedFor: { placeholder: 'Donated For (Optional)', type: 'text' },
+      cardNumber: { placeholder: 'Card Number', type: 'text', maxLength: 19 },
+      cardHolder: { placeholder: 'Cardholder Name', type: 'text' },
+      expiryDate: { placeholder: 'MM/YY', type: 'text', maxLength: 5 },
+      cvv: { placeholder: 'CVV', type: 'password', maxLength: 3 },
+      accountNumber: { placeholder: 'Your Account Number', type: 'text' },
+      bankName: { placeholder: 'Your Bank Name', type: 'text' },
+      branchName: { placeholder: 'Your Branch Name', type: 'text' },
+      referenceNumber: { placeholder: 'Transaction Reference Number', type: 'text' },
+      email: { placeholder: 'Your Email Address', type: 'email' },
+      paypalTransactionId: { placeholder: 'PayPal Transaction ID', type: 'text' }
+    };
+
+    const config = fieldConfig[fieldName];
+
+    return (
+      <input
+        key={fieldName}
+        type={config.type}
+        name={fieldName}
+        placeholder={config.placeholder}
+        value={formData[fieldName]}
+        onChange={handleInputChange}
+        maxLength={config.maxLength}
+        className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-pink-500 focus:outline-none"
+      />
+    );
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <div className="flex justify-center items-center space-x-5">
-        {/* Modal */}
-        <div
-          className={` relative bg-white rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto pb-10`}
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+      onClick={handleBackdropClick}
+    >
+      <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+
+        {/* CLOSE BUTTON */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg hover:bg-gray-100"
         >
-          <div>
-            <Image
-              src={"/Stories/modal1.png"}
-              width={500}
-              height={500}
-              alt="modal-image"
-              className="w-full object-cover"
-            />
-          </div>
-          <div className="px-10 mt-5 space-y-5">
-            <div className="flex justify-center ">
-              <Image
-                src={"/Header/Sparce-logo.png"}
-                alt="sparc-logo"
-                width={149}
-                height={84}
-                className="w-20 h-11 lg:w-32 lg:h-18 xl:w-[90px] xl:h-14"
-                priority
-              />
-            </div>
-            <p className={`font-semibold text-xl ${poppins.className}`}>
-              Every woman deserves safety, dignity, and opportunity
-            </p>
-            <p className={`text-lg leading-relaxed ${antiquaFont.className}`}>
-              Your support can transform lives. SPaRC is an indigenous women-led
-              organization working to ensure that women, girls, and marginalized
-              communities in the Chittagong Hill Tracts (CHT) can grow, thrive,
-              and live free from violence and discrimination. By donating today,
-              you’re helping provide essential resources, community education,
-              crisis support, and leadership opportunities for women and girls
-              who need it most. Together, we can build stronger, safer, and more
-              empowered communities across the CHT. Donations can be made using
-              mobile banking, debit, or credit card. Your generosity creates
-              real change.
-            </p>
-          <div className={`space-x-5 ${antiquaFont.className} mt-10`}>
-            <Link href={"/volunteer"} className="border-b">Volunteer</Link>
-            <Link href={"/learn"} className="border-b">Learn with us</Link>
-            <Link href={"/be-a-intern"} className="border-b">Be an intern</Link>
-          </div>
-          </div>
-        </div>
-        <div
-          className={`relative bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto ${poppins.className} p-10`}
-        >
-          <div className="flex items-center justify-center space-x-3 mb-10">
-            <HiOutlineShieldCheck size={30} color="#007A39" />
-            <p className="text-2xl font-semibold">Secure donation</p>
+          ✕
+        </button>
+
+        <div className="flex w-full gap-4 flex-col lg:flex-row">
+
+          {/* LEFT SIDE — PAYMENT LIST WITH MAP */}
+          <div className="w-full lg:w-1/2 rounded-lg bg-white p-6 shadow-lg">
+            <h2 className='text-center text-xl mb-5'>Choose Payment Method</h2>
+            {/* Category wrapper */}
+            {[
+              { label: 'Mobile Banking', methods: MOBILE_METHODS },
+              { label: 'Card', methods: CARD_METHODS },
+              { label: 'Bank Payment', methods: BANK_METHODS },
+              { label: 'International', methods: INTERNATIONAL_METHODS }
+            ].map((group, i) => (
+              <div key={i} className="mb-6">
+                <h3 className="mb-3 text-sm font-semibold">{group.label}</h3>
+
+                <div className="flex gap-3 flex-wrap">
+
+                  {group.methods.map((method) => {
+                    const item = paymentDetails[method];
+                    return (
+                      <button
+                        key={method}
+                        onClick={() => setSelectedMethod(method)}
+                        className={`flex items-center gap-2 rounded-lg border-2 px-4 py-3 transition ${getColorClasses(item.color, selectedMethod === method)
+                          }`}
+                      >
+                        <Image
+                          src={item.img}
+                          alt={item?.name}
+                          width={45}
+                          height={40}
+                          className="object-contain"
+                        />
+                        <span className="font-medium">{item?.name}</span>
+                      </button>
+                    );
+                  })}
+
+                </div>
+              </div>
+            ))}
+
           </div>
 
-          <div className="space-y-6">
-            <p className="text-center">
-              Choose the amount you would like to contribute
-            </p>
-            <div>
-              <div className="grid grid-cols-3 gap-3 mt-7">
-                {predefinedAmounts.map((value: number) => (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => handleAmountSelect(value)}
-                    className={`py-3 px-4 cursor-pointer rounded-lg border  border-gray-300 text-base transition-all duration-200 ${
-                      amount === value.toString() && !customAmount
-                        ? "bg-[#FF951B] text-white border-transparent"
-                        : " text-gray-700 "
-                    }`}
+          {/* RIGHT SIDE — PAYMENT FORM */}
+          <div className="w-full lg:w-1/2 rounded-lg bg-white p-6 shadow-lg overflow-y-auto max-h-[600px]">
+
+            <div className="mb-6 flex flex-col items-center justify-center gap-2">
+              <Image
+                src={currentPayment.img}
+                // Increased size for Next.js Image component optimization
+                width={500}
+                height={30}
+                alt={currentPayment.name}
+                // CONDITIONAL CSS APPLIED HERE:
+                className={`object-contain  ${getImageSizeClasses(selectedMethod)}`}
+              />
+              <h2 className="text-2xl font-semibold">{currentPayment.name}</h2>
+            </div>
+            {currentPayment.numbers.length > 0 && (
+              <div className="mb-6 rounded-lg bg-gray-50 p-4 text-center">
+                {currentPayment.numbers.map((number, index) => (
+                  <div
+                    key={index}
+                    className={`font-semibold ${index === 0 ? 'text-xl' : 'text-base text-gray-700'
+                      }`}
                   >
-                    ৳ {value}
-                  </button>
+                    {number}
+                  </div>
                 ))}
               </div>
-            </div>
+            )}
 
-            {/* Custom Amount */}
-            <div>
-              <div className="relative">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xl">
-                  ৳
-                </span>
-                <input
-                  id="customAmount"
-                  type="text"
-                  value={customAmount || amount}
-                  onChange={handleCustomAmountChange}
-                  placeholder="Enter amount"
-                  className="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-[#FF951B] transition-colors duration-200 text-xl"
-                />
-              </div>
-            </div>
-
-            {/* Donor Information */}
+            {/* FORM FIELDS */}
             <div className="space-y-4">
-              <div className="relative border-2 border-gray-200 rounded-lg transition-colors duration-200 focus-within:border-[#FF951B] pt-3">
-                <label
-                  htmlFor="designation"
-                  className="block text-sm pl-4 text-[#737373] mb-1"
-                >
-                  Designation
-                </label>
-                <div className="relative">
-                  <select
-                    id="designation"
-                    // value={designation}
-                    // onChange={(e) => setDesignation(e.target.value)}
-                    className="w-full px-4 pb-3 bg-transparent focus:outline-none appearance-none cursor-pointer text-gray-900 border-none"
-                  >
-                    <option value="wherever-needed" className="border-none">
-                      Wherever most needed
-                    </option>
-                    <option value="education" className="border-none">
-                      Education Programs
-                    </option>
-                    <option value="healthcare" className="border-none">
-                      Healthcare Initiatives
-                    </option>
-                    <option value="emergency-relief" className="border-none">
-                      Emergency Relief
-                    </option>
-                    <option value="food-security" className="border-none">
-                      Food Security
-                    </option>
-                    <option value="clean-water" className="border-none">
-                      Clean Water Projects
-                    </option>
-                    <option
-                      value="community-development"
-                      className="border-none"
-                    >
-                      Community Development
-                    </option>
-                    <option value="women-empowerment" className="border-none">
-                      Women Empowerment
-                    </option>
-                  </select>
-                  <div className="absolute right-5 top-3 -translate-y-1/2 pointer-events-none">
-                    <svg
-                      className="w-5 h-5 text-gray-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div>
+              {currentPayment.fields.map((fieldName) => {
+                if (fieldName === 'expiryDate' || fieldName === 'cvv') return null;
+                return renderFormField(fieldName);
+              })}
 
-              <div className="relative border-2 border-gray-200 rounded-lg transition-colors duration-200 focus-within:border-[#FF951B] px-4 py-3">
-                <label
-                  htmlFor="honoree-name"
-                  className="block text-sm text-[#737373] mb-1"
-                >
-                  Honoree name
-                </label>
-                <div className="relative">
-                  <input
-                    value={honoreeName}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setHonoreeName(e.target.value)
-                    }
-                    id="honoree-name"
-                    type="text"
-                    className="w-full bg-transparent focus:outline-none text-gray-900"
-                  />
+              {currentPayment.type === 'card' && (
+                <div className="flex gap-3">
+                  <div className="w-1/2">{renderFormField('expiryDate')}</div>
+                  <div className="w-1/2">{renderFormField('cvv')}</div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Submit Button */}
             <button
-              type="button"
               onClick={handleSubmit}
-              className="w-full py-4 bg-[#FF951B] text-white font-bold rounded-lg hover:bg-[#E88617] disabled:bg-gray-300 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
+              className={`mt-6 w-full rounded-lg py-3 font-semibold text-white transition ${getButtonColorClasses(currentPayment.color)
+                }`}
             >
-              Donate
+              SUBMIT
             </button>
+
           </div>
+
         </div>
-        {/* Modal */}
       </div>
     </div>
   );
