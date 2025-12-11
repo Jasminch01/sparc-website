@@ -324,7 +324,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm  p-4"
       onClick={handleBackdropClick}
     >
       <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
@@ -387,11 +387,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
             <div className="mb-6 flex flex-col items-center justify-center gap-2">
               <Image
                 src={currentPayment.img}
-                // Increased size for Next.js Image component optimization
-                width={500}
-                height={30}
+                width={1000}
+                height={1000}
                 alt={currentPayment.name}
-                // CONDITIONAL CSS APPLIED HERE:
                 className={`object-contain  ${getImageSizeClasses(selectedMethod)}`}
               />
               <h2 className="text-2xl font-semibold">{currentPayment.name}</h2>
