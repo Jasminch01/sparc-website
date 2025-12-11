@@ -1,24 +1,19 @@
-import React, { useState, ChangeEvent, useEffect } from 'react';
-import bikashLogo from '../../public/donation/BKash-Icon-Logo.wine 1.png';
-import bracLogo from '../../public/donation/brac.png';
-import nagadLogo from '../../public/donation/Nagad-Logo.wine 1.png';
-import upayLogo from '../../public/donation/Upay_logo_freekaj 1.png';
-import visalogo from '../../public/donation/visa.png';
-import master from '../../public/donation/mastercard.png';
-import ucb from '../../public/donation/ucb-bank-seeklogo 1.png';
-import paypal from '../../public/donation/paypal-seeklogo 1.png';
-import Image, { StaticImageData } from 'next/image';
+import React, { useState, ChangeEvent, useEffect } from "react";
+import bikashLogo from "../../public/donation/bikash.png";
+import nagadLogo from "../../public/donation/nogod.png";
+import upayLogo from "../../public/donation/up.png";
+import rocketLogo from "../../public/donation/nogod.png";
+import bankIcon from "../../public/donation/brac.png";
+import paypal from "../../public/donation/paypal.png";
+import Image, { StaticImageData } from "next/image";
+import { getAllPaymentMethods, PaymentMethod } from "@/sanity/queries/queries";
+import { antiquaFont, poppins } from "../utils/font";
 
 interface FormData {
   name: string;
   transactionId: string;
-  honoredName: string;
-  donatedFor: string;
-  cardNumber: string;
-  cardHolder: string;
-  expiryDate: string;
-  cvv: string;
-  accountNumber: string;
+  honoreeName: string;
+  message: string;
   bankName: string;
   branchName: string;
   referenceNumber: string;
@@ -26,32 +21,11 @@ interface FormData {
   paypalTransactionId: string;
 }
 
-type PaymentType = 'mobile' | 'card' | 'bank' | 'paypal';
-type PaymentColor = 'pink' | 'orange' | 'blue' | 'red';
-
-interface PaymentDetail {
-  name: string;
-  color: PaymentColor;
-  img: StaticImageData;
-  type: PaymentType;
-  numbers: string[];
-  fields: (keyof FormData)[];
-}
-
-type PaymentMethod =
-  | 'bkash'
-  | 'nagad'
-  | 'upay'
-  | 'mastercard'
-  | 'visa'
-  | 'ucb'
-  | 'bracbank'
-  | 'paypal';
-
 interface FieldConfig {
   placeholder: string;
   type: string;
   maxLength?: number;
+  isTextarea?: boolean;
 }
 
 interface DonationModalProps {
@@ -60,179 +34,177 @@ interface DonationModalProps {
 }
 
 const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
-  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>('bkash');
+  const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(
+    null
+  );
+  const [sanityPaymentData, setSanityPaymentData] = useState<PaymentMethod[]>(
+    []
+  );
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    transactionId: '',
-    honoredName: '',
-    donatedFor: '',
-    cardNumber: '',
-    cardHolder: '',
-    expiryDate: '',
-    cvv: '',
-    accountNumber: '',
-    bankName: '',
-    branchName: '',
-    referenceNumber: '',
-    email: '',
-    paypalTransactionId: ''
+    name: "",
+    transactionId: "",
+    honoreeName: "",
+    message: "",
+    bankName: "",
+    branchName: "",
+    referenceNumber: "",
+    email: "",
+    paypalTransactionId: "",
   });
+
+  // Fetch payment data from Sanity
+  useEffect(() => {
+    const fetchPaymentMethods = async () => {
+      setIsLoading(true);
+      try {
+        const data = await getAllPaymentMethods();
+        setSanityPaymentData(data);
+        if (data.length > 0) {
+          setSelectedPayment(data[0]);
+        }
+      } catch (error) {
+        console.error("Error loading payment methods:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (isOpen) {
+      fetchPaymentMethods();
+    }
+  }, [isOpen]);
 
   // ESC key closes modal
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
+      document.addEventListener("keydown", handleEscape);
+      document.body.style.overflow = "hidden";
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
 
-  // PAYMENT DETAILS
-  const paymentDetails: Record<PaymentMethod, PaymentDetail> = {
-    bkash: {
-      name: 'Bkash',
-      color: 'pink',
-      img: bikashLogo,
-      type: 'mobile',
-      numbers: ['01871888764', '01871888764'],
-      fields: ['name', 'transactionId', 'honoredName', 'donatedFor']
-    },
-    nagad: {
-      name: 'Nagad',
-      color: 'orange',
-      img: nagadLogo,
-      type: 'mobile',
-      numbers: ['01712345678', '01712345678'],
-      fields: ['name', 'transactionId', 'honoredName', 'donatedFor']
-    },
-    upay: {
-      name: 'Upay',
-      color: 'blue',
-      img: upayLogo,
-      type: 'mobile',
-      numbers: ['01898765432', '01898765432'],
-
-      fields: ['name', 'transactionId', 'honoredName', 'donatedFor']
-    },
-    mastercard: {
-      name: '',
-      color: 'red',
-      img: master,
-      type: 'card',
-      numbers: [],
-
-      fields: [
-        'cardNumber',
-        'cardHolder',
-        'expiryDate',
-        'cvv',
-        'honoredName',
-        'donatedFor'
-      ]
-    },
-    visa: {
-      name: '',
-      color: 'blue',
-      img: visalogo,
-      type: 'card',
-      numbers: [],
-
-      fields: [
-        'cardNumber',
-        'cardHolder',
-        'expiryDate',
-        'cvv',
-        'honoredName',
-        'donatedFor'
-      ]
-    },
-    ucb: {
-      name: '',
-      color: 'red',
-      img: ucb,
-      type: 'bank',
-      numbers: [
-        'Account: 1234567890123',
-        'Account Name: Donation Fund',
-        'Branch: Gulshan, Dhaka'
-      ],
-
-      fields: [
-        'name',
-        'accountNumber',
-        'bankName',
-        'branchName',
-        'referenceNumber',
-        'honoredName',
-        'donatedFor'
-      ]
-    },
-    bracbank: {
-      name: '',
-      color: 'blue',
-      img: bracLogo,
-      type: 'bank',
-      numbers: [
-        'Account: 9876543210987',
-        'Account Name: Donation Fund',
-        'Branch: Dhanmondi, Dhaka'
-      ],
-
-      fields: [
-        'name',
-        'accountNumber',
-        'bankName',
-        'branchName',
-        'referenceNumber',
-        'honoredName',
-        'donatedFor'
-      ]
-    },
-    paypal: {
-      name: '',
-      color: 'blue',
-      img: paypal,
-      type: 'paypal',
-      numbers: ['Email: donations@example.com'],
-
-      fields: ['name', 'email', 'paypalTransactionId', 'honoredName', 'donatedFor']
+  // Get logo based on payment type and provider
+  const getPaymentLogo = (payment: PaymentMethod): StaticImageData => {
+    if (payment.paymentType === "mobileBanking") {
+      const logoMap: Record<string, StaticImageData> = {
+        bkash: bikashLogo,
+        nagad: nagadLogo,
+        upay: upayLogo,
+        rocket: rocketLogo,
+      };
+      return logoMap[payment.mobileProvider || "bkash"] || bikashLogo;
     }
+
+    if (payment.paymentType === "bankTransfer") {
+      return bankIcon;
+    }
+
+    if (payment.paymentType === "paypal") {
+      return paypal;
+    }
+
+    return bikashLogo;
   };
 
-  const currentPayment = paymentDetails[selectedMethod];
-
-  // Input change formatting
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value;
-    const name = e.target.name as keyof FormData;
-
-    if (name === 'cardNumber') {
-      value = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
-      if (value.length > 19) value = value.slice(0, 19);
+  // Get display name
+  const getPaymentName = (payment: PaymentMethod): string => {
+    if (payment.paymentType === "mobileBanking") {
+      const nameMap: Record<string, string> = {
+        bkash: "bKash",
+        nagad: "Nagad",
+        upay: "Upay",
+        rocket: "Rocket",
+      };
+      return nameMap[payment.mobileProvider || ""] || "Mobile Banking";
     }
 
-    if (name === 'expiryDate') {
-      value = value.replace(/\D/g, '');
-      if (value.length >= 2) value = value.slice(0, 2) + '/' + value.slice(2, 4);
-      if (value.length > 5) value = value.slice(0, 5);
+    if (payment.paymentType === "bankTransfer") {
+      return payment.bankName || "Bank Transfer";
     }
 
-    if (name === 'cvv') value = value.replace(/\D/g, '').slice(0, 3);
+    if (payment.paymentType === "paypal") {
+      return "PayPal";
+    }
 
+    return "Payment Method";
+  };
+
+  // Get payment details to display
+  const getPaymentDetails = (payment: PaymentMethod): string[] => {
+    if (payment.paymentType === "mobileBanking") {
+      return payment.mobileAccountNumber
+        ? [payment.mobileAccountNumber]
+        : ["No account number available"];
+    }
+
+    if (payment.paymentType === "bankTransfer") {
+      return [
+        `Account Name: ${payment.accountName || "N/A"}`,
+        `Account Number: ${payment.accountNumber || "N/A"}`,
+        `Bank Name: ${payment.bankName || "N/A"}`,
+        `Branch: ${payment.branchName || "N/A"}`,
+        `SWIFT Code: ${payment.swiftCode || "N/A"}`,
+        `Routing Number: ${payment.routingNumber || "N/A"}`,
+      ];
+    }
+
+    if (payment.paymentType === "paypal") {
+      return payment.paypalEmail
+        ? [`Email: ${payment.paypalEmail}`]
+        : ["No PayPal email available"];
+    }
+
+    return [];
+  };
+
+  // Get form fields based on payment type
+  const getFormFields = (payment: PaymentMethod): (keyof FormData)[] => {
+    if (payment.paymentType === "mobileBanking") {
+      return ["name", "transactionId", "honoreeName", "message"];
+    }
+
+    if (payment.paymentType === "bankTransfer") {
+      return [
+        "name",
+        "transactionId",
+        "bankName",
+        "branchName",
+        "referenceNumber",
+        "honoreeName",
+        "message",
+      ];
+    }
+
+    if (payment.paymentType === "paypal") {
+      return ["name", "email", "paypalTransactionId", "honoreeName", "message"];
+    }
+
+    return [];
+  };
+
+  // Input change handler
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = () => {
-    console.log('Form submitted:', { method: selectedMethod, ...formData });
-    alert('Payment submitted successfully!');
+    console.log("Form submitted:", {
+      paymentMethod: selectedPayment,
+      formData,
+    });
+    alert("Payment submitted successfully!");
     onClose();
   };
 
@@ -240,71 +212,55 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     if (e.target === e.currentTarget) onClose();
   };
 
-  const getColorClasses = (color: PaymentColor, isSelected: boolean): string => {
-    const colors: Record<PaymentColor, string> = {
-      pink: isSelected ? 'border-pink-500 bg-pink-50' : 'border-gray-200',
-      orange: isSelected ? 'border-orange-500 bg-orange-50' : 'border-gray-200',
-      blue: isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-200',
-      red: isSelected ? 'border-red-500 bg-red-50' : 'border-gray-200'
-    };
-    return colors[color];
-  };
-
-  const getButtonColorClasses = (color: PaymentColor): string => {
-    const colors: Record<PaymentColor, string> = {
-      pink: 'bg-pink-500 hover:bg-pink-600',
-      orange: 'bg-orange-400 hover:bg-orange-500',
-      blue: 'bg-blue-500 hover:bg-blue-600',
-      red: 'bg-red-500 hover:bg-red-600'
-    };
-    return colors[color];
-  };
-
-  // NEW FUNCTION TO CONDITIONALLY APPLY IMAGE SIZE CLASSES
-  const getImageSizeClasses = (method: PaymentMethod): string => {
-    const customSizes: PaymentMethod[] = [
-      'bracbank',
-      'ucb',
-      'mastercard',
-      'visa',
-      'paypal'
-    ];
-
-    // Apply different classes for wider/flatter logos
-    if (customSizes.includes(method)) {
-      // Example: Max width of 80p, height of 48px (h-12) to contain non-square logos better
-      return 'w-auto h-12 ';
-    }
-
-    // Default size for square logos like Bkash, Nagad, Upay (w-16, h-16 is 64px)
-    return 'w-16 h-16';
-  };
-  // END NEW FUNCTION
-
-  const MOBILE_METHODS: PaymentMethod[] = ['bkash', 'nagad', 'upay'];
-  const CARD_METHODS: PaymentMethod[] = ['mastercard', 'visa'];
-  const BANK_METHODS: PaymentMethod[] = ['ucb', 'bracbank'];
-  const INTERNATIONAL_METHODS: PaymentMethod[] = ['paypal'];
+  // Group payments by type
+  const mobileBankingMethods = sanityPaymentData.filter(
+    (p) => p.paymentType === "mobileBanking"
+  );
+  const bankTransferMethods = sanityPaymentData.filter(
+    (p) => p.paymentType === "bankTransfer"
+  );
+  const paypalMethods = sanityPaymentData.filter(
+    (p) => p.paymentType === "paypal"
+  );
 
   const renderFormField = (fieldName: keyof FormData) => {
     const fieldConfig: Record<keyof FormData, FieldConfig> = {
-      name: { placeholder: 'Enter Name', type: 'text' },
-      transactionId: { placeholder: 'Enter Transaction ID', type: 'text' },
-      honoredName: { placeholder: 'Honored Name (Optional)', type: 'text' },
-      donatedFor: { placeholder: 'Donated For (Optional)', type: 'text' },
-      cardNumber: { placeholder: 'Card Number', type: 'text', maxLength: 19 },
-      cardHolder: { placeholder: 'Cardholder Name', type: 'text' },
-      expiryDate: { placeholder: 'MM/YY', type: 'text', maxLength: 5 },
-      cvv: { placeholder: 'CVV', type: 'password', maxLength: 3 },
-      accountNumber: { placeholder: 'Your Account Number', type: 'text' },
-      bankName: { placeholder: 'Your Bank Name', type: 'text' },
-      branchName: { placeholder: 'Your Branch Name', type: 'text' },
-      referenceNumber: { placeholder: 'Transaction Reference Number', type: 'text' },
-      email: { placeholder: 'Your Email Address', type: 'email' },
-      paypalTransactionId: { placeholder: 'PayPal Transaction ID', type: 'text' }
+      name: { placeholder: "Enter Your Name", type: "text" },
+      transactionId: { placeholder: "Enter Transaction ID", type: "text" },
+      honoreeName: { placeholder: "Honoree Name", type: "text" },
+      message: {
+        placeholder: "Donate For",
+        type: "text",
+        isTextarea: true,
+      },
+      bankName: { placeholder: "Your Bank Name", type: "text" },
+      branchName: { placeholder: "Your Branch Name", type: "text" },
+      referenceNumber: {
+        placeholder: "Transaction Reference Number",
+        type: "text",
+      },
+      email: { placeholder: "Your Email Address", type: "email" },
+      paypalTransactionId: {
+        placeholder: "PayPal Transaction ID",
+        type: "text",
+      },
     };
 
     const config = fieldConfig[fieldName];
+
+    if (config.isTextarea) {
+      return (
+        <textarea
+          key={fieldName}
+          name={fieldName}
+          placeholder={config.placeholder}
+          value={formData[fieldName]}
+          onChange={handleInputChange}
+          rows={4}
+          className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none resize-none"
+        />
+      );
+    }
 
     return (
       <input
@@ -315,7 +271,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
         value={formData[fieldName]}
         onChange={handleInputChange}
         maxLength={config.maxLength}
-        className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-pink-500 focus:outline-none"
+        className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none"
       />
     );
   };
@@ -324,115 +280,223 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm  p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onClick={handleBackdropClick}
     >
       <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
-
         {/* CLOSE BUTTON */}
-        <button
+        {/* <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg hover:bg-gray-100"
         >
           ✕
-        </button>
+        </button> */}
 
         <div className="flex w-full gap-4 flex-col lg:flex-row">
-
-          {/* LEFT SIDE — PAYMENT LIST WITH MAP */}
-          <div className="w-full lg:w-1/2 rounded-lg bg-white p-6 shadow-lg">
-            <h2 className='text-center text-xl mb-5'>Choose Payment Method</h2>
-            {/* Category wrapper */}
-            {[
-              { label: 'Mobile Banking', methods: MOBILE_METHODS },
-              { label: 'Card', methods: CARD_METHODS },
-              { label: 'Bank Payment', methods: BANK_METHODS },
-              { label: 'International', methods: INTERNATIONAL_METHODS }
-            ].map((group, i) => (
-              <div key={i} className="mb-6">
-                <h3 className="mb-3 text-sm font-semibold">{group.label}</h3>
-
-                <div className="flex gap-3 flex-wrap">
-
-                  {group.methods.map((method) => {
-                    const item = paymentDetails[method];
-                    return (
-                      <button
-                        key={method}
-                        onClick={() => setSelectedMethod(method)}
-                        className={`flex items-center gap-2 rounded-lg border-2 px-4 py-3 transition ${getColorClasses(item.color, selectedMethod === method)
-                          }`}
-                      >
-                        <Image
-                          src={item.img}
-                          alt={item?.name}
-                          width={45}
-                          height={40}
-                          className="object-contain"
-                        />
-                        <span className="font-medium">{item?.name}</span>
-                      </button>
-                    );
-                  })}
-
+          {/* LEFT SIDE — PAYMENT LIST */}
+          <div className="w-full lg:w-1/2 rounded-lg bg-white shadow-lg">
+            <h2 className={`text-center text-xl mb-5 font-semibold my-6 ${poppins.className}`}>
+              Choose Payment Method
+            </h2>
+            <div className={`px-14 mt-20 ${poppins.className}`}>
+              {isLoading ? (
+                <div className="text-center py-8">
+                  Loading payment methods...
                 </div>
-              </div>
-            ))}
+              ) : sanityPaymentData.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  No payment methods available
+                </div>
+              ) : (
+                <>
+                  {/* Mobile Banking */}
+                  {mobileBankingMethods.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="mb-3 text-base font-semibold text-gray-700">
+                        Mobile Banking
+                      </h3>
+                      <div className="flex gap-3 flex-wrap">
+                        {mobileBankingMethods.map((payment) => (
+                          <button
+                            key={payment._id}
+                            onClick={() => setSelectedPayment(payment)}
+                            className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition ${
+                              selectedPayment?._id === payment._id
+                                ? "border-blue-500 bg-blue-50"
+                                : "border-gray-200 hover:border-gray-300"
+                            }`}
+                          >
+                            <Image
+                              src={getPaymentLogo(payment)}
+                              alt={getPaymentName(payment)}
+                              width={100}
+                              height={100}
+                              sizes="500px"
+                              className="object-contain"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
+                  {/* Bank Transfer */}
+                  {bankTransferMethods.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="mb-3 text-base font-semibold text-gray-700">
+                        Bank Transfer
+                      </h3>
+                      <div className="flex gap-3 flex-wrap">
+                        {bankTransferMethods.map((payment) => (
+                          <button
+                            key={payment._id}
+                            onClick={() => setSelectedPayment(payment)}
+                            className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition ${
+                              selectedPayment?._id === payment._id
+                                ? "border-blue-500 bg-blue-50"
+                                : "border-gray-200 hover:border-gray-300"
+                            }`}
+                          >
+                            <Image
+                              src={getPaymentLogo(payment)}
+                              alt={getPaymentName(payment)}
+                              width={120}
+                              height={120}
+                              sizes="500px"
+                              className="object-contain"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* International Payment */}
+                  {paypalMethods.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="mb-3 text-base font-semibold text-gray-700">
+                        International Payment
+                      </h3>
+                      <div className="flex gap-3 flex-wrap">
+                        {paypalMethods.map((payment) => (
+                          <button
+                            key={payment._id}
+                            onClick={() => setSelectedPayment(payment)}
+                            className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition ${
+                              selectedPayment?._id === payment._id
+                                ? "border-blue-500 bg-blue-50"
+                                : "border-gray-200 hover:border-gray-300"
+                            }`}
+                          >
+                            <Image
+                              src={getPaymentLogo(payment)}
+                              alt={getPaymentName(payment)}
+                              width={120}
+                              height={120}
+                              sizes="500px"
+                              className="object-contain"
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
           {/* RIGHT SIDE — PAYMENT FORM */}
-          <div className="w-full lg:w-1/2 rounded-lg bg-white p-6 shadow-lg overflow-y-auto max-h-[600px]">
+          <div className="w-full lg:w-1/2 rounded-lg bg-white shadow-lg overflow-y-auto hidden-scrollbar max-h-[600px]">
+            {selectedPayment ? (
+              <div className="">
+                <div className="mb-6 flex flex-col items-center justify-center gap-2 border-gray-300 border-b py-5">
+                  <Image
+                    src={getPaymentLogo(selectedPayment)}
+                    width={120}
+                    height={120}
+                    sizes="2000px"
+                    alt={getPaymentName(selectedPayment)}
+                    className="object-contain"
+                  />
+                </div>
+                <div className="px-14 pb-6">
+                  {/* Payment Details */}
+                  {selectedPayment.paymentType === "mobileBanking" && (
+                    <p
+                      className={`text-center px-10 text-[#323232] ${antiquaFont.className} text-base leading-6 mb-3`}
+                    >
+                      Send money to the number displayed on the screen and enter
+                      the details below
+                    </p>
+                  )}
+                  <div className="mb-6">
+                    {selectedPayment.paymentType === "bankTransfer" ? (
+                      <div className="space-y-2">
+                        <p
+                          className={`text-center px-10 text-[#323232] ${antiquaFont.className} text-lg leading-6 mb-3`}
+                        >
+                          Account Details
+                        </p>
+                        {getPaymentDetails(selectedPayment).map(
+                          (detail, index) => {
+                            const [label, value] = detail.split(":");
 
-            <div className="mb-6 flex flex-col items-center justify-center gap-2">
-              <Image
-                src={currentPayment.img}
-                width={1000}
-                height={1000}
-                alt={currentPayment.name}
-                className={`object-contain  ${getImageSizeClasses(selectedMethod)}`}
-              />
-              <h2 className="text-2xl font-semibold">{currentPayment.name}</h2>
-            </div>
-            {currentPayment.numbers.length > 0 && (
-              <div className="mb-6 rounded-lg bg-gray-50 p-4 text-center">
-                {currentPayment.numbers.map((number, index) => (
-                  <div
-                    key={index}
-                    className={`font-semibold ${index === 0 ? 'text-xl' : 'text-base text-gray-700'
-                      }`}
-                  >
-                    {number}
+                            return (
+                              <div
+                                key={index}
+                                className={`flex justify-between gap-4 ${poppins.className}`}
+                              >
+                                <p className="text-[#484848]">{label}:</p>
+                                <p className="text-right font-medium">
+                                  {value}
+                                </p>
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+                    ) : (
+                      getPaymentDetails(selectedPayment).map(
+                        (detail, index) => (
+                          <p
+                            key={index}
+                            className={`${poppins.className} ${
+                              index === 0 &&
+                              selectedPayment.paymentType === "mobileBanking"
+                                ? "text-xl font-semibold text-center"
+                                : "text-base"
+                            } ${index > 0 ? "mt-1" : ""}`}
+                          >
+                            {detail}
+                          </p>
+                        )
+                      )
+                    )}
                   </div>
-                ))}
+
+                  {/* FORM FIELDS */}
+                  <div className={`space-y-4 ${poppins.className}`}>
+                    {getFormFields(selectedPayment).map((fieldName) =>
+                      renderFormField(fieldName)
+                    )}
+                  </div>
+
+                  <button
+                    onClick={handleSubmit}
+                    className="mt-6 w-full rounded-lg py-5 font-semibold text-white bg-[#FF951B]
+                   hover:bg-[#d57f1d] transition"
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center h-full text-gray-500">
+                Please select a payment method
               </div>
             )}
-
-            {/* FORM FIELDS */}
-            <div className="space-y-4">
-              {currentPayment.fields.map((fieldName) => {
-                if (fieldName === 'expiryDate' || fieldName === 'cvv') return null;
-                return renderFormField(fieldName);
-              })}
-
-              {currentPayment.type === 'card' && (
-                <div className="flex gap-3">
-                  <div className="w-1/2">{renderFormField('expiryDate')}</div>
-                  <div className="w-1/2">{renderFormField('cvv')}</div>
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={handleSubmit}
-              className={`mt-6 w-full rounded-lg py-3 font-semibold text-white transition ${getButtonColorClasses(currentPayment.color)
-                }`}
-            >
-              SUBMIT
-            </button>
-
           </div>
-
         </div>
       </div>
     </div>
