@@ -35,7 +35,7 @@ const Whatwedo = () => {
             </h2>
             <p
               style={{ fontFamily: '"Book Antiqua", serif' }}
-              className="text-lg lg:text-xl max-w-3xl mx-auto px-4 text-[#2B2B2B]"
+              className="text-lg lg:text-xl max-w-3xl mx-auto px-4"
             >
               To create a world where all living beings enjoy their rights with
               dignity.
