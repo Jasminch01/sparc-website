@@ -88,7 +88,7 @@ const NavLinks = () => {
 
   return (
     <div ref={dropdownRef} className={`relative  ${poppins.className}`} onMouseLeave={() => setActiveIndex(null)}>
-      <div className="flex flex-col xl:flex-row xl:items-center gap-1 xl:gap-6 py-5">
+      <div className="flex flex-col xl:flex-row xl:items-center gap-1 xl:gap-6 py-5 text-[#2B2B2B]">
         {navs.map((nav, i) => {
           const isHovered = activeIndex === i;
           const isActive = isNavActive(nav);

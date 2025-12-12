@@ -74,7 +74,7 @@ const Statistic = () => {
                   "0" + sta.suffix
                 )}
               </h2>
-              <p className="font-medium text-center text-sm md:text-base lg:text-lg">
+              <p className="font-medium text-[#2B2B2B] text-center text-sm md:text-base lg:text-lg">
                 {sta.title}
               </p>
             </div>
