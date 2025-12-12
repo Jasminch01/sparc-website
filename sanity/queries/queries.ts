@@ -4,6 +4,10 @@ import { groq } from "next-sanity";
 import { client } from "../lib/client";
 
 // TypeScript interfaces for the payment data
+export interface MobileAccountNumber {
+  accountNumber: string;
+}
+
 export interface BankTransferData {
   accountName: string;
   bankName: string;
@@ -15,7 +19,7 @@ export interface BankTransferData {
 
 export interface MobileBankingData {
   mobileProvider: "bkash" | "nagad" | "upay" | "rocket";
-  mobileAccountNumber: string;
+  mobileAccountNumbers: MobileAccountNumber[];
 }
 
 export interface PayPalData {
@@ -34,7 +38,7 @@ export interface PaymentMethod {
   routingNumber?: string;
   // Mobile Banking fields
   mobileProvider?: "bkash" | "nagad" | "upay" | "rocket";
-  mobileAccountNumber?: string;
+  mobileAccountNumbers: MobileAccountNumber[]; // Required array, not optional
   // PayPal fields
   paypalEmail?: string;
 }
@@ -51,7 +55,9 @@ export const paymentMethodsQuery = groq`
     swiftCode,
     routingNumber,
     mobileProvider,
-    mobileAccountNumber,
+    "mobileAccountNumbers": coalesce(mobileAccountNumbers[] {
+      accountNumber
+    }, []),
     paypalEmail
   }
 `;
@@ -68,7 +74,9 @@ export const paymentMethodsByTypeQuery = (type: string) => groq`
     swiftCode,
     routingNumber,
     mobileProvider,
-    mobileAccountNumber,
+    "mobileAccountNumbers": coalesce(mobileAccountNumbers[] {
+      accountNumber
+    }, []),
     paypalEmail
   }
 `;
@@ -100,7 +108,9 @@ export async function getPaymentMethodsByType(
         swiftCode,
         routingNumber,
         mobileProvider,
-        mobileAccountNumber,
+        "mobileAccountNumbers": coalesce(mobileAccountNumbers[] {
+          accountNumber
+        }, []),
         paypalEmail
       }
     `;
@@ -122,7 +132,9 @@ export async function getMobileBankingByProvider(
         _id,
         paymentType,
         mobileProvider,
-        mobileAccountNumber
+        "mobileAccountNumbers": coalesce(mobileAccountNumbers[] {
+          accountNumber
+        }, [])
       }
     `;
     const data = await client.fetch(query, { provider });
@@ -146,4 +158,64 @@ export async function getMobileBankingMethods(): Promise<PaymentMethod[]> {
 // Fetch PayPal methods
 export async function getPayPalMethods(): Promise<PaymentMethod[]> {
   return getPaymentMethodsByType("paypal");
+}
+
+// NEW: Fetch mobile banking methods by provider with all account details
+export async function getMobileBankingAccountsByProvider(
+  provider: "bkash" | "nagad" | "upay" | "rocket"
+): Promise<MobileAccountNumber[]> {
+  try {
+    const query = groq`
+      *[_type == "paymentMethod" && paymentType == "mobileBanking" && mobileProvider == $provider][0] {
+        "accounts": coalesce(mobileAccountNumbers[] {
+          accountNumber
+        }, [])
+      }
+    `;
+    const data = await client.fetch(query, { provider });
+    return data?.accounts || [];
+  } catch (error) {
+    console.error(`Error fetching ${provider} accounts:`, error);
+    return [];
+  }
+}
+
+// NEW: Get total count of mobile accounts for a provider
+export async function getMobileAccountCount(
+  provider: "bkash" | "nagad" | "upay" | "rocket"
+): Promise<number> {
+  try {
+    const query = groq`
+      *[_type == "paymentMethod" && paymentType == "mobileBanking" && mobileProvider == $provider][0] {
+        "count": count(coalesce(mobileAccountNumbers, []))
+      }
+    `;
+    const data = await client.fetch(query, { provider });
+    return data?.count || 0;
+  } catch (error) {
+    console.error(`Error fetching ${provider} account count:`, error);
+    return 0;
+  }
+}
+
+// NEW: Validate if a mobile account exists
+export async function validateMobileAccount(
+  provider: "bkash" | "nagad" | "upay" | "rocket",
+  accountNumber: string
+): Promise<boolean> {
+  try {
+    const query = groq`
+      *[_type == "paymentMethod" && 
+        paymentType == "mobileBanking" && 
+        mobileProvider == $provider &&
+        $accountNumber in coalesce(mobileAccountNumbers[].accountNumber, [])][0] {
+        _id
+      }
+    `;
+    const data = await client.fetch(query, { provider, accountNumber });
+    return !!data;
+  } catch (error) {
+    console.error(`Error validating ${provider} account:`, error);
+    return false;
+  }
 }
