@@ -187,7 +187,7 @@ const ResearchProjects = () => {
                         <span className="font-semibold">Author:</span> {project.fundedBy}
                       </p>
                     </div>
-                    <p className={`text-[18px] leading-relaxed mb-4 line-clamp-2 ${antiquaFont.className}`}>
+                    <p className={`text-[18px] leading-relaxed mb-4 line-clamp-2 text-[#4E4E4E]  ${antiquaFont.className}`}>
                       {project.description}
                     </p>
                     <div className="flex items-center justify-between">
@@ -248,7 +248,7 @@ const ResearchProjects = () => {
                         <span className="font-semibold">Author:</span> {project.fundedBy}
                       </p>
                     </div>
-                    <p className={`text-[18px] leading-relaxed mb-4 line-clamp-2 ${antiquaFont.className}`}>
+                    <p className={`text-[18px] leading-relaxed mb-4 line-clamp-2 text-[#4E4E4E] ${antiquaFont.className}`}>
                       {project.description}
                     </p>
                     <div className="flex items-center justify-between">

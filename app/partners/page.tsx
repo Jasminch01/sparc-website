@@ -20,6 +20,8 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     const fetchPartners = async () => {
       try {
         setLoading(true);
@@ -35,7 +37,6 @@ const Page = () => {
         }`;
 
         const data = await client.fetch(query);
-        console.log("Fetched partners:", data); // Debug log
         setPartners(data);
       } catch (error) {
         console.error("Error fetching partners from Sanity:", error);
@@ -53,7 +54,9 @@ const Page = () => {
         <div className="text-center py-20">
           <div className="flex flex-col items-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-            <p className={`text-2xl ${poppins.className}`}>Loading partners...</p>
+            <p className={`text-2xl ${poppins.className}`}>
+              Loading partners...
+            </p>
           </div>
         </div>
       </Container>
@@ -108,7 +111,10 @@ const Page = () => {
             <div className="py-10 lg:py-20">
               <div className="grid grid-cols-1 gap-8 lg:gap-12">
                 {partners.map((partner, index) => (
-                  <div key={index} className="p-6 md:p-12 lg:p-20 border rounded">
+                  <div
+                    key={index}
+                    className="p-6 md:p-12 lg:p-20 border rounded"
+                  >
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 lg:gap-20">
                       {partner.logo && (
                         <Image

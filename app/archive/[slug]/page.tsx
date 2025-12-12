@@ -152,7 +152,7 @@ const Page = () => {
         />
 
         <p
-          className={`text-[#252525] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line`}
+          className={`text-[#252525] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line text-[#252525]`}
         >
           {filteredData.longdes}
         </p>
@@ -189,7 +189,7 @@ const Page = () => {
                     {story.title}
                   </h3>
 
-                  <p className={`text-lg ${antiquaFont.className}`}>
+                  <p className={`text-lg text-[#252525] ${antiquaFont.className}`}>
                     {story.des}
                   </p>
                 </div>

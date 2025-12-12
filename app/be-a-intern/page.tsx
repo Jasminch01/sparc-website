@@ -87,7 +87,7 @@ const page = () => {
           YOUR CAREER JOURNEY BEGINS HERE. LEARN, GROW, AND MAKE AN IMPACT
         </h2>
         <p
-          className={`mb-3 lg:mb-4 text-lg lg:text-xl ${antiquaFont.className}`}
+          className={`mb-3 lg:mb-4 text-lg lg:text-xl text-[#666666] ${antiquaFont.className}`}
         >
           Our internship program offers valuable real-world experience for
           passionate individuals who want to grow their skills while
@@ -101,7 +101,7 @@ const page = () => {
           className="w-full h-auto"
         />
         <p
-          className={`mb-3 lg:mb-4 text-lg lg:text-xl ${antiquaFont.className} text-justify`}
+          className={`mb-3 lg:mb-4 text-lg lg:text-xl text-[#666666] ${antiquaFont.className} text-justify`}
         >
           Skill-building sessions that provide education, leadership training,
           and emotional support to Indigenous women in local communities.
@@ -120,7 +120,7 @@ const page = () => {
           WHAT YOU CAN DO
         </h2>
         <p
-          className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
+          className={`${antiquaFont.className} text-justify text-[#666666]  text-lg lg:text-xl`}
         >
           Skill-building sessions that provide education, leadership training,
           and emotional support to Indigenous women in local communities.
@@ -149,7 +149,7 @@ const page = () => {
                   className="mt-1 shrink-0"
                 />
                 <li
-                  className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
+                  className={`${antiquaFont.className} text-[#666666]  text-justify text-lg lg:text-xl`}
                 >
                   {req.title}
                 </li>
@@ -159,7 +159,7 @@ const page = () => {
         </div>
 
         <p
-          className={`${antiquaFont.className} text-lg lg:text-xl text-justify`}
+          className={`${antiquaFont.className} text-lg text-[#666666]  lg:text-xl text-justify`}
         >
           Skill-building sessions that provide education, leadership training,
           and emotional support to Indigenous women in local communities
