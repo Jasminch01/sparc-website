@@ -95,7 +95,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg text-[#4E4E4E] lg:text-xl ${antiquaFont.className}`}
             >
               Explore stories, documents, and visual archives celebrating the
               heritage, resilience, and identity of Indigenous communities

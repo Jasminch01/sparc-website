@@ -73,7 +73,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 lg:text-justify text-center text-md md:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 lg:text-justify text-center text-[#4E4E4E] text-md md:text-xl ${antiquaFont.className}`}
             >
               Stories of Resistance is a robust and meaningful collection,
               weaving threads of the personal, professional and political into a
@@ -197,7 +197,7 @@ const Page = () => {
                       })}
                     </p>
                     <p
-                      className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify`}
+                      className={`${antiquaFont.className} w-full xl:w-3xl text-lg lg:text-xl text-justify text-[#252525]`}
                     >
                       {expandedIndex === index
                         ? ids.des

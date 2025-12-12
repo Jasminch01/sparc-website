@@ -156,7 +156,7 @@ const Highlights = () => {
               </h2>
 
               <p
-                className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`}
+                className={`text-justify text-lg lg:text-xl leading-relaxed text-[#4D4D4D] ${antiquaFont.className}`}
               >
                 {highlightData.des}
               </p>

@@ -15,7 +15,7 @@ const Videos = () => {
               VIDEOS
             </h2>
             <p
-              className={`text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed ${antiquaFont.className}`}
+              className={`text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed text-[#2B2B2B] ${antiquaFont.className}`}
             >
               Strong voices. Bold visions. Meet the women and allies driving
               equality and empowerment forward. Our strength lies in unity.

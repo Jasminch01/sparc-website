@@ -105,7 +105,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify lg:text-xl text-lg ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify lg:text-xl text-[#4E4E4E] text-lg ${antiquaFont.className}`}
             >
               Every project we run begins with one goal — to uplift Indigenous
               women and their communities through action, awareness, and
@@ -324,7 +324,7 @@ const Page = () => {
                       )}
                       <div className="mt-6 md:mt-10">
                         <div>
-                          <p className="text-base md:text-lg lg:text-xl text-justify leading-relaxed">
+                          <p className="text-base text-[# 4E4E4E] md:text-lg lg:text-xl text-justify leading-relaxed">
                             {rep.des}
                           </p>
                         </div>
@@ -352,7 +352,7 @@ const Page = () => {
                       year: "numeric",
                     })}
                   </p>
-                  <p className={`mb-4 text-base md:text-lg text-justify ${antiquaFont.className}`}>
+                  <p className={`mb-4 text-base md:text-lg text-[#4E4E4E] text-justify ${antiquaFont.className}`}>
                     {rep.des}
                   </p>
                   {rep.img && (

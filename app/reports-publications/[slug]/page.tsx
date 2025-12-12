@@ -368,7 +368,7 @@ const Page = () => {
                         {item.title}
                       </h3>
                       <p
-                        className={`text-sm text-gray-600 line-clamp-2 ${antiquaFont.className}`}
+                        className={`text-lg text-gray-600 line-clamp-2 ${antiquaFont.className}`}
                       >
                         {item.des}
                       </p>

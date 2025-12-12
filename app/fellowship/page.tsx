@@ -44,7 +44,7 @@ const page = () => {
           </div>
           <div className="w-full lg:w-1/2 justify-end">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#4E4E4E] ${antiquaFont.className}`}
             >
               Our Fellowship Program supports individuals dedicated to
               protecting Indigenous rights, documenting histories, and building
@@ -90,7 +90,7 @@ const page = () => {
             ABOUT THE FELLOWSHIP
           </h2>
           <p
-            className={`${antiquaFont.className} text-justify text-lg lg:text-xl leading-relaxed`}
+            className={`${antiquaFont.className} text-[#363636] text-justify text-lg lg:text-xl leading-relaxed`}
           >
             This fellowship provides mentorship, training, and funding to
             individuals passionate about cultural heritage, gender equity,
@@ -125,7 +125,7 @@ const page = () => {
           ABOUT THE PROGRAM
         </h2>
         <p
-          className={`${antiquaFont.className} text-justify leading-relaxed text-lg lg:text-xl`}
+          className={`${antiquaFont.className} text-justify text-[#363636] leading-relaxed text-lg lg:text-xl`}
         >
           The Indigenous Fellowship Program is designed to empower emerging
           leaders from Indigenous communities through mentorship, research
@@ -139,80 +139,76 @@ const page = () => {
         </p>
       </section>
 
-      {/* Eligible Section */}
-      <section className="max-w-6xl mx-auto mt-12 lg:mt-15 space-y-4 lg:space-y-5 px-4 lg:px-0">
-        <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
-          WHO IS ELIGIBLE TO APPLY?
-        </h2>
-        <p
-          className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
-        >
-          The fellowship is open to Indigenous individuals who are passionate
-          about community development, cultural preservation, and social
-          advocacy.
-        </p>
-        <div>
-          <h3
-            className={`${antiquaFont.className} text-[#363636] text-justify text-lg lg:text-xl mb-4`}
-          >
-            Candidates with the following are welcome to apply:
-          </h3>
-          <ul>
-            {requirements.map((req, index) => (
-              <div
-                key={index}
-                className="flex items-start gap-3 lg:gap-4 my-4 lg:my-5"
-              >
-                <Image
-                  src={req.icon}
-                  alt={req.title}
-                  width={20}
-                  height={20}
-                  className="mt-1 shrink-0"
-                />
-                <li
-                  className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
-                >
-                  {req.title}
-                </li>
-              </div>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Fellows Section */}
-      <section className="max-w-6xl mx-auto mt-12 lg:mt-15 space-y-6 lg:space-y-10 px-4 lg:px-0">
-        <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
-          MEET THE FELLOWS
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-20">
-          <Image
-            src={follower}
-            alt="follower"
-            width={333}
-            height={200}
-            className="w-full h-auto"
-          />
-          <Image
-            src={follower}
-            alt="follower"
-            width={333}
-            height={200}
-            className="w-full h-auto"
-          />
-          <Image
-            src={follower}
-            alt="follower"
-            width={333}
-            height={200}
-            className="w-full h-auto"
-          />
-        </div>
-        <hr className="border-gray-300" />
-      </section>
       <Container>
-        {/* Career Section */}
+        <section className=" mt-12 lg:mt-15 space-y-4 lg:space-y-5 ">
+          <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
+            WHO IS ELIGIBLE TO APPLY?
+          </h2>
+          <p
+            className={`${antiquaFont.className} text-justify text-[#363636] text-lg lg:text-xl`}
+          >
+            The fellowship is open to Indigenous individuals who are passionate
+            about community development, cultural preservation, and social
+            advocacy.
+          </p>
+          <div>
+            <h3
+              className={`${antiquaFont.className} text-[#363636] text-justify text-lg lg:text-xl mb-4`}
+            >
+              Candidates with the following are welcome to apply:
+            </h3>
+            <ul>
+              {requirements.map((req, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 lg:gap-4 my-4 lg:my-5"
+                >
+                  <Image
+                    src={req.icon}
+                    alt={req.title}
+                    width={20}
+                    height={20}
+                    className="mt-1 shrink-0"
+                  />
+                  <li
+                    className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
+                  >
+                    {req.title}
+                  </li>
+                </div>
+              ))}
+            </ul>
+          </div>
+        </section>
+        <section className=" mt-12 lg:mt-15 space-y-6 lg:space-y-10">
+          <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
+            MEET THE FELLOWS
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-20">
+            <Image
+              src={follower}
+              alt="follower"
+              width={333}
+              height={200}
+              className="w-full h-auto"
+            />
+            <Image
+              src={follower}
+              alt="follower"
+              width={333}
+              height={200}
+              className="w-full h-auto"
+            />
+            <Image
+              src={follower}
+              alt="follower"
+              width={333}
+              height={200}
+              className="w-full h-auto"
+            />
+          </div>
+          <hr className="border-gray-300" />
+        </section>
         <section className="mt-12 lg:mt-15 mb-20 lg:mb-30 rounded-md bg-gray-100 flex flex-col lg:flex-row items-center border border-gray-200 overflow-hidden">
           <div className="w-full lg:w-1/2">
             <Image
@@ -230,7 +226,7 @@ const page = () => {
               YOUR CAREER JOURNEY BEGINS HERE. LEARN, GROW
             </h2>
             <p
-              className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
+              className={`${antiquaFont.className} text-justify text-lg lg:text-xl text-[#363636]`}
             >
               Indigenous young people who are emerging leaders, learners, or
               activists working to preserve their culture and rights.

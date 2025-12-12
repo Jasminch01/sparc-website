@@ -98,7 +98,7 @@ const Team = () => {
 
           <div className="w-full xl:w-1/2">
             <p
-              className={`text-justify text-lg lg:text-xl leading-relaxed ${antiquaFont.className}`}
+              className={`text-justify text-lg lg:text-xl leading-relaxed text-[#4D4D4D] ${antiquaFont.className}`}
             >
               Strong voices. Bold visions. Meet the women and allies driving
               equality and empowerment forward. Our strength lies in unity. The

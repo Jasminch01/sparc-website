@@ -151,7 +151,7 @@ const Testimonials = () => {
                     className="object-contain w-10 h-10 md:w-12 md:h-12"
                   />
                   <p
-                    className="text-center text-sm md:text-base lg:text-lg leading-relaxed grow"
+                    className="text-center text-sm md:text-base text-[#3A3A3A] lg:text-lg leading-relaxed grow"
                     style={{ fontFamily: '"Book Antiqua", serif' }}
                   >
                     {testimonial.des}

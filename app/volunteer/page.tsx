@@ -152,7 +152,7 @@ const page = () => {
               WHY VOLUNTEERS WITH US?
             </h2>
             <p
-              className={`${antiquaFont.className} text-[#2B2B2B leading-relaxed text-lg xl:text-xl`}
+              className={`${antiquaFont.className} text-[#2B2B2B] leading-relaxed text-lg xl:text-xl`}
             >
               Empowerment begins with awareness — and change begins with you. As
               a volunteer, you&apos;ll help raise voices that deserve to be
@@ -223,7 +223,7 @@ const page = () => {
                       className="mt-1 shrink-0"
                     />
                     <p
-                      className={`${antiquaFont.className} text-lg lg:text-xl`}
+                      className={`${antiquaFont.className} text-[#2B2B2B] text-lg lg:text-xl`}
                     >
                       {op.title}
                     </p>

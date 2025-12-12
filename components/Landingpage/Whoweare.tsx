@@ -25,7 +25,7 @@ const Whoweare = () => {
               WHO WE ARE
             </h2>
             <p
-              className={`text-lg lg:text-xl text-justify ${antiquaFont.className}`}
+              className={`text-lg lg:text-xl text-justify text-[#2B2B2B] ${antiquaFont.className}`}
             >
               SPaRC is an indigenous women-led feminist organisation established
               in Chittagong Hill Tracts (CHT), Bangladesh. SPaRC works with a
@@ -53,7 +53,9 @@ const Whoweare = () => {
                 WHAT WE STAND FOR
               </h2>
             </div>
-            <p className={`text-lg lg:text-xl ${antiquaFont.className}`}>
+            <p
+              className={`text-lg lg:text-xl text-[#2B2B2B]  ${antiquaFont.className}`}
+            >
               To ensure women and girls&apos; social, cultural, economic and
               political, sexual and spiritual rights without prejudice of any
               identity such as age, sex, caste, religion, ethnicity or sexual
@@ -77,7 +79,7 @@ const Whoweare = () => {
                 WHERE WE ARE HEADED
               </h2>
             </div>
-            <p className={`text-lg lg:text-xl ${antiquaFont.className}`}>
+            <p className={`text-lg lg:text-xl text-[#2B2B2B] ${antiquaFont.className}`}>
               To create a world where all living beings enjoy their rights with
               dignity.
             </p>
