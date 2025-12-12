@@ -17,7 +17,7 @@ const navs = [
 
 const opportunities = [
   { title: "Volunteer", path: "/volunteer" },
-  { title: "Be a Intern", path: "/be-a-intern" },
+  { title: "Be an Intern", path: "/be-an-intern" },
   { title: "Fellowship", path: "/fellowship" },
 ];
 
