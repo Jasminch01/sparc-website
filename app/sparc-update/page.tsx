@@ -40,7 +40,9 @@ const projectsCategory = ["All Projects", "Ongoing", "Completed"];
 const eventsCategory = ["All Events", "Ongoing", "Upcoming"];
 
 const Page = () => {
-  const [data, setData] = useState<Data[]>([]);
+  const [highlightData, setHighlightData] = useState<Data | null>(null);
+  const [featuredStoryData, setFeaturedStoryData] = useState<Data | null>(null);
+  const [latestNewsData, setLatestNewsData] = useState<Data | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [events, setEvents] = useState<Events[]>([]);
   const [activeProjectCategory, setActiveProjectCategory] = useState(0);
@@ -94,14 +96,16 @@ const Page = () => {
     }
   };
 
-  // Fetch News, Highlight, Featured Stories, Latest News
+  // Fetch only ONE item per category: Highlight, Featured Stories, Latest News
   useEffect(() => {
     const fetchUpdates = async () => {
       try {
         setLoading(true);
         setError(null);
-        const result = await client.fetch(`
-          *[_type == "newsUpdate"] | order(date desc){
+
+        // Fetch only 1 highlight (most recent)
+        const highlightResult = await client.fetch(`
+          *[_type == "newsUpdate" && category == "highlight"] | order(date desc)[0...1]{
             title,
             category,
             date,
@@ -110,7 +114,34 @@ const Page = () => {
             video
           }
         `);
-        setData(result || []);
+        setHighlightData(highlightResult && highlightResult.length > 0 ? highlightResult[0] : null);
+
+        // Fetch only 1 featured story (most recent)
+        const featuredResult = await client.fetch(`
+          *[_type == "newsUpdate" && category == "FEATURED_STORIES"] | order(date desc)[0...1]{
+            title,
+            category,
+            date,
+            des,
+            "img": img.asset->url,
+            video
+          }
+        `);
+        setFeaturedStoryData(featuredResult && featuredResult.length > 0 ? featuredResult[0] : null);
+
+        // Fetch only 1 latest news (most recent)
+        const latestResult = await client.fetch(`
+          *[_type == "newsUpdate" && category == "LATEST_NEWS"] | order(date desc)[0...1]{
+            title,
+            category,
+            date,
+            des,
+            "img": img.asset->url,
+            video
+          }
+        `);
+        setLatestNewsData(latestResult && latestResult.length > 0 ? latestResult[0] : null);
+
       } catch (err) {
         console.error("Error fetching updates:", err);
         setError("Failed to load updates");
@@ -184,11 +215,6 @@ const Page = () => {
       : events.filter(
         (event) => event.status === eventsCategory[activeEventCategory]
       );
-
-  // Get filtered data by category
-  const highlightData = data.filter((item) => item.category === "highlight");
-  const featuredStoriesData = data.filter((item) => item.category === "FEATURED_STORIES");
-  const latestNewsData = data.filter((item) => item.category === "LATEST_NEWS");
 
   return (
     <div className="mt-10 sm:mt-12 md:mt-15">
@@ -275,7 +301,7 @@ const Page = () => {
           </div>
         ) : (
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 mt-15 border border-gray-300 sm:mt-20">
-            {/* Left Column - Highlight */}
+            {/* Left Column - Highlight (ONLY 1 ITEM) */}
             <div className="border-r border-gray-300 relative">
               <div
                 className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
@@ -289,41 +315,39 @@ const Page = () => {
               </div>
 
               <div className="p-6 pt-8">
-                {highlightData && highlightData.length > 0 ? (
-                  highlightData.map((item, index) => (
-                    <Link href={`/sparc-update/${createSlug(item.title)}`} key={`highlight-${index}`} className="cursor-pointer group">
-                      {item.img && (
-                        <div className="relative w-full h-[250px] lg:h-[300px] mb-4 overflow-hidden">
-                          <Image
-                            src={item.img}
-                            alt={item.title || "Highlight image"}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-                      <h2
-                        className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
-                      >
-                        {item.title}
-                      </h2>
-                      <p className={`text-xs text-gray-500 mb-4 uppercase ${poppins.className}`}>
-                        {formatDate(item.date)}
-                      </p>
-                      <p className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}>
-                        {item.des}
-                      </p>
-                      Read More <span>→</span>
-                    </Link>
-                  ))
+                {highlightData ? (
+                  <Link href={`/sparc-update/${createSlug(highlightData.title)}`} className="cursor-pointer group">
+                    {highlightData.img && (
+                      <div className="relative w-full h-[250px] lg:h-[300px] mb-4 overflow-hidden">
+                        <Image
+                          src={highlightData.img}
+                          alt={highlightData.title || "Highlight image"}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover"
+                        />
+                      </div>
+                    )}
+                    <h2
+                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
+                    >
+                      {highlightData.title}
+                    </h2>
+                    <p className={`text-xs text-gray-500 mb-4 uppercase ${poppins.className}`}>
+                      {formatDate(highlightData.date)}
+                    </p>
+                    <p className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}>
+                      {highlightData.des}
+                    </p>
+                    <button className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}>Read More <span>→</span></button>
+                  </Link>
                 ) : (
                   <p className={`text-center text-gray-500 ${poppins.className}`}>No highlights available</p>
                 )}
               </div>
             </div>
 
-            {/* Right Column - Featured Stories & Latest News */}
+            {/* Right Column - Featured Stories & Latest News (ONLY 1 ITEM EACH) */}
             <div className="relative">
               <div
                 className="absolute -top-[45px] left-0 w-60 bg-[#E5E5E5] text-black px-6 py-3 z-10"
@@ -337,36 +361,32 @@ const Page = () => {
               </div>
 
               <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
-                {featuredStoriesData && featuredStoriesData.length > 0 ? (
-                  featuredStoriesData.map((item, index) => (
-                    <Link href={`/sparc-update/${createSlug(item.title)}`} key={`featured-${index}`} className="mb-6 last:mb-0 group cursor-pointer">
-                      {item.img && (
-                        <div className="relative w-full h-[300px] mb-3 overflow-hidden">
-                          <Image
-                            src={item.img}
-                            alt={item.title || "Featured story image"}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-                      <h3 className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}>
-                        {item.title}
-                      </h3>
-                      <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
-                        {item.des.length > 100 ? `${item.des.substring(0, 100)}...` : item.des}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
-                          {formatDate(item.date)}
-                        </p>
-
-                        Read More <span>→</span>
-
+                {featuredStoryData ? (
+                  <Link href={`/sparc-update/${createSlug(featuredStoryData.title)}`} className="mb-6 group cursor-pointer">
+                    {featuredStoryData.img && (
+                      <div className="relative w-full h-[300px] mb-3 overflow-hidden">
+                        <Image
+                          src={featuredStoryData.img}
+                          alt={featuredStoryData.title || "Featured story image"}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover"
+                        />
                       </div>
-                    </Link>
-                  ))
+                    )}
+                    <h3 className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}>
+                      {featuredStoryData.title}
+                    </h3>
+                    <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
+                      {featuredStoryData.des.length > 100 ? `${featuredStoryData.des.substring(0, 100)}...` : featuredStoryData.des}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
+                        {formatDate(featuredStoryData.date)}
+                      </p>
+                      <button className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}>Read More <span>→</span></button>
+                    </div>
+                  </Link>
                 ) : (
                   <p className={`text-center text-gray-500 ${poppins.className}`}>No featured stories available</p>
                 )}
@@ -384,58 +404,56 @@ const Page = () => {
               </div>
 
               <div className="p-6 border-t border-gray-300">
-                {latestNewsData && latestNewsData.length > 0 ? (
-                  latestNewsData.map((item, index) => (
-                    <div key={`latest-${index}`} className="group cursor-pointer">
-                      <div className="relative w-full h-[300px] mb-3 overflow-hidden">
-                        {item.video ? (
-                          <iframe
-                            src={getYouTubeEmbedUrl(item.video)}
-                            className="w-full h-full"
-                            title={item.title}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          />
-                        ) : item.img ? (
-                          <Image
-                            src={item.img}
-                            alt={item.title || "Latest news image"}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover"
-                          />
-                        ) : null}
-                      </div>
-                      <h3 className={`text-xl lg:text-2xl group-hover:text-[#FF951B] font-bold mb-2 leading-tight ${poppins.className}`}>
-                        {item.title}
-                      </h3>
-                      <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
-                        {item.des.length > 80 ? `${item.des.substring(0, 80)}...` : item.des}
-                      </p>
-                      <div className="flex justify-between items-center">
-                        <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
-                          {formatDate(item.date)}
-                        </p>
-                        {item.video ? (
-                          <Link
-                            href={item.video}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                          >
-                            Watch Video <span>→</span>
-                          </Link>
-                        ) : (
-                          <Link
-                            href={`/sparc-update/${createSlug(item.title)}`}
-                            className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                          >
-                            Read More <span>→</span>
-                          </Link>
-                        )}
-                      </div>
+                {latestNewsData ? (
+                  <div className="group cursor-pointer">
+                    <div className="relative w-full h-[300px] mb-3 overflow-hidden">
+                      {latestNewsData.video ? (
+                        <iframe
+                          src={getYouTubeEmbedUrl(latestNewsData.video)}
+                          className="w-full h-full"
+                          title={latestNewsData.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : latestNewsData.img ? (
+                        <Image
+                          src={latestNewsData.img}
+                          alt={latestNewsData.title || "Latest news image"}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          className="object-cover"
+                        />
+                      ) : null}
                     </div>
-                  ))
+                    <h3 className={`text-xl lg:text-2xl group-hover:text-[#FF951B] font-bold mb-2 leading-tight ${poppins.className}`}>
+                      {latestNewsData.title}
+                    </h3>
+                    <p className={`text-lg text-gray-700 mb-3 ${antiquaFont.className}`}>
+                      {latestNewsData.des.length > 80 ? `${latestNewsData.des.substring(0, 80)}...` : latestNewsData.des}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <p className={`text-xs text-gray-500 uppercase ${poppins.className}`}>
+                        {formatDate(latestNewsData.date)}
+                      </p>
+                      {latestNewsData.video ? (
+                        <Link
+                          href={latestNewsData.video}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                        >
+                          Watch Video <span>→</span>
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/sparc-update/${createSlug(latestNewsData.title)}`}
+                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                        >
+                          Read More <span>→</span>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
                 ) : (
                   <p className={`text-center text-gray-500 ${poppins.className}`}>No latest news available</p>
                 )}
