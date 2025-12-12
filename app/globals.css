@@ -1,5 +1,20 @@
 @import "tailwindcss";
 
+.hidden-scrollbar {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Smooth scrolling behavior */
+.hidden-scrollbar {
+  scroll-behavior: smooth;
+}
+
 /* Volunteer Vector image responsive */
 @media (min-width: 1400px) and (max-width: 1500px) {
   #volunteer-vector-image {

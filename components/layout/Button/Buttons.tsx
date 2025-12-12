@@ -80,7 +80,7 @@ const Buttons = () => {
     <>
       <div className={`flex items-center gap-3 relative ${poppins.className}`}>
         {/* Language Dropdown */}
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative " ref={dropdownRef}>
           <button
             onClick={toggleDropdown}
             onKeyDown={(e) => {
@@ -156,7 +156,7 @@ const Buttons = () => {
         {/* Donate Button */}
         <button
           onClick={() => setIsDonationModalOpen(true)}
-          className="lg:px-10 px-6 py-2 cursor-pointer lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full font-semibold transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50"
+          className="lg:px-10 px-3 py-2 cursor-pointer lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50"
           aria-label="Donate now"
         >
           DONATE NOW
