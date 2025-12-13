@@ -115,7 +115,7 @@ const page = () => {
       </section>
 
       {/* Eligible Section */}
-      <section className="max-w-5xl mx-auto mt-12 lg:mt-15 space-y-4 lg:space-y-5 mb-20 lg:mb-30 px-4 lg:px-0">
+      <section className="max-w-6xl mx-auto mt-12 lg:mt-15 space-y-4 lg:space-y-5 mb-20 lg:mb-30 px-4 lg:px-0">
         <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
           WHAT YOU CAN DO
         </h2>

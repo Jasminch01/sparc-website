@@ -241,15 +241,27 @@ const Page = () => {
                                         }}>
                                         <div className={`transition-all duration-300 ${isHovered ? 'opacity-90' : 'opacity-100'}`}>
                                             <Image src={course.img} alt={course.title} height={400} width={400} className='h-[187px]' />
-                                            <div className='mt-5 space-y-3'>
-                                                <h2 className={`${poppins.className} text-lg font-semibold`}>{course.title}</h2>
-                                                <p className={`${antiquaFont.className} text-justify`}>{course.des}</p>
-                                                <div className='flex items-center gap-5'>
-                                                    <p className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${poppins.className}`}>{course.rating}</p>
-                                                    <p className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${poppins.className}`}>{course.itemsSold} Sold</p>
+                                            <div className="mt-5 flex flex-col gap-3">
+                                                <h2 className={`${poppins.className} text-lg font-semibold line-clamp-2 h-13`}>
+                                                    {course.title}
+                                                </h2>
+                                                <p className={`${antiquaFont.className} text-justify line-clamp-2`}>
+                                                    {course.des}
+                                                </p>
+                                                <div className="flex items-center gap-5">
+                                                    <p className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${poppins.className}`}  >
+                                                        {course.rating}
+                                                    </p>
+                                                    <p className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${poppins.className}`} >
+                                                        {course.itemsSold} Sold
+                                                    </p>
                                                 </div>
-                                                <p className={`${poppins.className} font-bold`}>{course.price} BDT</p>
+
+                                                <p className={`${poppins.className} font-bold`}>
+                                                    {course.price} BDT
+                                                </p>
                                             </div>
+
                                         </div>
                                     </div>
 

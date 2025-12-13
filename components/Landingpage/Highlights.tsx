@@ -162,7 +162,7 @@ const Highlights = () => {
               </p>
 
               {/* Dynamic slug-based link */}
-              <Link href={`/highlights/${createSlug(highlightData.title)}`}>
+              <Link href={`/sparc-update/${createSlug(highlightData.title)}`}>
                 <button
                   className={`group relative bg-[#36133B] hover:bg-[#ff951b] flex items-center gap-3 cursor-pointer rounded-[33px] text-white px-6 sm:px-8 md:px-10 py-2.5 md:py-3 text-base transition-colors ${poppins.className} w-fit`}
                 >
