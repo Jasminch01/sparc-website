@@ -15,9 +15,9 @@ const Hero = () => {
               WOMANIFESTO
             </h2>
           </div>
-          <div className="lg:flex-1 justify-end mt-5">
+          <div className="lg:flex-1 justify-end mt-5  text-center">
             <p
-              className={`text-lg lg:text-xl text-center lg:text-right ${antiquaFont.className}`}
+              className={`text-lg lg:text-xl text-wrap lg:text-right hero-text ${antiquaFont.className}`}
             >
               Empowering indigenous women and communities to rise <br /> against
               systemic oppression, reclaim their voices.

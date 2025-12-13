@@ -232,3 +232,26 @@
     top: -11rem !important;
   }
 }
+
+@media (min-width:300px) and (max-width:349px) {
+  .hero-text{
+    width:300px
+  }
+}
+@media(min-width:350px) and (max-width:399px){
+  .hero-text{
+    width:330px
+  }
+}
+@media(min-width:400px) and (max-width:449px){
+  .hero-text{
+    width:400px;
+    
+  }
+}
+@media(min-width:450px) and (max-width:500px){
+  .hero-text{
+    width:500px;
+    
+  }
+}
