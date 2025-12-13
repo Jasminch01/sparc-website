@@ -243,6 +243,7 @@
     width:330px
   }
 }
+/* hero text updated */
 @media(min-width:400px) and (max-width:449px){
   .hero-text{
     width:400px;
