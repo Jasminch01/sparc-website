@@ -12,6 +12,8 @@ import Whatwedo from "@/components/Landingpage/Whatwedo";
 import Wherewework from "@/components/Landingpage/Wherewework";
 import Whoweare from "@/components/Landingpage/Whoweare";
 
+
+
 export default function Home() {
   return (
     <div className="overflow-hidden">
