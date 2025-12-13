@@ -1,17 +1,33 @@
+import { useState } from 'react';
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
 import { antiquaFont, poppins } from "../utils/font";
 import Container from "../Container";
-
+// Updated Navbar
 const navs = [
-  "Who we are",
-  "Stories",
-  "Partners",
-  "Work with us",
-  "Resources",
-  "Blog",
+  { title: "Who we are", href: "/who-we-are" },
+  { title: "Stories", href: "/stories-news" },
+  { title: "Partners", href: "/partners" },
+  { 
+    title: "Work with us",
+    dropdown: [
+      { title: "Volunteer", href: "/volunteer" },
+      { title: "Be an Intern", href: "/be-an-intern" },
+      { title: "Fellowship", href: "/fellowship" }
+    ]
+  },
+  { 
+    title: "Resources",
+    dropdown: [
+      { title: "Reports & Publications", href: "/reports-publications" },
+      { title: "Indigenous Archive", href: "/archive" },
+      { title: "Our Research", href: "/our-research" }
+    ]
+  },
+  { title: "Blogs", href: "/blogs" },
 ];
+
 const bottomBar = [
   "Tearms & Conditions",
   "Privacy Policy",
@@ -20,6 +36,12 @@ const bottomBar = [
 ];
 
 const Footer = () => {
+  const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+
+  const toggleDropdown = (index: number) => {
+    setOpenDropdown(openDropdown === index ? null : index);
+  };
+
   return (
     <div className="bg-[#36133B] text-white relative h-full md:mt-24 mt-12 lg:pb-20">
       <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[4.3rem] md:-top-11 -top-7 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
@@ -46,15 +68,51 @@ const Footer = () => {
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-6">
             {/* Navigation Links */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5 w-full lg:w-auto">
-              {navs.map((btn, index) => (
-                <Link
-                  style={{ fontFamily: '"Nunito", serif' }}
-                  key={index}
-                  href={`/${btn.toLowerCase().replace(/\s+/g, "-")}`}
-                  className="text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300"
-                >
-                  {btn}
-                </Link>
+              {navs.map((nav, index) => (
+                <div key={index} className="relative">
+                  {nav.dropdown ? (
+                    <div>
+                      <button
+                        onClick={() => toggleDropdown(index)}
+                        style={{ fontFamily: '"Nunito", serif' }}
+                        className="text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300 flex items-center gap-1"
+                      >
+                        {nav.title}
+                        <svg 
+                          className={`w-4 h-4 transition-transform duration-200 ${openDropdown === index ? 'rotate-180' : ''}`}
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      {openDropdown === index && (
+                        <div className="mt-2 ml-2 space-y-2">
+                          {nav.dropdown.map((item, subIndex) => (
+                            <Link
+                              key={subIndex}
+                              href={item.href}
+                              style={{ fontFamily: '"Nunito", serif' }}
+                              className="block text-sm sm:text-base text-gray-300 hover:text-[#FF951B] transition-colors duration-300 pl-2 border-l-2 border-gray-600 hover:border-[#FF951B]"
+                            >
+                              {item.title}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      style={{ fontFamily: '"Nunito", serif' }}
+                      href={nav.href}
+                      className="text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300"
+                    >
+                      {nav.title}
+                    </Link>
+                  )}
+                </div>
               ))}
             </div>
 
@@ -63,7 +121,7 @@ const Footer = () => {
               <h2 className={`font-semibold mb-3 text-base sm:text-lg `}>
                 Get the freshest news from us
               </h2>
-              <form onSubmit={(e) => e.preventDefault()}>
+              <div onSubmit={(e) => e.preventDefault()}>
                 <div className="flex flex-row rounded overflow-hidden gap-2 sm:gap-0">
                   <input
                     type="email"
@@ -77,7 +135,7 @@ const Footer = () => {
                     Subscribe
                   </button>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
 

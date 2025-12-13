@@ -139,7 +139,7 @@ const page = () => {
         </p>
       </section>
 
-      <Container>
+      <div className="max-w-6xl mx-auto px-4 lg:px-0 ">
         <section className=" mt-12 lg:mt-15 space-y-4 lg:space-y-5 ">
           <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
             WHO IS ELIGIBLE TO APPLY?
@@ -240,7 +240,7 @@ const page = () => {
             </div>
           </div>
         </section>
-      </Container>
+      </div>
     </div>
   );
 };
