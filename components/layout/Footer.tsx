@@ -4,7 +4,7 @@ import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
 import { antiquaFont, poppins } from "../utils/font";
 import Container from "../Container";
-
+// Updated Navbar
 const navs = [
   { title: "Who we are", href: "/who-we-are" },
   { title: "Stories", href: "/stories-news" },
