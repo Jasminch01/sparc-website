@@ -1,7 +1,34 @@
-// import Image from "next/image";
-// import vectorImage from '../../public/Whatwedo/Vector.png'
+"use client";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import Container from "../Container";
 import { antiquaFont, poppins } from "../utils/font";
+
+const videos = [
+  {
+    id: 1,
+    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    title: "Video 1"
+  },
+  {
+    id: 2,
+    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    title: "Video 2"
+  },
+  {
+    id: 3,
+    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    title: "Video 3"
+  },
+  {
+    id: 4,
+    url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    title: "Video 4"
+  }
+];
 
 const Videos = () => {
   return (
@@ -22,23 +49,79 @@ const Videos = () => {
             </p>
           </div>
 
-          {/* Embedded YouTube video - Responsive */}
-          <div className="flex justify-center">
-            <div className="w-full max-w-4xl aspect-video">
-              <iframe
-                width="100%"
-                height="100%"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="rounded-md shadow-lg w-full h-full"
-              ></iframe>
-            </div>
+          {/* Video Slider */}
+          <div className="relative px-12">
+            <Swiper
+              modules={[Navigation, Pagination, Autoplay]}
+              spaceBetween={30}
+              slidesPerView={1}
+              navigation
+              pagination={{ clickable: true }}
+              autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
+              }}
+              loop={true}
+              breakpoints={{
+                640: {
+                  slidesPerView: 1,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 2,
+                  spaceBetween: 30,
+                },
+              }}
+              className="video-swiper"
+            >
+              {videos.map((video) => (
+                <SwiperSlide key={video.id}>
+                  <div className="w-full aspect-video">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={video.url}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="rounded-md shadow-lg w-full h-full"
+                    ></iframe>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       </Container>
+
+      <style jsx global>{`
+        .video-swiper .swiper-button-next,
+        .video-swiper .swiper-button-prev {
+          color: #FF951B;
+          
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+         
+        }
+
+        .video-swiper .swiper-button-next:after,
+        .video-swiper .swiper-button-prev:after {
+          font-size: 20px;
+        }
+        .video-swiper .swiper-pagination-bullet-active {
+          background: #FF951B;
+          opacity: 1;
+        }
+
+        .video-swiper {
+          padding-bottom: 50px;
+        }
+      `}</style>
     </div>
   );
 };

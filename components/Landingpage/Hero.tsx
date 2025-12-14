@@ -72,9 +72,7 @@ const Hero = () => {
                   Empowering indigenous women and communities to rise against
                   systemic oppression, reclaim their voices
                 </p>
-                <button className="border-b-2 border-white cursor-pointer text-sm lg:text-base hover:border-[#FF951B] transition-colors duration-300 uppercase font-semibold">
-                  Read More
-                </button>
+               
               </div>
             </div>
           </Container>

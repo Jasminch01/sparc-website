@@ -4,7 +4,7 @@ import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
 import { antiquaFont, poppins } from "../utils/font";
 import Container from "../Container";
-// Updated Navbar
+
 const navs = [
   { title: "Who we are", href: "/who-we-are" },
   { title: "Stories", href: "/stories-news" },
@@ -89,13 +89,14 @@ const Footer = () => {
                       </button>
                       
                       {openDropdown === index && (
-                        <div className="mt-2 ml-2 space-y-2">
+                        <div className="absolute left-0 top-full mt-2 bg-[#4a1a50] rounded shadow-lg py-2 px-3 z-10 min-w-[200px]">
                           {nav.dropdown.map((item, subIndex) => (
                             <Link
                               key={subIndex}
                               href={item.href}
+                              onClick={() => setOpenDropdown(null)}
                               style={{ fontFamily: '"Nunito", serif' }}
-                              className="block text-sm sm:text-base text-gray-300 hover:text-[#FF951B] transition-colors duration-300 pl-2 border-l-2 border-gray-600 hover:border-[#FF951B]"
+                              className="block text-sm sm:text-base text-gray-300 hover:text-[#FF951B] transition-colors duration-300 py-2 pl-2 border-l-2 border-gray-600 hover:border-[#FF951B]"
                             >
                               {item.title}
                             </Link>
