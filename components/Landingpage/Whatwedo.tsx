@@ -68,6 +68,7 @@ const Whatwedo = () => {
           </div>
         </div>
       </Container>
+      {/* Vector image updated */}
 
       {/* Bottom Vector Image - Fixed at bottom edge */}
       <div className="absolute vector-image left-0 right-0 w-full pointer-events-none overflow-hidden bottom">
