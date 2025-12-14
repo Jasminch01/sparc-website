@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
-import { ArchiveIcon } from '@sanity/icons';
+import { ArchiveIcon, IconComponent } from '@sanity/icons';
 
 const archiveSchema = {
   name: "archive",
   title: "Archive Post",
-  icon : ArchiveIcon,
+  icon : ArchiveIcon as IconComponent,
   type: "document",
   fields: [
     {

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
-import { DocumentTextIcon } from "@sanity/icons";
+import { DocumentTextIcon, IconComponent } from "@sanity/icons";
 
 // Blogs Schema
 export const Blogs = {
   name: "blog",
   title: "BLOGS",
   type: "document",
-  icon: DocumentTextIcon,
+  icon: DocumentTextIcon as IconComponent,
   fields: [
     {
       name: "title",
