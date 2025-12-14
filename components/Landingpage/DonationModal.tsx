@@ -1,9 +1,8 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import bikashLogo from "../../public/donation/bikash.png";
-import nagadLogo from "../../public/donation/nogod.png";
-import upayLogo from "../../public/donation/up.png";
-import rocketLogo from "../../public/donation/nogod.png";
-import brac from "../../public/donation/brac.png";
+import bikashLogo from "../../public/donation/bikash.svg";
+import nagadLogo from "../../public/donation/nagad.svg";
+import upayLogo from "../../public/donation/upai.webp";
+import brac from "../../public/donation/brac-bank.png";
 import ucb from "../../public/donation/ucb.png";
 import paypal from "../../public/donation/paypal.png";
 import Image, { StaticImageData } from "next/image";
@@ -129,7 +128,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
         bkash: bikashLogo,
         nagad: nagadLogo,
         upay: upayLogo,
-        rocket: rocketLogo,
+       
       };
       return logoMap[payment.mobileProvider || "bkash"] || bikashLogo;
     }
@@ -509,14 +508,14 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                   </span>
                 </button>
 
-                <div className="mb-6 flex flex-col items-center justify-center gap-2 border-gray-300 border-b py-5">
+                <div className="mb-6 flex flex-col items-center justify-center gap-2 py-5">
                   <Image
                     src={getPaymentLogo(selectedPayment)}
                     width={120}
                     height={120}
                     sizes="2000px"
                     alt={getPaymentName(selectedPayment)}
-                    className="object-contain"
+                    className="object-contain h-[100px]"
                   />
                 </div>
                 <div className="px-6 md:px-14 pb-6">
