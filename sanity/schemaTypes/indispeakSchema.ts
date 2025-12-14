@@ -2,8 +2,8 @@
 import { Rule } from "@sanity/types";
 
 export const indiSpeak = {
-    name: "indispeak",
-    title: "Indispeak Story",
+    name: "indispeakStories",
+    title: "Story",
     type: "document",
     fields: [
         {
@@ -30,7 +30,7 @@ export const indiSpeak = {
         },
         {
             name: "img",
-            title: "Story Image",
+            title: "Author Image",
             type: "image",
             options: {
                 hotspot: true,
@@ -38,16 +38,16 @@ export const indiSpeak = {
             validation: (rule: Rule) => rule.required(),
         },
         {
-            name: "imgName",
+            name: "autorName",
             title: "Author Name",
             type: "string",
             description: "Name of the person sharing their story (optional)",
         },
         {
             name: "imgAlt",
-            title: "Author Description",
+            title: "Author title",
             type: "string",
-            description: "Description or title of the person",
+            description: "Title of the author",
             validation: (rule: Rule) => rule.required(),
         },
     ],

@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineField, defineType } from "sanity";
+import { MdOutlinePayment } from "react-icons/md";
 
 export default defineType({
   name: "paymentMethod",
-  title: "Payment Method",
+  title: "PAYMENT METHODS",
+  icon : MdOutlinePayment,
   type: "document",
   fields: [
     defineField({

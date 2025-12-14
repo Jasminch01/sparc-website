@@ -45,7 +45,10 @@ export const Research = {
       options: {
         list: [
           { title: "Building Movements", value: "Building Movements" },
-          { title: "Gender & Social Justice", value: "Gender & Social Justice" },
+          {
+            title: "Gender & Social Justice",
+            value: "Gender & Social Justice",
+          },
           { title: "Training & Workshop", value: "Training & Workshop" },
           { title: "Language & Education", value: "Language & Education" },
         ],
@@ -56,8 +59,8 @@ export const Research = {
     {
       name: "description",
       title: "Description",
-      type: "text",
-      rows: 6,
+      type: "array",
+      of: [{ type: "block" }],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
