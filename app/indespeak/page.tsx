@@ -163,9 +163,6 @@ const Page = () => {
         {loading ? (
           <div className="flex flex-col h-screen items-center justify-center py-20">
             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#FF951B]"></div>
-            <p className={`mt-6 text-xl text-[#6B6B6B] ${poppins.className}`}>
-              Loading stories...
-            </p>
           </div>
         ) : indiSpeakData.length === 0 ? (
           <div className="flex h-screen flex-col items-center justify-center py-20 px-4">
