@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
+import { DocumentTextIcon, IconComponent } from "@sanity/icons";
 
 // Blogs Schema
 export const Blogs = {
   name: "blog",
-  title: "Blog Post",
+  title: "BLOGS",
   type: "document",
+  icon: DocumentTextIcon as IconComponent,
   fields: [
     {
       name: "title",
@@ -13,6 +15,22 @@ export const Blogs = {
       type: "string",
       validation: (Rule: Rule) => Rule.required(),
     },
+    {
+      name: "subtitle",
+      title: "Subtitle",
+      type: "text",
+      rows: 3,
+      validation: (Rule: Rule) => Rule.required().max(250),
+    },
+
+    {
+      name: "description",
+      title: "Description",
+      type: "array",
+      of: [{ type: "block" }],
+      validation: (Rule: Rule) => Rule.required(),
+    },
+
     {
       name: "writtenBy",
       title: "Written By",
@@ -29,75 +47,18 @@ export const Blogs = {
       validation: (rule: Rule) => rule.required(),
     },
     {
-      name: "description",
-      title: "Short Description",
-      type: "text",
-      rows: 3,
-      validation: (Rule: Rule) => Rule.required().max(250),
-    },
-    {
-      name: "longdes",
-      title: "Long Description",
-      type: "text",
-      rows: 10,
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
       name: "img",
       title: "Featured Image",
       type: "image",
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-        },
-      ],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "category",
       title: "Category",
       type: "string",
-      options: {
-        list: [
-          { title: "Indigenous Opinion", value: "indigenous opinion" },
-          { title: "News", value: "news" },
-          { title: "Analysis", value: "analysis" },
-          { title: "Feature", value: "feature" },
-        ],
-        layout: "dropdown",
-      },
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: "status",
-      title: "Status",
-      type: "string",
-      options: {
-        list: [
-          { title: "Latest", value: "latest" },
-          { title: "Featured", value: "featured" },
-          { title: "Archived", value: "archived" },
-        ],
-        layout: "radio",
-      },
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      name: "subcategory",
-      title: "Subcategory",
-      type: "string",
-      options: {
-        list: [
-          { title: "Latest", value: "latest" },
-          { title: "Old", value: "old" },
-        ],
-        layout: "radio",
-      },
       validation: (Rule: Rule) => Rule.required(),
     },
   ],

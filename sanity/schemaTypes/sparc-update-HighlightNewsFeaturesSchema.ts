@@ -3,8 +3,8 @@ import { Rule } from "@sanity/types";
 
 // Update
 export const Highlight_Stories_Features = {
-  name: "newsUpdate",
-  title: "News Highlight Stories ",
+  name: "highlights",
+  title: "Highlight",
   type: "document",
   fields: [
     {
@@ -13,7 +13,7 @@ export const Highlight_Stories_Features = {
       type: "string",
       validation: (Rule: Rule) => Rule.required(),
     },
-    
+
     {
       name: "date",
       title: "Date",
@@ -33,33 +33,25 @@ export const Highlight_Stories_Features = {
           { title: "Highlight", value: "highlight" },
           { title: "Featured Stories", value: "FEATURED_STORIES" },
           { title: "Latest News", value: "LATEST_NEWS" },
-          { title: "Breaking News", value: "BREAKING_NEWS" },
         ],
         layout: "dropdown",
       },
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "des",
+      name: "descriptin",
       title: "Description",
-      type: "text",
-      rows: 8,
+      type: "array",
+      of: [{ type: "block" }],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "img",
+      name: "featuredImage",
       title: "Featured Image",
       type: "image",
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-        },
-      ],
       hidden: ({ parent }: { parent?: any }) =>
         parent?.category === "LATEST_NEWS" && !!parent?.video,
     },

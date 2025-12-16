@@ -3,8 +3,8 @@ import { Rule } from "@sanity/types";
 
 // Sparc-update project schema
 export const Projects = {
-  name: "project",
-  title: "Sparce Update Project",
+  name: "projects",
+  title: "Projects",
   type: "document",
   fields: [
     {
@@ -13,7 +13,7 @@ export const Projects = {
       type: "string",
       validation: (Rule: Rule) => Rule.required(),
     },
- 
+
     {
       name: "status",
       title: "Status",
@@ -46,26 +46,19 @@ export const Projects = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "des",
+      name: "description",
       title: "Description",
-      type: "text",
-      rows: 4,
+      type: "array",
+      of: [{ type: "block" }],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "img",
+      name: "projectImage",
       title: "Project Image",
       type: "image",
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-        },
-      ],
       validation: (Rule: Rule) => Rule.required(),
     },
   ],

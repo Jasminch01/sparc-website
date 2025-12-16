@@ -1,9 +1,14 @@
 "use client";
-//
+
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import hero from "@/public/Archive/hero.png";
-import { client } from "@/sanity/lib/client";
+import {
+  ArchiveData,
+  fetchArchiveDataPaginated,
+  fetchArchiveYears,
+  PaginatedArchiveResult,
+} from "@/sanity/queries/archiveQueries";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -11,16 +16,8 @@ import { FaSearch } from "react-icons/fa";
 import { FaAnglesDown } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-interface Data {
-  _id: string;
-  img: string;
-  title: string;
-  des: string;
-  date: string;
-  category: string;
-}
-
 const categories: string[] = [
+  "All Categories",
   "Historical Records",
   "Community Stories",
   "News and Update",
@@ -28,47 +25,97 @@ const categories: string[] = [
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [activeCategory, setActiveCategory] = useState("Historical Records");
-  const [data, setData] = useState<Data[]>([]);
+  const [activeCategory, setActiveCategory] =
+    useState<string>("All Categories");
+  const [data, setData] = useState<ArchiveData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch data from Sanity
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [total, setTotal] = useState(0);
+  const pageSize = 9;
+  // Year filter state
+  const [availableYears, setAvailableYears] = useState<string[]>([]);
+  const [selectedYearRange, setSelectedYearRange] = useState<string>("");
+
+  // Fetch available years on mount
   useEffect(() => {
-    const fetchData = async () => {
+    const loadYears = async () => {
+      try {
+        const years = await fetchArchiveYears();
+        setAvailableYears(years);
+
+        // Set default to latest year if available
+        if (years.length > 0) {
+          const latestYear = years[0];
+          setSelectedYearRange(`${latestYear}-${parseInt(latestYear) + 1}`);
+        }
+      } catch (err) {
+        console.error("Error fetching years:", err);
+      }
+    };
+
+    loadYears();
+  }, []);
+
+  // Fetch data with filters
+  useEffect(() => {
+    const loadData = async () => {
       try {
         setLoading(true);
-        const query = `*[_type == "archivePost"] | order(date desc) {
-          _id,
-          title,
-          "img": img.asset->url,
-          des,
-          date,
-          category,
-        }`;
+        setError(null);
 
-        const result = await client.fetch(query);
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        // Parse year range
+        let startDate, endDate;
+        if (selectedYearRange) {
+          const [startYear, endYear] = selectedYearRange.split("-");
+          startDate = `${startYear}-01-01`;
+          endDate = `${endYear}-12-31`;
+        }
+
+        const categoryToFetch =
+          activeCategory === "All Categories" ? undefined : activeCategory;
+
+        const result: PaginatedArchiveResult = await fetchArchiveDataPaginated(
+          categoryToFetch,
+          startDate,
+          endDate,
+          currentPage,
+          pageSize
+        );
+
+        setData(result.data);
+        setTotal(result.total);
+        setTotalPages(result.totalPages);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load archive data. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
-  }, []);
+    if (selectedYearRange) {
+      loadData();
+    }
+  }, [activeCategory, selectedYearRange, currentPage]);
 
-  // Filter data by category and search
-  const filterdData = data.filter((d) => {
-    const matchesCategory = d.category
-      ?.toLowerCase()
-      .includes(activeCategory.toLowerCase());
-    const matchesSearch =
-      searchTerm === "" ||
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCategory, selectedYearRange]);
+
+  // Filter data by search term (client-side)
+  const filteredData = data.filter((d) => {
+    if (searchTerm === "") return true;
+    return (
       d.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      d.des?.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCategory && matchesSearch;
+      d.subtitle?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   });
 
   // Format date
@@ -79,6 +126,54 @@ const Page = () => {
       month: "long",
       year: "numeric",
     });
+  };
+
+  // Handle category change
+  const handleCategoryChange = (index: number, category: string) => {
+    setActiveIndex(index);
+    setActiveCategory(category);
+  };
+
+  // Handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    document.getElementById("data")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisiblePages = 5;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pages.push(i);
+        }
+        pages.push("...");
+        pages.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pages.push(1);
+        pages.push("...");
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        pages.push(1);
+        pages.push("...");
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pages.push(i);
+        }
+        pages.push("...");
+        pages.push(totalPages);
+      }
+    }
+
+    return pages;
   };
 
   return (
@@ -179,15 +274,14 @@ const Page = () => {
               return (
                 <div
                   key={index}
-                  onClick={() => {
-                    setActiveIndex(index);
-                    setActiveCategory(item);
-                  }}
-                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${poppins.className
-                    } ${activeIndex === index
+                  onClick={() => handleCategoryChange(index, item)}
+                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${
+                    poppins.className
+                  } ${
+                    activeIndex === index
                       ? "border-gray-700 border bg-gray-200"
                       : "border-gray-200 bg-gray-100 hover:bg-gray-200"
-                    }`}
+                  }`}
                 >
                   {item}
                 </div>
@@ -207,33 +301,23 @@ const Page = () => {
           <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
             <div className="relative w-full md:w-auto">
               <select
-                name=""
-                id=""
-                className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm md:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none uppercase`}
-              >
-                <option value="modified">Data Modified</option>
-                <option value="original">Original</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 md:px-3 text-gray-700">
-                <svg
-                  className="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                </svg>
-              </div>
-            </div>
-            <div className="relative w-full md:w-auto">
-              <select
-                name=""
-                id=""
+                value={selectedYearRange}
+                onChange={(e) => setSelectedYearRange(e.target.value)}
                 className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm lg:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
               >
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2024-2025">2024-2025</option>
+                {availableYears.length > 0 ? (
+                  availableYears.map((year) => {
+                    const nextYear = parseInt(year) + 1;
+                    const rangeValue = `${year}-${nextYear}`;
+                    return (
+                      <option key={year} value={rangeValue}>
+                        {rangeValue}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option value="">No years available</option>
+                )}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 md:px-3 text-gray-700">
                 <svg
@@ -257,59 +341,119 @@ const Page = () => {
                 Loading...
               </p>
             </div>
-          ) : filterdData.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
-              {filterdData.map((project) => (
-                <Link href={`/archive/${project.title.toLowerCase()
-                  .replace(/\s+/g, '-')
-                  .replace(/[^\w\-]+/g, '')
-                  .replace(/\-\-+/g, '-')
-                  .replace(/^-+/, '')
-                  .replace(/-+$/, '')}`} key={project._id}>
-                  <div className="relative h-full group">
-                    <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
-                      <div className="relative w-full h-[250px] md:h-[250px] mb-3 md:mb-4 shrink-0">
-                        <Image
-                          src={project.img}
-                          alt={project.title}
-                          width={500}
-                          height={500}
-                          className="object-cover rounded-lg"
-                        />
-                      </div>
-                      <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
-                        <h2
-                          className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
-                        >
-                          {project.title}
-                        </h2>
-                        <p
-                          className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
-                        >
-                          {formatDate(project.date)}
-                        </p>
-                        <p
-                          className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
-                        >
-                          {project.des}
-                        </p>
-                        <button
-                          className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer group-hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
-                        >
-                          Read More <IoIosArrowRoundForward size={20} />
-                        </button>
+          ) : error ? (
+            <div className="text-center h-screen flex justify-center items-center">
+              <p
+                className={`text-red-500 text-lg md:text-xl ${poppins.className}`}
+              >
+                {error}
+              </p>
+            </div>
+          ) : filteredData.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                {filteredData.map((project) => (
+                  <Link
+                    href={`/archive/${project.title}`}
+                    key={project._id}
+                  >
+                    <div className="relative h-full group">
+                      <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
+                        <div className="relative w-full h-[250px] md:h-[250px] mb-3 md:mb-4 shrink-0">
+                          <Image
+                            src={project.img}
+                            alt={project.title}
+                            fill
+                            className="object-cover rounded-lg"
+                          />
+                        </div>
+                        <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
+                          <h2
+                            className={`${poppins.className} text-base lg:text-lg font-semibold line-clamp-2`}
+                          >
+                            {project.title}
+                          </h2>
+                          <p
+                            className={`${poppins.className} text-[#6B6B6B] text-xs lg:text-sm`}
+                          >
+                            {formatDate(project.date)}
+                          </p>
+                          <p
+                            className={`${antiquaFont.className} text-justify text-[#4D4D4D] text-sm md:text-base line-clamp-3 grow`}
+                          >
+                            {project.subtitle}
+                          </p>
+                          <button
+                            className={`${poppins.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer group-hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
+                          >
+                            Read More <IoIosArrowRoundForward size={20} />
+                          </button>
+                        </div>
                       </div>
                     </div>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div
+                  className={`flex flex-col items-center gap-4 mt-8 ${poppins.className}`}
+                >
+                  <div className="flex justify-center items-center gap-2 flex-wrap">
+                    <button
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className={`px-3 py-2 rounded border text-sm md:text-base ${
+                        currentPage === 1
+                          ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                          : "border-gray-400 text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      Previous
+                    </button>
+
+                    {getPageNumbers().map((page, index) =>
+                      page === "..." ? (
+                        <span key={`ellipsis-${index}`} className="px-2">
+                          ...
+                        </span>
+                      ) : (
+                        <button
+                          key={page}
+                          onClick={() => handlePageChange(page as number)}
+                          className={`px-4 py-2 rounded border text-sm md:text-base ${
+                            currentPage === page
+                              ? "bg-[#FF951B] text-white border-[#FF951B]"
+                              : "border-gray-400 text-gray-700 hover:bg-gray-100"
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      )
+                    )}
+
+                    <button
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className={`px-3 py-2 rounded border text-sm md:text-base ${
+                        currentPage === totalPages
+                          ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                          : "border-gray-400 text-gray-700 hover:bg-gray-100"
+                      }`}
+                    >
+                      Next
+                    </button>
                   </div>
-                </Link>
-              ))}
-            </div>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center h-screen flex justify-center items-center">
               <p
                 className={`text-gray-500 text-lg md:text-xl ${poppins.className}`}
               >
-                No projects found in this category.
+                No projects found for {activeCategory} in {selectedYearRange}.
               </p>
             </div>
           )}

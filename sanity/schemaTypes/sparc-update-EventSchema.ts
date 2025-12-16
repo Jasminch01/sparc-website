@@ -3,8 +3,8 @@ import { Rule } from "@sanity/types";
 
 // Events schema
 export const Events = {
-  name: "event",
-  title: "Sparce Update Event",
+  name: "events",
+  title: "Event",
   type: "document",
   fields: [
     {
@@ -22,7 +22,6 @@ export const Events = {
           { title: "Upcoming", value: "Upcoming" },
           { title: "Ongoing", value: "Ongoing" },
           { title: "Completed", value: "Completed" },
-          { title: "Cancelled", value: "Cancelled" },
         ],
         layout: "radio",
       },
@@ -47,10 +46,10 @@ export const Events = {
         parent?.status === "Completed" || parent?.status === "Cancelled",
     },
     {
-      name: "des",
+      name: "description",
       title: "Description",
-      type: "text",
-      rows: 4,
+      type: "array",
+      of: [{ type: "block" }],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -60,13 +59,6 @@ export const Events = {
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-        },
-      ],
       validation: (Rule: Rule) => Rule.required(),
     },
   ],
