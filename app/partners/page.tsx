@@ -5,6 +5,7 @@ import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import Image from "next/image";
 import { client } from "@/sanity/lib/client";
+import { useTranslation } from "react-i18next";
 
 interface Partner {
   name: string;
@@ -16,8 +17,15 @@ interface Partner {
 }
 
 const Page = () => {
+  const { t } = useTranslation();
+
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // translations
+  const heroTitle = t("partners_page.hero_section.title");
+  const heroDescription = t("partners_page.hero_section.description");
+  const heroButton = t("partners_page.hero_section.button");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -26,7 +34,6 @@ const Page = () => {
       try {
         setLoading(true);
 
-        // Fetch all partners from Sanity, ordered by display order
         const query = `*[_type == "partner"] | order(order asc, name asc) {
           name,
           "logo": logo.asset->url,
@@ -80,25 +87,25 @@ const Page = () => {
           <h1
             className={`text-2xl lg:text-5xl font-black md:mb-4 text-center ${poppins.className}`}
           >
-            OUR PARTNERS
+            {heroTitle}
           </h1>
           <p
             className={`text-lg lg:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
           >
-            Our research amplifies Indigenous voices, documents cultural wisdom,
-            and supports evidence-based advocacy for equality and sustainability
+            {heroDescription}
           </p>
           <div className="md:mt-10 mt-5">
             <button className="md:py-5 md:px-10 p-3 font-semibold cursor-pointer rounded-full bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg">
-              BECOME A PARTNER
+              {heroButton}
             </button>
           </div>
         </div>
       </div>
+
       <Container>
         <div className="py-20">
           <p className="lg:text-4xl text-2xl font-bold text-center">
-            OUR PARTNERS SO FAR
+            {t('partners_page.title')}
           </p>
 
           {partners.length === 0 ? (

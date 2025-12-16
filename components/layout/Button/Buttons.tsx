@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
 import { Poppins } from "next/font/google";
+import { useTranslation } from "react-i18next";
 import DonationModal from "@/components/Landingpage/DonationModal";
 
 const poppins = Poppins({
@@ -20,13 +21,13 @@ interface LanguageOption {
 
 const languageOptions: LanguageOption[] = [
   {
-    code: "EN",
+    code: "en",
     name: "English",
     flag: "https://flagcdn.com/us.svg",
     nativeName: "English",
   },
   {
-    code: "BN",
+    code: "bn",
     name: "Bengali",
     flag: "https://flagcdn.com/bd.svg",
     nativeName: "বাংলা",
@@ -34,12 +35,17 @@ const languageOptions: LanguageOption[] = [
 ];
 
 const Buttons = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageOption>(
-    languageOptions[0]
-  );
+  const { i18n, t } = useTranslation();
+
+  // UI state only
   const [isOpen, setIsOpen] = useState(false);
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Derived state (NO useState / NO useEffect)
+  const selectedLanguage =
+    languageOptions.find((lang) => lang.code === i18n.language) ||
+    languageOptions[0];
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -53,10 +59,15 @@ const Buttons = () => {
     };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Handle keyboard navigation
+  const handleSelect = (language: LanguageOption) => {
+    i18n.changeLanguage(language.code);
+    setIsOpen(false);
+  };
+
   const handleKeyDown = (
     event: React.KeyboardEvent,
     language: LanguageOption
@@ -67,32 +78,17 @@ const Buttons = () => {
     }
   };
 
-  const handleSelect = (language: LanguageOption) => {
-    setSelectedLanguage(language);
-    setIsOpen(false);
-  };
-
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
-
   return (
     <>
       <div className={`flex items-center gap-3 relative ${poppins.className}`}>
         {/* Language Dropdown */}
-        <div className="relative " ref={dropdownRef}>
+        <div className="relative" ref={dropdownRef}>
           <button
-            onClick={toggleDropdown}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggleDropdown();
-              }
-            }}
+            onClick={() => setIsOpen((prev) => !prev)}
             aria-haspopup="listbox"
             aria-expanded={isOpen}
             aria-label={`Selected language: ${selectedLanguage.name}. Press to change language`}
-            className="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50"
+            className="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#FF951B]"
           >
             <Image
               src={selectedLanguage.flag}
@@ -102,11 +98,12 @@ const Buttons = () => {
               className="rounded-full h-5 w-5 object-cover"
               role="presentation"
             />
-            <span className="min-w-[30px]">{selectedLanguage.code}</span>
+            <span className="min-w-[30px] uppercase">
+              {selectedLanguage.code}
+            </span>
             <IoIosArrowDown
-              className={`h-4 w-4 transition-transform duration-200 ${
-                isOpen ? "rotate-180" : "rotate-0"
-              }`}
+              className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : "rotate-0"
+                }`}
               aria-hidden="true"
             />
           </button>
@@ -124,11 +121,10 @@ const Buttons = () => {
                   onKeyDown={(e) => handleKeyDown(e, language)}
                   role="option"
                   aria-selected={selectedLanguage.code === language.code}
-                  className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
-                    selectedLanguage.code === language.code
-                      ? "bg-blue-50 text-blue-600 font-medium"
-                      : "text-gray-700"
-                  }`}
+                  className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none ${selectedLanguage.code === language.code
+                    ? "bg-blue-50 text-blue-600 font-medium"
+                    : "text-gray-700"
+                    }`}
                 >
                   <Image
                     src={language.flag}
@@ -139,7 +135,9 @@ const Buttons = () => {
                     role="presentation"
                   />
                   <div className="flex flex-col items-start">
-                    <span className="font-medium">{language.nativeName}</span>
+                    <span className="font-medium">
+                      {language.nativeName}
+                    </span>
                     <span className="text-xs text-gray-500">
                       {language.name}
                     </span>
@@ -156,10 +154,10 @@ const Buttons = () => {
         {/* Donate Button */}
         <button
           onClick={() => setIsDonationModalOpen(true)}
-          className="lg:px-10 px-3 py-2 cursor-pointer lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50"
-          aria-label="Donate now"
+          className="lg:px-10 px-3 py-2 lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617]"
+          aria-label={t("donate_now")}
         >
-          DONATE NOW
+          {t("donate_now")}
         </button>
       </div>
 

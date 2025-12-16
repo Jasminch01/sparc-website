@@ -10,6 +10,9 @@ import { useEffect, useRef, useState } from 'react';
 import { IoArrowBack, IoArrowForward } from 'react-icons/io5';
 import { useRouter } from 'next/navigation';
 import { client } from '@/sanity/lib/client';
+// 1. Import useTranslation
+import { useTranslation } from 'react-i18next';
+
 
 type Course = {
     title: string;
@@ -30,6 +33,8 @@ const learnCategory = ['Culture and Advocacy', 'Indigenous History', 'Sovereignt
 
 const Page = () => {
     const router = useRouter();
+    // 2. Initialize useTranslation
+    const { t } = useTranslation();
     const [courses, setCourses] = useState<Course[]>([])
     const [activeCategory, setActiveCategory] = useState(0)
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -38,6 +43,31 @@ const Page = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const coursesPerPage = 4;
     const [isMobile, setIsMobile] = useState(false);
+
+    // 3. Helper Function to handle <1> tag for Styling (from previous context)
+    const renderStyledTitle = (key: string) => {
+        // Fetch the raw translated string
+        const rawTitle = t(key);
+
+        // Split the string by the <1> and </1> tags
+        const parts = rawTitle.split(/(<1>.*?<\/1>)/g).filter(Boolean);
+
+        return (
+            <>
+                {parts.map((part, i) => {
+                    if (part.startsWith('<1>') && part.endsWith('</1>')) {
+                        // Extract text inside <1> and apply orange color class
+                        const text = part.replace(/<\/?1>/g, '');
+                        return <span key={i} className='text-[#ff951b]'>{text}</span>;
+                    }
+                    // Return the rest of the text as plain string (or React fragment)
+                    return <span key={i}>{part}</span>;
+                })}
+            </>
+        );
+    };
+    // --------------------------------------------------------
+
 
     // Check if mobile
     useEffect(() => {
@@ -53,20 +83,20 @@ const Page = () => {
         const fetchCourses = async () => {
             try {
                 const data = await client.fetch(`
-                    *[_type == "learn"]{
-                        title,
-                        des,
-                        longDes,
-                        category,
-                        itemsSold,
-                        rating,
-                        price,
-                        updated,
-                        whatYouLearn,
-                        form,
-                        "img": img.asset->url
-                    }
-                `);
+                    *[_type == "learn"]{
+                        title,
+                        des,
+                        longDes,
+                        category,
+                        itemsSold,
+                        rating,
+                        price,
+                        updated,
+                        whatYouLearn,
+                        form,
+                        "img": img.asset->url
+                    }
+                `);
 
                 setCourses(data);
             } catch (error) {
@@ -127,13 +157,15 @@ const Page = () => {
                 {/* Top Section */}
                 <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
                     <div className="w-full lg:w-1/2">
-                        <h2 className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight  ${poppins.className}`}>
-                            LEARN <span className='text-[#ff951b]'>ANYTHING</span>, EVERYTHING
+                        <h2 className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-bold leading-tight  ${poppins.className}`}>
+                            {/* Translated Title with styling */}
+                            {renderStyledTitle('learn_page.title')}
                         </h2>
                     </div>
                     <div className="w-full lg:w-1/2">
                         <p className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}>
-                            Learning their history and present challenges is the first step toward justice, equality, and empowerment.
+                            {/* Translated Description */}
+                            {t('learn_page.description')}
                         </p>
                     </div>
                 </section>
@@ -150,10 +182,12 @@ const Page = () => {
                 />
                 <div className="absolute top-1/2 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center text-white w-full px-4">
                     <h2 className={`text-xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}>
-                        LEARN
+                        {/* Translated Hero Title */}
+                        {t('learn_page.hero.title')}
                     </h2>
                     <p className={`mb-3 text-lg lg:text-xl md:text-2xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}>
-                        Our reports and publications highlight the voices, experiences, and resilience of Indigenous women across communities.
+                        {/* Translated Hero Description */}
+                        {t('learn_page.hero.description')}
                     </p>
 
                 </div>
@@ -162,25 +196,41 @@ const Page = () => {
             {/* Breadcrumb Section */}
             <Container>
                 <section className={`flex gap-5 my-10 lg:my-20 ${poppins.className} font-semibold text-xs md:text-base`}>
-                    <Link href='/'>HOME</Link> <span>||</span>
-                    <p className="text-[#818181] uppercase " >Learn from us</p>
+                    <Link href='/'>
+                        {/* Translated Breadcrumb HOME */}
+                        {t('learn_page.breadcrumb.title')}
+                    </Link>
+                    <span>||</span>
+                    <p className="text-[#818181] uppercase " >
+                        {/* Current Page: Using Hero Title as a placeholder for "Learn from us" */}
+                        {t('learn_page.hero.title')}
+                    </p>
                 </section>
             </Container>
 
 
-            {/* Learn Section */}
+            {/* Learn Section - Assuming placeholder keys for untranslated strings below */}
             <Container>
                 <section>
                     <div className=''>
-                        <h2 className={`text-2xl lg:text-4xl font-bold mb-4 ${poppins.className}`}>LEARN TO KNOW BETTER</h2>
-                        <p className={`mb-4 text-lg  ${antiquaFont.className} text-gray-500`}>Program offers valuable real-world experience for passionate individuals. </p>
+                        <h2 className={`text-2xl lg:text-4xl font-bold mb-4 ${poppins.className}`}>
+                            {/* Placeholder/Hardcoded in English until key is provided */}
+                            {t('learn_page.section_title', 'LEARN TO KNOW BETTER')}
+                        </h2>
+                        <p className={`mb-4 text-lg  ${antiquaFont.className} text-gray-500`}>
+                            {/* Placeholder/Hardcoded in English until key is provided */}
+                            {t('learn_page.section_subtitle', 'Program offers valuable real-world experience for passionate individuals.')}
+                        </p>
                     </div>
 
-                    {/* Course Category */}
+                    {/* Course Category - Should be translated using i18n, but keeping array for now */}
                     <div className='grid grid-cols-1 lg:grid-cols-4 my-5 lg:my-10'>
                         {learnCategory.map((cat, index) =>
                             <div key={index} className='border-b-2 border-gray-300'>
-                                <button onClick={() => setActiveCategory(index)} className={`${poppins.className} cursor-pointer py-5 text-sm lg:text-xl font-semibold transition-all duration-300 ${activeCategory === index ? 'border-b-2 border-[#FF951B] text-[#FF951B]' : 'hover:text-[#FF951B]'}`}>{cat}</button>
+                                <button onClick={() => setActiveCategory(index)} className={`${poppins.className} cursor-pointer py-5 text-sm lg:text-xl font-semibold transition-all duration-300 ${activeCategory === index ? 'border-b-2 border-[#FF951B] text-[#FF951B]' : 'hover:text-[#FF951B]'}`}>
+                                    {/* Categories are likely translated through a common system */}
+                                    {t(`categories.${cat.replace(/\s/g, '_').toLowerCase()}`, cat)}
+                                </button>
                             </div>
                         )}
                     </div>
@@ -196,7 +246,8 @@ const Page = () => {
                                     : 'bg-[#5B1E63] text-white hover:bg-[#7a2887]'
                                     }`}>
                                 <IoArrowBack />
-                                Previous
+                                {/* Translated "Previous" */}
+                                {t('common.previous', 'Previous')}
                             </button>
 
                             <button onClick={handleNext}
@@ -205,7 +256,8 @@ const Page = () => {
                                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                                     : 'bg-[#5B1E63] text-white hover:bg-[#7a2887]'
                                     }`}>
-                                Next
+                                {/* Translated "Next" */}
+                                {t('common.next', 'Next')}
                                 <IoArrowForward />
                             </button>
                         </div>
@@ -249,16 +301,16 @@ const Page = () => {
                                                     {course.des}
                                                 </p>
                                                 <div className="flex items-center gap-5">
-                                                    <p className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${poppins.className}`}  >
+                                                    <p className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${poppins.className}`}  >
                                                         {course.rating}
                                                     </p>
                                                     <p className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${poppins.className}`} >
-                                                        {course.itemsSold} Sold
+                                                        {course.itemsSold} {t('course.sold', 'Sold')}
                                                     </p>
                                                 </div>
 
                                                 <p className={`${poppins.className} font-bold`}>
-                                                    {course.price} BDT
+                                                    {course.price} {t('common.currency', 'BDT')}
                                                 </p>
                                             </div>
 
@@ -289,7 +341,8 @@ const Page = () => {
                                                 {course.longDes}
                                             </p>
                                             <h3 className={`${poppins.className} font-semibold text-sm mb-1`}>
-                                                What you&apos;ll learn
+                                                {/* Translated "What you'll learn" */}
+                                                {t('course.what_you_learn', "What you'll learn")}
                                             </h3>
                                             <div className="space-y-1">
                                                 {course.whatYouLearn.map((item, i) => (
@@ -301,7 +354,8 @@ const Page = () => {
                                                 <button
                                                     onClick={(e) => handleEnrollClick(course.form, e)}
                                                     className='flex justify-center mx-auto bg-[#5B1E63] rounded-full px-10 py-2 text-white mt-5 cursor-pointer hover:bg-[#7a2887] transition-all duration-300 transform hover:scale-105'>
-                                                    Enroll Now
+                                                    {/* Translated "Enroll Now" */}
+                                                    {t('course.enroll_now', 'Enroll Now')}
                                                 </button>
                                             </div>
                                         </div>

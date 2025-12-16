@@ -1,3 +1,6 @@
+"use client";
+// Import useTranslation and Trans
+import { useTranslation, Trans } from "react-i18next";
 import { antiquaFont, poppins } from "@/components/utils/font";
 // import vector from "../../public/Volunteer/vector.png";
 import hero from "../../public/Volunteer/banner.png";
@@ -7,29 +10,37 @@ import Container from "@/components/Container";
 import icon from "../../public/Volunteer/icon.png";
 import whatyouwillgainimage from "../../public/Volunteer/gain-image.png";
 
-const opinions = [
-  { title: "Support community workshops and awareness programs", icon: icon },
+const Page = () => {
+  const { t } = useTranslation();
 
-  {
-    title: "Organize campaigns on women's rights and cultural preservation",
-    icon: icon,
-  },
+  // --- Fetch Translations ---
+  const heroTitleKey = 'volunteer_page.hero_section.title';
+  const heroDescription = t('volunteer_page.hero_section.description');
+  
+  const formHeading = t('volunteer_page.form.heading');
+  const namePlaceholder = t('volunteer_page.form.name_placeholder');
+  const emailPlaceholder = t('volunteer_page.form.email_placeholder');
+  const phonePlaceholder = t('volunteer_page.form.phone_placeholder');
+  const addressPlaceholder = t('volunteer_page.form.address_placeholder');
+  const messagePlaceholder = t('volunteer_page.form.message_placeholder');
+  const submitButtonText = t('volunteer_page.form.submit_button');
 
-  { title: "Share stories that inspire change across generations", icon: icon },
-];
-const gain = [
-  { title: "Real experience in advocacy and social impact work", icon: icon },
-  {
-    title: "Deeper understanding of Indigenous traditions and resilience",
-    icon: icon,
-  },
-  {
-    title: "A sense of purpose and community that lasts a lifetime",
-    icon: icon,
-  },
-];
+  const whyTitle = t('volunteer_page.why_volunteer_section.title');
+  const whyDescription = t('volunteer_page.why_volunteer_section.description');
+  const whySubtitle = t('volunteer_page.why_volunteer_section.subtitle');
+  const whyList = t('volunteer_page.why_volunteer_section.list', { returnObjects: true }) as string[];
 
-const page = () => {
+  const gainTitle = t('volunteer_page.gain_section.title');
+  const gainDescription = t('volunteer_page.gain_section.description');
+  const gainSubtitle = t('volunteer_page.gain_section.subtitle');
+  const gainList = t('volunteer_page.gain_section.list', { returnObjects: true }) as string[];
+
+  const ctaButtonText = t('volunteer_page.final_call_to_action');
+  // --- End Fetch Translations ---
+  // Reformat list data to use icon path, matching the original structure
+  const opinions = whyList.map(title => ({ title, icon }));
+  const gain = gainList.map(title => ({ title, icon }));
+
   return (
     <div className="relative mt-8 lg:mt-15">
       {/* Top Part - Hero Section with Form */}
@@ -41,14 +52,20 @@ const page = () => {
               <h2
                 className={`uppercase font-black text-3xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
               >
-                Apply today to become a{" "}
-                <span className="text-orange-400">volunteer</span>
+                {/* Translated Hero Title with styling */}
+                <Trans
+                  i18nKey={heroTitleKey}
+                  defaults="Apply today to become a <1>volunteer</1>"
+                  components={{
+                    1: <span className="text-orange-400" />,
+                  }}
+                />
               </h2>
               <p
                 className={`text-[#4E4E4E] ${antiquaFont.className} text-lg leading-relaxed lg:text-xl`}
               >
-                Every action counts when it comes to protecting the rights,
-                voices, and dignity of Indigenous women. By volunteering with us
+                {/* Translated Hero Description */}
+                {heroDescription}
               </p>
             </div>
             <div className=" lg:hidden w-full">
@@ -61,7 +78,7 @@ const page = () => {
               />
             </div>
 
-            {/* Right Form */}
+            {/* Right Form - Now using translated placeholders/heading */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
               <form
                 id="form"
@@ -71,40 +88,41 @@ const page = () => {
                 <h2
                   className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${poppins.className}`}
                 >
-                  Become a volunteer
+                  {/* Translated Form Heading */}
+                  {formHeading}
                 </h2>
                 <div className="space-y-4">
                   <div>
                     <input
                       type="text"
-                      placeholder="Full Name"
+                      placeholder={namePlaceholder} // Translated
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
                     />
                   </div>
                   <div>
                     <input
                       type="email"
-                      placeholder="Email"
+                      placeholder={emailPlaceholder} // Translated
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
                     />
                   </div>
                   <div>
                     <input
                       type="tel"
-                      placeholder="Phone Number"
+                      placeholder={phonePlaceholder} // Translated
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
                     />
                   </div>
                   <div>
                     <input
                       type="text"
-                      placeholder="Address"
+                      placeholder={addressPlaceholder} // Translated
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
                     />
                   </div>
                   <div>
                     <textarea
-                      placeholder="Message"
+                      placeholder={messagePlaceholder} // Translated
                       rows={4}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white resize-none text-sm"
                     />
@@ -113,7 +131,7 @@ const page = () => {
                     type="submit"
                     className="w-full bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm transition duration-200"
                   >
-                    Submit
+                    {submitButtonText} {/* Translated */}
                   </button>
                 </div>
               </form>
@@ -122,7 +140,7 @@ const page = () => {
         </div>
       </Container>
 
-      {/* Banner Images Section */}
+      {/* Banner Images Section (No translation needed here) */}
       <div className="relative w-full">
         <Image
           src={hero}
@@ -133,7 +151,7 @@ const page = () => {
         />
       </div>
 
-      {/* Why Volunteers */}
+      {/* Why Volunteers - Now using translated text */}
       <Container>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 py-12 lg:py-20">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
@@ -149,21 +167,18 @@ const page = () => {
             <h2
               className={`${poppins.className} text-2xl lg:text-4xl font-extrabold`}
             >
-              WHY VOLUNTEERS WITH US?
+              {whyTitle} {/* Translated */}
             </h2>
             <p
               className={`${antiquaFont.className} text-[#2B2B2B] leading-relaxed text-lg xl:text-xl`}
             >
-              Empowerment begins with awareness — and change begins with you. As
-              a volunteer, you&apos;ll help raise voices that deserve to be
-              heard, support community-led initiatives, and advocate for
-              justice, education, and equality for Indigenous women.
+              {whyDescription} {/* Translated */}
             </p>
             <div className="space-y-4 lg:space-y-5 pt-4">
               <h2
                 className={`font-semibold ${poppins.className} text-xl lg:text-2xl`}
               >
-                Through your time and passion, you can help:
+                {whySubtitle} {/* Translated */}
               </h2>
               <ul className="space-y-3 sm:space-y-5">
                 {opinions.map((op, index) => (
@@ -188,29 +203,25 @@ const page = () => {
         </div>
       </Container>
 
-      {/* What you will gain */}
+      {/* What you will gain - Now using translated text */}
       <Container>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
           <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5 order-2 lg:order-1">
             <h2
               className={`${poppins.className} text-2xl lg:text-4xl font-black`}
             >
-              WHAT YOU&apos;LL GAIN
+              {gainTitle} {/* Translated */}
             </h2>
             <p
               className={`${antiquaFont.className} text-[#2B2B2B] text-lg lg:text-xl leading-relaxed`}
             >
-              Volunteering isn&apos;t just an act of service — it&apos;s a
-              journey of learning, connection, and growth. You&apos;ll work
-              alongside dedicated leaders, experience Indigenous cultures
-              firsthand, and become a voice for those who continue to fight for
-              equality and recognition.
+              {gainDescription} {/* Translated */}
             </p>
             <div className="space-y-4 sm:space-y-5 pt-4">
               <h2
                 className={`font-semibold ${poppins.className} text-xl lg:text-2xl`}
               >
-                You&apos;ll gain:
+                {gainSubtitle} {/* Translated */}
               </h2>
               <ul className="space-y-3 sm:space-y-5">
                 {gain.map((op, index) => (
@@ -244,15 +255,16 @@ const page = () => {
         </div>
       </Container>
 
+      {/* Final Call to Action Button - Now using translated text */}
       <div className="flex items-center justify-center mb-12 sm:mb-15 px-4">
         <button
           className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-400 transition duration-200 ${poppins.className}`}
         >
-          APPLY FOR VOLUNTEER
+          {ctaButtonText} {/* Translated */}
         </button>
       </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

@@ -7,6 +7,7 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaAnglesDown } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 
@@ -27,19 +28,46 @@ const Page = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const { t, i18n } = useTranslation();
+
+  // --- Helper Function to handle <1> tag for Styling ---
+  // This manually parses the string content from the JSON to apply the orange color.
+  const renderStyledTitle = (key: string) => {
+    // Fetch the raw translated string
+    const rawTitle = t(key);
+
+    // Split the string by the <1> and </1> tags
+    const parts = rawTitle.split(/(<1>.*?<\/1>)/g).filter(Boolean);
+
+    return (
+      <>
+        {parts.map((part, i) => {
+          if (part.startsWith('<1>') && part.endsWith('</1>')) {
+            // Extract text inside <1> and apply orange color class
+            const text = part.replace(/<\/?1>/g, '');
+            return <span key={i} className="text-[#FF951B]">{text}</span>;
+          }
+          // Return the rest of the text as plain string (or React fragment)
+          return <span key={i}>{part}</span>;
+        })}
+      </>
+    );
+  };
+  // --------------------------------------------------------
+
   // Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
         const query = `*[_type == "indispeak"] | order(writtenOn desc) {
-          title,
-          des,
-          "img": img.asset->url,
-          writtenOn,
-          imgAlt,
-          imgName
-        }`;
+          title,
+          des,
+          "img": img.asset->url,
+          writtenOn,
+          imgAlt,
+          imgName
+        }`;
 
         const data = await client.fetch(query);
         setIndeSpeakData(data);
@@ -67,18 +95,18 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-5">
           <div className="lg:w-1/2">
             <h2
-              className={`text-2xl lg:text-5xl font-black ${poppins.className}`}
+              className={`text-2xl lg:text-5xl font-black ${poppins.className} uppercase`}
             >
-              STORIES OF <span className="text-[#FF951B]">RESISTANCE</span>
+              {/* Use helper function for the title with <1> tag styling */}
+              {renderStyledTitle('indespeak_page.title')}
             </h2>
           </div>
           <div className="lg:w-1/2">
             <p
               className={`text-[#4E4E4E] text-md md:text-xl ${antiquaFont.className}`}
             >
-              Stories of Resistance is a robust and meaningful collection,
-              weaving threads of the personal, professional and political into a
-              vibrant tapestry of becoming.
+              {/* Translation for: indespeak_page.description */}
+              {t('indespeak_page.description')}
             </p>
           </div>
         </section>
@@ -95,14 +123,14 @@ const Page = () => {
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
           <h2 className={`text-3xl lg:text-4xl font-bold ${poppins.className}`}>
-            INDISPEAK
+            {/* Translation for: indespeak_page.hero.title */}
+            {t('indespeak_page.hero.title')}
           </h2>
           <p
             className={`mt-2 text-sm lg:text-xl max-w-2xl ${antiquaFont.className}`}
           >
-            Explore stories, documents, and visual archives celebrating the
-            heritage, resilience, and identity of Indigenous communities
-            worldwide.
+            {/* Translation for: indespeak_page.hero.description */}
+            {t('indespeak_page.hero.description')}
           </p>
           <div
             onClick={() =>
@@ -113,7 +141,8 @@ const Page = () => {
             className="flex flex-col items-center mt-6 cursor-pointer"
           >
             <span className={`text-[#FF951B] ${poppins.className}`}>
-              SCROLL DOWN
+              {/* Translation for: indespeak_page.hero.button */}
+              {t('indespeak_page.hero.button')}
             </span>
             <FaAnglesDown className="animate-bounce" size={24} />
           </div>
@@ -124,9 +153,15 @@ const Page = () => {
       <Container>
         <div className="flex flex-col lg:flex-row justify-between items-center my-6 lg:my-20 gap-4">
           <div className={`flex gap-3 font-semibold ${poppins.className}`}>
-            <Link href="/">HOME</Link>
+            <Link href="/">
+              {/* Translation for: breadcrumb.home */}
+              {t('breadcrumb.home')}
+            </Link>
             <span>||</span>
-            <span className="text-[#818181] uppercase">Indispeak</span>
+            <span className="text-[#818181] uppercase">
+              {/* Translation for: indespeak_page.hero.title (used as component title/breadcrumb item) */}
+              {t('indespeak_page.hero.title')}
+            </span>
           </div>
 
           <select
@@ -144,7 +179,8 @@ const Page = () => {
       <Container>
         {loading ? (
           <p className={`text-center text-xl ${poppins.className}`}>
-            Loading stories...
+            {/* Translation for: loading_stories */}
+            {t('loading_stories')}
           </p>
         ) : (
           <section id="indispeak" className="space-y-16">
@@ -165,8 +201,9 @@ const Page = () => {
                       <p
                         className={`text-sm lg:text-lg uppercase text-[#6B6B6B] ${poppins.className}`}
                       >
-                        Written on{" "}
-                        {new Date(ids.writtenOn).toLocaleDateString("en-US", {
+                        {/* Translation for: written_on */}
+                        {t('written_on')}{" "}
+                        {new Date(ids.writtenOn).toLocaleDateString(i18n.language === 'bn' ? "bn-BD" : "en-US", {
                           day: "2-digit",
                           month: "long",
                           year: "numeric",
@@ -188,11 +225,11 @@ const Page = () => {
                           }
                           className={`flex items-center gap-2 ${antiquaFont.className} text-lg hover:text-[#FF951B]`}
                         >
-                          {isExpanded ? "Less" : "Expand"}
+                          {/* Hardcoded English text translated to Bengali here */}
+                          {isExpanded ? "কম দেখান" : "আরো পড়ুন"}
                           <IoMdArrowDropdown
-                            className={`transition-transform duration-300 ${
-                              isExpanded ? "rotate-180" : ""
-                            }`}
+                            className={`transition-transform duration-300 ${isExpanded ? "rotate-180" : ""
+                              }`}
                           />
                         </button>
                       )}
