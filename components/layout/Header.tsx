@@ -47,6 +47,7 @@ const Header = () => {
   const pathname = usePathname();
   const prevPathnameRef = useRef(pathname);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close menu when route changes
   useEffect(() => {
@@ -80,17 +81,21 @@ const Header = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsLanguageOpen(false);
-      }
+      const target = event.target as Node;
+
+      // Desktop dropdown
+      if (dropdownRef.current?.contains(target)) return;
+
+      // Mobile dropdown
+      if (mobileDropdownRef.current?.contains(target)) return;
+
+      setIsLanguageOpen(false);
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
 
   // Handle keyboard navigation
   const handleKeyDown = (
@@ -110,7 +115,7 @@ const Header = () => {
 
   useEffect(() => {
     const changeLang = async () => {
-      await i18n.changeLanguage(selectedLanguage.code); 
+      await i18n.changeLanguage(selectedLanguage.code);
     };
     changeLang();
   }, [selectedLanguage]);
@@ -202,8 +207,8 @@ const Header = () => {
                           role="option"
                           aria-selected={selectedLanguage.code === language.code}
                           className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${selectedLanguage.code === language.code
-                              ? "bg-blue-50 text-blue-600 font-medium"
-                              : "text-gray-700"
+                            ? "bg-blue-50 text-blue-600 font-medium"
+                            : "text-gray-700"
                             }`}
                         >
                           <Image
@@ -310,7 +315,7 @@ const Header = () => {
 
                   {/* Language Dropdown at Bottom */}
                   <div className="border-t border-gray-200 px-5 sm:px-6 py-4">
-                    <div className="relative">
+                    <div className="relative" ref={mobileDropdownRef}>
                       <button
                         onClick={toggleDropdown}
                         aria-label={`Selected language: ${selectedLanguage.name}`}
@@ -353,8 +358,8 @@ const Header = () => {
                               role="option"
                               aria-selected={selectedLanguage.code === language.code}
                               className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 ${selectedLanguage.code === language.code
-                                  ? "bg-blue-50 text-blue-600 font-medium"
-                                  : "text-gray-700"
+                                ? "bg-blue-50 text-blue-600 font-medium"
+                                : "text-gray-700"
                                 }`}
                             >
                               <Image
