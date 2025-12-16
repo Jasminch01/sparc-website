@@ -335,7 +335,7 @@ const BlogPage = () => {
             className={`transition-opacity duration-300 ${loading ? "opacity-0" : "opacity-100"}`}
           >
             {loading ? (
-              <div className="flex justify-center items-center h-64">
+              <div className="flex justify-center items-center h-screen">
                 <div className="flex flex-col items-center gap-4">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
                   <p className={`text-xl ${poppins.className}`}>

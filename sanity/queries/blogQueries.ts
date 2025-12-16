@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { client } from "@/sanity/lib/client";
 
 export interface Blog {
   title: string;
   subtitle: string;
-  description: unknown;
+  description: any[];
   date: string;
   writtenBy: string;
   img: string;
@@ -104,22 +105,54 @@ export const fetchBlogs = async ({
 /**
  * Fetch a single blog by slug
  */
-export const fetchBlogBySlug = async (slug: string): Promise<Blog | null> => {
-  try {
-    const query = `*[_type == "blog" && slug.current == $slug][0] {
+export async function fetchBlogByTitle(title: string) {
+  // Try multiple strategies to find the blog
+
+  // Strategy 1: Exact title match (case-insensitive)
+  const exactQuery = `
+    *[_type == "blog" && lower(title) == lower($title)][0] {
+      _id,
+      _createdAt,
       title,
       subtitle,
-      description,
       date,
-      writtenBy,
+      description,
       "img": img.asset->url,
+      writtenBy,
       category
-    }`;
+    }
+  `;
 
-    const blog = await client.fetch(query, { slug });
-    return blog;
+  try {
+    let result = await client.fetch(exactQuery, { title });
+
+    if (result) return result;
+
+    // Strategy 2: Fuzzy match with wildcards
+    const fuzzyQuery = `
+      *[_type == "blog" && lower(title) match lower($searchTerm)][0] {
+        _id,
+        _createdAt,
+        title,
+        subtitle,
+        date,
+        description,
+        "img": img.asset->url,
+        writtenBy,
+        category
+      }
+    `;
+    const pattern = `*${title}*`;
+    result = await client.fetch(fuzzyQuery, { searchTerm: pattern });
+
+    if (result) return result;
+
+    // Strategy 3: Try matching with normalized spaces
+    const normalizedTitle = title.trim().replace(/\s+/g, " ");
+    result = await client.fetch(exactQuery, { title: normalizedTitle });
+    return result;
   } catch (error) {
-    console.error("Error fetching blog by slug:", error);
+    console.error("Error fetching blog by title:", error);
     return null;
   }
-};
+}

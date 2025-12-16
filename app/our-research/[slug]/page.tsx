@@ -4,81 +4,44 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import Image from "next/image";
+import { PortableText } from "@portabletext/react";
 import { antiquaFont, poppins } from "@/components/utils/font";
-import { client } from "@/sanity/lib/client";
-
-interface Project {
-  _id: string;
-  title: string;
-  date: string;
-  image: string;
-  category: string;
-  description: string;
-  status: string;
-  duration: string;
-  authors: string[];
-  objectives: string[];
-  location: string;
-  fundedBy: string;
-  researchers: string[];
-  methodology: string;
-  impact: string;
-}
-
-// Internal slug generator
-const makeSlug = (title: string) =>
-  title
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+import {
+  getResearchProjectBySlug,
+  ResearchProject,
+} from "@/sanity/queries/researchQueries";
 
 const ResearchDetailsPage = () => {
   const { slug } = useParams();
-  const [project, setProject] = useState<Project | null>(null);
+  const [project, setProject] = useState<ResearchProject | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!slug) return;
-
     const fetchProject = async () => {
       try {
         setLoading(true);
         setNotFound(false);
 
-        // Fetch all research projects
-        const allProjects: Project[] = await client.fetch(`
-          *[_type == "research"]{
-            _id,
-            title,
-            date,
-            "image": image.asset->url,
-            category,
-            description,
-            status,
-            duration,
-            authors,
-            objectives,
-            location,
-            fundedBy,
-            researchers,
-            methodology,
-            impact
-          }
-        `);
+        if (!slug) {
+          setNotFound(true);
+          return;
+        }
 
-        // Find the project by internal slug
-        const currentProject = allProjects.find(
-          (proj) => makeSlug(proj.title) === slug
-        );
+        // Get the slug string and clean it
+        const slugString = Array.isArray(slug) ? slug[0] : slug.toString();
+        const cleanedSlug = slugString.split("/").pop() || "";
+        const decodedSlug = decodeURIComponent(cleanedSlug);
 
-        if (!currentProject) {
+        const titleFromSlug = decodedSlug.replace(/-/g, " ");
+
+        const fetchedProject = await getResearchProjectBySlug(titleFromSlug);
+
+        if (!fetchedProject) {
+          console.log("Project not found");
           setNotFound(true);
         } else {
-          setProject(currentProject);
+          setProject(fetchedProject);
         }
       } catch (error) {
         console.error("Error fetching project:", error);
@@ -129,7 +92,7 @@ const ResearchDetailsPage = () => {
     );
   }
 
-  // Render project details (CSS exactly the same as original)
+  // Render project details
   return (
     <div className="pb-48">
       <div className={`py-8 md:py-12 lg:py-16 ${poppins.className}`}>
@@ -163,17 +126,20 @@ const ResearchDetailsPage = () => {
                   })
                   .toUpperCase()}
               </span>
+              <span className="px-3 py-1 bg-gray-100 rounded-full text-xs">
+                {project.category}
+              </span>
             </div>
           </div>
 
           {/* Featured Image */}
           <div className="my-8 sm:my-10 lg:my-12 rounded-lg overflow-hidden shadow-lg">
-            {project.image && (
+            {project.image?.asset?.url && (
               <Image
-                alt={project.title}
-                src={project.image}
-                width={1200}
-                height={600}
+                alt={project.image.alt || project.title}
+                src={project.image.asset.url}
+                width={project.image.asset.metadata?.dimensions?.width || 1200}
+                height={project.image.asset.metadata?.dimensions?.height || 600}
                 className="w-full h-auto object-cover"
               />
             )}
@@ -186,11 +152,24 @@ const ResearchDetailsPage = () => {
               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 sm:mb-6">
                 Project Overview
               </h2>
-              <p
-                className={`${antiquaFont.className} text-[#4E4E4E]  text-base sm:text-lg lg:text-xl leading-10`}
+              <div
+                className={`${antiquaFont.className} text-[#4E4E4E] text-base sm:text-lg lg:text-xl leading-10`}
               >
-                {project.description}
-              </p>
+                {typeof project.description === "string" ? (
+                  <p>{project.description}</p>
+                ) : (
+                  <PortableText
+                    value={project.description}
+                    components={{
+                      block: {
+                        normal: ({ children }) => (
+                          <p className="mb-4">{children}</p>
+                        ),
+                      },
+                    }}
+                  />
+                )}
+              </div>
             </section>
 
             {/* Project Details */}
@@ -205,7 +184,7 @@ const ResearchDetailsPage = () => {
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">Status</h3>
                     <p
-                      className={`text-lg ${project.status.toLocaleLowerCase() === "ongoing" ? "text-[#E47A00]" : "text-green-400"}  ${antiquaFont.className}`}
+                      className={`text-lg ${project.status.toLowerCase() === "ongoing" ? "text-[#E47A00]" : "text-green-600"} ${antiquaFont.className}`}
                     >
                       {project.status}
                     </p>
@@ -213,47 +192,53 @@ const ResearchDetailsPage = () => {
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">Duration</h3>
                     <p
-                      className={`text-lg text-[#4E4E4E]  ${antiquaFont.className}`}
+                      className={`text-lg text-[#4E4E4E] ${antiquaFont.className}`}
                     >
                       {project.duration}
                     </p>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-semibold mb-2">Authors</h3>
-                    <ul className="space-y-1">
-                      {project.authors.map((author, i) => (
-                        <li
-                          key={i}
-                          className={`text-lg text-[#4E4E4E]  ${antiquaFont.className}`}
-                        >
-                          {author}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-semibold mb-3">Objectives</h3>
-                    <ul
-                      className={`space-y-2 sm:space-y-3 ${antiquaFont.className}`}
-                    >
-                      {project.objectives.map((obj, i) => (
-                        <li key={i} className="flex items-start gap-3">
-                          <Image
-                            src="/research/right.svg"
-                            width={50}
-                            height={50}
-                            alt="icon"
-                            className="size-6"
-                          />
-                          <span
-                            className={`text-lg leading-relaxed text-[#4E4E4E]  ${antiquaFont.className}`}
+                  {project.authors && project.authors.length > 0 && (
+                    <div>
+                      <h3 className="text-2xl font-semibold mb-2">Authors</h3>
+                      <ul className="space-y-1">
+                        {project.authors.map((author, i) => (
+                          <li
+                            key={i}
+                            className={`text-lg text-[#4E4E4E] ${antiquaFont.className}`}
                           >
-                            {obj}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                            {author}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {project.objectives && project.objectives.length > 0 && (
+                    <div>
+                      <h3 className="text-2xl font-semibold mb-3">
+                        Objectives
+                      </h3>
+                      <ul
+                        className={`space-y-2 sm:space-y-3 ${antiquaFont.className}`}
+                      >
+                        {project.objectives.map((obj, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <Image
+                              src="/research/right.svg"
+                              width={50}
+                              height={50}
+                              alt="icon"
+                              className="size-6"
+                            />
+                            <span
+                              className={`text-lg leading-relaxed text-[#4E4E4E] ${antiquaFont.className}`}
+                            >
+                              {obj}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 {/* Right Column */}
@@ -261,7 +246,7 @@ const ResearchDetailsPage = () => {
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">Location</h3>
                     <p
-                      className={`text-lg text-[#4E4E4E]  ${antiquaFont.className}`}
+                      className={`text-lg text-[#4E4E4E] ${antiquaFont.className}`}
                     >
                       {project.location}
                     </p>
@@ -269,28 +254,32 @@ const ResearchDetailsPage = () => {
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">Funded By</h3>
                     <p
-                      className={`text-lg text-[#4E4E4E]  ${antiquaFont.className}`}
+                      className={`text-lg text-[#4E4E4E] ${antiquaFont.className}`}
                     >
                       {project.fundedBy}
                     </p>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-semibold mb-2">Researchers</h3>
-                    <ul className="space-y-1">
-                      {project.researchers.map((r, i) => (
-                        <li
-                          key={i}
-                          className={`text-lg text-[#4E4E4E]  ${antiquaFont.className}`}
-                        >
-                          {r}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  {project.researchers && project.researchers.length > 0 && (
+                    <div>
+                      <h3 className="text-2xl font-semibold mb-2">
+                        Researchers
+                      </h3>
+                      <ul className="space-y-1">
+                        {project.researchers.map((r, i) => (
+                          <li
+                            key={i}
+                            className={`text-lg text-[#4E4E4E] ${antiquaFont.className}`}
+                          >
+                            {r}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">Methodology</h3>
                     <p
-                      className={`text-lg text-[#4E4E4E]  ${antiquaFont.className}`}
+                      className={`text-lg text-[#4E4E4E] ${antiquaFont.className}`}
                     >
                       {project.methodology}
                     </p>
@@ -298,7 +287,7 @@ const ResearchDetailsPage = () => {
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">Impact</h3>
                     <p
-                      className={`text-lg leading-relaxed  text-[#4E4E4E]  ${antiquaFont.className}`}
+                      className={`text-lg leading-relaxed text-[#4E4E4E] ${antiquaFont.className}`}
                     >
                       {project.impact}
                     </p>

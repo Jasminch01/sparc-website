@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
 
+
 export const Research = {
   name: "research",
   title: "Research Project",

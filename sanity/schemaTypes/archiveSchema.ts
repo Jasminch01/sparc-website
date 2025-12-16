@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
-import { ArchiveIcon, IconComponent } from '@sanity/icons';
+import { ArchiveIcon, IconComponent } from "@sanity/icons";
 
 const archiveSchema = {
   name: "archive",
-  title: "Archive Post",
-  icon : ArchiveIcon as IconComponent,
+  title: "Archive",
+  icon: ArchiveIcon as IconComponent,
   type: "document",
   fields: [
     {
@@ -58,7 +58,7 @@ const archiveSchema = {
       type: "string",
       options: {
         list: [
-          { title: "Historical Records", value: "historical records" },
+          { title: "Historical Records", value: "Historical Records" },
           { title: "Community Stories", value: "Community Stories" },
           { title: "News and Update", value: "News and Update" },
         ],

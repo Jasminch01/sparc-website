@@ -56,3 +56,36 @@ export async function getIndiSpeakStory(id: string) {
 
   return await client.fetch(query, { id });
 }
+
+export interface FeaturedStory {
+  _id: string;
+  title: string;
+  writtenOn: string;
+  des: string;
+  imageUrl: string;
+  autorName?: string;
+  imgAlt: string;
+  isFeatured: boolean;
+}
+
+export async function getFeaturedStories(limit: number = 3) {
+  const query = `*[_type == "indispeakStories" && isFeatured == true] | order(writtenOn desc) [0...${limit}] {
+    _id,
+    title,
+    writtenOn,
+    des,
+    img {
+      asset->{
+        url,
+        metadata {
+          dimensions
+        }
+      }
+    },
+    autorName,
+    imgAlt,
+    isFeatured
+  }`;
+
+  return await client.fetch(query);
+}
