@@ -210,16 +210,13 @@ const Page = () => {
               className={`text-2xl lg:text-4xl font-bold mb-4 ${poppins.className}`}
             >
               {/* Placeholder/Hardcoded in English until key is provided */}
-              {t("learn_page.section_title", "LEARN TO KNOW BETTER")}
+              {t("learn_page.cta.title")}
             </h2>
             <p
               className={`mb-4 text-lg  ${antiquaFont.className} text-gray-500`}
             >
               {/* Placeholder/Hardcoded in English until key is provided */}
-              {t(
-                "learn_page.section_subtitle",
-                "Program offers valuable real-world experience for passionate individuals."
-              )}
+              {t("learn_page.cta.description")}
             </p>
           </div>
 
@@ -247,11 +244,10 @@ const Page = () => {
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 1}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${poppins.className} ${
-                  currentPage === 1
-                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                    : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
-                }`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${poppins.className} ${currentPage === 1
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
+                  }`}
               >
                 <IoArrowBack />
                 {/* Translated "Previous" */}
@@ -261,11 +257,10 @@ const Page = () => {
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${poppins.className} ${
-                  currentPage === totalPages
-                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                    : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
-                }`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${poppins.className} ${currentPage === totalPages
+                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
+                  }`}
               >
                 {/* Translated "Next" */}
                 {t("common.next", "Next")}
@@ -298,13 +293,12 @@ const Page = () => {
                 <h3
                   className={`text-2xl font-bold text-gray-400 mb-2 ${poppins.className}`}
                 >
-                  {t("course.no_courses_found", "No Courses Found")}
+                  No Courses Found
                 </h3>
                 <p className={`text-gray-500 ${antiquaFont.className}`}>
-                  {t(
-                    "course.no_courses_message",
-                    "There are currently no courses available in this category."
-                  )}
+
+                  There are currently no courses available in this category.
+
                 </p>
               </div>
             </div>
@@ -317,11 +311,10 @@ const Page = () => {
                 return (
                   <div key={course._id} className="relative">
                     <div
-                      className={`border p-4 cursor-pointer rounded-lg transition-all duration-300 ${isMobile ? "cursor-pointer" : ""} ${
-                        isHovered
-                          ? "border-[#FF951B] shadow-lg scale-105 bg-orange-50/30"
-                          : "border-gray-200 hover:border-gray-400"
-                      }`}
+                      className={`border p-4 cursor-pointer rounded-lg transition-all duration-300 ${isMobile ? "cursor-pointer" : ""} ${isHovered
+                        ? "border-[#FF951B] shadow-lg scale-105 bg-orange-50/30"
+                        : "border-gray-200 hover:border-gray-400"
+                        }`}
                       onClick={() => handleCourseClick(course)}
                       onMouseEnter={() => {
                         if (!isMobile) {
@@ -376,7 +369,7 @@ const Page = () => {
                           </div>
 
                           <p className={`${poppins.className} font-bold`}>
-                            {course.price} {t("common.currency", "BDT")}
+                            {course.price} BDT
                           </p>
                         </div>
                       </div>
@@ -385,11 +378,10 @@ const Page = () => {
                     {/* Hovered content with smooth transitions */}
                     {!isMobile && (
                       <div
-                        className={`absolute py-10 z-50 hidden lg:block top-[-3] ${isLastInRow ? "right-full mr-4" : "left-full ml-4"} w-80 p-5 bg-white shadow-2xl rounded-lg border-2 border-[#FF951B] transition-all duration-300 ease-in-out ${
-                          isHovered
-                            ? "opacity-100 scale-100 visible translate-x-0"
-                            : "opacity-0 scale-95 invisible translate-x-4"
-                        }`}
+                        className={`absolute py-10 z-50 hidden lg:block top-[-3] ${isLastInRow ? "right-full mr-4" : "left-full ml-4"} w-80 p-5 bg-white shadow-2xl rounded-lg border-2 border-[#FF951B] transition-all duration-300 ease-in-out ${isHovered
+                          ? "opacity-100 scale-100 visible translate-x-0"
+                          : "opacity-0 scale-95 invisible translate-x-4"
+                          }`}
                         onMouseEnter={() => {
                           if (hoverTimeoutRef.current) {
                             clearTimeout(hoverTimeoutRef.current);
@@ -419,8 +411,8 @@ const Page = () => {
                         <h3
                           className={`${poppins.className} font-semibold text-sm mb-1`}
                         >
-                          {/* Translated "What you'll learn" */}
-                          {t("course.what_you_learn", "What you'll learn")}
+
+                          What you&apos;ll learn
                         </h3>
                         <div className="space-y-1">
                           {course.whatYouLearn?.map((item, i) => (
@@ -441,8 +433,8 @@ const Page = () => {
                             onClick={(e) => handleEnrollClick(course.form, e)}
                             className="flex justify-center mx-auto bg-[#5B1E63] rounded-full px-10 py-2 text-white mt-5 cursor-pointer hover:bg-[#7a2887] transition-all duration-300 transform hover:scale-105"
                           >
-                            {/* Translated "Enroll Now" */}
-                            {t("course.enroll_now", "Enroll Now")}
+
+                            Enroll Now
                           </button>
                         </div>
                       </div>

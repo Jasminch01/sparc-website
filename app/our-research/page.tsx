@@ -1,3 +1,4 @@
+"use client"
 import Container from "@/components/Container";
 import Card from "@/components/Research/Card";
 import ResearchPartners from "@/components/Research/ResearchPartners";
@@ -5,9 +6,11 @@ import ResearchProjects from "@/components/Research/ResearchProjects";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import { IoSearch } from "react-icons/io5";
 
-const page = () => {
+const Page = () => {
+  const { t } = useTranslation()
   return (
     <div>
       <div className="w-full relative h-[400px] md:h-[500px] lg:h-screen ">
@@ -25,17 +28,16 @@ const page = () => {
           <h1
             className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${poppins.className}`}
           >
-            OUR RESEARCH
+            {t("research_page.hero.title")}
           </h1>
           <p
             className={`text-base md:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
           >
-            Our research amplifies Indigenous voices, documents cultural wisdom,
-            and supports evidence-based advocacy for equality and sustainability
+            {t("research_page.hero.description")}
           </p>
           <div className="md:mt-10 mt-5">
             <button className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-semibold rounded-full cursor-pointer bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg">
-              COLLABORATE WITH US
+              {t("research_page.hero.button")}
             </button>
           </div>
         </div>
@@ -44,8 +46,8 @@ const page = () => {
       <Container>
         <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
           <section className={`flex text-sm gap-5  ${poppins.className} font-semibold`}>
-            <Link href="/">HOME</Link> <span>||</span>
-            <p className="text-[#818181] uppercase">Our Research</p>
+            <Link href="/">{t("research_page.breadcrumb.title")}</Link> <span>||</span>
+            <p className="text-[#818181] uppercase"> {t("research_page.hero.title")}</p>
           </section>
 
           {/* Search bar */}
@@ -66,4 +68,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

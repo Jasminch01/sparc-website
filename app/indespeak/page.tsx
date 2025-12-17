@@ -168,7 +168,7 @@ const Page = () => {
           <div className={`flex gap-3 font-semibold ${poppins.className}`}>
             <Link href="/">
               {/* Translation for: breadcrumb.home */}
-              {t('breadcrumb.home')}
+              {t('indespeak_page.breadcrumb.title')}
             </Link>
             <span>||</span>
             <span className="text-[#818181] uppercase">
