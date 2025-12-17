@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import bikashLogo from "../../public/donation/bikash.svg";
 import nagadLogo from "../../public/donation/nagad.svg";
 import upayLogo from "../../public/donation/upai.webp";
@@ -35,6 +36,7 @@ interface DonationModalProps {
 }
 
 const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
+  const router = useRouter();
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(
     null
   );
@@ -43,6 +45,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     []
   );
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     transactionId: "",
@@ -128,7 +131,6 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
         bkash: bikashLogo,
         nagad: nagadLogo,
         upay: upayLogo,
-       
       };
       return logoMap[payment.mobileProvider || "bkash"] || bikashLogo;
     }
@@ -239,13 +241,69 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", {
-      paymentMethod: selectedPayment,
-      formData,
-    });
-    alert("Payment submitted successfully!");
-    onClose();
+  // Validate form
+  const validateForm = (): boolean => {
+    if (!selectedPayment) return false;
+
+    // Check required fields based on payment type
+    if (selectedPayment.paymentType === "mobileBanking") {
+      if (!formData.name.trim() || !formData.transactionId.trim()) {
+        alert("Please fill in Name and Transaction ID");
+        return false;
+      }
+    }
+
+    if (selectedPayment.paymentType === "bankTransfer") {
+      if (
+        !formData.name.trim() ||
+        !formData.transactionId.trim() ||
+        !formData.bankName.trim() ||
+        !formData.branchName.trim()
+      ) {
+        alert("Please fill in all required bank transfer fields");
+        return false;
+      }
+    }
+
+    if (selectedPayment.paymentType === "paypal") {
+      if (
+        !formData.name.trim() ||
+        !formData.email.trim() ||
+        !formData.paypalTransactionId.trim()
+      ) {
+        alert("Please fill in Name, Email and PayPal Transaction ID");
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      // Here you can add your API call to save donation data
+      console.log("Form submitted:", {
+        paymentMethod: selectedPayment,
+        formData,
+      });
+
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Close modal
+      onClose();
+
+      // Navigate to thank you page
+      router.push("/thank-you");
+    } catch (error) {
+      console.error("Error submitting donation:", error);
+      alert("Something went wrong. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -274,23 +332,23 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
   const renderFormField = (fieldName: keyof FormData) => {
     const fieldConfig: Record<keyof FormData, FieldConfig> = {
-      name: { placeholder: "Enter Your Name", type: "text" },
-      transactionId: { placeholder: "Enter Transaction ID", type: "text" },
+      name: { placeholder: "Enter Your Name *", type: "text" },
+      transactionId: { placeholder: "Enter Transaction ID *", type: "text" },
       honoreeName: { placeholder: "Honoree Name", type: "text" },
       message: {
         placeholder: "Donate For",
         type: "text",
         isTextarea: true,
       },
-      bankName: { placeholder: "Your Bank Name", type: "text" },
-      branchName: { placeholder: "Your Branch Name", type: "text" },
+      bankName: { placeholder: "Your Bank Name *", type: "text" },
+      branchName: { placeholder: "Your Branch Name *", type: "text" },
       referenceNumber: {
         placeholder: "Transaction Reference Number",
         type: "text",
       },
-      email: { placeholder: "Your Email Address", type: "email" },
+      email: { placeholder: "Your Email Address *", type: "email" },
       paypalTransactionId: {
-        placeholder: "PayPal Transaction ID",
+        placeholder: "PayPal Transaction ID *",
         type: "text",
       },
       selectedMobileAccount: { placeholder: "Select Account", type: "text" },
@@ -357,7 +415,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
       <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
         <div className="flex w-full gap-4 flex-col lg:flex-row">
-          {/* LEFT SIDE — PAYMENT LIST (Desktop: Always visible, Mobile: Hidden when details shown) */}
+          {/* LEFT SIDE — PAYMENT LIST */}
           <div
             className={`w-full lg:w-1/2 rounded-xl bg-white shadow-lg ${showDetails ? "hidden lg:block" : "block"}`}
           >
@@ -478,7 +536,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
             </div>
           </div>
 
-          {/* RIGHT SIDE — PAYMENT FORM (Desktop: Always visible, Mobile: Shown after selection) */}
+          {/* RIGHT SIDE — PAYMENT FORM */}
           <div
             className={`w-full lg:w-1/2 rounded-xl bg-white shadow-lg overflow-y-auto hidden-scrollbar max-h-[600px] ${!showDetails ? "hidden lg:block" : "block"}`}
           >
@@ -584,10 +642,14 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
                   <button
                     onClick={handleSubmit}
-                    className="mt-6 w-full rounded-lg py-4 md:py-5 font-semibold text-white bg-[#FF951B]
-                   hover:bg-[#d57f1d] transition"
+                    disabled={isSubmitting}
+                    className={`mt-6 w-full rounded-lg py-4 md:py-5 font-semibold text-white transition ${
+                      isSubmitting
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-[#FF951B] hover:bg-[#d57f1d]"
+                    }`}
                   >
-                    SUBMIT
+                    {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
                   </button>
                 </div>
               </div>

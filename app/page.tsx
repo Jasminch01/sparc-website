@@ -4,7 +4,7 @@ import Highlights from "@/components/Landingpage/Highlights";
 import Organization from "@/components/Landingpage/Organization";
 import Overview from "@/components/Landingpage/Overview";
 import Statistic from "@/components/Landingpage/Statistic";
-import Stories from "@/components/Landingpage/Stories";
+// import Stories from "@/components/Landingpage/Stories";
 import Team from "@/components/Landingpage/Team";
 import Testimonials from "@/components/Landingpage/Testimonials";
 import Videos from "@/components/Landingpage/Videos";
@@ -27,7 +27,7 @@ export default function Home() {
       <Highlights />
       <Videos />
       <Team />
-      <Stories />
+      {/* <Stories /> */}
       <Wherewework />
       <Overview />
       <Testimonials />

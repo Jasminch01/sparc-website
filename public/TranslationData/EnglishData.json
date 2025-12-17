@@ -1,0 +1,480 @@
+{
+    "navigationLinks": [
+        {
+            "title": "WHO WE ARE",
+            "path": "/who-we-are",
+            "hasDropdown": false
+        },
+        {
+            "title": "OPPORTUNITY",
+            "hasDropdown": true,
+            "dropdownItems": [
+                {
+                    "title": "Volunteer",
+                    "path": "/volunteer"
+                },
+                {
+                    "title": "Be an Intern",
+                    "path": "/be-an-intern"
+                },
+                {
+                    "title": "Fellowship",
+                    "path": "/fellowship"
+                }
+            ]
+        },
+        {
+            "title": "STORIES",
+            "hasDropdown": true,
+            "dropdownItems": [
+                {
+                    "title": "Indespeak",
+                    "path": "/indespeak"
+                },
+                {
+                    "title": "Sparc Update",
+                    "path": "/sparc-update"
+                }
+            ]
+        },
+        {
+            "title": "RESOURCES",
+            "hasDropdown": true,
+            "dropdownItems": [
+                {
+                    "title": "Reports and Publications",
+                    "path": "/reports-publications"
+                },
+                {
+                    "title": "Indigenous Archive",
+                    "path": "/archive"
+                },
+                {
+                    "title": "Our Research",
+                    "path": "/our-research"
+                }
+            ]
+        },
+        {
+            "title": "PARTNERS",
+            "hasDropdown": true,
+            "dropdownItems": [
+                {
+                    "title": "How to Partner",
+                    "path": "/how-to-partner"
+                },
+                {
+                    "title": "Partners",
+                    "path": "/partners"
+                }
+            ]
+        },
+        {
+            "title": "LEARN FROM US",
+            "path": "/learn",
+            "hasDropdown": false
+        },
+        {
+            "title": "BLOG",
+            "path": "/blogs",
+            "hasDropdown": false
+        }
+    ],
+    "header": {
+        "title": "THE CHT <1>INDIGENOUS</1> WOMANIFESTO",
+        "description": "Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices"
+    },
+    "hero": {
+        "title": "PROTEST FOR EQUALITY",
+        "description": "Empowering indigenous women and communities to rise against systemic oppression, reclaim their voices"
+    },
+    "whoweare": {
+        "title": "WHO WE ARE",
+        "description": "SPaRC is an indigenous women-led feminist organisation established in Chittagong Hill Tracts (CHT), Bangladesh. SPaRC works with a specific focus for indigenous women, girls and communities who are often ignored, have no access to resources and are survivors of communal attack, conflict, Violence Against Women, Gender Based Violence, and systematic oppression such as misinformation, intergenerational trauma and sufferings."
+    },
+    "whatwestandfor": {
+        "title": "WHAT WE STAND FOR",
+        "description": "To ensure women and girls' social, cultural, economic and political, sexual and spiritual rights without prejudice of any identity such as age, sex, caste, religion, ethnicity or sexual orientation etc."
+    },
+    "whatweareheaded": {
+        "title": "WHERE WE ARE HEADED",
+        "description": "To create a world where all living beings enjoy their rights with dignity."
+    },
+    "statistic": {
+        "title": "VARIOUS STATISTICS THAT WE HAVE",
+        "data": [
+            {
+                "title": "5OK",
+                "description": "Invested in Community Initiatives"
+            },
+            {
+                "title": "70+",
+                "description": "Indigenous-led Projects Funded"
+            },
+            {
+                "title": "10+",
+                "description": "Years of Dedicated Support"
+            },
+            {
+                "title": "35+",
+                "description": "NGO'S Partnered"
+            }
+        ]
+    },
+    "whatwedo": {
+        "title": "WHAT WE DO",
+        "description": "To create a world where all living beings enjoy their rights with dignity.",
+        "data": [
+            {
+                "title": "Dismantle Patriarchy"
+            },
+            {
+                "title": "Busting Myth & Misinformation"
+            },
+            {
+                "title": "Capacity Building : Indigenous & Feminist Perspective"
+            }
+        ]
+    },
+    "higlight": {
+        "title": "HIGHLIGHTS"
+    },
+    "videos": {
+        "title": "VIDEOS",
+        "description": "Strong voices. Bold visions. Meet the women and allies driving equality and empowerment forward. Our strength lies in unity."
+    },
+    "team": {
+        "title": "MEET THE TEAM",
+        "description": "Strong voices. Bold visions. Meet the women and allies driving equality and empowerment forward. Our strength lies in unity. The incredible women and allies in our team are at the heart of everything we do — leading initiatives, empowering communities, and standing firm for justice and equality.",
+        "subtitle": "01"
+    },
+    "wherewework": {
+        "title": "WHERE WE WORK",
+        "description": "Community development is often linked with community work or community planning, and may involve stakeholders, foundations.",
+        "country": [
+            {
+                "title": "Countries We Have Worked"
+            },
+            {
+                "title": "Where We Belong"
+            }
+        ]
+    },
+    "overview": {
+        "title": "We're an Indigenous feminist organization with a specific focus on indigenous women, girls, and communities who are often ignored, have limited access to resources, and are survivors of attack, conflict, Violence Against Women, Gender-Based Violence, and systemic & structural oppression."
+    },
+    "testimonials_components": {
+        "title": "WHAT PEOPLE SAY",
+        "description": "Community development is often linked with community work or community planning, and may involve stakeholders, foundations.",
+        "testimonials": [
+            {
+                "testimoniname": "Sadia Jahan",
+                "designation": "Founder @Migelko",
+                "description": "Joining this movement lead the community  workshops empowering other women to stand up for their rights."
+            },
+            {
+                "testimoniname": "Sadia Jahan",
+                "designation": "Founder @Migelko",
+                "description": "Joining this movement lead the community  workshops empowering other women to stand up for their rights."
+            },
+            {
+                "testimoniname": "Sadia Jahan",
+                "designation": "Founder @Migelko",
+                "description": "Joining this movement lead the community  workshops empowering other women to stand up for their rights."
+            },
+            {
+                "testimoniname": "Sadia Jahan",
+                "designation": "Founder @Migelko",
+                "description": "Joining this movement lead the community  workshops empowering other women to stand up for their rights."
+            }
+        ]
+    },
+    "footer": {
+        "menu_links": {
+            "who_we_are": "Who we are",
+            "stories": "Stories",
+            "partners": "Partners",
+            "blogs": "Blogs",
+            "work_with_us": {
+                "title": "Work with us",
+                "volunteer": "Volunteer",
+                "intern": "Be an Intern",
+                "fellowship": "Fellowship"
+            },
+            "resources": {
+                "title": "Resources",
+                "reports_publications": "Reports & Publications",
+                "indigenous_archive": "Indigenous Archive",
+                "our_research": "Our Research"
+            }
+        },
+        "subscribe": {
+            "heading": "Get the freshest news from us",
+            "placeholder": "Your email address",
+            "button": "Subscribe"
+        },
+        "legal_links": {
+            "terms": "Terms & Conditions",
+            "privacy": "Privacy Policy",
+            "accessibility": "Accessibility",
+            "legal": "Legal"
+        },
+        "copyright": "Sparc 2025. All rights reserved."
+    },
+    "aboutpage": {
+        "top_section": {
+            "title": "EMPOWERING <1> WOMEN </1> , BUILDING",
+            "description": "Every project we run begins with one goal - to uplift Indigenous woman and their communities through action, awarness, and empowerment."
+        }
+    },
+    "banner": {
+        "title": "WHO WE ARE",
+        "description": "Gain hands-on exprience and make impact through out internship program",
+        "button": "SCROLL DOWN"
+    },
+    "ourstory": {
+        "title": "WHO WE ARE",
+        "description": "SPaRC is an indigenous women-led feminist organisation established in Chittagong Hill Tracts (CHT), Bangladesh. SPaRC works with a specific focus for indigenous women, girls and communities who are often ignored, have no access to resources and are survivors of communal attack, conflict, Violence Against Women, Gender Based Violence, and systematic oppression such as misinformation, intergenerational trauma and sufferings."
+    },
+    "whatwestandforTwo": {
+        "title": "WHAT WE STAND FOR",
+        "description": "To ensure women and girls' social, cultural, economic and political, sexual and spiritual rights without prejudice of any identity such as age, sex, caste, religion, ethnicity or sexual orientation etc."
+    },
+    "whatweareheadedtwo": {
+        "title": "WHERE WE ARE HEADED",
+        "description": "To create a world where all living beings enjoy their rights with dignity."
+    },
+    "volunteer_page": {
+        "hero_section": {
+            "title": "Apply today to become a <1>volunteer</1>",
+            "description": "Every action counts when it comes to protecting the rights, voices, and dignity of Indigenous women. By volunteering with us"
+        },
+        "form": {
+            "heading": "Become a volunteer",
+            "name_placeholder": "Full Name",
+            "email_placeholder": "Email",
+            "phone_placeholder": "Phone Number",
+            "address_placeholder": "Address",
+            "message_placeholder": "Message",
+            "submit_button": "Submit"
+        },
+        "why_volunteer_section": {
+            "title": "WHY VOLUNTEERS WITH US?",
+            "description": "Empowerment begins with awareness — and change begins with you. As a volunteer, you'll help raise voices that deserve to be heard, support community-led initiatives, and advocate for justice, education, and equality for Indigenous women.",
+            "subtitle": "Through your time and passion, you can help:",
+            "list": [
+                "Support community workshops and awareness programs",
+                "Organize campaigns on women's rights and cultural preservation",
+                "Share stories that inspire change across generations"
+            ]
+        },
+        "gain_section": {
+            "title": "WHAT YOU'LL GAIN",
+            "description": "Volunteering isn't just an act of service — it's a journey of learning, connection, and growth. You'll work alongside dedicated leaders, experience Indigenous cultures firsthand, and become a voice for those who continue to fight for equality and recognition.",
+            "subtitle": "You'll gain:",
+            "list": [
+                "Real experience in advocacy and social impact work",
+                "Deeper understanding of Indigenous traditions and resilience",
+                "A sense of purpose and community that lasts a lifetime"
+            ]
+        },
+        "final_call_to_action": "APPLY FOR VOLUNTEER"
+    },
+    "internship_page": {
+        "top_section": {
+            "title": "BE PART OF REAL <1>CHANGE</1>",
+            "description": "Every project we run begins with one goal — to uplift Indigenous women and their communities through action, awareness, and empowerment."
+        },
+        "hero_section": {
+            "title": "START YOUR JOURNEY WITH US",
+            "description": "Gain hands-on experience and make an impact through our internship program.",
+            "button": "APPLY FOR INTERNSHIP"
+        },
+        "career_journey_section": {
+            "title": "YOUR CAREER JOURNEY BEGINS HERE. LEARN, GROW, AND MAKE AN IMPACT",
+            "description_part1": "Our internship program offers valuable real-world experience for passionate individuals who want to grow their skills while contributing to meaningful causes.",
+            "description_part2": "Skill-building sessions that provide education, leadership training, and emotional support to Indigenous women in local communities. Volunteer roles: Event assistance, teaching support, translation, and logistics. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here"
+        },
+        "eligible_section": {
+            "title": "WHAT YOU CAN DO",
+            "description_part1": "Skill-building sessions that provide education, leadership training, and emotional support to Indigenous women in local communities. Volunteer roles: Event assistance, teaching support, translation, and logistics. It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+            "subtitle": "Candidates with the following are welcome to apply:",
+            "requirements": [
+                "Real experience in advocacy and social impact work",
+                "Research & Documentation",
+                "Cultural Learning & Exchange",
+                "Communication & Media"
+            ],
+            "description_part2": "Skill-building sessions that provide education, leadership training, and emotional support to Indigenous women in local communities"
+        },
+        "final_call_to_action": "APPLY FOR INTERNSHIP"
+    },
+    "fellowship_page": {
+        "top_section": {
+            "title": "THE FELLOWSHIP IS OPEN TO <1>INDIGENOUS</1> YOUTH",
+            "description": "Our Fellowship Program supports individuals dedicated to protecting Indigenous rights, documenting histories, and building stronger communities."
+        },
+        "hero_section": {
+            "title": "FELLOWSHIP",
+            "description": "Gain hands-on experience and make an impact through our internship program.",
+            "button": "APPLY NOW"
+        },
+        "about_section": {
+            "title": "ABOUT THE FELLOWSHIP",
+            "description": "This fellowship provides mentorship, training, and funding to individuals passionate about cultural heritage, gender equity, environmental justice, and Indigenous education. To help address these challenges, our Early Career Fellowship empowers a new, diverse generation of Internet champions who will bridge the gap between technology and policy, becoming advocates for the open, globally connected, secure, and trustworthy Internet."
+        },
+        "program_section": {
+            "title": "ABOUT THE PROGRAM",
+            "description": "The Indigenous Fellowship Program is designed to empower emerging leaders from Indigenous communities through mentorship, research support, and cultural advocacy training. The program provides fellows with the resources and guidance needed to preserve traditional knowledge, document community histories, and lead initiatives that strengthen Indigenous rights and representation. Through collaboration, storytelling, and field-based projects, fellows contribute to building a more inclusive and equitable future for their people."
+        },
+        "eligibility_section": {
+            "title": "WHO IS ELIGIBLE TO APPLY?",
+            "description": "The fellowship is open to Indigenous individuals who are passionate about community development, cultural preservation, and social advocacy.",
+            "subtitle": "Candidates with the following are welcome to apply:",
+            "requirements": [
+                "Open to all Indigenous individuals (18+)",
+                "Must have a demonstrated commitment to community service or research",
+                "Fellowship duration: 6–12 months",
+                "Provides stipend and mentorship support"
+            ]
+        },
+        "meet_the_fellows_section": {
+            "title": "MEET THE FELLOWS"
+        },
+        "cta_section": {
+            "title": "YOUR CAREER JOURNEY BEGINS HERE. LEARN, GROW",
+            "description": "Indigenous young people who are emerging leaders, learners, or activists working to preserve their culture and rights.",
+            "button": "Apply Now"
+        }
+    },
+    "indespeak_page": {
+        "title": "STORIES OF <1> RESISTANCE </1>",
+        "description": "Stories of Resistance is a robust and meaningful collection, weaving threads of the personal, professional and political into a vibrant tapestry of becoming.",
+        "hero": {
+            "title": "INDISPEAK",
+            "description": "Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide.",
+            "button": "SCROLL DOWN"
+        }
+    },
+    "sparce_update_page": {
+        "title": "SPARC UPDATE",
+        "description": "To share the latest news, activities, and milestones from your organization — keeping visitors informed about ongoing advocacy, events, and community progress.",
+        "hero": {
+            "title": "SPARC UPDATE",
+            "description": "Stay connected with the latest updates from our organization — from local initiatives to global advocacy for Indigenous rights.",
+            "button": "VIEW PROJECTS"
+        },
+        "breadcrumb": {
+            "title": "HOME"
+        },
+        "updates_section": {
+            "projects_header": "FUNDING & PROJECT UPDATES",
+            "projects_description": "Each update reflects our commitment to accountability, collaboration, and positive impact across Indigenous regions.",
+            "events_header": "EVENT ANNOUNCEMENTS",
+            "events_description": "Explore our latest gatherings, campaigns, and community programs supporting Indigenous voices"
+        }
+    },
+    "reports_publications_page": {
+        "title": "KNOWLEDGE THAT <1> INSPIRE </1> CHANGE",
+        "description": "Every project we run begins with one goal — to uplift Indigenous women and their communities through action, awareness, and empowerment.",
+        "hero": {
+            "title": "REPORTS AND PUBLICATIONS",
+            "description": "Our reports and publications highlight the voices, experiences, and resilience of Indigenous women across communities.",
+            "button": "SCROLL DOWN"
+        },
+        "breadcrumb": {
+            "title": "HOME"
+        }
+    },
+    "indegenous_archive_page": {
+        "title": " <1> INDIGENOUS KNOWLEDGE</1> FOR FUTURE GENERATIONS",
+        "description": "Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide",
+        "hero": {
+            "title": "INDIGENOUS ARCHIVE",
+            "description": "Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide.",
+            "button": "SCROLL DOWN"
+        },
+        "breadcrumb": {
+            "title": "HOME"
+        }
+    },
+    "research_page": {
+        "title": "EXPLORING KNOWLEDGE THROUGH RESEARCH",
+        "description": "To showcase research projects, findings, and collaborations that advance understanding of Indigenous rights, culture, environment, and community well-being.",
+        "hero": {
+            "title": "OUR RESEARCH",
+            "description": "Our research amplifies Indigenous voices, documents cultural wisdom, and supports evidence-based advocacy for equality and sustainability",
+            "button": "COLLABORATE WITH US"
+        }
+    },
+    "partners_page": {
+        "title": "OUR PARTNERS SO FAR",
+        "hero_section": {
+            "title": "HOW TO PARTNER",
+            "description": "Our research amplifies Indigenous voices, documents cultural wisdom, and supports evidence-based advocacy for equality and sustainability",
+            "button": "BECOME A PARTNER"
+        }
+    },
+    "partnership_steps": {
+        "title": "HOW TO BECOME A PARTNER",
+        "step_1": {
+            "heading": "Submit a Partnership Proposal",
+            "description": "Share your organization's goals and areas of interest. We welcome proposals supporting advocacy, education, gender equality, and cultural sustainability."
+        },
+        "step_2": {
+            "heading": "Consultation & Review",
+            "description": "Our team carefully reviews each proposal in discussion with Indigenous community representatives to ensure cultural relevance and mutual benefit."
+        },
+        "step_3": {
+            "heading": "Agreement & Implementation",
+            "description": "Once approved, we sign a formal agreement and begin collaborative action — from research and workshops to community programs."
+        }
+    },
+    "partnership_opportunities": {
+        "title": "Partnership Opportunities",
+        "list": [
+            {
+                "title": "Institutional Partnerships",
+                "description": "Collaborate on advocacy campaigns, cultural research, or educational programs."
+            },
+            {
+                "title": "Funding & Grants",
+                "description": "Support ongoing or new Indigenous-led projects through financial partnerships and co-funding"
+            },
+            {
+                "title": "Academic & Research Collaboration",
+                "description": "Partner with universities, researchers, and think tanks to produce evidence-based studies on Indigenous issues."
+            }
+        ]
+    },
+    "partnership_form": {
+        "title": "PARTNERSHIP PROPOSAL",
+        "fields": {
+            "name_label": "Your Name",
+            "company_label": "Company Name",
+            "email_label": "Email",
+            "message_label": "Leave a Message"
+        },
+        "button": "SUBMIT PROPOSAL",
+        "success_message": "Message sent successfully!"
+    },
+    "our_partner_page": {
+        "title": "OUR PARTNERS",
+        "description": "Our research amplifies Indigenous voices, documents cultural wisdom, and supports evidence-based advocacy for equality and sustainability",
+        "button": "BECOME A PARTNER"
+    },
+    "learn_page": {
+        "title": "LEARN <1> ANYTHING </1>, EVERYTHING",
+        "description": "Learning their history and present challenges is the first step toward justice, equality, and empowerment.",
+        "hero": {
+            "title": "LEARN",
+            "description": "Our reports and publications highlight the voices, experiences, and resilience of Indigenous women across communities."
+        },
+        "breadcrumb": {
+            "title": "HOME"
+        }
+    },
+    "blog_page": {
+        "title": "BLOG"
+    }
+}

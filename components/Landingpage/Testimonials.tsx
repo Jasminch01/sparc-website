@@ -9,41 +9,31 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Container from "../Container";
+import { useTranslation } from "react-i18next";
 
-const testimonials = [
-  {
-    icon: comma,
-    des: 'Joining this movement lead community workshops empowering other women to stand up for their rights."',
-    testimoniName: "Sadia",
-    designation: "Founder @ Migelko",
-  },
-  {
-    icon: comma,
-    des: 'Joining this movement lead community workshops empowering other women to stand up for their rights."',
-    testimoniName: "Sadia",
-    designation: "Founder @ Migelko",
-  },
-  {
-    icon: comma,
-    des: 'Joining this movement lead community workshops empowering other women to stand up for their rights."',
-    testimoniName: "Sadia",
-    designation: "Founder @ Migelko",
-  },
-  {
-    icon: comma,
-    des: 'Joining this movement lead community workshops empowering other women to stand up for their rights."',
-    testimoniName: "Sadia",
-    designation: "Founder @ Migelko",
-  },
-  {
-    icon: comma,
-    des: 'Joining this movement lead community workshops empowering other women to stand up for their rights."',
-    testimoniName: "Sadia",
-    designation: "Founder @ Migelko",
-  },
-];
+interface TestimonialData {
+  testimoniname: string;
+  designation: string;
+  description: string;
+
+}
 
 const Testimonials = () => {
+  const { t } = useTranslation();
+  const sectionTitle = t('testimonials_components.title', 'WHAT PEOPLE SAY');
+  const sectionDescription = t(
+    'testimonials_components.description',
+    'Community development is often linked with community work or community planning, and may involve stakeholders, foundations.'
+  );
+
+  // 2. Fetch the nested array of testimonials using returnObjects: true
+  const testimonialsData = t('testimonials_components.testimonials', {
+    returnObjects: true,
+  }) as TestimonialData[];
+
+  // Use the fetched data for rendering
+  const dataToRender = testimonialsData || [];
+
   return (
     <div className=" my-12 md:my-16 lg:my-20">
       <Container>
@@ -97,18 +87,17 @@ const Testimonials = () => {
           }
         `}</style>
 
-        {/* Header Section */}
+        {/* Header Section (Using i18n data) */}
         <div className="text-center max-w-xl mx-auto space-y-3 md:space-y-4 lg:space-y-5 mb-10 md:mb-12 lg:mb-16">
           <h2
             className={`${poppins.className} font-black text-2xl lg:text-4xl`}
           >
-            WHAT PEOPLE SAY
+            {sectionTitle}
           </h2>
           <p
             className={`text-[#454545] text-lg lg:text-xl leading-relaxed px-4 ${antiquaFont.className}`}
           >
-            Community development is often linked with community work or
-            community planning, and may involve stakeholders, foundations.
+            {sectionDescription}
           </p>
         </div>
 
@@ -130,7 +119,7 @@ const Testimonials = () => {
                 spaceBetween: 24,
               },
               1024: {
-                slidesPerView: 2,
+                slidesPerView: 3,
                 spaceBetween: 24,
               },
               1280: {
@@ -140,11 +129,13 @@ const Testimonials = () => {
             }}
             className="testimonial-swiper"
           >
-            {testimonials.map((testimonial, index) => (
+            {/* Using fetched i18n data (dataToRender) */}
+            {dataToRender.map((testimonial, index) => (
               <SwiperSlide key={index}>
                 <div className="border-2 border-[#F26522] rounded-lg p-6 md:p-8 lg:p-10 flex flex-col items-center gap-4 md:gap-5 h-full min-h-[300px] md:min-h-80 hover:shadow-lg transition-shadow">
                   <Image
-                    src={testimonial.icon}
+                    // Icon is still hardcoded as 'comma' image import
+                    src={comma}
                     alt="quote icon"
                     width={50}
                     height={50}
@@ -154,13 +145,15 @@ const Testimonials = () => {
                     className="text-center text-sm md:text-base text-[#3A3A3A] lg:text-lg leading-relaxed grow"
                     style={{ fontFamily: '"Book Antiqua", serif' }}
                   >
-                    {testimonial.des}
+                    {/* Using i18n data 'description' */}
+                    {testimonial.description}
                   </p>
                   <div
                     className={`${poppins.className} flex flex-col items-center mt-auto`}
                   >
                     <h3 className="text-[#FF951B] font-bold text-lg lg:text-xl">
-                      {testimonial.testimoniName}
+                      {/* Using i18n data 'testimoniname' */}
+                      {testimonial.testimoniname}
                     </h3>
                     <p className="text-[#4B4B4B] text-xs lg:text-base">
                       {testimonial.designation}

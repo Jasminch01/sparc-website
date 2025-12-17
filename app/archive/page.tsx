@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { FaSearch } from "react-icons/fa";
 import { FaAnglesDown } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
@@ -32,6 +33,15 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const { t } = useTranslation()
+
+  const pageDescription = t("indegenous_archive_page.description");
+  const heroTitle = t("indegenous_archive_page.hero.title");
+  const heroDescription = t("indegenous_archive_page.hero.description");
+  const heroButton = t("indegenous_archive_page.hero.button");
+  const homeButton = t("indegenous_archive_page.breadcrumb.title");
+
+  // Fetch data from Sanity
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -182,17 +192,20 @@ const Page = () => {
             <h2
               className={`text-xl md:text-3xl lg:text-[45px] text-center lg:text-start max-w-2xl font-extrabold leading-tight ${poppins.className}`}
             >
-              <span className="text-[#FF951B]">INDIGENOUS KNOWLEDGE</span> FOR
-              FUTURE GENERATIONS
+              <Trans
+                i18nKey="indegenous_archive_page.title"
+                components={{
+                  1: <span className="text-[#FF951B]" />
+                }}
+              />
             </h2>
+
           </div>
           <div className="w-full lg:w-1/2">
             <p
               className={`lg:ml-30 text-justify text-lg text-[#4E4E4E] lg:text-xl ${antiquaFont.className}`}
             >
-              Explore stories, documents, and visual archives celebrating the
-              heritage, resilience, and identity of Indigenous communities
-              worldwide
+              {pageDescription}
             </p>
           </div>
         </section>
@@ -211,14 +224,12 @@ const Page = () => {
           <h2
             className={`text-2xl lg:text-4xl font-bold mb-2 lg:mb-4 ${poppins.className}`}
           >
-            INDIGENOUS ARCHIVE
+            {heroTitle}
           </h2>
           <p
             className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
           >
-            Explore stories, documents, and visual archives celebrating the
-            heritage, resilience, and identity of Indigenous communities
-            worldwide.
+            {heroDescription}
           </p>
           <div
             onClick={() => {
@@ -231,7 +242,7 @@ const Page = () => {
             <button
               className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
             >
-              SCROLL DOWN
+              {heroButton}
             </button>
             <FaAnglesDown className="animate-bounce" size={24} />
           </div>
@@ -245,10 +256,10 @@ const Page = () => {
         >
           <div className="flex gap-3 md:gap-5 text-xs md:text-base py-5 lg:py-0">
             <Link href="/" className="hover:text-[#FF951B] transition-colors">
-              HOME
+              {homeButton}
             </Link>
             <span>||</span>
-            <p className="text-[#818181] uppercase">INDIGENOUS ARCHIVE</p>
+            <p className="text-[#818181] uppercase">{heroTitle}</p>
           </div>
           <div className="border-2 border-gray-300 rounded-md flex items-center w-full md:w-auto">
             <input

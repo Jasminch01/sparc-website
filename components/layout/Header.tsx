@@ -3,13 +3,14 @@
 import Image from "next/image";
 import logo from "../../public/Header/Sparce-logo.png";
 import Navbar from "./Nav/Navbar";
-import { IoClose, IoMenu} from "react-icons/io5";
+import { IoClose, IoMenu } from "react-icons/io5";
 import { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { poppins } from "../utils/font";
 import Container from "../Container";
 import DonationModal from "@/components/Landingpage/DonationModal";
 import { IoIosArrowDown } from "react-icons/io";
+import i18n from "@/i18n";
 
 interface LanguageOption {
   code: string;
@@ -41,11 +42,12 @@ const Header = () => {
   );
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
-  
+
   const router = useRouter();
   const pathname = usePathname();
   const prevPathnameRef = useRef(pathname);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close menu when route changes
   useEffect(() => {
@@ -79,17 +81,21 @@ const Header = () => {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsLanguageOpen(false);
-      }
+      const target = event.target as Node;
+
+      // Desktop dropdown
+      if (dropdownRef.current?.contains(target)) return;
+
+      // Mobile dropdown
+      if (mobileDropdownRef.current?.contains(target)) return;
+
+      setIsLanguageOpen(false);
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
 
   // Handle keyboard navigation
   const handleKeyDown = (
@@ -107,6 +113,14 @@ const Header = () => {
     setIsLanguageOpen(false);
   };
 
+  useEffect(() => {
+    const changeLang = async () => {
+      await i18n.changeLanguage(selectedLanguage.code);
+    };
+    changeLang();
+  }, [selectedLanguage]);
+
+
   const toggleDropdown = () => {
     setIsLanguageOpen((prev) => !prev);
   };
@@ -114,9 +128,8 @@ const Header = () => {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 bg-white transition-shadow duration-300 ${
-          scrolled ? "shadow-md" : ""
-        }`}
+        className={`sticky top-0 z-40 bg-white transition-shadow duration-300 ${scrolled ? "shadow-md" : ""
+          }`}
       >
         <Container>
           <div className={`${poppins.className}`}>
@@ -174,9 +187,8 @@ const Header = () => {
                     />
                     <span className="min-w-[30px]">{selectedLanguage.code}</span>
                     <IoIosArrowDown
-                      className={`h-4 w-4 transition-transform duration-200 ${
-                        isLanguageOpen ? "rotate-180" : "rotate-0"
-                      }`}
+                      className={`h-4 w-4 transition-transform duration-200 ${isLanguageOpen ? "rotate-180" : "rotate-0"
+                        }`}
                       aria-hidden="true"
                     />
                   </button>
@@ -194,11 +206,10 @@ const Header = () => {
                           onKeyDown={(e) => handleKeyDown(e, language)}
                           role="option"
                           aria-selected={selectedLanguage.code === language.code}
-                          className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${
-                            selectedLanguage.code === language.code
-                              ? "bg-blue-50 text-blue-600 font-medium"
-                              : "text-gray-700"
-                          }`}
+                          className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 ${selectedLanguage.code === language.code
+                            ? "bg-blue-50 text-blue-600 font-medium"
+                            : "text-gray-700"
+                            }`}
                         >
                           <Image
                             src={language.flag}
@@ -258,9 +269,8 @@ const Header = () => {
               {/* Mobile Menu Overlay */}
               <div
                 onClick={() => setMenuOpen(false)}
-                className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300 xl:hidden ${
-                  menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
-                }`}
+                className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-all duration-300 xl:hidden ${menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+                  }`}
                 aria-hidden={!menuOpen}
                 role="button"
                 tabIndex={-1}
@@ -268,9 +278,8 @@ const Header = () => {
 
               {/* Mobile Menu Drawer */}
               <aside
-                className={`fixed xl:hidden top-0 left-0 h-full w-80 sm:w-96 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-out ${
-                  menuOpen ? "translate-x-0" : "-translate-x-full"
-                }`}
+                className={`fixed xl:hidden top-0 left-0 h-full w-80 sm:w-96 bg-white z-50 shadow-2xl transform transition-transform duration-300 ease-out ${menuOpen ? "translate-x-0" : "-translate-x-full"
+                  }`}
                 aria-label="Mobile navigation"
               >
                 {/* Drawer Header */}
@@ -306,7 +315,7 @@ const Header = () => {
 
                   {/* Language Dropdown at Bottom */}
                   <div className="border-t border-gray-200 px-5 sm:px-6 py-4">
-                    <div className="relative">
+                    <div className="relative" ref={mobileDropdownRef}>
                       <button
                         onClick={toggleDropdown}
                         aria-label={`Selected language: ${selectedLanguage.name}`}
@@ -331,9 +340,8 @@ const Header = () => {
                           </div>
                         </div>
                         <IoIosArrowDown
-                          className={`h-4 w-4 transition-transform duration-200 ${
-                            isLanguageOpen ? "rotate-180" : "rotate-0"
-                          }`}
+                          className={`h-4 w-4 transition-transform duration-200 ${isLanguageOpen ? "rotate-180" : "rotate-0"
+                            }`}
                           aria-hidden="true"
                         />
                       </button>
@@ -349,11 +357,10 @@ const Header = () => {
                               onClick={() => handleSelect(language)}
                               role="option"
                               aria-selected={selectedLanguage.code === language.code}
-                              className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 ${
-                                selectedLanguage.code === language.code
-                                  ? "bg-blue-50 text-blue-600 font-medium"
-                                  : "text-gray-700"
-                              }`}
+                              className={`flex items-center gap-3 w-full text-left px-4 py-3 text-sm transition-all duration-200 hover:bg-gray-50 ${selectedLanguage.code === language.code
+                                ? "bg-blue-50 text-blue-600 font-medium"
+                                : "text-gray-700"
+                                }`}
                             >
                               <Image
                                 src={language.flag}
