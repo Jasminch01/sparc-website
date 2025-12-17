@@ -13,8 +13,6 @@ const AboutPage = () => {
 
   // Fetch the description directly
   const description = t('aboutpage.top_section.description', 'Every project we run begins with one goal - to uplift Indigenous woman and their communities through action, awarness, and empowerment.');
-// WHERE IS HERO?
-  // NOTE: The title uses Trans to handle the styled span tag from the i18n JSON
 
   return (
     <div className="mt-10 md:mt-12 lg:mt-15">

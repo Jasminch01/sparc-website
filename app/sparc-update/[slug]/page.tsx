@@ -137,14 +137,9 @@ const Page = () => {
   if (loading) {
     return (
       <Container>
-        <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B] mx-auto mb-4"></div>
-            <p
-              className={`${poppins.className} text-sm sm:text-base text-gray-600`}
-            >
-              Loading...
-            </p>
           </div>
         </div>
       </Container>
@@ -155,7 +150,7 @@ const Page = () => {
   if (error) {
     return (
       <Container>
-        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center">
+        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center">
           <div className="text-red-500 text-5xl mb-4">⚠️</div>
           <h1 className={`text-2xl font-bold ${poppins.className}`}>
             Error Loading Content
@@ -178,7 +173,7 @@ const Page = () => {
   if (!contentItem || !contentType) {
     return (
       <Container>
-        <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4 text-center">
+        <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center">
           <div className="text-gray-400 text-6xl mb-4">📄</div>
           <h1 className={`text-2xl font-bold ${poppins.className}`}>
             Content Not Found
