@@ -6,6 +6,7 @@ import { client } from "@/sanity/lib/client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 import { FaAnglesDown } from "react-icons/fa6";
 
 interface Report {
@@ -30,6 +31,17 @@ const Page = () => {
   const [reportsData, setReportsData] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+
+  const { t } = useTranslation()
+
+
+
+  const pageDescription = t("reports_publications_page.description");
+  const heroTitle = t("reports_publications_page.hero.title");
+  const heroDescription = t("reports_publications_page.hero.description");
+  const heroButton = t("reports_publications_page.hero.button");
+  const homeButton = t("reports_publications_page.breadcrumb.title");
 
   // Fetch data from Sanity
   useEffect(() => {
@@ -99,17 +111,21 @@ const Page = () => {
             <h2
               className={`text-3xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}
             >
-              KNOWLEDGE THAT <span className="text-[#FF951B]">INSPIRE </span>
-              CHANGE
+              <Trans
+                i18nKey="reports_publications_page.title"
+                components={{
+                  1: <span className="text-[#FF951B]" />
+                }}
+              />
             </h2>
+
+
           </div>
           <div className="w-full lg:w-1/2">
             <p
               className={`lg:ml-30 text-justify lg:text-xl text-[#4E4E4E] text-lg ${antiquaFont.className}`}
             >
-              Every project we run begins with one goal — to uplift Indigenous
-              women and their communities through action, awareness, and
-              empowerment.
+              {pageDescription}
             </p>
           </div>
         </section>
@@ -129,13 +145,12 @@ const Page = () => {
           <h2
             className={`text-2xl lg:text-5xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
           >
-            REPORTS AND PUBLICATIONS
+            {heroTitle}
           </h2>
           <p
             className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
           >
-            Our reports and publications highlight the voices, experiences, and
-            resilience of Indigenous women across communities.
+            {heroDescription}
           </p>
           <div
             onClick={handleScrollToReports}
@@ -144,7 +159,7 @@ const Page = () => {
             <button
               className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
             >
-              SCROLL DOWN
+              {heroButton}
             </button>
             <FaAnglesDown className="animate-bounce" size={24} />
           </div>
@@ -162,10 +177,10 @@ const Page = () => {
               href="/"
               className="hover:text-[#FF951B] transition-colors uppercase font-semibold"
             >
-              Home
+              {homeButton}
             </Link>
             <span>||</span>
-            <p className="text-[#818181] uppercase">Reports and Publications</p>
+            <p className="text-[#818181] uppercase">{heroTitle}</p>
           </section>
 
           {/* Sorting buttons */}
