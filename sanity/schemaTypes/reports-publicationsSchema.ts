@@ -35,13 +35,6 @@ export const ReportsPublications = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "date",
-      title: "Date Range",
-      type: "string",
-      description: 'Year or year range (e.g., "2020-2021")',
-      validation: (Rule: Rule) => Rule.required(),
-    },
-    {
       name: "description",
       title: "Description",
       type: "array",

@@ -25,9 +25,6 @@ export interface FetchBlogsResult {
   currentPage: number;
 }
 
-/**
- * Fetch all unique categories from blogs
- */
 export const fetchCategories = async (): Promise<string[]> => {
   try {
     const query = `*[_type == "blog"] {
@@ -44,9 +41,6 @@ export const fetchCategories = async (): Promise<string[]> => {
   }
 };
 
-/**
- * Fetch blogs with pagination, sorting, and filtering
- */
 export const fetchBlogs = async ({
   category = "All",
   sortBy = "latest",
@@ -102,13 +96,7 @@ export const fetchBlogs = async ({
   }
 };
 
-/**
- * Fetch a single blog by slug
- */
 export async function fetchBlogByTitle(title: string) {
-  // Try multiple strategies to find the blog
-
-  // Strategy 1: Exact title match (case-insensitive)
   const exactQuery = `
     *[_type == "blog" && lower(title) == lower($title)][0] {
       _id,
