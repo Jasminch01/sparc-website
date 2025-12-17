@@ -1,20 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import Image from "next/image";
-import { client } from "@/sanity/lib/client";
 import { useTranslation } from "react-i18next";
 
-interface Partner {
-  name: string;
-  logo: string;
-  image: string;
-  about: string;
-  link: string;
-  order?: number;
-}
+import { getAllPartners, Partner } from "@/sanity/queries/parthnerQueries";
 
 const Page = () => {
   const { t } = useTranslation();
@@ -27,31 +20,20 @@ const Page = () => {
   const heroDescription = t("partners_page.hero_section.description");
   const heroButton = t("partners_page.hero_section.button");
 
+  const fetchPartners = async () => {
+    try {
+      setLoading(true);
+      const partnersData = await getAllPartners();
+      setPartners(partnersData);
+    } catch (error) {
+      console.error("Error fetching partners:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    const fetchPartners = async () => {
-      try {
-        setLoading(true);
-
-        const query = `*[_type == "partner"] | order(order asc, name asc) {
-          name,
-          "logo": logo.asset->url,
-          "image": image.asset->url,
-          about,
-          link,
-          order
-        }`;
-
-        const data = await client.fetch(query);
-        setPartners(data);
-      } catch (error) {
-        console.error("Error fetching partners from Sanity:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPartners();
   }, []);
 
@@ -59,11 +41,8 @@ const Page = () => {
     return (
       <Container>
         <div className="text-center py-20">
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col h-screen items-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-            <p className={`text-2xl ${poppins.className}`}>
-              Loading partners...
-            </p>
           </div>
         </div>
       </Container>
@@ -105,7 +84,7 @@ const Page = () => {
       <Container>
         <div className="py-20">
           <p className="lg:text-4xl text-2xl font-bold text-center">
-            {t('partners_page.title')}
+            {t("partners_page.title")}
           </p>
 
           {partners.length === 0 ? (
@@ -117,9 +96,9 @@ const Page = () => {
           ) : (
             <div className="py-10 lg:py-20">
               <div className="grid grid-cols-1 gap-8 lg:gap-12">
-                {partners.map((partner, index) => (
+                {partners.map((partner) => (
                   <div
-                    key={index}
+                    key={partner._id}
                     className="p-6 md:p-12 lg:p-20 border rounded"
                   >
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10 lg:gap-20">
@@ -143,11 +122,33 @@ const Page = () => {
                       )}
                     </div>
                     <div className="my-6 md:my-10">
-                      <p
-                        className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
-                      >
-                        {partner.about}
-                      </p>
+                      {/* If about is Sanity block content, you'll need to render it properly */}
+                      {Array.isArray(partner.about) ? (
+                        <div
+                          className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
+                        >
+                          {partner.about.map((block, index) => {
+                            if (block._type === "block" && block.children) {
+                              return (
+                                <p key={index} className="mb-4">
+                                  {block.children.map(
+                                    (child: any, childIndex: number) => (
+                                      <span key={childIndex}>{child.text}</span>
+                                    )
+                                  )}
+                                </p>
+                              );
+                            }
+                            return null;
+                          })}
+                        </div>
+                      ) : (
+                        <p
+                          className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
+                        >
+                          {partner.about}
+                        </p>
+                      )}
                     </div>
                     <div className="text-center">
                       <a
