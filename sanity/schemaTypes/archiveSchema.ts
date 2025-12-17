@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Rule } from "@sanity/types";
+import { ArchiveIcon, IconComponent } from "@sanity/icons";
 
 const archiveSchema = {
-  name: "archivePost",
-  title: "Archive Post",
+  name: "archive",
+  title: "Archive",
+  icon: ArchiveIcon as IconComponent,
   type: "document",
   fields: [
     {
@@ -21,15 +24,15 @@ const archiveSchema = {
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
-      name: "des",
-      title: "Short Description",
+      name: "subtitle",
+      title: "Subtitle",
       type: "text",
       rows: 3,
       validation: (Rule: {
         required: () => {
           (): any;
-          new(): any;
-          max: { (arg0: number): any; new(): any };
+          new (): any;
+          max: { (arg0: number): any; new (): any };
         };
       }) => Rule.required().max(200),
     },
@@ -55,7 +58,7 @@ const archiveSchema = {
       type: "string",
       options: {
         list: [
-          { title: "Historical Records", value: "historical records" },
+          { title: "Historical Records", value: "Historical Records" },
           { title: "Community Stories", value: "Community Stories" },
           { title: "News and Update", value: "News and Update" },
         ],
@@ -64,13 +67,12 @@ const archiveSchema = {
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
-      name: "longdes",
-      title: "Long Description",
-      type: "text",
-      rows: 10,
-      validation: (Rule: { required: () => any }) => Rule.required(),
+      name: "description",
+      title: "Description",
+      type: "array",
+      of: [{ type: "block" }],
+      validation: (Rule: Rule) => Rule.required(),
     },
-  
   ],
   preview: {
     select: {

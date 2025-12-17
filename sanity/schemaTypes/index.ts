@@ -11,7 +11,6 @@ import { Highlight_Stories_Features } from "./sparc-update-HighlightNewsFeatures
 import { Partners } from "./parthnerSchema";
 import { socialWorkerTeamSchema } from "./teamSchema";
 import paymentMethod from "./paymentMethod";
-import { Story_News } from "./story_newsSchema";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -26,7 +25,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Highlight_Stories_Features,
     Partners,
     socialWorkerTeamSchema,
-    Story_News,
     paymentMethod
 
   ],

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
-
+import { FaHandshake } from "react-icons/fa";
 export const Partners = {
   name: "partner",
-  title: "Partner",
+  title: "PARTNERS",
+  icon: FaHandshake,
   type: "document",
   fields: [
     {
@@ -20,57 +21,35 @@ export const Partners = {
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-        },
-      ],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "image",
-      title: "Partner Image",
+      title: "Partner Banner Image",
       type: "image",
       description: "Main image or banner for the partner",
       options: {
         hotspot: true,
       },
-      fields: [
-        {
-          name: "alt",
-          title: "Alternative Text",
-          type: "string",
-        },
-      ],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "about",
       title: "About",
-      type: "text",
-      rows: 6,
+      type: "array",
+      of: [{ type: "block" }],
       description: "Description about the partner organization",
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: "link",
-      title: "Website Link",
+      title: "Partner Website Address",
       type: "url",
       description: "Partner organization website URL",
       validation: (Rule: Rule) =>
         Rule.required().uri({
           scheme: ["http", "https"],
         }),
-    },
-    {
-      name: "order",
-      title: "Display Order",
-      type: "number",
-      description:
-        "Order in which this partner should appear (lower numbers appear first)",
-      validation: (Rule: Rule) => Rule.integer().positive(),
     },
   ],
   preview: {

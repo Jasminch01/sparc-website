@@ -5,29 +5,8 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
-
-interface Blog {
-  _id: string;
-  title: string;
-  description: string;
-  date: string;
-  writtenBy: string;
-  img: string;
-  category: string;
-  longdes: string;
-  status: string;
-}
-
-// Convert TITLE → SLUG internally
-const makeSlug = (title: string) =>
-  title
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+import { Blog, fetchBlogByTitle } from "@/sanity/queries/blogQueries";
+import { PortableText } from "next-sanity";
 
 const BlogPage = () => {
   const { slug } = useParams();
@@ -37,46 +16,28 @@ const BlogPage = () => {
 
   useEffect(() => {
     if (!slug) return;
+    // Get the slug string and clean it
+    const slugString = Array.isArray(slug) ? slug[0] : slug.toString();
+    const cleanedSlug = slugString.split("/").pop() || "";
+    const decodedSlug = decodeURIComponent(cleanedSlug);
 
-    const fetchBlog = async () => {
-      try {
-        setLoading(true);
-        setNotFound(false);
+    const titleFromSlug = decodedSlug.replace(/-/g, " ");
 
-        // Fetch all blogs from Sanity
-        const allBlogs: Blog[] = await client.fetch(`
-          *[_type == "blog"]{
-            _id,
-            title,
-            description,
-            writtenBy,
-            date,
-            "img": img.asset->url,
-            category,
-            longdes,
-            status
-          }
-        `);
-
-        // Match blog by internal slug
-        const mainBlog = allBlogs.find(
-          (b) => makeSlug(b.title) === slug
-        );
-
-        if (!mainBlog) {
-          setNotFound(true);
+    try {
+      const fetchBlog = async () => {
+        const blogResponse = await fetchBlogByTitle(titleFromSlug);
+        if (blogResponse) {
+          setBlog(blogResponse);
+          setLoading(false);
         } else {
-          setBlog(mainBlog);
+          setNotFound(true);
         }
-      } catch (error) {
-        console.error("Error fetching blog:", error);
-        setNotFound(true);
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
-    fetchBlog();
+      fetchBlog();
+    } catch (error) {
+      console.log(error);
+    }
   }, [slug]);
 
   // Loading state
@@ -84,11 +45,8 @@ const BlogPage = () => {
     return (
       <Container>
         <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-20 text-center">
-          <div className="flex flex-col items-center justify-center gap-4">
+          <div className="flex h-screen flex-col items-center justify-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-            <p className={`text-xl text-gray-600 ${poppins.className}`}>
-              Loading blog post...
-            </p>
           </div>
         </div>
       </Container>
@@ -100,7 +58,9 @@ const BlogPage = () => {
     return (
       <Container>
         <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-20 text-center">
-          <h1 className={`text-3xl font-bold text-gray-800 mb-4 ${poppins.className}`}>
+          <h1
+            className={`text-3xl font-bold text-gray-800 mb-4 ${poppins.className}`}
+          >
             Blog Not Found
           </h1>
           <p className={`text-gray-600 mb-6 ${antiquaFont.className} text-lg`}>
@@ -123,9 +83,13 @@ const BlogPage = () => {
       <div
         className={`flex uppercase items-center gap-5 my-5 lg:my-10 ${poppins.className} text-[8px] lg:text-base`}
       >
-        <Link href="/" className="font-bold hover:text-[#FF951B]">HOME</Link>
+        <Link href="/" className="font-bold hover:text-[#FF951B]">
+          HOME
+        </Link>
         <span>||</span>
-        <Link href="/blogs" className="font-bold hover:text-[#FF951B]">BLOGS</Link>
+        <Link href="/blogs" className="font-bold hover:text-[#FF951B]">
+          BLOGS
+        </Link>
         <span>||</span>
         <p className="text-[#818181] truncate max-w-xs lg:max-w-md">
           {blog.title}
@@ -134,13 +98,15 @@ const BlogPage = () => {
 
       <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-5 mb-40">
         {/* Title */}
-        <h1 className={`text-2xl lg:text-4xl font-bold mb-5 ${poppins.className}`}>
+        <h1
+          className={`text-2xl lg:text-4xl font-bold mb-5 ${poppins.className}`}
+        >
           {blog.title}
         </h1>
 
         {/* Description */}
         <p className={`${antiquaFont.className} text-[#505050] text-lg mb-5`}>
-          {blog.description}
+          {blog.subtitle}
         </p>
 
         {/* Meta Info */}
@@ -149,7 +115,8 @@ const BlogPage = () => {
         >
           <div className="flex items-center gap-3 flex-wrap">
             <p className="text-gray-500">
-              Written by <span className="text-black font-semibold">{blog.writtenBy}</span>
+              Written by{" "}
+              <span className="text-black font-semibold">{blog.writtenBy}</span>
             </p>
             <span className="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs">
               {blog.category}
@@ -182,7 +149,14 @@ const BlogPage = () => {
         <div
           className={`text-gray-700 text-lg lg:text-xl ${antiquaFont.className} leading-relaxed whitespace-pre-line`}
         >
-          {blog.longdes}
+          <PortableText
+            value={blog.description}
+            components={{
+              block: {
+                normal: ({ children }) => <p className="mb-4">{children}</p>,
+              },
+            }}
+          />
         </div>
       </div>
     </Container>

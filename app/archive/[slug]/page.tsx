@@ -5,17 +5,12 @@ import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/Container";
 import { antiquaFont, poppins } from "@/components/utils/font";
-import { client } from "@/sanity/lib/client";
-
-interface Data {
-  _id: string;
-  img: string;
-  title: string;
-  des: string;
-  date: string;
-  category: string;
-  longdes: string;
-}
+import {
+  ArchiveData,
+  fetchArchiveBySlug,
+  fetchRelatedArchives,
+} from "@/sanity/queries/archiveQueries";
+import { PortableText } from "next-sanity";
 
 // Format date
 const formatDate = (dateString: string) => {
@@ -27,63 +22,43 @@ const formatDate = (dateString: string) => {
   });
 };
 
-// Convert TITLE → SLUG internally
-const makeSlug = (title: string) =>
-  title
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
-
 const Page = () => {
   const { slug } = useParams();
-  const [filteredData, setFilteredData] = useState<Data | null>(null);
-  const [relatedStories, setRelatedStories] = useState<Data[]>([]);
+  const [relatedStories, setRelatedStories] = useState<ArchiveData[]>([]);
+  const [archive, setArchives] = useState<ArchiveData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!slug) return;
+    // Get the slug string and clean it
+    const slugString = Array.isArray(slug) ? slug[0] : slug.toString();
+    const cleanedSlug = slugString.split("/").pop() || "";
+    const decodedSlug = decodeURIComponent(cleanedSlug);
 
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        // Fetch ALL posts from Sanity
-        const allPosts: Data[] = await client.fetch(`
-          *[_type == "archivePost"]{
-            _id,
-            title,
-            "img": img.asset->url,
-            des,
-            date,
-            category,
-            longdes
-          }
-        `);
+    const titleFromSlug = decodedSlug.replace(/-/g, " ");
 
-        // Find current article using INTERNAL SLUG
-        const mainArticle = allPosts.find(
-          (post) => makeSlug(post.title) === slug
+    try {
+      const fetchBlog = async () => {
+        const blogResponse = await fetchArchiveBySlug(titleFromSlug);
+        const relatedStories = await fetchRelatedArchives(
+          archive?._id as string,
+          archive?.category
         );
 
-        setFilteredData(mainArticle || null);
+        if (blogResponse) {
+          setArchives(blogResponse);
+          setRelatedStories(relatedStories);
+          setLoading(false);
+        } else {
+          // setNotFound(true);
+        }
+      };
 
-        // Generate related posts
-        const related = allPosts
-          .filter((post) => post._id !== mainArticle?._id)
-          .slice(0, 3);
-
-        setRelatedStories(related);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [slug]);
+      fetchBlog();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [archive?._id, archive?.category, slug]);
 
   // Loading State
   if (loading) {
@@ -95,7 +70,7 @@ const Page = () => {
   }
 
   // If article is missing
-  if (!filteredData) {
+  if (!archive) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-4">
         <p>Article not found</p>
@@ -112,7 +87,7 @@ const Page = () => {
         <span
           className={`text-xl lg:text-3xl uppercase text-center font-semibold flex items-center justify-center ${poppins.className}`}
         >
-          {filteredData.category}
+          {archive.category}
         </span>
 
         <section
@@ -125,9 +100,7 @@ const Page = () => {
             <span>||</span>
             <p className="text-[#818181] ">INDIGENOUS ARCHIVE</p>
             <span>||</span>
-            <h2 className="text-[#818181] line-clamp-1">
-              {filteredData.title}
-            </h2>
+            <h2 className="text-[#818181] line-clamp-1">{archive.title}</h2>
           </div>
         </section>
       </Container>
@@ -136,26 +109,33 @@ const Page = () => {
         <h1
           className={`text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4 ${poppins.className}`}
         >
-          {filteredData.title}
+          {archive.title}
         </h1>
 
         <p className={`text-gray-500 mb-6 ${poppins.className}`}>
-          {formatDate(filteredData.date)}
+          {formatDate(archive.date)}
         </p>
 
         <Image
-          src={filteredData.img}
-          alt={filteredData.title}
+          src={archive.img}
+          alt={archive.title}
           width={1000}
           height={1000}
           className="w-full object-cover max-h-[60vh]"
         />
 
-        <p
+        <div
           className={`text-[#252525] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line text-[#252525]`}
         >
-          {filteredData.longdes}
-        </p>
+          <PortableText
+            value={archive.description}
+            components={{
+              block: {
+                normal: ({ children }) => <p className="mb-4">{children}</p>,
+              },
+            }}
+          />
+        </div>
 
         {/* Related Stories */}
         <div className="mt-16 mb-40">
@@ -169,7 +149,7 @@ const Page = () => {
             {relatedStories.map((story) => (
               <Link
                 key={story._id}
-                href={`/archive/${makeSlug(story.title)}`}
+                href={`/archive/${story.title}`}
                 className="border border-gray-300 rounded-sm p-5 group"
               >
                 <div className="overflow-hidden">
@@ -189,8 +169,10 @@ const Page = () => {
                     {story.title}
                   </h3>
 
-                  <p className={`text-lg text-[#252525] ${antiquaFont.className}`}>
-                    {story.des}
+                  <p
+                    className={`text-lg text-[#252525] ${antiquaFont.className}`}
+                  >
+                    {story.subtitle}
                   </p>
                 </div>
               </Link>
