@@ -11,7 +11,7 @@ const Story = () => {
   const { t } = useTranslation();
 
   // 1. Fetch Breadcrumb Text
-  const homeLinkText = t('common.home', 'Home');
+  const homeLinkText = t('ourstory.breadcrumb.title', 'Home');
   const whoWeAreBreadcrumb = t('footer.menu_links.who_we_are', 'WHO WE ARE'); // Reusing existing key or defining a new one if necessary
 
   // 2. Fetch Story Section Text

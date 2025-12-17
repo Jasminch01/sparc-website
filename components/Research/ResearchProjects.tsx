@@ -11,6 +11,7 @@ import {
   ResearchProject,
   ResearchResponse,
 } from "@/sanity/queries/researchQueries";
+import { useTranslation } from "react-i18next";
 
 interface Tab {
   id: string;
@@ -31,6 +32,8 @@ const ResearchProjects = () => {
   const [totalOngoing, setTotalOngoing] = useState(0);
   const [totalCompleted, setTotalCompleted] = useState(0);
   const itemsPerPage = 3;
+
+  const {t} = useTranslation()
 
   // Fetch categories for tabs
   useEffect(() => {
@@ -197,7 +200,7 @@ const ResearchProjects = () => {
         {totalOngoing > 0 && (
           <div className="mb-16">
             <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
-              Ongoing Research Projects
+              {t("research_page.projects.ongoing")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {ongoingProjects.map((project) => (
@@ -300,7 +303,7 @@ const ResearchProjects = () => {
         {totalCompleted > 0 && (
           <div>
             <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
-              Completed Research Projects
+             {t("research_page.projects.completed")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {completedProjects.map((project) => (

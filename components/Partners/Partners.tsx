@@ -1,7 +1,10 @@
+
+"use client"
 import Image from "next/image";
 import { poppins } from "../utils/font";
 import Link from "next/link";
 import Marquee from "react-fast-marquee";
+import { useTranslation } from "react-i18next";
 
 const partners = [
   {
@@ -22,11 +25,12 @@ const partners = [
 ];
 
 const Partners = () => {
+  const {t} = useTranslation()
   return (
     <div className="w-full py-12 px-4 lg:px-0">
       <div className={`border-b border-gray-300 pb-7 ${poppins.className}`}>
         <h2 className="text-2xl lg:text-4xl font-bold text-center mb-8 lg:mb-12">
-          Our Trusted Partners
+         {t("partnersTwo.title")}
         </h2>
 
         {/* Marquee for all screen sizes */}

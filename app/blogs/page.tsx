@@ -10,11 +10,13 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { FaSearch } from "react-icons/fa";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 const ITEMS_PER_PAGE = 6;
 
 const BlogPage = () => {
+  const {t} = useTranslation()
   const [activeIndex, setActiveIndex] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -215,7 +217,7 @@ const BlogPage = () => {
           <h2
             className={`${poppins.className} font-extrabold text-3xl lg:text-5xl`}
           >
-            BLOG
+            {t("blog_page.title")}
           </h2>
           <div className="flex items-center border border-gray-300 rounded-full px-3 py-1 lg:py-2 bg-white">
             <input
@@ -297,8 +299,8 @@ const BlogPage = () => {
           ref={blogSectionRef}
         >
           <section className={`flex gap-5 font-semibold ${poppins.className}`}>
-            <Link href="/">HOME</Link> <span>||</span>
-            <p className="text-[#818181] uppercase">blog</p>
+            <Link href="/">{t("blog_page.breadcrumb.title")}</Link> <span>||</span>
+            <p className="text-[#818181] uppercase">{t("blog_page.title")}</p>
           </section>
 
           <section className="flex gap-5 items-center">
