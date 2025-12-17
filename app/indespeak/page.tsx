@@ -128,7 +128,7 @@ const Page = () => {
             <span className={`text-[#FF951B] ${poppins.className}`}>
               SCROLL DOWN
             </span>
-            <FaAnglesDown className="animate-bounce" size={24} />
+            <FaAnglesDown className="animate-bounce mt-6" size={24} />
           </div>
         </div>
       </section>

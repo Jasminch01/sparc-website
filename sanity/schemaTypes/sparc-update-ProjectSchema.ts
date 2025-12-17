@@ -13,7 +13,31 @@ export const Projects = {
       type: "string",
       validation: (Rule: Rule) => Rule.required(),
     },
+    {
+      name: "isHighlighted",
+      title: "Highlight Project",
+      type: "boolean",
+      description: "Only 2 projects can be highlighted at a time",
+      initialValue: false,
+      validation: (Rule: Rule) =>
+        Rule.custom(async (value, context) => {
+          if (!value) return true;
 
+          const { document, getClient } = context;
+          const client = getClient({ apiVersion: "2023-01-01" });
+
+          const highlightedProjects = await client.fetch(
+            `count(*[_type == "projects" && isHighlighted == true && _id != $id])`,
+            { id: document?._id }
+          );
+
+          if (highlightedProjects >= 2) {
+            return "Only 2 projects can be highlighted at a time. Please unhighlight another project first.";
+          }
+
+          return true;
+        }),
+    },
     {
       name: "status",
       title: "Status",
@@ -22,8 +46,6 @@ export const Projects = {
         list: [
           { title: "Ongoing", value: "Ongoing" },
           { title: "Completed", value: "Completed" },
-          { title: "Planned", value: "Planned" },
-          { title: "On Hold", value: "On Hold" },
         ],
         layout: "radio",
       },
@@ -67,18 +89,27 @@ export const Projects = {
       title: "title",
       status: "status",
       date: "date",
-      media: "img",
+      isHighlighted: "isHighlighted",
+      media: "projectImage",
     },
     prepare(selection: Record<string, any>) {
-      const { title, status, date, media } = selection;
+      const { title, status, date, isHighlighted, media } = selection;
       return {
-        title: title || "Untitled",
+        title: `${isHighlighted ? "⭐ " : ""}${title || "Untitled"}`,
         subtitle: `${status || "No status"} - ${date || "No date"}`,
         media: media,
       };
     },
   },
   orderings: [
+    {
+      title: "Highlighted First",
+      name: "highlightedFirst",
+      by: [
+        { field: "isHighlighted", direction: "desc" },
+        { field: "date", direction: "desc" },
+      ],
+    },
     {
       title: "Status",
       name: "statusOrder",

@@ -7,7 +7,6 @@ import { Research } from "./researchSchema";
 import { Learn } from "./learnSchema";
 import { Projects } from "./sparc-update-ProjectSchema";
 import { Events } from "./sparc-update-EventSchema";
-import { Highlight_Stories_Features } from "./sparc-update-HighlightNewsFeaturesSchema";
 import { Partners } from "./parthnerSchema";
 import { socialWorkerTeamSchema } from "./teamSchema";
 import paymentMethod from "./paymentMethod";
@@ -22,7 +21,6 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Learn,
     Projects,
     Events,
-    Highlight_Stories_Features,
     Partners,
     socialWorkerTeamSchema,
     paymentMethod

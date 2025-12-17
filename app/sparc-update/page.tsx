@@ -7,73 +7,130 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { client } from "@/sanity/lib/client";
-
-interface Data {
-  category: string;
-  img?: string;
-  des: string;
-  title: string;
-  date: string;
-  video?: string;
-}
-
-interface Project {
-  title: string;
-  img?: string;
-  date: string;
-  status: string;
-  des: string;
-  fundedBy: string;
-}
-
-interface Events {
-  title: string;
-  img?: string;
-  date: string;
-  status: string;
-  des: string;
-  timeLeft?: string;
-}
+import {
+  fetchHighlightedEvent,
+  fetchEventsPaginated,
+  type EventData,
+} from "@/sanity/queries/eventQueries";
+import {
+  fetchHighlightedProjects,
+  fetchProjectsPaginated,
+  type ProjectData,
+} from "@/sanity/queries/projectQueries";
+import { PortableText } from "next-sanity";
 
 const projectsCategory = ["All Projects", "Ongoing", "Completed"];
 const eventsCategory = ["All Events", "Ongoing", "Upcoming"];
 
 const Page = () => {
-  const [highlightData, setHighlightData] = useState<Data | null>(null);
-  const [featuredStoryData, setFeaturedStoryData] = useState<Data | null>(null);
-  const [latestNewsData, setLatestNewsData] = useState<Data | null>(null);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [events, setEvents] = useState<Events[]>([]);
+  const [highlightedEvent, setHighlightedEvent] = useState<EventData | null>(
+    null
+  );
+  const [highlightedProjects, setHighlightedProjects] = useState<ProjectData[]>(
+    []
+  );
+  const [projects, setProjects] = useState<ProjectData[]>([]);
+  const [events, setEvents] = useState<EventData[]>([]);
   const [activeProjectCategory, setActiveProjectCategory] = useState(0);
   const [activeEventCategory, setActiveEventCategory] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Helper function to create URL slug
-  const createSlug = (title: string): string => {
-    return title
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w\-]+/g, "")
-      .replace(/\-\-+/g, "-")
-      .replace(/^-+/, "")
-      .replace(/-+$/, "");
-  };
+  // Pagination states
+  const [projectPage, setProjectPage] = useState(1);
+  const [eventPage, setEventPage] = useState(1);
+  const [projectTotalPages, setProjectTotalPages] = useState(1);
+  const [eventTotalPages, setEventTotalPages] = useState(1);
+  const [projectsLoading, setProjectsLoading] = useState(false);
+  const [eventsLoading, setEventsLoading] = useState(false);
 
-  // Helper function to extract YouTube video ID
-  const getYouTubeEmbedUrl = (url: string): string => {
-    try {
-      const videoId = url.match(
-        /(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/watch\?.+&v=))([^&\n?#]+)/
-      )?.[1];
-      return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
-    } catch {
-      return url;
-    }
-  };
+  // Fetch initial data
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-  // Helper function to format date
+        // Fetch highlighted event and projects
+        const [highlightEvent, highlightProjs] = await Promise.all([
+          fetchHighlightedEvent(),
+          fetchHighlightedProjects(),
+        ]);
+
+        setHighlightedEvent(highlightEvent);
+        setHighlightedProjects(highlightProjs);
+      } catch (error) {
+        console.error("Error fetching initial data:", error);
+        setError("Failed to load data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
+
+  // Fetch projects when category or page changes
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setProjectsLoading(true);
+        const categoryMap: { [key: number]: string } = {
+          0: "all",
+          1: "Ongoing",
+          2: "Completed",
+        };
+
+        const status = categoryMap[activeProjectCategory];
+        const result = await fetchProjectsPaginated(status, projectPage, 6);
+        setProjects(result.data);
+        setProjectTotalPages(result.totalPages);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setProjectsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, [activeProjectCategory, projectPage]);
+
+  // Fetch events when category or page changes
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        setEventsLoading(true);
+        const categoryMap: { [key: number]: string } = {
+          0: "all",
+          1: "Ongoing",
+          2: "Upcoming",
+        };
+
+        const status = categoryMap[activeEventCategory];
+        const result = await fetchEventsPaginated(status, eventPage, 6);
+        setEvents(result.data);
+        setEventTotalPages(result.totalPages);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setEventsLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, [activeEventCategory, eventPage]);
+
+  // Reset to page 1 when category changes
+  useEffect(() => {
+    setProjectPage(1);
+  }, [activeProjectCategory]);
+
+  useEffect(() => {
+    setEventPage(1);
+  }, [activeEventCategory]);
+
+  // Helper functions
+
   const formatDate = (dateString: string): string => {
     if (!dateString) return "Date unavailable";
     try {
@@ -90,7 +147,6 @@ const Page = () => {
     }
   };
 
-  // Smooth scroll handler
   const handleScrollToProjects = () => {
     const element = document.getElementById("projects");
     if (element) {
@@ -98,132 +154,62 @@ const Page = () => {
     }
   };
 
-  // Fetch only ONE item per category: Highlight, Featured Stories, Latest News
-  useEffect(() => {
-    const fetchUpdates = async () => {
-      try {
-        setLoading(true);
-        setError(null);
+  // Pagination component
+  const Pagination = ({
+    currentPage,
+    totalPages,
+    onPageChange,
+  }: {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+  }) => {
+    if (totalPages <= 1) return null;
 
-        // Fetch only 1 highlight (most recent)
-        const highlightResult = await client.fetch(`
-          *[_type == "newsUpdate" && category == "highlight"] | order(date desc)[0...1]{
-            title,
-            category,
-            date,
-            des,
-            "img": img.asset->url,
-            video
-          }
-        `);
-        setHighlightData(
-          highlightResult && highlightResult.length > 0
-            ? highlightResult[0]
-            : null
-        );
+    return (
+      <div className="flex justify-center items-center gap-2 mt-8">
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 rounded ${
+            currentPage === 1
+              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "bg-[#FF951B] text-white hover:bg-orange-400"
+          } ${poppins.className}`}
+        >
+          Previous
+        </button>
 
-        // Fetch only 1 featured story (most recent)
-        const featuredResult = await client.fetch(`
-          *[_type == "newsUpdate" && category == "FEATURED_STORIES"] | order(date desc)[0...1]{
-            title,
-            category,
-            date,
-            des,
-            "img": img.asset->url,
-            video
-          }
-        `);
-        setFeaturedStoryData(
-          featuredResult && featuredResult.length > 0 ? featuredResult[0] : null
-        );
+        <div className="flex gap-2">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => onPageChange(page)}
+              className={`px-4 py-2 rounded ${
+                currentPage === page
+                  ? "bg-[#FF951B] text-white"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              } ${poppins.className}`}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
 
-        // Fetch only 1 latest news (most recent)
-        const latestResult = await client.fetch(`
-          *[_type == "newsUpdate" && category == "LATEST_NEWS"] | order(date desc)[0...1]{
-            title,
-            category,
-            date,
-            des,
-            "img": img.asset->url,
-            video
-          }
-        `);
-        setLatestNewsData(
-          latestResult && latestResult.length > 0 ? latestResult[0] : null
-        );
-      } catch (err) {
-        console.error("Error fetching updates:", err);
-        setError("Failed to load updates");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUpdates();
-  }, []);
-
-  // Fetch projects
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const query = `
-        *[_type == "project"] | order(date desc) {
-          title,
-          date,
-          status,
-          des,
-          fundedBy,
-          "img": img.asset->url,
-        }`;
-
-        const result: Project[] = await client.fetch(query);
-        setProjects(result || []);
-      } catch (error) {
-        console.error("Error fetching projects from Sanity:", error);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
-  // Fetch events
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const query = `
-        *[_type == "event"] | order(date desc) {
-          title,
-          date,
-          status,
-          des,
-          timeLeft,
-          "img": img.asset->url,
-        }`;
-
-        const result: Events[] = await client.fetch(query);
-        setEvents(result || []);
-      } catch (error) {
-        console.error("Error fetching events from Sanity:", error);
-      }
-    };
-
-    fetchEvents();
-  }, []);
-
-  const combineProjects =
-    projectsCategory[activeProjectCategory] === "All Projects"
-      ? projects
-      : projects.filter(
-          (project) =>
-            project.status === projectsCategory[activeProjectCategory]
-        );
-
-  const combineEvents =
-    eventsCategory[activeEventCategory] === "All Events"
-      ? events
-      : events.filter(
-          (event) => event.status === eventsCategory[activeEventCategory]
-        );
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 rounded ${
+            currentPage === totalPages
+              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "bg-[#FF951B] text-white hover:bg-orange-400"
+          } ${poppins.className}`}
+        >
+          Next
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="mt-10 sm:mt-12 md:mt-15">
@@ -298,7 +284,7 @@ const Page = () => {
         </section>
       </Container>
 
-      {/* Data Content Section */}
+      {/* Highlighted Event Section */}
       <Container>
         {loading ? (
           <div className="flex justify-center items-center h-64 my-20">
@@ -317,7 +303,7 @@ const Page = () => {
           </div>
         ) : (
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 mt-15 border border-gray-300 sm:mt-20">
-            {/* Left Column - Highlight (ONLY 1 ITEM) */}
+            {/* Left Column - Highlighted Event */}
             <div className="border-r border-gray-300 relative">
               <div
                 className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
@@ -329,21 +315,21 @@ const Page = () => {
                 <h3
                   className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
                 >
-                  HIGHLIGHT
+                  HIGHLIGHT EVENT
                 </h3>
               </div>
 
               <div className="p-6 pt-8">
-                {highlightData ? (
+                {highlightedEvent ? (
                   <Link
-                    href={`/sparc-update/${createSlug(highlightData.title)}`}
+                    href={`/sparc-update/${highlightedEvent.title}`}
                     className="cursor-pointer group"
                   >
-                    {highlightData.img && (
+                    {highlightedEvent.img && (
                       <div className="relative w-full h-[250px] lg:h-[300px] mb-4 overflow-hidden">
                         <Image
-                          src={highlightData.img}
-                          alt={highlightData.title || "Highlight image"}
+                          src={highlightedEvent.img}
+                          alt={highlightedEvent.title || "Highlight event"}
                           fill
                           sizes="(max-width: 768px) 100vw, 50vw"
                           className="object-cover"
@@ -353,18 +339,18 @@ const Page = () => {
                     <h2
                       className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
                     >
-                      {highlightData.title}
+                      {highlightedEvent.title}
                     </h2>
                     <p
                       className={`text-xs text-[#4D4D4D] mb-4 uppercase ${poppins.className}`}
                     >
-                      {formatDate(highlightData.date)}
+                      {formatDate(highlightedEvent.date)}
                     </p>
-                    <p
+                    <div
                       className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}
                     >
-                      {highlightData.des}
-                    </p>
+                      <PortableText value={highlightedEvent.description} />
+                    </div>
                     <button
                       className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
                     >
@@ -375,16 +361,16 @@ const Page = () => {
                   <p
                     className={`text-center text-[#4D4D4D] ${poppins.className}`}
                   >
-                    No highlights available
+                    No highlighted event available
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Right Column - Featured Stories & Latest News (ONLY 1 ITEM EACH) */}
+            {/* Right Column - Highlighted Projects */}
             <div className="relative">
               <div
-                className="absolute -top-[45px] left-0 w-60 bg-[#E5E5E5] text-black px-6 py-3 z-10"
+                className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
                 style={{
                   clipPath:
                     "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
@@ -393,144 +379,67 @@ const Page = () => {
                 <h3
                   className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
                 >
-                  FEATURED STORIES
+                  HIGHLIGHTED PROJECTS
                 </h3>
               </div>
 
-              <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
-                {featuredStoryData ? (
-                  <Link
-                    href={`/sparc-update/${createSlug(featuredStoryData.title)}`}
-                    className="mb-6 group cursor-pointer"
+              {highlightedProjects.length > 0 ? (
+                highlightedProjects.map((project, index) => (
+                  <div
+                    key={project._id}
+                    className={`p-6 lg:pt-8 ${
+                      index === 0 ? "" : "border-t border-gray-300"
+                    }`}
                   >
-                    {featuredStoryData.img && (
-                      <div className="relative w-full h-[300px] mb-3 overflow-hidden">
-                        <Image
-                          src={featuredStoryData.img}
-                          alt={
-                            featuredStoryData.title || "Featured story image"
-                          }
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover"
-                        />
+                    <Link
+                      href={`/sparc-update/${project.title}`}
+                      className="group cursor-pointer"
+                    >
+                      {project.projectImage && (
+                        <div className="relative w-full h-[300px] mb-3 overflow-hidden">
+                          <Image
+                            src={project.projectImage}
+                            alt={project.title || "Highlighted project"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      <h3
+                        className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
+                      >
+                        {project.title}
+                      </h3>
+                      <div
+                        className={`text-lg text-[#4D4D4D] mb-3 line-clamp-3 ${antiquaFont.className}`}
+                      >
+                        <PortableText value={project.description} />
                       </div>
-                    )}
-                    <h3
-                      className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
-                    >
-                      {featuredStoryData.title}
-                    </h3>
-                    <p
-                      className={`text-lg text-[#4D4D4D] mb-3 ${antiquaFont.className}`}
-                    >
-                      {featuredStoryData.des.length > 100
-                        ? `${featuredStoryData.des.substring(0, 100)}...`
-                        : featuredStoryData.des}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p
-                        className={`text-xs text-[#4D4D4D] uppercase ${poppins.className}`}
-                      >
-                        {formatDate(featuredStoryData.date)}
-                      </p>
-                      <button
-                        className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
-                      >
-                        Read More <span>→</span>
-                      </button>
-                    </div>
-                  </Link>
-                ) : (
+                      <div className="flex justify-between items-center">
+                        <p
+                          className={`text-xs text-[#4D4D4D] uppercase ${poppins.className}`}
+                        >
+                          {formatDate(project.date)}
+                        </p>
+                        <button
+                          className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
+                        >
+                          Read More <span>→</span>
+                        </button>
+                      </div>
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <div className="p-6 pt-8">
                   <p
                     className={`text-center text-[#4D4D4D] ${poppins.className}`}
                   >
-                    No featured stories available
+                    No highlighted projects available
                   </p>
-                )}
-              </div>
-
-              <div
-                className="w-60 bg-[#E5E5E5] text-black px-6 py-3"
-                style={{
-                  clipPath:
-                    "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
-                }}
-              >
-                <h3
-                  className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
-                >
-                  LATEST NEWS
-                </h3>
-              </div>
-
-              <div className="p-6 border-t border-gray-300">
-                {latestNewsData ? (
-                  <div className="group cursor-pointer">
-                    <div className="relative w-full h-[300px] mb-3 overflow-hidden">
-                      {latestNewsData.video ? (
-                        <iframe
-                          src={getYouTubeEmbedUrl(latestNewsData.video)}
-                          className="w-full h-full"
-                          title={latestNewsData.title}
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        />
-                      ) : latestNewsData.img ? (
-                        <Image
-                          src={latestNewsData.img}
-                          alt={latestNewsData.title || "Latest news image"}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          className="object-cover"
-                        />
-                      ) : null}
-                    </div>
-                    <h3
-                      className={`text-xl lg:text-2xl group-hover:text-[#FF951B] font-bold mb-2 leading-tight ${poppins.className}`}
-                    >
-                      {latestNewsData.title}
-                    </h3>
-                    <p
-                      className={`text-lg text-[#4D4D4D]  mb-3 ${antiquaFont.className}`}
-                    >
-                      {latestNewsData.des.length > 80
-                        ? `${latestNewsData.des.substring(0, 80)}...`
-                        : latestNewsData.des}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p
-                        className={`text-xs text-[#4D4D4D]  uppercase ${poppins.className}`}
-                      >
-                        {formatDate(latestNewsData.date)}
-                      </p>
-                      {latestNewsData.video ? (
-                        <Link
-                          href={latestNewsData.video}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                        >
-                          Watch Video <span>→</span>
-                        </Link>
-                      ) : (
-                        <Link
-                          href={`/sparc-update/${createSlug(latestNewsData.title)}`}
-                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
-                        >
-                          Read More <span>→</span>
-                        </Link>
-                      )}
-                    </div>
-                  </div>
-                ) : (
-                  <p
-                    className={`text-center text-[#4D4D4D]  ${poppins.className}`}
-                  >
-                    No latest news available
-                  </p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -546,7 +455,7 @@ const Page = () => {
               FUNDING & PROJECT UPDATES
             </h2>
             <p
-              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-[#4D4D4D] `}
+              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-[#4D4D4D]`}
             >
               Each update reflects our commitment to accountability,
               collaboration, and positive impact across Indigenous regions.
@@ -573,75 +482,90 @@ const Page = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
-            {combineProjects && combineProjects.length > 0 ? (
-              combineProjects.map((project, index) => (
-                <Link
-                  href={`/sparc-update/${createSlug(project.title)}`}
-                  key={`project-${index}`}
-                  className="relative"
-                >
-                  <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px]">
-                    {project.img && (
-                      <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
-                        <Image
-                          src={project.img}
-                          alt={project.title || "Project image"}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover"
-                        />
+          {projectsLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
+                {projects && projects.length > 0 ? (
+                  projects.map((project) => (
+                    <Link
+                      href={`/sparc-update/${project.title}`}
+                      key={`project-${project._id}`}
+                      className="relative"
+                    >
+                      <div className="border cursor-pointer border-gray-300 group p-3 lg:p-4 rounded-lg lg:h-[550px]">
+                        {project.projectImage && (
+                          <div className="relative w-full h-[250px] sm:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
+                            <Image
+                              src={project.projectImage}
+                              alt={project.title || "Project image"}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                        <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
+                          <h2
+                            className={`${poppins.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
+                          >
+                            {project.title}
+                          </h2>
+                          <div
+                            className={`${antiquaFont.className} text-sm text-[#4D4D4D] sm:text-base text-justify line-clamp-3`}
+                          >
+                            <PortableText value={project.description} />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
+                            <p
+                              className={`font-bold ${
+                                project.status === "Ongoing"
+                                  ? "text-[#F26522]"
+                                  : "text-[#018F44]"
+                              } ${poppins.className}`}
+                            >
+                              {project.status}
+                            </p>
+                            <span className="hidden sm:inline">|</span>
+                            <p className={`${poppins.className}`}>
+                              {formatDate(project.date)}
+                            </p>
+                            <span className="hidden sm:inline">|</span>
+                            <p className={`${poppins.className}`}>
+                              Funded By {project.fundedBy}
+                            </p>
+                          </div>
+                          <div className="h-10">
+                            <button
+                              className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
+                            >
+                              View Report <IoIosArrowRoundForward size={20} />
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                    )}
-                    <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
-                      <h2
-                        className={`${poppins.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
-                      >
-                        {project.title}
-                      </h2>
-                      <p
-                        className={`${antiquaFont.className} text-sm text-[#4D4D4D]   sm:text-base text-justify line-clamp-3`}
-                      >
-                        {project.des}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
-                        <p
-                          className={`font-bold ${
-                            project.status === "Ongoing"
-                              ? "text-[#F26522]"
-                              : "text-[#018F44]"
-                          } ${poppins.className}`}
-                        >
-                          {project.status}
-                        </p>
-                        <span className="hidden sm:inline">|</span>
-                        <p className={`${poppins.className}`}>
-                          {formatDate(project.date)}
-                        </p>
-                        <span className="hidden sm:inline">|</span>
-                        <p className={`${poppins.className}`}>
-                          Funded By {project.fundedBy}
-                        </p>
-                      </div>
-                      <div className="h-10">
-                        <button
-                          className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
-                        >
-                          View Report <IoIosArrowRoundForward size={20} />
-                        </button>
-                      </div>
-                    </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-10">
+                    <p className={`text-gray-500 ${poppins.className}`}>
+                      No projects available
+                    </p>
                   </div>
-                </Link>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-10">
-                <p className={`text-gray-500 ${poppins.className}`}>
-                  No projects available
-                </p>
+                )}
               </div>
-            )}
-          </div>
+
+              {/* Projects Pagination */}
+              <Pagination
+                currentPage={projectPage}
+                totalPages={projectTotalPages}
+                onPageChange={setProjectPage}
+              />
+            </>
+          )}
         </section>
       </Container>
 
@@ -682,79 +606,94 @@ const Page = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
-            {combineEvents && combineEvents.length > 0 ? (
-              combineEvents.map((event, index) => (
-                <Link
-                  href={`/sparc-update/${createSlug(event.title)}`}
-                  key={`event-${index}`}
-                  className="relative"
-                >
-                  <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
-                    {event.img && (
-                      <div className="relative w-full h-[250px] lg:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
-                        <Image
-                          src={event.img}
-                          alt={event.title || "Event image"}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
-                    <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
-                      <h2
-                        className={`${poppins.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
-                      >
-                        {event.title}
-                      </h2>
-                      <p
-                        className={`${antiquaFont.className} text-sm text-[#4D4D4D]  lg:text-base text-justify line-clamp-3`}
-                      >
-                        {event.des}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
-                        <p
-                          className={`font-bold ${
-                            event.status === "Upcoming"
-                              ? "text-[#36133B]"
-                              : "text-[#018F44]"
-                          } ${poppins.className}`}
-                        >
-                          {event.status}
-                        </p>
-                        <span className="hidden sm:inline">|</span>
-                        <p className={`${poppins.className}`}>
-                          {formatDate(event.date)}
-                        </p>
-                        {event.timeLeft && (
-                          <>
+          {eventsLoading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-8 sm:mb-10 gap-4 sm:gap-5">
+                {events && events.length > 0 ? (
+                  events.map((event) => (
+                    <Link
+                      href={`/sparc-update/${event.title}`}
+                      key={`event-${event._id}`}
+                      className="relative"
+                    >
+                      <div className="border cursor-pointer border-gray-300 p-3 lg:p-4 group rounded-lg lg:h-[550px]">
+                        {event.img && (
+                          <div className="relative w-full h-[250px] lg:h-[300px] mb-3 sm:mb-4 overflow-hidden rounded-lg">
+                            <Image
+                              src={event.img}
+                              alt={event.title || "Event image"}
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              className="object-cover"
+                            />
+                          </div>
+                        )}
+                        <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
+                          <h2
+                            className={`${poppins.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
+                          >
+                            {event.title}
+                          </h2>
+                          <div
+                            className={`${antiquaFont.className} text-sm text-[#4D4D4D] lg:text-base text-justify line-clamp-3`}
+                          >
+                            <PortableText value={event.description} />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
+                            <p
+                              className={`font-bold ${
+                                event.status === "Upcoming"
+                                  ? "text-[#36133B]"
+                                  : "text-[#018F44]"
+                              } ${poppins.className}`}
+                            >
+                              {event.status}
+                            </p>
                             <span className="hidden sm:inline">|</span>
                             <p className={`${poppins.className}`}>
-                              {event.timeLeft} Left
+                              {formatDate(event.date)}
                             </p>
-                          </>
-                        )}
+                            {event.timeLeft && (
+                              <>
+                                <span className="hidden sm:inline">|</span>
+                                <p className={`${poppins.className}`}>
+                                  {event.timeLeft} Left
+                                </p>
+                              </>
+                            )}
+                          </div>
+                          <div className="h-10">
+                            <button
+                              className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
+                            >
+                              View Report <IoIosArrowRoundForward size={20} />
+                            </button>
+                          </div>
+                        </div>
                       </div>
-                      <div className="h-10">
-                        <button
-                          className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
-                        >
-                          View Report <IoIosArrowRoundForward size={20} />
-                        </button>
-                      </div>
-                    </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-10">
+                    <p className={`text-gray-500 ${poppins.className}`}>
+                      No events available
+                    </p>
                   </div>
-                </Link>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-10">
-                <p className={`text-gray-500 ${poppins.className}`}>
-                  No events available
-                </p>
+                )}
               </div>
-            )}
-          </div>
+
+              {/* Events Pagination */}
+              <Pagination
+                currentPage={eventPage}
+                totalPages={eventTotalPages}
+                onPageChange={setEventPage}
+              />
+            </>
+          )}
         </section>
         <Image
           src={frame}
