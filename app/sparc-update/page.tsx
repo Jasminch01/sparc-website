@@ -98,17 +98,9 @@ const Page = () => {
     }
   };
 
-  // Smooth scroll handler
-  const handleScrollToProjects = () => {
-    const element = document.getElementById("projects");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  // Fetch only ONE item per category: Highlight, Featured Stories, Latest News
+  // Fetch initial data
   useEffect(() => {
-    const fetchUpdates = async () => {
+    const fetchInitialData = async () => {
       try {
         setLoading(true);
         setError(null);
@@ -171,53 +163,115 @@ const Page = () => {
     fetchUpdates();
   }, []); // Removed [t] from dependency array as per JSON scope
 
-  // Fetch projects
+  // Fetch projects when category or page changes
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const query = `
-        *[_type == "project"] | order(date desc) {
-          title,
-          date,
-          status,
-          des,
-          fundedBy,
-          "img": img.asset->url,
-        }`;
+        setProjectsLoading(true);
+        const categoryMap: { [key: number]: string } = {
+          0: "all",
+          1: "Ongoing",
+          2: "Completed",
+        };
 
-        const result: Project[] = await client.fetch(query);
-        setProjects(result || []);
+        const status = categoryMap[activeProjectCategory];
+        const result = await fetchProjectsPaginated(status, projectPage, 6);
+        setProjects(result.data);
+        setProjectTotalPages(result.totalPages);
       } catch (error) {
-        console.error("Error fetching projects from Sanity:", error);
+        console.error("Error fetching projects:", error);
+      } finally {
+        setProjectsLoading(false);
       }
     };
 
     fetchProjects();
-  }, []);
+  }, [activeProjectCategory, projectPage]);
 
-  // Fetch events
+  // Fetch events when category or page changes
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const query = `
-        *[_type == "event"] | order(date desc) {
-          title,
-          date,
-          status,
-          des,
-          timeLeft,
-          "img": img.asset->url,
-        }`;
+        setEventsLoading(true);
+        const categoryMap: { [key: number]: string } = {
+          0: "all",
+          1: "Ongoing",
+          2: "Upcoming",
+        };
 
-        const result: Events[] = await client.fetch(query);
-        setEvents(result || []);
+        const status = categoryMap[activeEventCategory];
+        const result = await fetchEventsPaginated(status, eventPage, 6);
+        setEvents(result.data);
+        setEventTotalPages(result.totalPages);
       } catch (error) {
-        console.error("Error fetching events from Sanity:", error);
+        console.error("Error fetching events:", error);
+      } finally {
+        setEventsLoading(false);
       }
     };
 
     fetchEvents();
-  }, []);
+  }, [activeEventCategory, eventPage]);
+
+  // Reset to page 1 when category changes
+  useEffect(() => {
+    setProjectPage(1);
+  }, [activeProjectCategory]);
+
+  useEffect(() => {
+    setEventPage(1);
+  }, [activeEventCategory]);
+
+  // Helper functions
+
+  const formatDate = (dateString: string): string => {
+    if (!dateString) return "Date unavailable";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return dateString;
+
+      return date.toLocaleDateString("en-US", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  const handleScrollToProjects = () => {
+    const element = document.getElementById("projects");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Pagination component
+  const Pagination = ({
+    currentPage,
+    totalPages,
+    onPageChange,
+  }: {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+  }) => {
+    if (totalPages <= 1) return null;
+
+    return (
+      <div className="flex justify-center items-center gap-2 mt-8">
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 rounded ${
+            currentPage === 1
+              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+              : "bg-[#FF951B] text-white hover:bg-orange-400"
+          } ${poppins.className}`}
+        >
+          Previous
+        </button>
 
   const combineProjects =
     projectsCategory[activeProjectCategory] === "All Projects"
@@ -311,7 +365,7 @@ const Page = () => {
         </section>
       </Container>
 
-      {/* Data Content Section */}
+      {/* Highlighted Event Section */}
       <Container>
         {loading ? (
           <div className="flex justify-center items-center h-64 my-20">
@@ -331,7 +385,7 @@ const Page = () => {
           </div>
         ) : (
           <section className="grid grid-cols-1 lg:grid-cols-2 gap-0 mb-8 sm:mb-10 mt-15 border border-gray-300 sm:mt-20">
-            {/* Left Column - Highlight (ONLY 1 ITEM) */}
+            {/* Left Column - Highlighted Event */}
             <div className="border-r border-gray-300 relative">
               <div
                 className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
@@ -343,17 +397,17 @@ const Page = () => {
                 <h3
                   className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
                 >
-                  HIGHLIGHT
+                  HIGHLIGHT EVENT
                 </h3>
               </div>
 
               <div className="p-6 pt-8">
-                {highlightData ? (
+                {highlightedEvent ? (
                   <Link
-                    href={`/sparc-update/${createSlug(highlightData.title)}`}
+                    href={`/sparc-update/${highlightedEvent.title}`}
                     className="cursor-pointer group"
                   >
-                    {highlightData.img && (
+                    {highlightedEvent.img && (
                       <div className="relative w-full h-[250px] lg:h-[300px] mb-4 overflow-hidden">
                         <Image
                           src={highlightData.img}
@@ -368,18 +422,18 @@ const Page = () => {
                     <h2
                       className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
                     >
-                      {highlightData.title}
+                      {highlightedEvent.title}
                     </h2>
                     <p
                       className={`text-xs text-[#4D4D4D] mb-4 uppercase ${poppins.className}`}
                     >
-                      {formatDate(highlightData.date)}
+                      {formatDate(highlightedEvent.date)}
                     </p>
-                    <p
+                    <div
                       className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}
                     >
-                      {highlightData.des}
-                    </p>
+                      <PortableText value={highlightedEvent.description} />
+                    </div>
                     <button
                       className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
                     >
@@ -391,16 +445,16 @@ const Page = () => {
                   <p
                     className={`text-center text-[#4D4D4D] ${poppins.className}`}
                   >
-                    No highlights available
+                    No highlighted event available
                   </p>
                 )}
               </div>
             </div>
 
-            {/* Right Column - Featured Stories & Latest News (ONLY 1 ITEM EACH) */}
+            {/* Right Column - Highlighted Projects */}
             <div className="relative">
               <div
-                className="absolute -top-[45px] left-0 w-60 bg-[#E5E5E5] text-black px-6 py-3 z-10"
+                className="absolute -top-[45px] left-0 w-60 bg-[#303030] text-white px-6 py-3 z-10"
                 style={{
                   clipPath:
                     "polygon(0 0, calc(100% - 40px) 0, 100% 100%, 0 100%)",
@@ -409,15 +463,17 @@ const Page = () => {
                 <h3
                   className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
                 >
-                  FEATURED STORIES
+                  HIGHLIGHTED PROJECTS
                 </h3>
               </div>
 
-              <div className="p-6 lg:pt-8 lg:border-0 border-t border-gray-300">
-                {featuredStoryData ? (
-                  <Link
-                    href={`/sparc-update/${createSlug(featuredStoryData.title)}`}
-                    className="mb-6 group cursor-pointer"
+              {highlightedProjects.length > 0 ? (
+                highlightedProjects.map((project, index) => (
+                  <div
+                    key={project._id}
+                    className={`p-6 lg:pt-8 ${
+                      index === 0 ? "" : "border-t border-gray-300"
+                    }`}
                   >
                     {featuredStoryData.img && (
                       <div className="relative w-full h-[300px] mb-3 overflow-hidden">
@@ -441,18 +497,19 @@ const Page = () => {
                     <p
                       className={`text-lg text-[#4D4D4D] mb-3 ${antiquaFont.className}`}
                     >
-                      {featuredStoryData.des.length > 100
-                        ? `${featuredStoryData.des.substring(0, 100)}...`
-                        : featuredStoryData.des}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <p
-                        className={`text-xs text-[#4D4D4D] uppercase ${poppins.className}`}
-                      >
-                        {formatDate(featuredStoryData.date)}
-                      </p>
-                      <button
-                        className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
+                      {project.projectImage && (
+                        <div className="relative w-full h-[300px] mb-3 overflow-hidden">
+                          <Image
+                            src={project.projectImage}
+                            alt={project.title || "Highlighted project"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                      <h3
+                        className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
                       >
                         {/* NOTE: Keeping default text for missing key */}
                         Read More <span>→</span>
@@ -522,14 +579,11 @@ const Page = () => {
                       <p
                         className={`text-xs text-[#4D4D4D]  uppercase ${poppins.className}`}
                       >
-                        {formatDate(latestNewsData.date)}
-                      </p>
-                      {latestNewsData.video ? (
-                        <Link
-                          href={latestNewsData.video}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`text-sm font-medium flex items-center gap-2 group-hover:text-[#FF951B] transition-colors ${poppins.className}`}
+                        <PortableText value={project.description} />
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <p
+                          className={`text-xs text-[#4D4D4D] uppercase ${poppins.className}`}
                         >
                           {/* NOTE: Keeping default text for missing key */}
                           Watch Video <span>→</span>
@@ -541,19 +595,21 @@ const Page = () => {
                         >
                           {/* NOTE: Keeping default text for missing key */}
                           Read More <span>→</span>
-                        </Link>
-                      )}
-                    </div>
+                        </button>
+                      </div>
+                    </Link>
                   </div>
-                ) : (
+                ))
+              ) : (
+                <div className="p-6 pt-8">
                   <p
                     className={`text-center text-[#4D4D4D]  ${poppins.className}`}
                   >
                     {/* NOTE: Keeping default text for missing key */}
                     No latest news available
                   </p>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </section>
         )}
@@ -570,7 +626,7 @@ const Page = () => {
               {t('sparc_update_page.updates_section.projects_header', 'FUNDING & PROJECT UPDATES')}
             </h2>
             <p
-              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-[#4D4D4D] `}
+              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-[#4D4D4D]`}
             >
               {/* 8. Translate Funding & Project Updates Description */}
               {t('sparc_update_page.updates_section.projects_description', 'Each update reflects our commitment to accountability, collaboration, and positive impact across Indigenous regions.')}
@@ -657,7 +713,13 @@ const Page = () => {
                           View Report <IoIosArrowRoundForward size={20} />
                         </button>
                       </div>
-                    </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-10">
+                    <p className={`text-gray-500 ${poppins.className}`}>
+                      No projects available
+                    </p>
                   </div>
                 </Link>
               ))
@@ -668,8 +730,15 @@ const Page = () => {
                   No projects available
                 </p>
               </div>
-            )}
-          </div>
+
+              {/* Projects Pagination */}
+              <Pagination
+                currentPage={projectPage}
+                totalPages={projectTotalPages}
+                onPageChange={setProjectPage}
+              />
+            </>
+          )}
         </section>
       </Container>
 
@@ -775,7 +844,13 @@ const Page = () => {
                           View Report <IoIosArrowRoundForward size={20} />
                         </button>
                       </div>
-                    </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-10">
+                    <p className={`text-gray-500 ${poppins.className}`}>
+                      No events available
+                    </p>
                   </div>
                 </Link>
               ))
@@ -786,8 +861,15 @@ const Page = () => {
                   No events available
                 </p>
               </div>
-            )}
-          </div>
+
+              {/* Events Pagination */}
+              <Pagination
+                currentPage={eventPage}
+                totalPages={eventTotalPages}
+                onPageChange={setEventPage}
+              />
+            </>
+          )}
         </section>
       </Container>
     </div>

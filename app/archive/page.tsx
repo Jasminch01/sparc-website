@@ -138,19 +138,16 @@ const Page = () => {
     });
   };
 
-  // Handle category change
   const handleCategoryChange = (index: number, category: string) => {
     setActiveIndex(index);
     setActiveCategory(category);
   };
 
-  // Handle page change
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     document.getElementById("data")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Generate page numbers for pagination
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 5;
@@ -364,10 +361,7 @@ const Page = () => {
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {filteredData.map((project) => (
-                  <Link
-                    href={`/archive/${project.title}`}
-                    key={project._id}
-                  >
+                  <Link href={`/archive/${project.title}`} key={project._id}>
                     <div className="relative h-full group">
                       <div className="border border-gray-300 p-3 md:p-4 rounded-lg h-full flex flex-col">
                         <div className="relative w-full h-[250px] md:h-[250px] mb-3 md:mb-4 shrink-0">

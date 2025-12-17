@@ -4,43 +4,21 @@ import Image from "next/image";
 import { antiquaFont, poppins } from "@/components/utils/font";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { client } from "@/sanity/lib/client";
 import Container from "@/components/Container";
 import { IoArrowBack } from "react-icons/io5";
-
-interface ReportDetail {
-  _id: string;
-  title: string;
-  writtenOn: string;
-  des: string;
-  img: string;
-  category: "reports" | "publications";
-  date: string;
-  imgDes?: string;
-  publisher?: string;
-  author?: string;
-  publicationLanguage?: string;
-  financialSupportBy?: string;
-  releaseYear?: number;
-  releaseMonth?: string;
-}
-
-// Function to convert title → slug internally
-const makeSlug = (title: string) =>
-  title
-    .toLowerCase()
-    .replace(/\s+/g, "-")
-    .replace(/[^\w\-]+/g, "")
-    .replace(/\-\-+/g, "-")
-    .replace(/^-+/, "")
-    .replace(/-+$/, "");
+import {
+  fetchReportBySlug,
+  fetchRelatedReports,
+  type ReportData,
+} from "@/sanity/queries/reportQueries";
+import { PortableText } from "next-sanity";
 
 const Page = () => {
   const params = useParams();
   const slug = params?.slug as string | undefined;
 
-  const [data, setData] = useState<ReportDetail | null>(null);
-  const [relatedItems, setRelatedItems] = useState<ReportDetail[]>([]);
+  const [data, setData] = useState<ReportData | null>(null);
+  const [relatedItems, setRelatedItems] = useState<ReportData[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -51,56 +29,31 @@ const Page = () => {
       return;
     }
 
+    const slugString = Array.isArray(slug) ? slug[0] : slug.toString();
+    const cleanedSlug = slugString.split("/").pop() || "";
+    const decodedSlug = decodeURIComponent(cleanedSlug);
+
+    const titleFromSlug = decodedSlug.replace(/-/g, " ");
+
     const fetchData = async () => {
       try {
         setLoading(true);
         setNotFound(false);
 
-        // Fetch all reports and publications
-        const allData: ReportDetail[] = await client.fetch(`
-          *[_type == "reports"] | order(writtenOn desc) {
-            _id,
-            title,
-            writtenOn,
-            des,
-            "img": img.asset->url,
-            category,
-            date,
-            imgDes,
-            publisher,
-            author,
-            publicationLanguage,
-            financialSupportBy,
-            releaseYear,
-            releaseMonth
-          }
-        `);
+        // Fetch the report by slug
+        const reportData = await fetchReportBySlug(titleFromSlug);
 
-        // Safety check
-        if (!allData || allData.length === 0) {
-          setNotFound(true);
-          return;
-        }
-
-        // Find the current item using internal slug
-        const currentItem = allData.find(
-          (item) => makeSlug(item.title) === slug
-        );
-
-        if (!currentItem) {
+        if (!reportData) {
           setNotFound(true);
         } else {
-          setData(currentItem);
+          setData(reportData);
 
-          // Get related items (same category, same date range, exclude current)
-          const related = allData
-            .filter(
-              (item) =>
-                item.category === currentItem.category &&
-                item.date === currentItem.date &&
-                item._id !== currentItem._id
-            )
-            .slice(0, 3);
+          // Fetch related reports (same category)
+          const related = await fetchRelatedReports(
+            reportData._id,
+            reportData.category,
+            3
+          );
           setRelatedItems(related);
         }
       } catch (error) {
@@ -138,9 +91,6 @@ const Page = () => {
         <div className="max-w-7xl mx-auto py-20 text-center">
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-            <p className={`text-xl text-gray-600 ${poppins.className}`}>
-              Loading content...
-            </p>
           </div>
         </div>
       </Container>
@@ -157,9 +107,7 @@ const Page = () => {
           >
             Content Not Found
           </h1>
-          <p
-            className={`text-gray-600 mb-6 ${antiquaFont.className} text-lg`}
-          >
+          <p className={`text-gray-600 mb-6 ${antiquaFont.className} text-lg`}>
             The report or publication you are looking for does not exist or has
             been removed.
           </p>
@@ -203,10 +151,11 @@ const Page = () => {
           {/* Category Badge */}
           <div className="mb-4">
             <span
-              className={`inline-block px-4 py-2 ${data.category === "reports"
-                ? "bg-blue-100 text-blue-600"
-                : "bg-purple-100 text-purple-600"
-                } rounded-full text-sm font-semibold uppercase ${poppins.className}`}
+              className={`inline-block px-4 py-2 ${
+                data.category === "reports"
+                  ? "bg-blue-100 text-blue-600"
+                  : "bg-purple-100 text-purple-600"
+              } rounded-full text-sm font-semibold uppercase ${poppins.className}`}
             >
               {data.category}
             </span>
@@ -231,17 +180,14 @@ const Page = () => {
                 </span>
               </span>
             </div>
-            <div className="text-sm text-gray-600">
-              Date Range: <span className="font-semibold">{data.date}</span>
-            </div>
           </div>
 
           {/* Description */}
-          <p
-            className={`text-lg lg:text-xl leading-relaxed text-gray-700 ${antiquaFont.className}`}
+          <div
+            className={`text-lg lg:text-xl leading-relaxed text-gray-700 ${antiquaFont.className} whitespace-pre-line`}
           >
-            {data.des}
-          </p>
+            <PortableText value={data.description} />
+          </div>
 
           {/* Featured Image */}
           {data.img && (
@@ -329,21 +275,30 @@ const Page = () => {
         {/* Related Items */}
         {relatedItems && relatedItems.length > 0 && (
           <div className="mt-16 lg:mt-20 pt-12 border-t border-gray-200">
-            <h2
-              className={`text-2xl lg:text-3xl font-bold mb-8 ${poppins.className}`}
-            >
-              Related {data.category === "reports" ? "Reports" : "Publications"}
-            </h2>
+            <div className="flex items-center justify-between mb-8">
+              <h2
+                className={`text-2xl lg:text-3xl font-bold ${poppins.className}`}
+              >
+                Related{" "}
+                {data.category === "reports" ? "Reports" : "Publications"}
+              </h2>
+              <Link
+                href="/reports-publications"
+                className={`inline-flex items-center gap-2 text-[#36133B] hover:text-[#FF951B] transition-colors ${poppins.className} font-semibold text-sm md:text-base`}
+              >
+                <IoArrowBack /> View All
+              </Link>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedItems.map((item) => (
                 <Link
-                  href={`/reports-publications/${makeSlug(item.title)}`}
+                  href={`/reports-publications/${item.title}`}
                   key={item._id}
                   className="group"
                 >
-                  <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
+                  <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow h-full flex flex-col">
                     {item.img && (
-                      <div className="relative h-48 w-full overflow-hidden">
+                      <div className="relative h-48 w-full overflow-hidden shrink-0">
                         <Image
                           src={item.img}
                           alt={item.title}
@@ -353,12 +308,13 @@ const Page = () => {
                         />
                       </div>
                     )}
-                    <div className="p-4">
+                    <div className="p-4 flex flex-col grow">
                       <span
-                        className={`inline-block px-3 py-1 ${item.category === "reports"
-                          ? "bg-blue-100 text-blue-600"
-                          : "bg-purple-100 text-purple-600"
-                          } rounded-full text-xs font-semibold mb-2 uppercase ${poppins.className}`}
+                        className={`inline-block px-3 py-1 ${
+                          item.category === "reports"
+                            ? "bg-blue-100 text-blue-600"
+                            : "bg-purple-100 text-purple-600"
+                        } rounded-full text-xs font-semibold mb-2 uppercase ${poppins.className} self-start`}
                       >
                         {item.category}
                       </span>
@@ -367,11 +323,11 @@ const Page = () => {
                       >
                         {item.title}
                       </h3>
-                      <p
-                        className={`text-lg text-gray-600 line-clamp-2 ${antiquaFont.className}`}
+                      <div
+                        className={`text-base text-gray-600 line-clamp-2 grow ${antiquaFont.className}`}
                       >
-                        {item.des}
-                      </p>
+                        <PortableText value={data.description} />
+                      </div>
                       <p
                         className={`text-xs text-gray-500 mt-3 ${poppins.className}`}
                       >

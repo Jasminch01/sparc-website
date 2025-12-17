@@ -157,7 +157,7 @@ const Page = () => {
               {/* Translation for: indespeak_page.hero.button */}
               {t('indespeak_page.hero.button')}
             </span>
-            <FaAnglesDown className="animate-bounce" size={24} />
+            <FaAnglesDown className="animate-bounce mt-6" size={24} />
           </div>
         </div>
       </section>

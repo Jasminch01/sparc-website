@@ -5,7 +5,6 @@ import {
   ArchiveIcon,
   SearchIcon,
   CalendarIcon,
-  StarIcon,
   FolderIcon,
 } from "@sanity/icons";
 
@@ -44,12 +43,6 @@ export const structure: StructureResolver = (S) =>
                         .title("Events")
                         .icon(CalendarIcon as unknown as React.ComponentType)
                         .child(S.documentTypeList("events").title("Events")),
-                      S.listItem()
-                        .title("Highlights")
-                        .icon(StarIcon as unknown as React.ComponentType)
-                        .child(
-                          S.documentTypeList("highlights").title("Highlights")
-                        ),
                       S.listItem()
                         .title("Projects")
                         .icon(FolderIcon as unknown as React.ComponentType)

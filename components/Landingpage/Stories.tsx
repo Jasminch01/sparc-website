@@ -97,17 +97,6 @@ const Stories = () => {
     fetchData();
   }, []);
 
-  // Helper function to create URL slug
-  const createSlug = (title: string): string => {
-    return title
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/[^\w\-]+/g, "")
-      .replace(/\-\-+/g, "-")
-      .replace(/^-+/, "")
-      .replace(/-+$/, "");
-  };
-
   // Format date helper
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -143,11 +132,6 @@ const Stories = () => {
     } else {
       return item.writtenOn || "";
     }
-  };
-
-  // Get link based on type
-  const getLink = (item: CombinedItem): string => {
-    return `/indispeak/${createSlug(item.title)}`;
   };
 
   return (
@@ -195,7 +179,7 @@ const Stories = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-6">
               {combinedData.slice(0, 3).map((item, index) => (
                 <Link
-                  href={getLink(item)}
+                  href={"/indespeak"}
                   key={`${item.type}-${index}`}
                   className="flex flex-col bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group cursor-pointer "
                 >
