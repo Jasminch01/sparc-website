@@ -59,10 +59,10 @@ const Wherewework = () => {
         </div>
 
         {/* Interactive Map */}
-        <Map selectedCategories={selectedCategories} />
+        {/* <Map selectedCategories={selectedCategories} /> */}
 
         {/* Category Filter & Legend */}
-        <div className={`mt-10 space-y-3 ${antiquaFont.className}`}>
+        {/* <div className={`mt-10 space-y-3 ${antiquaFont.className}`}>
           <h3 className="text-lg font-semibold mb-4">Filter by Category:</h3>
           {categories.map((category) => (
             <div key={category.key} className="flex items-center gap-5">
@@ -91,7 +91,7 @@ const Wherewework = () => {
               </label>
             </div>
           ))}
-        </div>
+        </div> */}
       </Container>
     </div>
   );
