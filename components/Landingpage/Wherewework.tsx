@@ -1,71 +1,100 @@
 "use client";
-import Image from "next/image";
-import map from "../../public/Wherewework/map.png";
 import { antiquaFont, poppins } from "../utils/font";
 import Container from "../Container";
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import Map from "./Map";
+
+export type LocationCategory = "alumni" | "active" | "operating" | "staff";
 
 const Wherewework = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
+  const [selectedCategories, setSelectedCategories] = useState<
+    LocationCategory[]
+  >(["alumni", "active", "operating", "staff"]);
 
-    // 1. Fetch main title and description
-    const componentTitle = t('wherewework.title', 'WHERE WE WORK');
-    const componentDescription = t('wherewework.description', 'Community development is often linked with community work or community planning, and may involve stakeholders, foundations,');
+  const componentTitle = t("wherewework.title", "WHERE WE WORK");
+  const componentDescription = t(
+    "wherewework.description",
+    "Community development is often linked with community work or community planning, and may involve stakeholders, foundations,"
+  );
 
-    // 2. Fetch the nested array of indicator titles
-    // We use returnObjects: true to get the array structure
-    const indicatorData = t('wherewework.country', { returnObjects: true }) as { title: string }[];
-
-    // 3. Safely access the two indicator titles from the array
-    const indicatorWorked = indicatorData?.[0]?.title || 'Countries We Have Worked';
-    const indicatorBelong = indicatorData?.[1]?.title || 'Where We Belong';
-
-    return (
-        <div className="my-20">
-            <Container>
-                <div className="text-center mx-auto mb-20 space-y-5">
-                    <h2
-                        className={`${poppins.className} font-black xl:text-4xl md:text-3xl text-2xl `}
-                    >
-                        {/* Display Translated Title */}
-                        {componentTitle}
-                    </h2>
-                    <p
-                        className={`text-[#6D6D6D] lg:text-xl text-lg max-w-xl mx-auto ${antiquaFont.className}`}
-                    >
-                        {/* Display Translated Description */}
-                        {componentDescription}
-                    </p>
-                </div>
-                
-                <Image
-                    src={map}
-                    alt="map"
-                    height={600}
-                    width={1000}
-                    className="object-contain w-full"
-                />
-
-                {/* Indicator */}
-                <div className={`mt-10 space-y-2 ${antiquaFont.className}`}>
-                    <div className="flex items-center gap-5">
-                        <div className="w-5 h-5 bg-[#802390] text-lg font-bold "></div>
-                        <p>
-                            {/* Display Translated Indicator 1: "আমরা যে দেশগুলিতে কাজ করেছি" */}
-                            {indicatorWorked}
-                        </p>
-                    </div>
-                    <div className="flex items-center gap-5">
-                        <div className="w-5 h-5 bg-[#FF951B] text-lg font-bold"></div>
-                        <p>
-                            {/* Display Translated Indicator 2: "আমরা যেখানে আছি" */}
-                            {indicatorBelong}
-                        </p>
-                    </div>
-                </div>
-            </Container>
-        </div>
+  const toggleCategory = (category: LocationCategory) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
     );
+  };
+
+  const categories = [
+    { key: "alumni" as LocationCategory, label: "Alumni", color: "#802390" },
+    {
+      key: "active" as LocationCategory,
+      label: "Active Members",
+      color: "#FF951B",
+    },
+    {
+      key: "operating" as LocationCategory,
+      label: "Operating Areas",
+      color: "#2ECC71",
+    },
+    { key: "staff" as LocationCategory, label: "Staff", color: "#3498DB" },
+  ];
+
+  return (
+    <div className="my-20">
+      <Container>
+        <div className="text-center mx-auto mb-20 space-y-5">
+          <h2
+            className={`${poppins.className} font-black xl:text-4xl md:text-3xl text-2xl`}
+          >
+            {componentTitle}
+          </h2>
+          <p
+            className={`text-[#6D6D6D] lg:text-xl text-lg max-w-xl mx-auto ${antiquaFont.className}`}
+          >
+            {componentDescription}
+          </p>
+        </div>
+
+        {/* Interactive Map */}
+        <Map selectedCategories={selectedCategories} />
+
+        {/* Category Filter & Legend */}
+        <div className={`mt-10 space-y-3 ${antiquaFont.className}`}>
+          <h3 className="text-lg font-semibold mb-4">Filter by Category:</h3>
+          {categories.map((category) => (
+            <div key={category.key} className="flex items-center gap-5">
+              <button
+                onClick={() => toggleCategory(category.key)}
+                className={`w-5 h-5 border-2 transition-all ${
+                  selectedCategories.includes(category.key)
+                    ? "opacity-100"
+                    : "opacity-30"
+                }`}
+                style={{
+                  backgroundColor: category.color,
+                  borderColor: category.color,
+                }}
+                aria-label={`Toggle ${category.label}`}
+              />
+              <label
+                className={`cursor-pointer select-none transition-opacity ${
+                  selectedCategories.includes(category.key)
+                    ? "opacity-100"
+                    : "opacity-50"
+                }`}
+                onClick={() => toggleCategory(category.key)}
+              >
+                {category.label}
+              </label>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </div>
+  );
 };
 
 export default Wherewework;
