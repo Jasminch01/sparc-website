@@ -2,10 +2,20 @@
 import { antiquaFont, poppins } from "../utils/font";
 import Container from "../Container";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import Map from "./Map";
+import { useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 
 export type LocationCategory = "alumni" | "active" | "operating" | "staff";
+
+// Dynamically import the Map component with SSR disabled
+const DynamicMap = dynamic(() => import("./Map"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[600px] md:h-[500px] lg:h-[600px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center">
+      <p className="text-gray-500">Loading map...</p>
+    </div>
+  ),
+});
 
 const Wherewework = () => {
   const { t } = useTranslation();
@@ -58,11 +68,17 @@ const Wherewework = () => {
           </p>
         </div>
 
-        {/* Interactive Map */}
-        {/* <Map selectedCategories={selectedCategories} /> */}
+        {/* Interactive Map with Suspense boundary */}
+        <Suspense
+          fallback={
+            <div className="w-full h-[600px] md:h-[500px] lg:h-[600px] bg-gray-100 animate-pulse rounded-lg" />
+          }
+        >
+          <DynamicMap selectedCategories={selectedCategories} />
+        </Suspense>
 
         {/* Category Filter & Legend */}
-        {/* <div className={`mt-10 space-y-3 ${antiquaFont.className}`}>
+        <div className={`mt-10 space-y-3 ${antiquaFont.className}`}>
           <h3 className="text-lg font-semibold mb-4">Filter by Category:</h3>
           {categories.map((category) => (
             <div key={category.key} className="flex items-center gap-5">
@@ -91,7 +107,7 @@ const Wherewework = () => {
               </label>
             </div>
           ))}
-        </div> */}
+        </div>
       </Container>
     </div>
   );
