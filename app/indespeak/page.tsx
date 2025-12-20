@@ -108,7 +108,7 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-5 mb-20">
           <div className="lg:w-1/2">
             <h2
-              className={`text-2xl lg:text-5xl font-black ${poppins.className} uppercase`}
+              className={`text-2xl text-center lg:text-left lg:text-5xl font-black ${poppins.className} uppercase`}
             >
               {/* Use helper function for the title with <1> tag styling */}
               {renderStyledTitle('indespeak_page.title')}
