@@ -14,22 +14,22 @@ import { useTranslation } from "react-i18next"; // Import useTranslation
 const videos = [
     {
         id: 1,
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        url: "https://www.youtube.com/embed/Gbzbg2U48Nk",
         title: "Video 1"
     },
     {
         id: 2,
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        url: "https://www.youtube.com/embed/Gbzbg2U48Nk",
         title: "Video 2"
     },
     {
         id: 3,
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        url: "https://www.youtube.com/embed/Gbzbg2U48Nk",
         title: "Video 3"
     },
     {
         id: 4,
-        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        url: "https://www.youtube.com/embed/Gbzbg2U48Nk",
         title: "Video 4"
     }
 ];
@@ -78,11 +78,11 @@ const Videos = () => {
                                     slidesPerView: 1,
                                 },
                                 768: {
-                                    slidesPerView: 2,
+                                    slidesPerView: 1,
                                     spaceBetween: 20,
                                 },
                                 1024: {
-                                    slidesPerView: 2,
+                                    slidesPerView: 1,
                                     spaceBetween: 30,
                                 },
                             }}
