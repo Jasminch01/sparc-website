@@ -50,7 +50,7 @@ const Page = () => {
             {/* Left Content */}
             <div className="w-full lg:w-1/2 lg:pr-8 px-5 lg:px-0">
               <h2
-                className={`uppercase text-center lg:text-left font-black text-3xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
+                className={`uppercase text-center lg:text-left font-black text-2xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
               >
                 {/* Translated Hero Title with styling */}
                 <Trans
