@@ -67,7 +67,7 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-20 px-4 lg:px-0">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-3xl text-center lg:text-left lg:text-5xl max-w-2xl font-extrabold ${poppins.className}`}
+              className={`text-2xl text-center lg:text-left lg:text-5xl max-w-2xl font-extrabold ${poppins.className}`}
             >
               {/* Translated Title with embedded styling */}
               <Trans
