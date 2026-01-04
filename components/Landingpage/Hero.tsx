@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import Container from "../Container";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost, poppins } from "../utils/font";
 import hero from '../../public/Hero/hero.png'
 import { Trans, useTranslation } from "react-i18next";
 
@@ -20,7 +20,7 @@ const Hero = () => {
       <Container>
         <section className="flex flex-col lg:flex-row items-center md:items-start lg:justify-between lg:space-x-25 mt-10 mb-5">
           <div className="lg:max-w-xl text-center lg:text-left flex-1">
-            <h2 className="font-black text-2xl lg:text-[51px]">
+            <h2 className={`${jost.className} font-black text-2xl lg:text-[51px]`}>
               {/* Replace t('header.title') with Trans component */}
               <Trans
                 i18nKey="header.title" 
@@ -32,7 +32,7 @@ const Hero = () => {
           </div>
           <div className="lg:flex-1 justify-end mt-5  text-center">
             <p
-              className={`text-lg lg:text-xl text-wrap lg:text-right hero-text ${antiquaFont.className}`}
+              className={`text-lg lg:text-xl text-wrap  lg:text-right hero-text ${antiquaFont.className}`}
             >
               {/* Using header.description from the JSON */}
               {/* Note: The <br /> tag might break the translated text flow; consider handling line breaks in CSS or removing them for dynamic text. */}
@@ -69,11 +69,11 @@ const Hero = () => {
             <div className="">
               <div className="text-white max-w-2xl">
                 {/* Hero Title (Large Screens) */}
-                <p className="font-extrabold hidden lg:flex text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 sm:mb-3 lg:mb-4">
+                <p className={` ${jost.className} font-extrabold hidden lg:flex text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 sm:mb-3 lg:mb-4`}>
                   {heroTitle}
                 </p>
                 {/* Hero Title (Small Screens) */}
-                <p className="font-extrabold lg:hidden text-2xl sm:text-2xl lg:text-4xl xl:text-4xl mb-2 lg:mb-4">
+                <p className={`${jost.className} font-extrabold lg:hidden text-2xl sm:text-2xl lg:text-4xl xl:text-4xl mb-2 lg:mb-4`}>
                   {heroTitle}
                 </p>
 

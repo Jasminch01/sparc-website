@@ -1,7 +1,11 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Jost } from "next/font/google";
 import localFont from "next/font/local";
 
 export const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+export const jost = Jost({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });

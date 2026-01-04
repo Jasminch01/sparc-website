@@ -1,6 +1,6 @@
 "use client";
 
-import { poppins } from "@/components/utils/font";
+import { jost } from "@/components/utils/font";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -57,7 +57,7 @@ const NavLinks = () => {
   return (
     <div
       ref={dropdownRef}
-      className={`relative ${poppins.className}`}
+      className={`relative ${jost.className}`}
       onMouseLeave={() => setActiveIndex(null)}
     >
       <div className="flex flex-col xl:flex-row xl:items-center gap-1 xl:gap-6 py-5 text-[#2B2B2B]">

@@ -8,7 +8,7 @@ import imageThree from "../../public/Whoweare/Image 3.png";
 import imageFour from "../../public/Whoweare/Image 4.png";
 import Image from "next/image";
 import { useTranslation } from "react-i18next"; // Import useTranslation
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost} from "../utils/font";
 import Container from "../Container";
 
 const images = [imageFour, imageOne];
@@ -24,15 +24,15 @@ const Whoweare = () => {
                 {/* Left Section */}
                 <section className="space-y-6 md:space-y-8 lg:space-y-10 w-full lg:w-1/2">
                     {/* First Div (WHO WE ARE) */}
-                    <div className="space-y-3">
+                    <div className="space-y-6">
                         <h2
-                            className={`${poppins.className} font-extrabold text-2xl md:text-3xl xl:text-4xl`}
+                            className={`${jost.className} font-extrabold text-2xl md:text-4xl xl:text-5xl`}
                         >
                             {/* Translated: WHO WE ARE */}
                             {t('whoweare.title')}
                         </h2>
                         <p
-                            className={`text-lg lg:text-xl text-justify text-[#2B2B2B] ${antiquaFont.className}`}
+                            className={`text-lg lg:text-xl text-justify text-[#6d6b6b] ${antiquaFont.className}`}
                         >
                             {/* Translated: WHO WE ARE description */}
                             {t('whoweare.description')}
@@ -40,7 +40,7 @@ const Whoweare = () => {
                     </div>
 
                     {/* Second Div (WHAT WE STAND FOR) */}
-                    <div className="space-y-3">
+                    <div className="space-y-6">
                         <div className="flex items-center gap-3">
                             <Image
                                 src={iconOne}
@@ -50,14 +50,14 @@ const Whoweare = () => {
                                 className="object-contain h-10 md:h-12 w-10 md:w-12"
                             />
                             <h2
-                                className={`${poppins.className} font-extrabold text-xl md:text-2xl lg:text-3xl`}
+                                className={`${jost.className} font-extrabold text-xl md:text-2xl lg:text-4xl`}
                             >
                                 {/* Translated: WHAT WE STAND FOR */}
                                 {t('whatwestandfor.title')}
                             </h2>
                         </div>
                         <p
-                            className={`text-lg lg:text-xl text-[#2B2B2B]  ${antiquaFont.className}`}
+                            className={`text-lg lg:text-xl text-[#6d6b6b]  ${antiquaFont.className}`}
                         >
                             {/* Translated: WHAT WE STAND FOR description */}
                             {t('whatwestandfor.description')}
@@ -65,7 +65,7 @@ const Whoweare = () => {
                     </div>
 
                     {/* Third Div (WHERE WE ARE HEADED) */}
-                    <div className="space-y-3">
+                    <div className="space-y-6">
                         <div className="flex items-center gap-3">
                             <Image
                                 src={iconTwo}
@@ -75,13 +75,13 @@ const Whoweare = () => {
                                 className="object-contain h-10 md:h-12 w-10 md:w-12"
                             />
                             <h2
-                                className={`${poppins.className} font-extrabold text-xl md:text-2xl lg:text-3xl`}
+                                className={`${jost.className} font-extrabold text-xl md:text-2xl lg:text-4xl`}
                             >
                                 {/* Translated: WHERE WE ARE HEADED */}
                                 {t('whatweareheaded.title')}
                             </h2>
                         </div>
-                        <p className={`text-lg lg:text-xl text-[#2B2B2B] ${antiquaFont.className}`}>
+                        <p className={`text-lg lg:text-xl text-[#6d6b6b] ${antiquaFont.className}`}>
                             {/* Translated: WHERE WE ARE HEADED description */}
                             {t('whatweareheaded.description')}
                         </p>

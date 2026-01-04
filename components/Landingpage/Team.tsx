@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import leaf from "../../public/Team/Leaf.png";
 import Image from "next/image";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost, poppins } from "../utils/font";
 import Container from "../Container";
 import { getAllTeams } from "@/sanity/queries/teamQueries"; // Import the query function
 import { useTranslation } from "react-i18next";
@@ -96,7 +96,7 @@ const Team = () => {
               </div>
               <hr className="border-gray-400 border" />
               <p
-                className={`${poppins.className} font-bold xl:text-4xl md:text-3xl text-2xl leading-tight`}
+                className={`${jost.className} font-bold xl:text-4xl md:text-3xl text-2xl leading-tight`}
               >
                 {teamTitle}
               </p>
@@ -105,7 +105,7 @@ const Team = () => {
 
           <div className="w-full xl:w-1/2">
             <p
-              className={`text-justify text-lg lg:text-xl leading-relaxed text-[#4D4D4D] ${antiquaFont.className}`}
+              className={`text-justify text-lg lg:text-xl leading-relaxed text-[#6d6b6b] ${antiquaFont.className}`}
             >
               {teamDescription}
             </p>
@@ -165,7 +165,7 @@ const Team = () => {
                   </div>
                   <div className="mt-3 md:mt-4">
                     <h2
-                      className={`${poppins.className} font-bold text-lg md:text-xl`}
+                      className={`${jost.className} font-bold text-lg md:text-xl`}
                     >
                       {team.name}
                     </h2>

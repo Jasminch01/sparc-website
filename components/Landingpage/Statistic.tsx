@@ -1,5 +1,5 @@
 "use client";
-import { poppins } from "../utils/font";
+import { jost} from "../utils/font";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import Container from "../Container";
@@ -52,7 +52,7 @@ const Statistic = () => {
   return (
     <div
       ref={ref}
-      className={`my-16 md:my-20 lg:my-24 space-y-8 md:space-y-10 lg:space-y-12 ${poppins.className}`}>
+      className={`my-20 space-y-8 md:space-y-10 lg:space-y-12 ${jost.className}`}>
       <Container>
         <h2 className="text-center font-extrabold text-2xl md:text-3xl lg:text-4xl">
           {statisticsTitle}

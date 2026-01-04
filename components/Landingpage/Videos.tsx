@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Container from "../Container";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost } from "../utils/font";
 import { useTranslation } from "react-i18next"; // Import useTranslation
 
 // NOTE: The video data is hardcoded here. If the video URLs and titles
@@ -45,9 +45,9 @@ const Videos = () => {
         <div className="bg-[#36133B] py-10 md:py-16 lg:py-24 xl:py-32 lg:mt-10 relative">
             <Container>
                 <div className="text-center text-white">
-                    <div className="mb-8 md:mb-10 lg:mb-12">
+                    <div className="mb-8 md:mb-10 lg:mb-12 space-y-6">
                         <h2
-                            className={`font-black mb-3 md:mb-4 xl:text-4xl md:text-3xl text-2xl ${poppins.className}`}
+                            className={`font-black xl:text-5xl md:text-3xl text-2xl ${jost.className}`}
                         >
                             {/* Display Translated Title */}
                             {componentTitle}

@@ -3,14 +3,10 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
-import { Poppins } from "next/font/google";
 import { useTranslation } from "react-i18next";
 import DonationModal from "@/components/Landingpage/DonationModal";
+import { jost } from "@/components/utils/font";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
 
 interface LanguageOption {
   code: string;
@@ -80,7 +76,7 @@ const Buttons = () => {
 
   return (
     <>
-      <div className={`flex items-center gap-3 relative ${poppins.className}`}>
+      <div className={`flex items-center gap-3 relative ${jost.className}`}>
         {/* Language Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button

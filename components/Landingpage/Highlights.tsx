@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost, poppins } from "../utils/font";
 import vector from "../../public/Whatwedo/Frame1.png";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Container from "../Container";
@@ -118,7 +118,7 @@ const Highlights = () => {
                 <Container>
                     <div className="mt-20 sm:mt-24 md:mt-30">
                         <h2
-                            className={`${poppins.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
+                            className={`${jost.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
                         >
                             {componentTitle}
                         </h2>
@@ -136,7 +136,7 @@ const Highlights = () => {
             <Container>
                 <div className="mt-20 sm:mt-24 md:mt-30">
                     <h2
-                        className={`${poppins.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
+                        className={`${jost.className} text-center font-black xl:text-5xl md:text-3xl text-2xl xl:mb-5`}
                     >
                         {componentTitle}
                     </h2>
@@ -156,7 +156,7 @@ const Highlights = () => {
                         {/* Content Section - Dynamic from Sanity */}
                         <div className="space-y-4 md:space-y-10 w-full lg:w-1/2 flex flex-col justify-center">
                             <h2
-                                className={`${poppins.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}
+                                className={`${jost.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}
                             >
                                 {highlightData.title}
                             </h2>
