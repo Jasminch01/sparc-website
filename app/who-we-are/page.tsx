@@ -4,7 +4,7 @@ import Story from "@/components/About/Story";
 import Container from "@/components/Container";
 import Team from "@/components/Landingpage/Team";
 import Wherewework from "@/components/Landingpage/Wherewework";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost} from "@/components/utils/font";
 // Import Trans component alongside useTranslation
 import { useTranslation, Trans } from "react-i18next";
 
@@ -20,7 +20,7 @@ const AboutPage = () => {
         {/* Top Section */}
         <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
           <div className="w-full lg:w-1/2">
-            <h2 className={`text-2xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] lg:max-w-2xl font-extrabold leading-tight ${poppins.className}`}>
+            <h2 className={`text-2xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] lg:max-w-2xl font-extrabold leading-tight ${jost.className}`}>
               {/* Use Trans component for the title to apply styling */}
               <Trans
                 i18nKey="aboutpage.top_section.title"

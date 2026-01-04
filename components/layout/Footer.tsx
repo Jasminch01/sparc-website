@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost, } from "../utils/font";
 import Container from "../Container";
 // Import TFunction for type safety instead of using 'any'
 import { useTranslation } from "react-i18next";
@@ -160,7 +160,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Subscription Section */}
-            <div className={`w-full lg:w-auto ${poppins.className}`}>
+            <div className={`w-full lg:w-auto ${jost.className}`}>
               <h2 className={`font-semibold mb-3 text-base sm:text-lg `}>
                 {subscribeHeading}
               </h2>

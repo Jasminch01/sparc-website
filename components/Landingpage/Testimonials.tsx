@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import comma from "../../public/Testimonials/comma.png";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost, poppins } from "../utils/font";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 
@@ -90,12 +90,12 @@ const Testimonials = () => {
         {/* Header Section (Using i18n data) */}
         <div className="text-center max-w-xl mx-auto space-y-3 md:space-y-4 lg:space-y-5 mb-10 md:mb-12 lg:mb-16">
           <h2
-            className={`${poppins.className} font-black text-2xl lg:text-4xl`}
+            className={`${jost.className} font-black text-2xl lg:text-4xl`}
           >
             {sectionTitle}
           </h2>
           <p
-            className={`text-[#454545] text-lg lg:text-xl leading-relaxed px-4 ${antiquaFont.className}`}
+            className={`text-[#6d6b6b] text-lg lg:text-xl leading-relaxed px-4 ${antiquaFont.className}`}
           >
             {sectionDescription}
           </p>
@@ -142,7 +142,7 @@ const Testimonials = () => {
                     className="object-contain w-10 h-10 md:w-12 md:h-12"
                   />
                   <p
-                    className="text-center text-sm md:text-base text-[#3A3A3A] lg:text-lg leading-relaxed grow"
+                    className="text-center text-sm md:text-base text-[#6d6b6b] lg:text-lg leading-relaxed grow"
                     style={{ fontFamily: '"Book Antiqua", serif' }}
                   >
                     {/* Using i18n data 'description' */}

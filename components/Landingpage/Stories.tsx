@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost, poppins } from "@/components/utils/font";
 import Link from "next/link";
 
 // interface for Blog
@@ -141,7 +141,7 @@ const Stories = () => {
           {/* Header Section */}
           <div className="text-center max-w-2xl mx-auto text-white space-y-3 md:space-y-4 mb-10 md:mb-12 lg:mb-16">
             <h2
-              className={`${poppins.className} font-bold xl:text-4xl md:text-3xl text-2xl `}
+              className={`${jost.className} font-bold xl:text-4xl md:text-3xl text-2xl `}
             >
               FEATURED STORIES
             </h2>

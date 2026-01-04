@@ -1,5 +1,5 @@
 "use client";
-import { poppins } from "../utils/font";
+import { jost, poppins } from "../utils/font";
 import wwdOne from "../../public/Whatwedo/wwd 1.png";
 import wwdTwo from "../../public/Whatwedo/wwd 2.png";
 import wwdThree from "../../public/Whatwedo/wwd 3.png";
@@ -45,9 +45,9 @@ const Whatwedo = () => {
             <Container>
                 <div className="flex flex-col gap-8 md:gap-10 pb-0 lg:pb-10">
                     {/* Header Section */}
-                    <div className="text-center text-white space-y-3 md:space-y-4">
+                    <div className="text-center text-white space-y-3 md:space-y-6">
                         <h2
-                            className={`${poppins.className} font-black text-3xl sm:text-4xl md:text-5xl lg:text-4xl`}
+                            className={`${jost.className} font-black text-3xl sm:text-4xl md:text-5xl lg:text-5xl`}
                         >
                             {/* Display Translated Title */}
                             {title}

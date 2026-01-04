@@ -1,5 +1,5 @@
 "use client";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost} from "../utils/font";
 import Container from "../Container";
 import { useTranslation } from "react-i18next";
 import { useState, Suspense } from "react";
@@ -57,7 +57,7 @@ const Wherewework = () => {
       <Container>
         <div className="text-center mx-auto mb-20 space-y-5">
           <h2
-            className={`${poppins.className} font-black xl:text-4xl md:text-3xl text-2xl`}
+            className={`${jost.className} font-black xl:text-5xl md:text-3xl text-2xl`}
           >
             {componentTitle}
           </h2>
