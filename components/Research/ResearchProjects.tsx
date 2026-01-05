@@ -11,7 +11,6 @@ import {
   ResearchProject,
   ResearchResponse,
 } from "@/sanity/queries/researchQueries";
-import { useTranslation } from "react-i18next";
 
 interface Tab {
   id: string;
@@ -32,8 +31,6 @@ const ResearchProjects = () => {
   const [totalOngoing, setTotalOngoing] = useState(0);
   const [totalCompleted, setTotalCompleted] = useState(0);
   const itemsPerPage = 3;
-
-  const {t} = useTranslation()
 
   // Fetch categories for tabs
   useEffect(() => {

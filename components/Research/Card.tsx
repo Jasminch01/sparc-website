@@ -1,6 +1,7 @@
 "use client"
 import Image from "next/image";
 import { antiquaFont, jost } from "../utils/font";
+import { useTranslation } from "react-i18next";
 
 const Card = () => {
   const { t } = useTranslation()
