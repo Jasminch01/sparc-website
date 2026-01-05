@@ -234,7 +234,10 @@
     },
     "ourstory": {
         "title": "WHO WE ARE",
-        "description": "SPaRC is an indigenous women-led feminist organisation established in Chittagong Hill Tracts (CHT), Bangladesh. SPaRC works with a specific focus for indigenous women, girls and communities who are often ignored, have no access to resources and are survivors of communal attack, conflict, Violence Against Women, Gender Based Violence, and systematic oppression such as misinformation, intergenerational trauma and sufferings."
+        "description": "SPaRC is an indigenous women-led feminist organisation established in Chittagong Hill Tracts (CHT), Bangladesh. SPaRC works with a specific focus for indigenous women, girls and communities who are often ignored, have no access to resources and are survivors of communal attack, conflict, Violence Against Women, Gender Based Violence, and systematic oppression such as misinformation, intergenerational trauma and sufferings.",
+        "breadcrumb": {
+            "title": "HOME"
+        }
     },
     "whatwestandforTwo": {
         "title": "WHAT WE STAND FOR",
@@ -354,9 +357,12 @@
             "title": "INDISPEAK",
             "description": "Explore stories, documents, and visual archives celebrating the heritage, resilience, and identity of Indigenous communities worldwide.",
             "button": "SCROLL DOWN"
+        },
+        "breadcrumb": {
+            "title": "HOME"
         }
     },
-    "sparce_update_page": {
+    "sparc_update_page": {
         "title": "SPARC UPDATE",
         "description": "To share the latest news, activities, and milestones from your organization — keeping visitors informed about ongoing advocacy, events, and community progress.",
         "hero": {
@@ -405,6 +411,13 @@
             "title": "OUR RESEARCH",
             "description": "Our research amplifies Indigenous voices, documents cultural wisdom, and supports evidence-based advocacy for equality and sustainability",
             "button": "COLLABORATE WITH US"
+        },
+        "breadcrumb": {
+            "title": "HOME"
+        },
+        "projects": {
+            "ongoing": "Ongoing Research Projects",
+            "completed": "Completed Research Projects"
         }
     },
     "partners_page": {
@@ -472,9 +485,27 @@
         },
         "breadcrumb": {
             "title": "HOME"
+        },
+        "cta": {
+            "title": "LEARN TO KNOW BETTER",
+            "description": "Program offers valuable real-world experience for passionate individuals."
         }
     },
     "blog_page": {
-        "title": "BLOG"
+        "title": "BLOG",
+        "breadcrumb":{
+            "title":"HOME"
+        }
+    },
+    "partners": {
+        "title": "RESEARCH PARTNERS"
+    },
+    "card": {
+        "title": "JOIN WITH OUR TEAM AND RESEARCH TOGETHER",
+        "description": "Indigenous young people who are emerging leaders, learners, or activists working to preserve their culture and rights.",
+        "button": "JOIN NOW"
+    },
+    "partnersTwo": {
+        "title": "Our Trusted Partners"
     }
 }

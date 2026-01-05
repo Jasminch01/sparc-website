@@ -18,6 +18,7 @@ import {
   type ProjectData,
 } from "@/sanity/queries/projectQueries";
 import { PortableText } from "next-sanity";
+import { useTranslation } from "react-i18next";
 
 const projectsCategory = ["All Projects", "Ongoing", "Completed"];
 const eventsCategory = ["All Events", "Ongoing", "Upcoming"];
@@ -43,6 +44,10 @@ const Page = () => {
   const [eventTotalPages, setEventTotalPages] = useState(1);
   const [projectsLoading, setProjectsLoading] = useState(false);
   const [eventsLoading, setEventsLoading] = useState(false);
+
+  const {t} = useTranslation()
+
+  
 
   // Fetch initial data
   useEffect(() => {
@@ -220,16 +225,14 @@ const Page = () => {
             <h2
               className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${jost.className}`}
             >
-              SPARC UPDATE
+             {t('sparc_update_page.title')}
             </h2>
           </div>
           <div className="w-full lg:w-1/2">
             <p
               className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#6d6b6b] ${antiquaFont.className}`}
             >
-              To share the latest news, activities, and milestones from your
-              organization — keeping visitors informed about ongoing advocacy,
-              events, and community progress.
+             {t('sparc_update_page.description')}
             </p>
           </div>
         </section>
@@ -249,20 +252,19 @@ const Page = () => {
           <h2
             className={`text-2xl lg:text-5xl font-bold mb-3 ${jost.className}`}
           >
-            SPARC UPDATE
+          {t("sparc_update_page.hero.title")} 
           </h2>
           <p
             className={`mb-3 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
           >
-            Stay connected with the latest updates from our organization — from
-            local initiatives to global advocacy for Indigenous rights.
+            {t("sparc_update_page.hero.description")}
           </p>
           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
             <button
               onClick={handleScrollToProjects}
               className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${jost.className}`}
             >
-              VIEW PROJECTS
+              {t("sparc_update_page.hero.button")}
             </button>
           </div>
         </div>
@@ -277,10 +279,10 @@ const Page = () => {
             href="/"
             className="hover:text-[#FF951B] transition-colors uppercase"
           >
-            HOME
+            {t("sparc_update_page.breadcrumb.title")}
           </Link>
           <span>||</span>
-          <p className="text-[#818181] uppercase">Sparc Update</p>
+          <p className="text-[#818181] uppercase">{t("sparc_update_page.hero.title")}</p>
         </section>
       </Container>
 
@@ -452,13 +454,12 @@ const Page = () => {
             <h2
               className={`text-2xl lg:text-5xl font-bold mb-3 ${jost.className}`}
             >
-              FUNDING & PROJECT UPDATES
+              {t("sparc_update_page.updates_section.projects_header")}
             </h2>
             <p
               className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-[#4D4D4D]`}
             >
-              Each update reflects our commitment to accountability,
-              collaboration, and positive impact across Indigenous regions.
+              {t("sparc_update_page.updates_section.projects_description")}
             </p>
           </div>
 
@@ -576,13 +577,12 @@ const Page = () => {
             <h2
               className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${jost.className}`}
             >
-              EVENT ANNOUNCEMENTS
+              {t("sparc_update_page.updates_section.events_header")}
             </h2>
             <p
               className={`mb-3 sm:mb-4 text-base sm:text-lg ${antiquaFont.className} text-gray-500`}
             >
-              Explore our latest gatherings, campaigns, and community programs
-              supporting Indigenous voices
+               {t("sparc_update_page.updates_section.events_description")}
             </p>
           </div>
 

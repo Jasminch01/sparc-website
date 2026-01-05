@@ -1,7 +1,9 @@
+"use client"
 import Image from "next/image";
 import { antiquaFont, jost } from "../utils/font";
 
 const Card = () => {
+  const { t } = useTranslation()
   return (
     <div className="mt-20 pb-20 md:pb-40 md:px-8 lg:px-20">
       <div className="flex flex-col lg:flex-row justify-center items-center border-gray-300 border-2 rounded-lg overflow-hidden bg-white  transition-shadow duration-300">
@@ -26,12 +28,11 @@ const Card = () => {
           <p
             className={`text-base md:text-lg lg:text-xl text-[#6d6b6b] leading-relaxed ${antiquaFont.className}`}
           >
-            Indigenous young people who are emerging leaders, learners, or
-            activists working to preserve their culture and rights.
+            {t("card.description")}
           </p>
           <div className="text-center lg:text-left">
             <button className="rounded-full cursor-pointer hover:bg-[#FF951B] px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base transition-colors duration-300 shadow-md">
-              Join Now
+              {t("card.button")}
             </button>
           </div>
         </div>
