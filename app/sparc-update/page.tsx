@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import hero from "@/public/rebuild/hero.png";
 import frame from "@/public/rebuild/Frame 51.png";
 import Image from "next/image";
@@ -180,7 +180,7 @@ const Page = () => {
             currentPage === 1
               ? "bg-gray-200 text-gray-400 cursor-not-allowed"
               : "bg-[#FF951B] text-white hover:bg-orange-400"
-          } ${poppins.className}`}
+          } ${jost.className}`}
         >
           Previous
         </button>
@@ -194,7 +194,7 @@ const Page = () => {
                 currentPage === page
                   ? "bg-[#FF951B] text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } ${poppins.className}`}
+              } ${jost.className}`}
             >
               {page}
             </button>
@@ -208,7 +208,7 @@ const Page = () => {
             currentPage === totalPages
               ? "bg-gray-200 text-gray-400 cursor-not-allowed"
               : "bg-[#FF951B] text-white hover:bg-orange-400"
-          } ${poppins.className}`}
+          } ${jost.className}`}
         >
           Next
         </button>
@@ -223,14 +223,14 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${poppins.className}`}
+              className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${jost.className}`}
             >
              {t('sparc_update_page.title')}
             </h2>
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#4E4E4E] ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#6d6b6b] ${antiquaFont.className}`}
             >
              {t('sparc_update_page.description')}
             </p>
@@ -250,7 +250,7 @@ const Page = () => {
         />
         <div className="absolute top-2/3 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-2xl lg:text-5xl font-bold mb-3 ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 ${jost.className}`}
           >
           {t("sparc_update_page.hero.title")} 
           </h2>
@@ -262,7 +262,7 @@ const Page = () => {
           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
             <button
               onClick={handleScrollToProjects}
-              className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${poppins.className}`}
+              className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${jost.className}`}
             >
               {t("sparc_update_page.hero.button")}
             </button>
@@ -273,7 +273,7 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <section
-          className={`flex gap-3 sm:gap-5 text-xs sm:text-base font-semibold mt-5 sm:mt-10 ${poppins.className}`}
+          className={`flex gap-3 sm:gap-5 text-xs sm:text-base font-semibold mt-5 sm:mt-10 ${jost.className}`}
         >
           <Link
             href="/"
@@ -292,14 +292,14 @@ const Page = () => {
           <div className="flex justify-center items-center h-64 my-20">
             <div className="flex flex-col items-center gap-4">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-              <p className={`text-xl ${poppins.className}`}>
+              <p className={`text-xl ${jost.className}`}>
                 Loading updates...
               </p>
             </div>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-64 my-20">
-            <p className={`text-xl text-red-600 ${poppins.className}`}>
+            <p className={`text-xl text-red-600 ${jost.className}`}>
               {error}
             </p>
           </div>
@@ -315,7 +315,7 @@ const Page = () => {
                 }}
               >
                 <h3
-                  className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
+                  className={`text-xs sm:text-sm font-semibold tracking-wider ${jost.className}`}
                 >
                   HIGHLIGHT EVENT
                 </h3>
@@ -339,29 +339,29 @@ const Page = () => {
                       </div>
                     )}
                     <h2
-                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${poppins.className}`}
+                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${jost.className}`}
                     >
                       {highlightedEvent.title}
                     </h2>
                     <p
-                      className={`text-xs text-[#4D4D4D] mb-4 uppercase ${poppins.className}`}
+                      className={`text-xs text-[#4D4D4D] mb-4 uppercase ${jost.className}`}
                     >
                       {formatDate(highlightedEvent.date)}
                     </p>
                     <div
-                      className={`text-lg lg:text-xl text-gray-700 mb-4 leading-relaxed ${antiquaFont.className}`}
+                      className={`text-lg lg:text-xl text-[#6d6b6b] mb-4 leading-relaxed ${antiquaFont.className}`}
                     >
                       <PortableText value={highlightedEvent.description} />
                     </div>
                     <button
-                      className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
+                      className={`${jost.className} group-hover:text-[#FF951B] transition-colors`}
                     >
                       Read More <span>→</span>
                     </button>
                   </Link>
                 ) : (
                   <p
-                    className={`text-center text-[#4D4D4D] ${poppins.className}`}
+                    className={`text-center text-[#4D4D4D] ${jost.className}`}
                   >
                     No highlighted event available
                   </p>
@@ -379,7 +379,7 @@ const Page = () => {
                 }}
               >
                 <h3
-                  className={`text-xs sm:text-sm font-semibold tracking-wider ${poppins.className}`}
+                  className={`text-xs sm:text-sm font-semibold tracking-wider ${jost.className}`}
                 >
                   HIGHLIGHTED PROJECTS
                 </h3>
@@ -409,23 +409,23 @@ const Page = () => {
                         </div>
                       )}
                       <h3
-                        className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${poppins.className}`}
+                        className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${jost.className}`}
                       >
                         {project.title}
                       </h3>
                       <div
-                        className={`text-lg text-[#4D4D4D] mb-3 line-clamp-3 ${antiquaFont.className}`}
+                        className={`text-lg text-[#6d6b6b] mb-3 line-clamp-3 ${antiquaFont.className}`}
                       >
                         <PortableText value={project.description} />
                       </div>
                       <div className="flex justify-between items-center">
                         <p
-                          className={`text-xs text-[#4D4D4D] uppercase ${poppins.className}`}
+                          className={`text-xs text-[#6d6b6b] uppercase ${jost.className}`}
                         >
                           {formatDate(project.date)}
                         </p>
                         <button
-                          className={`${poppins.className} group-hover:text-[#FF951B] transition-colors`}
+                          className={`${jost.className} group-hover:text-[#FF951B] transition-colors`}
                         >
                           Read More <span>→</span>
                         </button>
@@ -436,7 +436,7 @@ const Page = () => {
               ) : (
                 <div className="p-6 pt-8">
                   <p
-                    className={`text-center text-[#4D4D4D] ${poppins.className}`}
+                    className={`text-center text-[#6d6b6b] ${jost.className}`}
                   >
                     No highlighted projects available
                   </p>
@@ -452,7 +452,7 @@ const Page = () => {
         <section id="projects" className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
             <h2
-              className={`text-2xl lg:text-5xl font-bold mb-3 ${poppins.className}`}
+              className={`text-2xl lg:text-5xl font-bold mb-3 ${jost.className}`}
             >
               {t("sparc_update_page.updates_section.projects_header")}
             </h2>
@@ -471,7 +471,7 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveProjectCategory(index)}
-                  className={`${poppins.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
+                  className={`${jost.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
                     activeProjectCategory === index
                       ? "border-b-2 border-black"
                       : ""
@@ -511,37 +511,37 @@ const Page = () => {
                         )}
                         <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
                           <h2
-                            className={`${poppins.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
+                            className={`${jost.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
                           >
                             {project.title}
                           </h2>
                           <div
-                            className={`${antiquaFont.className} text-sm text-[#4D4D4D] sm:text-base text-justify line-clamp-3`}
+                            className={`${antiquaFont.className} text-sm text-[#6d6b6b] sm:text-base text-justify line-clamp-3`}
                           >
                             <PortableText value={project.description} />
                           </div>
-                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6B6B6B] text-xs">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6d6b6b] text-xs">
                             <p
                               className={`font-bold ${
                                 project.status === "Ongoing"
                                   ? "text-[#F26522]"
                                   : "text-[#018F44]"
-                              } ${poppins.className}`}
+                              } ${jost.className}`}
                             >
                               {project.status}
                             </p>
                             <span className="hidden sm:inline">|</span>
-                            <p className={`${poppins.className}`}>
+                            <p className={`${jost.className}`}>
                               {formatDate(project.date)}
                             </p>
                             <span className="hidden sm:inline">|</span>
-                            <p className={`${poppins.className}`}>
+                            <p className={`${jost.className}`}>
                               Funded By {project.fundedBy}
                             </p>
                           </div>
                           <div className="h-10">
                             <button
-                              className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
+                              className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${jost.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
                             >
                               View Report <IoIosArrowRoundForward size={20} />
                             </button>
@@ -552,7 +552,7 @@ const Page = () => {
                   ))
                 ) : (
                   <div className="col-span-full text-center py-10">
-                    <p className={`text-gray-500 ${poppins.className}`}>
+                    <p className={`text-gray-500 ${jost.className}`}>
                       No projects available
                     </p>
                   </div>
@@ -575,7 +575,7 @@ const Page = () => {
         <section className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
+              className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${jost.className}`}
             >
               {t("sparc_update_page.updates_section.events_header")}
             </h2>
@@ -594,7 +594,7 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveEventCategory(index)}
-                  className={`${poppins.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
+                  className={`${jost.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
                     activeEventCategory === index
                       ? "border-b-2 border-black"
                       : ""
@@ -634,33 +634,33 @@ const Page = () => {
                         )}
                         <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
                           <h2
-                            className={`${poppins.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
+                            className={`${jost.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
                           >
                             {event.title}
                           </h2>
                           <div
-                            className={`${antiquaFont.className} text-sm text-[#4D4D4D] lg:text-base text-justify line-clamp-3`}
+                            className={`${antiquaFont.className} text-sm text-[#6d6b6b] lg:text-base text-justify line-clamp-3`}
                           >
                             <PortableText value={event.description} />
                           </div>
-                          <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6B6B6B] text-xs">
+                          <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6d6b6b] text-xs">
                             <p
                               className={`font-bold ${
                                 event.status === "Upcoming"
                                   ? "text-[#36133B]"
                                   : "text-[#018F44]"
-                              } ${poppins.className}`}
+                              } ${jost.className}`}
                             >
                               {event.status}
                             </p>
                             <span className="hidden sm:inline">|</span>
-                            <p className={`${poppins.className}`}>
+                            <p className={`${jost.className}`}>
                               {formatDate(event.date)}
                             </p>
                             {event.timeLeft && (
                               <>
                                 <span className="hidden sm:inline">|</span>
-                                <p className={`${poppins.className}`}>
+                                <p className={`${jost.className}`}>
                                   {event.timeLeft} Left
                                 </p>
                               </>
@@ -668,7 +668,7 @@ const Page = () => {
                           </div>
                           <div className="h-10">
                             <button
-                              className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${poppins.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
+                              className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${jost.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
                             >
                               View Report <IoIosArrowRoundForward size={20} />
                             </button>
@@ -679,7 +679,7 @@ const Page = () => {
                   ))
                 ) : (
                   <div className="col-span-full text-center py-10">
-                    <p className={`text-gray-500 ${poppins.className}`}>
+                    <p className={`text-gray-500 ${jost.className}`}>
                       No events available
                     </p>
                   </div>

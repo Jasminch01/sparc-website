@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
@@ -64,7 +64,7 @@ const Page = () => {
         {/* Center Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 lg:px-0 xl:mt-40 mt-20">
           <h1
-            className={`text-2xl lg:text-5xl font-black md:mb-4 text-center ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-black md:mb-4 text-center ${jost.className}`}
           >
             {heroTitle}
           </h1>
@@ -83,7 +83,9 @@ const Page = () => {
 
       <Container>
         <div className="py-20">
-          <p className="lg:text-4xl text-2xl font-bold text-center">
+          <p
+            className={` text-3xl md:text-4xl font-bold text-center mb-10 ${jost.className}`}
+          >
             {t("partners_page.title")}
           </p>
 
@@ -125,7 +127,7 @@ const Page = () => {
                       {/* If about is Sanity block content, you'll need to render it properly */}
                       {Array.isArray(partner.about) ? (
                         <div
-                          className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
+                          className={`${antiquaFont.className} text-[#6d6b6b] lg:text-justify lg:text-xl text-lg`}
                         >
                           {partner.about.map((block, index) => {
                             if (block._type === "block" && block.children) {
@@ -144,7 +146,7 @@ const Page = () => {
                         </div>
                       ) : (
                         <p
-                          className={`${antiquaFont.className} lg:text-justify lg:text-xl text-lg`}
+                          className={`${antiquaFont.className} text-[#6d6b6b] lg:text-justify lg:text-xl text-lg`}
                         >
                           {partner.about}
                         </p>
@@ -157,7 +159,7 @@ const Page = () => {
                         rel="noopener noreferrer"
                       >
                         <button
-                          className={`px-6 md:px-8 py-3 md:py-4 cursor-pointer hover:bg-[#ff951b] bg-[#36133B] rounded-full text-white ${poppins.className} hover:bg-[#4a1a50] transition-colors`}
+                          className={`px-6 md:px-8 py-3 md:py-4 cursor-pointer hover:bg-[#ff951b] bg-[#36133B] rounded-full text-white ${jost.className} hover:bg-[#4a1a50] transition-colors`}
                         >
                           Visit Partner Website
                         </button>

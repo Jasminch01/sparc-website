@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import hero from "@/public/Learn/hero.png";
 import icon from "@/public/Learn/icon.png";
 import banner from "@/public/Learn/ggds 1.png";
@@ -130,7 +130,7 @@ const Page = () => {
 
   // Handle enroll button click
   const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent triggering card click
+    e.stopPropagation();
     if (formUrl) {
       window.open(formUrl, "_blank");
     }
@@ -143,7 +143,7 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-bold leading-tight  ${poppins.className}`}
+              className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-bold leading-tight  ${jost.className}`}
             >
               {/* Translated Title with styling */}
               {renderStyledTitle("learn_page.title")}
@@ -151,7 +151,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg text-[#6d6b6b] lg:text-xl ${antiquaFont.className}`}
             >
               {/* Translated Description */}
               {t("learn_page.description")}
@@ -171,7 +171,7 @@ const Page = () => {
         />
         <div className="absolute top-1/2 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center text-white w-full px-4">
           <h2
-            className={`text-xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}
+            className={`text-xl lg:text-4xl font-bold mb-3 lg:mb-4 ${jost.className}`}
           >
             {/* Translated Hero Title */}
             {t("learn_page.hero.title")}
@@ -188,7 +188,7 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <section
-          className={`flex gap-5 my-10 lg:my-20 ${poppins.className} font-semibold text-xs md:text-base`}
+          className={`flex gap-5 my-10 lg:my-20 ${jost.className} font-semibold text-xs md:text-base`}
         >
           <Link href="/">
             {/* Translated Breadcrumb HOME */}
@@ -202,12 +202,11 @@ const Page = () => {
         </section>
       </Container>
 
-      {/* Learn Section - Assuming placeholder keys for untranslated strings below */}
       <Container>
         <section>
           <div className="">
             <h2
-              className={`text-2xl lg:text-4xl font-bold mb-4 ${poppins.className}`}
+              className={`text-2xl lg:text-4xl font-bold mb-4 ${jost.className}`}
             >
               {/* Placeholder/Hardcoded in English until key is provided */}
               {t("learn_page.cta.title")}
@@ -226,7 +225,7 @@ const Page = () => {
               <div key={index} className="border-b-2 border-gray-300">
                 <button
                   onClick={() => setActiveCategory(index)}
-                  className={`${poppins.className} cursor-pointer py-5 text-sm lg:text-xl font-semibold transition-all duration-300 ${activeCategory === index ? "border-b-2 border-[#FF951B] text-[#FF951B]" : "hover:text-[#FF951B]"}`}
+                  className={`${jost.className} cursor-pointer py-5 text-sm lg:text-xl font-semibold transition-all duration-300 ${activeCategory === index ? "border-b-2 border-[#FF951B] text-[#FF951B]" : "hover:text-[#FF951B]"}`}
                 >
                   {/* Categories are likely translated through a common system */}
                   {t(
@@ -244,10 +243,11 @@ const Page = () => {
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 1}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${poppins.className} ${currentPage === 1
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
-                  }`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${jost.className} ${
+                  currentPage === 1
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
+                }`}
               >
                 <IoArrowBack />
                 {/* Translated "Previous" */}
@@ -257,10 +257,11 @@ const Page = () => {
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${poppins.className} ${currentPage === totalPages
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
-                  }`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition ${jost.className} ${
+                  currentPage === totalPages
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    : "bg-[#5B1E63] text-white hover:bg-[#7a2887]"
+                }`}
               >
                 {/* Translated "Next" */}
                 {t("common.next", "Next")}
@@ -291,7 +292,7 @@ const Page = () => {
             <div className="flex flex-col items-center justify-center min-h-[400px] mb-10 border-b border-[#D9D9D9]">
               <div className="text-center">
                 <h3
-                  className={`text-2xl font-bold text-gray-400 mb-2 ${poppins.className}`}
+                  className={`text-2xl font-bold text-gray-400 mb-2 ${jost.className}`}
                 >
                   No Courses Found
                 </h3>
@@ -346,7 +347,7 @@ const Page = () => {
                         />
                         <div className="mt-5 flex flex-col gap-3">
                           <h2
-                            className={`${poppins.className} text-lg font-semibold line-clamp-2 h-13`}
+                            className={`${jost.className} text-[#6d6b6b] text-lg font-semibold line-clamp-2 h-13`}
                           >
                             {course.title}
                           </h2>
@@ -357,19 +358,19 @@ const Page = () => {
                           </p>
                           <div className="flex items-center gap-5">
                             <p
-                              className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${poppins.className}`}
+                              className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${jost.className}`}
                             >
                               {course.rating}
                             </p>
                             <p
-                              className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${poppins.className}`}
+                              className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${jost.className}`}
                             >
                               {course.itemsSold} {t("course.sold", "Sold")}
                             </p>
                           </div>
 
-                          <p className={`${poppins.className} font-bold`}>
-                            {course.price} BDT
+                          <p className={`${jost.className} font-bold`}>
+                            {course.price} {t("common.currency", "BDT")}
                           </p>
                         </div>
                       </div>
@@ -399,17 +400,17 @@ const Page = () => {
                         ></div>
 
                         <h2
-                          className={`${poppins.className} text-xl font-bold mb-2 text-[#5B1E63]`}
+                          className={`${jost.className} text-xl font-bold mb-2 text-[#5B1E63]`}
                         >
                           {course.title}
                         </h2>
                         <p
-                          className={`${antiquaFont.className} text-[#2B2B2B] text-justify mb-3`}
+                          className={`${antiquaFont.className} text-[#6d6b6b] text-justify mb-3`}
                         >
                           {course.subtitle}
                         </p>
                         <h3
-                          className={`${poppins.className} font-semibold text-sm mb-1`}
+                          className={`${jost.className} font-semibold text-sm mb-1`}
                         >
 
                           What you&apos;ll learn
@@ -418,7 +419,7 @@ const Page = () => {
                           {course.whatYouLearn?.map((item, i) => (
                             <div
                               key={i}
-                              className={`${antiquaFont.className} text-sm flex items-center gap-2 transition-all duration-200 delay-${i * 50}`}
+                              className={`${antiquaFont.className} text-[#6d6b6b] text-sm flex items-center gap-2 transition-all duration-200 delay-${i * 50}`}
                             >
                               <Image
                                 src={icon}

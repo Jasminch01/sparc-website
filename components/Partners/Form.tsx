@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { poppins } from "../utils/font";
+import { jost } from "../utils/font";
 // 1. Import useTranslation
 import { useTranslation } from 'react-i18next';
 
@@ -31,7 +31,7 @@ const Form = () => {
   };
 
   return (
-    <div className={`md:pt-20 xl:mb-40 mb-20 md:px-20 px-5 md:pb-32 ${poppins.className}`}>
+    <div className={`md:pt-20 xl:mb-40 mb-20 md:px-20 px-5 md:pb-32 ${jost.className}`}>
       <p className="lg:text-4xl text-3xl font-bold text-center md:mb-20 mb-14">
         {/* 4. Translate the main title */}
         {t('partnership_form.title', 'PARTNERSHIP PROPOSAL')}

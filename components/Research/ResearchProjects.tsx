@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MdOutlineFileDownload } from "react-icons/md";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost } from "../utils/font";
 import {
   getResearchCategories,
   getResearchProjects,
@@ -199,8 +199,8 @@ const ResearchProjects = () => {
         {/* Ongoing Projects - Only render if there are ongoing projects */}
         {totalOngoing > 0 && (
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
-              {t("research_page.projects.ongoing")}
+            <h3 className={`text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide ${jost.className}`}>
+              Ongoing Research Projects
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
               {ongoingProjects.map((project) => (
@@ -217,7 +217,7 @@ const ResearchProjects = () => {
                       className="object-cover rounded"
                     />
                   </div>
-                  <div className={`mt-5 ${poppins.className}`}>
+                  <div className={`mt-5 ${jost.className}`}>
                     <h3 className="text-lg group-hover:text-[#ff951b] transition-colors duration-300 font-bold mb-3 text-gray-900">
                       {project.title}
                     </h3>
@@ -238,7 +238,7 @@ const ResearchProjects = () => {
                       </p>
                     </div>
                     <p
-                      className={`text-[18px] leading-relaxed mb-4 line-clamp-2 text-[#4E4E4E]  ${antiquaFont.className}`}
+                      className={`text-[18px] leading-relaxed mb-4 line-clamp-2 text-[#6d6b6b] ${antiquaFont.className}`}
                     >
                       {getDescriptionText(project.description).slice(0, 190)}
                     </p>
@@ -302,8 +302,8 @@ const ResearchProjects = () => {
         {/* Completed Projects - Only render if there are completed projects */}
         {totalCompleted > 0 && (
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide">
-             {t("research_page.projects.completed")}
+            <h3 className={`text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide ${jost.className}`}>
+              Completed Research Projects
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {completedProjects.map((project) => (
@@ -320,7 +320,7 @@ const ResearchProjects = () => {
                       className="object-cover rounded"
                     />
                   </div>
-                  <div className={`mt-5 ${poppins.className}`}>
+                  <div className={`mt-5 ${jost.className}`}>
                     <h3 className="text-lg group-hover:text-[#ff951b] transition-colors duration-300 font-bold mb-3 text-gray-900">
                       {project.title}
                     </h3>
@@ -341,7 +341,7 @@ const ResearchProjects = () => {
                       </p>
                     </div>
                     <p
-                      className={`text-[18px] leading-relaxed mb-4 line-clamp-2 text-[#4E4E4E] ${antiquaFont.className}`}
+                      className={`text-[18px] leading-relaxed mb-4 line-clamp-2 text-[#6d6b6b] ${antiquaFont.className}`}
                     >
                       {getDescriptionText(project.description).slice(0, 190)}
                     </p>

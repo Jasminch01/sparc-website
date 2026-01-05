@@ -1,7 +1,7 @@
 
 "use client"
 import Image from "next/image";
-import { poppins } from "../utils/font";
+import { jost } from "../utils/font";
 import Link from "next/link";
 import Marquee from "react-fast-marquee";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ const Partners = () => {
   const {t} = useTranslation()
   return (
     <div className="w-full py-12 px-4 lg:px-0">
-      <div className={`border-b border-gray-300 pb-7 ${poppins.className}`}>
+      <div className={`border-b border-gray-300 pb-7 ${jost.className}`}>
         <h2 className="text-2xl lg:text-4xl font-bold text-center mb-8 lg:mb-12">
          {t("partnersTwo.title")}
         </h2>
@@ -66,7 +66,7 @@ const Partners = () => {
 
       <div className="flex justify-between items-center mt-10">
         <section
-          className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
+          className={`flex gap-5 text-sm uppercase font-semibold ${jost.className}`}
         >
           <Link href="/">Home</Link> <span>||</span>
           <p className="text-[#818181]">HOW TO PARTNER</p>

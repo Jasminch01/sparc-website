@@ -2,7 +2,7 @@
 import React from "react";
 import Container from "../Container";
 import Image from "next/image";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost} from "../utils/font";
 import Link from "next/link";
 // Import useTranslation for internationalization
 import { useTranslation } from "react-i18next";
@@ -28,11 +28,11 @@ const Story = () => {
 
 
   return (
-    <div className={`my-20 ${poppins.className}`}>
+    <div className={`my-20 ${jost.className}`}>
       <Container>
         <div className="flex justify-between items-center my-20">
           <section
-            className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
+            className={`flex gap-5 text-sm uppercase font-semibold ${jost.className}`}
           >
             {/* Breadcrumb - Using i18n data */}
             <Link href="/">{homeLinkText}</Link> <span>||</span>
@@ -62,11 +62,11 @@ const Story = () => {
 
             {/* Text Content - Using i18n data */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <p className="text-2xl md:text-3xl font-black mb-3 md:mb-4">
+              <p className="text-2xl md:text-3xl xl:text-4xl font-black mb-3 md:mb-4">
                 {storyTitle}
               </p>
               <p
-                className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
               >
                 {storyDescription}
               </p>
@@ -98,12 +98,12 @@ const Story = () => {
                     height={50}
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
-                  <p className="text-xl md:text-2xl font-black">
+                  <p className="text-xl md:text-2xl xl:text-4xl font-black">
                     {standForTitle}
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
                 >
                   {standForDescription}
                 </p>
@@ -119,12 +119,12 @@ const Story = () => {
                     height={50}
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
-                  <p className="text-xl md:text-2xl font-black">
+                  <p className="text-xl md:text-2xl font-black xl:text-4xl">
                     {headedTitle}
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
                 >
                   {headedDescription}
                 </p>

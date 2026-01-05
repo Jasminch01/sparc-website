@@ -3,7 +3,7 @@
 // Import useTranslation and Trans
 import { useTranslation, Trans } from "react-i18next";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import fellowshipHero from "@/public/fellowship/fellowship-hero.png";
 import aboutOne from "@/public/fellowship/about.png";
 import aboutTwo from "@/public/fellowship/abouttwo.png";
@@ -67,7 +67,7 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-20 px-4 lg:px-0">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-2xl text-center lg:text-left lg:text-5xl max-w-2xl font-extrabold ${poppins.className}`}
+              className={`text-3xl lg:text-5xl max-w-2xl font-extrabold ${jost.className}`}
             >
               {/* Translated Title with embedded styling */}
               <Trans
@@ -81,7 +81,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2 justify-end">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#4E4E4E] ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#6d6b6b] ${antiquaFont.className}`}
             >
               {/* Translated Description */}
               {topSectionDescription}
@@ -101,7 +101,7 @@ const Page = () => {
         />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/5 text-center text-white px-4 w-full">
           <h2
-            className={`text-2xl lg:text-5xl font-bold mb-3 lg:mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 lg:mb-4 ${jost.className}`}
           >
             {/* Translated Hero Title */}
             {heroTitle}
@@ -113,7 +113,7 @@ const Page = () => {
             {heroDescription}
           </p>
           <button
-            className={`bg-[#FF951B] hover:bg-orange-400 cursor-pointer  text-sm lg:text-lg text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full  font-semibold ${poppins.className}`}
+            className={`bg-[#FF951B] hover:bg-orange-400 cursor-pointer  text-sm lg:text-lg text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full  font-semibold ${jost.className}`}
           >
             {/* Translated Button Text */}
             {applyNowButton}
@@ -124,12 +124,12 @@ const Page = () => {
       {/* About Section */}
       <section className="mt-12 lg:mt-25 max-w-6xl mx-auto space-y-6 lg:space-y-10 px-4 lg:px-0">
         <div className="space-y-4 lg:space-y-5">
-          <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
+          <h2 className={`text-2xl lg:text-4xl font-bold ${jost.className}`}>
             {/* Translated About Title */}
             {aboutTitle}
           </h2>
           <p
-            className={`${antiquaFont.className} text-[#363636] text-justify text-lg lg:text-xl leading-relaxed`}
+            className={`${antiquaFont.className} text-[#6d6b6b] text-justify text-lg lg:text-xl leading-relaxed`}
           >
             {/* Translated About Description */}
             {aboutDescription}
@@ -155,12 +155,12 @@ const Page = () => {
 
       {/* Program Section */}
       <section className="mt-12 lg:mt-15 max-w-6xl mx-auto space-y-4 lg:space-y-5 px-4 lg:px-0">
-        <h2 className={`${poppins.className} text-2xl lg:text-4xl font-bold`}>
+        <h2 className={`${jost.className} text-2xl lg:text-4xl font-bold`}>
             {/* Translated Program Title */}
             {programTitle}
         </h2>
         <p
-          className={`${antiquaFont.className} text-justify text-[#363636] leading-relaxed text-lg lg:text-xl`}
+          className={`${antiquaFont.className} text-justify text-[#6d6b6b] leading-relaxed text-lg lg:text-xl`}
         >
             {/* Translated Program Description */}
             {programDescription}
@@ -169,19 +169,19 @@ const Page = () => {
 
       <div className="max-w-6xl mx-auto px-4 lg:px-0 ">
         <section className=" mt-12 lg:mt-15 space-y-4 lg:space-y-5 ">
-          <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
+          <h2 className={`text-2xl lg:text-4xl font-bold ${jost.className}`}>
             {/* Translated Eligibility Title */}
             {eligibilityTitle}
           </h2>
           <p
-            className={`${antiquaFont.className} text-justify text-[#363636] text-lg lg:text-xl`}
+            className={`${antiquaFont.className} text-justify text-[#6d6b6b] text-lg lg:text-xl`}
           >
             {/* Translated Eligibility Description */}
             {eligibilityDescription}
           </p>
           <div>
             <h3
-              className={`${antiquaFont.className} text-[#363636] text-justify text-lg lg:text-xl mb-4`}
+              className={`${antiquaFont.className} text-[#6d6b6b] text-justify text-lg lg:text-xl mb-4`}
             >
                 {/* Translated Eligibility Subtitle */}
                 {eligibilitySubtitle}
@@ -200,7 +200,7 @@ const Page = () => {
                     className="mt-1 shrink-0"
                   />
                   <li
-                    className={`${antiquaFont.className} text-justify text-lg lg:text-xl`}
+                    className={`${antiquaFont.className} text-[#6d6b6b] text-justify text-lg lg:text-xl`}
                   >
                     {/* Translated Requirement */}
                     {req.title}
@@ -211,7 +211,7 @@ const Page = () => {
           </div>
         </section>
         <section className=" mt-12 lg:mt-15 space-y-6 lg:space-y-10">
-          <h2 className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}>
+          <h2 className={`text-2xl lg:text-4xl font-bold ${jost.className}`}>
             {/* Translated Meet the Fellows Title */}
             {meetFellowsTitle}
           </h2>
@@ -252,20 +252,20 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2 space-y-6 lg:space-y-10 p-6 lg:p-8">
             <h2
-              className={`text-[#2D2D2D] ${poppins.className} font-bold text-xl lg:text-3xl`}
+              className={`text-[#2D2D2D] ${jost.className} font-bold text-xl lg:text-3xl`}
             >
                 {/* Translated CTA Title */}
                 {ctaTitle}
             </h2>
             <p
-              className={`${antiquaFont.className} text-justify text-lg lg:text-xl text-[#363636]`}
+              className={`${antiquaFont.className} text-justify text-lg lg:text-xl text-[#6d6b6b]`}
             >
                 {/* Translated CTA Description */}
                 {ctaDescription}
             </p>
             <div className="text-center lg:text-left">
               <button
-                className={`${poppins.className} bg-[#36133B] text-white cursor-pointer px-6 py-2 lg:px-8 lg:py-3 rounded-full uppercase hover:bg-[#ff951b] transition duration-200`}
+                className={`${jost.className} bg-[#36133B] text-white cursor-pointer px-6 py-2 lg:px-8 lg:py-3 rounded-full uppercase hover:bg-[#ff951b] transition duration-200`}
               >
                 {/* Translated CTA Button */}
                 {ctaButton}

@@ -3,7 +3,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import Link from "next/link";
 import { Blog, fetchBlogByTitle } from "@/sanity/queries/blogQueries";
 import { PortableText } from "next-sanity";
@@ -59,7 +59,7 @@ const BlogPage = () => {
       <Container>
         <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-20 text-center">
           <h1
-            className={`text-3xl font-bold text-gray-800 mb-4 ${poppins.className}`}
+            className={`text-3xl font-bold text-gray-800 mb-4 ${jost.className}`}
           >
             Blog Not Found
           </h1>
@@ -68,7 +68,7 @@ const BlogPage = () => {
           </p>
           <Link
             href="/blogs"
-            className={`inline-block bg-[#36133B] text-white px-6 py-3 rounded-full hover:bg-[#4a1a50] transition-colors ${poppins.className} font-semibold`}
+            className={`inline-block bg-[#36133B] text-white px-6 py-3 rounded-full hover:bg-[#4a1a50] transition-colors ${jost.className} font-semibold`}
           >
             Back to Blogs
           </Link>
@@ -81,7 +81,7 @@ const BlogPage = () => {
     <Container>
       {/* Breadcrumb */}
       <div
-        className={`flex uppercase items-center gap-5 my-5 lg:my-10 ${poppins.className} text-[8px] lg:text-base`}
+        className={`flex uppercase items-center gap-5 my-5 lg:my-10 ${jost.className} text-[8px] lg:text-base`}
       >
         <Link href="/" className="font-bold hover:text-[#FF951B]">
           HOME
@@ -99,7 +99,7 @@ const BlogPage = () => {
       <div className="xl:max-w-7xl lg:max-w-6xl mx-auto py-5 mb-40">
         {/* Title */}
         <h1
-          className={`text-2xl lg:text-4xl font-bold mb-5 ${poppins.className}`}
+          className={`text-2xl lg:text-4xl font-bold mb-5 ${jost.className}`}
         >
           {blog.title}
         </h1>
@@ -111,7 +111,7 @@ const BlogPage = () => {
 
         {/* Meta Info */}
         <div
-          className={`flex flex-col md:flex-row md:items-center justify-between gap-3 text-sm ${poppins.className} mb-10`}
+          className={`flex flex-col md:flex-row md:items-center justify-between gap-3 text-sm ${jost.className} mb-10`}
         >
           <div className="flex items-center gap-3 flex-wrap">
             <p className="text-gray-500">
@@ -147,7 +147,7 @@ const BlogPage = () => {
 
         {/* Long Description */}
         <div
-          className={`text-gray-700 text-lg lg:text-xl ${antiquaFont.className} leading-relaxed whitespace-pre-line`}
+          className={`text-[#6d6b6b] text-lg lg:text-xl ${antiquaFont.className} leading-relaxed whitespace-pre-line`}
         >
           <PortableText
             value={blog.description}

@@ -3,7 +3,7 @@ import Container from "@/components/Container";
 import Card from "@/components/Research/Card";
 import ResearchPartners from "@/components/Research/ResearchPartners";
 import ResearchProjects from "@/components/Research/ResearchProjects";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -26,12 +26,12 @@ const Page = () => {
         {/* Center Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-30 mt-20">
           <h1
-            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${poppins.className}`}
+            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${jost.className}`}
           >
             {t("research_page.hero.title")}
           </h1>
           <p
-            className={`text-base md:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
+            className={`text-base md:text-xl  text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
           >
             {t("research_page.hero.description")}
           </p>
@@ -45,9 +45,9 @@ const Page = () => {
 
       <Container>
         <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
-          <section className={`flex text-sm gap-5  ${poppins.className} font-semibold`}>
-            <Link href="/">{t("research_page.breadcrumb.title")}</Link> <span>||</span>
-            <p className="text-[#818181] uppercase"> {t("research_page.hero.title")}</p>
+          <section className={`flex text-sm gap-5  ${jost.className} font-semibold`}>
+            <Link href="/">HOME</Link> <span>||</span>
+            <p className="text-[#818181] uppercase">Our Research</p>
           </section>
 
           {/* Search bar */}

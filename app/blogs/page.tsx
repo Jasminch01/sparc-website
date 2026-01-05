@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import {
   Blog,
   fetchBlogs,
@@ -215,7 +215,7 @@ const BlogPage = () => {
       <Container>
         <section className="flex flex-col lg:flex-row justify-between items-center mt-20 lg:mt-10 gap-10 border-b border-[#E5E5E5] pb-5 mb-10">
           <h2
-            className={`${poppins.className} font-extrabold text-3xl lg:text-5xl`}
+            className={`${jost.className} font-extrabold text-3xl lg:text-5xl`}
           >
             {t("blog_page.title")}
           </h2>
@@ -246,7 +246,7 @@ const BlogPage = () => {
                     key={realIndex}
                     onClick={() => handleCategoryChange(category, realIndex)}
                     className={`lg:px-8 px-3 py-2 bg-[#F6F6F6] rounded-full cursor-pointer transition ${
-                      poppins.className
+                      jost.className
                     } ${
                       activeIndex === realIndex
                         ? "border-black border "
@@ -288,7 +288,7 @@ const BlogPage = () => {
         ) : null}
 
         <p
-          className={`text-center text-xl lg:text-3xl text-[#303030] font-bold ${poppins.className}`}
+          className={`text-center text-xl lg:text-3xl text-[#303030] font-bold ${jost.className}`}
         >
           {activeCategory}
         </p>
@@ -298,9 +298,9 @@ const BlogPage = () => {
           className="flex justify-between items-center my-5 lg:my-10 text-xs lg:text-base"
           ref={blogSectionRef}
         >
-          <section className={`flex gap-5 font-semibold ${poppins.className}`}>
-            <Link href="/">{t("blog_page.breadcrumb.title")}</Link> <span>||</span>
-            <p className="text-[#818181] uppercase">{t("blog_page.title")}</p>
+          <section className={`flex gap-5 font-semibold ${jost.className}`}>
+            <Link href="/">HOME</Link> <span>||</span>
+            <p className="text-[#818181] uppercase">blog</p>
           </section>
 
           <section className="flex gap-5 items-center">
@@ -310,7 +310,7 @@ const BlogPage = () => {
                   handleSubcategoryChange(e.target.value as "latest" | "old")
                 }
                 value={activeSubcategory}
-                className={`border border-[#B7B7B7] rounded-sm py-2 pl-4 pr-10 cursor-pointer appearance-none focus:outline-none  ${poppins.className}`}
+                className={`border border-[#B7B7B7] rounded-sm py-2 pl-4 pr-10 cursor-pointer appearance-none focus:outline-none  ${jost.className}`}
               >
                 <option value="latest">Latest</option>
                 <option value="old">Old</option>
@@ -340,7 +340,7 @@ const BlogPage = () => {
               <div className="flex justify-center items-center h-screen">
                 <div className="flex flex-col items-center gap-4">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-                  <p className={`text-xl ${poppins.className}`}>
+                  <p className={`text-xl ${jost.className}`}>
                     Loading blogs...
                   </p>
                 </div>
@@ -360,13 +360,13 @@ const BlogPage = () => {
                   >
                     <div className="flex-1 space-y-3">
                       <p
-                        className={`text-[#505050] text-base font-medium ${poppins.className}`}
+                        className={`text-[#505050] text-base font-medium ${jost.className}`}
                       >
                         Written by{" "}
                         <span className="text-black">{blog.writtenBy}</span>
                       </p>
                       <h2
-                        className={`text-xl sm:text-2xl lg:text-3xl font-bold mb-2  ${poppins.className}`}
+                        className={`text-xl sm:text-2xl lg:text-3xl font-bold mb-2  ${jost.className}`}
                       >
                         {blog.title}
                       </h2>
@@ -379,7 +379,7 @@ const BlogPage = () => {
                       )}
                       <div className="flex gap-3 items-center">
                         <p
-                          className={`text-[#6B6B6B] uppercase text-base font-medium ${poppins.className}`}
+                          className={`text-[#6B6B6B] uppercase text-base font-medium ${jost.className}`}
                         >
                           {new Date(blog.date).toLocaleDateString("en-US", {
                             day: "2-digit",
@@ -412,7 +412,7 @@ const BlogPage = () => {
                       disabled={currentPage === 1}
                       className={` disabled:cursor-not-allowed ${
                         currentPage === 1 ? "text-[#818181]" : "text-black"
-                      } ${poppins.className}`}
+                      } ${jost.className}`}
                     >
                       Previous
                     </button>
@@ -434,7 +434,7 @@ const BlogPage = () => {
                               currentPage === page
                                 ? "text-black"
                                 : "text-[#818181]"
-                            } ${poppins.className}`}
+                            } ${jost.className}`}
                           >
                             {page}
                           </button>
@@ -449,7 +449,7 @@ const BlogPage = () => {
                         currentPage === totalPages
                           ? "text-[#818181]"
                           : "text-black cursor-pointer"
-                      } ${poppins.className}`}
+                      } ${jost.className}`}
                     >
                       Next
                     </button>

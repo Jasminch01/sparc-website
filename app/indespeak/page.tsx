@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import hero from "@/public/indespeak/hero.png";
 import { getIndiSpeakStories } from "@/sanity/queries/indispeakQueries";
 import Image from "next/image";
@@ -108,7 +108,7 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-5 mb-20">
           <div className="lg:w-1/2">
             <h2
-              className={`text-2xl text-center lg:text-left lg:text-5xl font-black ${poppins.className} uppercase`}
+              className={`text-2xl lg:text-5xl font-black ${jost.className} uppercase`}
             >
               {/* Use helper function for the title with <1> tag styling */}
               {renderStyledTitle('indespeak_page.title')}
@@ -116,7 +116,7 @@ const Page = () => {
           </div>
           <div className="lg:w-1/2">
             <p
-              className={`text-[#4E4E4E] text-md md:text-xl ${antiquaFont.className}`}
+              className={`text-[#6d6b6b] text-md md:text-xl ${antiquaFont.className}`}
             >
               {/* Translation for: indespeak_page.description */}
               {t('indespeak_page.description')}
@@ -135,7 +135,7 @@ const Page = () => {
           className="w-full h-[350px] md:h-[500px] lg:h-[600px] object-cover"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
-          <h2 className={`text-3xl lg:text-4xl font-bold ${poppins.className}`}>
+          <h2 className={`text-3xl lg:text-4xl font-bold ${jost.className}`}>
             {/* Translation for: indespeak_page.hero.title */}
             {t('indespeak_page.hero.title')}
           </h2>
@@ -153,7 +153,7 @@ const Page = () => {
             }
             className="flex flex-col items-center mt-6 cursor-pointer"
           >
-            <span className={`text-[#FF951B] ${poppins.className}`}>
+            <span className={`text-[#FF951B] ${jost.className}`}>
               {/* Translation for: indespeak_page.hero.button */}
               {t('indespeak_page.hero.button')}
             </span>
@@ -165,7 +165,7 @@ const Page = () => {
       {/* Breadcrumb & Filter */}
       <Container>
         <div className="flex flex-col lg:flex-row justify-between items-center my-6 lg:my-20 gap-4">
-          <div className={`flex gap-3 font-semibold ${poppins.className}`}>
+          <div className={`flex gap-3 font-semibold ${jost.className}`}>
             <Link href="/">
               {/* Translation for: breadcrumb.home */}
               {t('indespeak_page.breadcrumb.title')}
@@ -180,7 +180,7 @@ const Page = () => {
           <select
             value={activeYear}
             onChange={(e) => setActiveYear(e.target.value)}
-            className={`border border-[#B7B7B7] py-2 px-4 rounded ${poppins.className} focus:outline-none focus:border-[#FF951B]`}
+            className={`border border-[#B7B7B7] py-2 px-4 rounded ${jost.className} focus:outline-none focus:border-[#FF951B]`}
           >
             <option value="2024-2025">2024-2025</option>
             <option value="2023-2024">2023-2024</option>
@@ -205,7 +205,7 @@ const Page = () => {
               <MdSearchOff className="text-[#FF951B] text-7xl" />
             </div>
             <h3
-              className={`text-2xl lg:text-3xl font-bold mb-4 ${poppins.className}`}
+              className={`text-2xl lg:text-3xl font-bold mb-4 ${jost.className}`}
             >
               No Stories Found
             </h3>
@@ -218,7 +218,7 @@ const Page = () => {
             </p>
             <button
               onClick={() => setActiveYear(`${currentYear - 1}-${currentYear}`)}
-              className={`px-6 py-3 bg-[#FF951B] text-white rounded hover:bg-[#e68516] transition-colors ${poppins.className} font-semibold`}
+              className={`px-6 py-3 bg-[#FF951B] text-white rounded hover:bg-[#e68516] transition-colors ${jost.className} font-semibold`}
             >
               View Latest Stories
             </button>
@@ -236,13 +236,13 @@ const Page = () => {
                     <div className="flex flex-col xl:flex-row gap-10">
                       <div className="xl:w-2/3 space-y-4">
                         <h2
-                          className={`text-2xl lg:text-[44px] font-bold uppercase ${poppins.className}`}
+                          className={`text-2xl lg:text-[44px] font-bold uppercase ${jost.className}`}
                         >
                           {ids.title}
                         </h2>
 
                         <p
-                          className={`text-sm lg:text-lg uppercase text-[#6B6B6B] ${poppins.className}`}
+                          className={`text-sm lg:text-lg font-bold uppercase text-[#6B6B6B] ${jost.className}`}
                         >
                           Written on{" "}
                           {new Date(ids.writtenOn).toLocaleDateString("en-US", {
@@ -253,7 +253,7 @@ const Page = () => {
                         </p>
 
                         <p
-                          className={`${antiquaFont.className} text-lg lg:text-xl text-justify`}
+                          className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl text-justify`}
                         >
                           {isExpanded || !isLongText
                             ? ids.des
@@ -288,7 +288,7 @@ const Page = () => {
                           />
                         )}
                         <h3
-                          className={`mt-4 font-bold text-lg ${poppins.className}`}
+                          className={`mt-4 font-bold text-lg ${jost.className}`}
                         >
                           {ids.autorName}
                         </h3>
@@ -312,7 +312,7 @@ const Page = () => {
                 <button
                   onClick={() => handlePageChange(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className={`px-4 py-2 border border-[#B7B7B7] rounded ${poppins.className} disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FF951B] hover:text-white cursor-pointer hover:border-[#FF951B] transition-all duration-200`}
+                  className={`px-4 py-2 border border-[#B7B7B7] rounded ${jost.className} disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FF951B] hover:text-white cursor-pointer hover:border-[#FF951B] transition-all duration-200`}
                 >
                   Previous
                 </button>
@@ -323,7 +323,7 @@ const Page = () => {
                       key={page}
                       onClick={() => handlePageChange(page)}
                       className={`px-4 py-2 border rounded ${
-                        poppins.className
+                        jost.className
                       } ${
                         currentPage === page
                           ? "bg-[#FF951B] text-white border-[#FF951B]"
@@ -338,7 +338,7 @@ const Page = () => {
                 <button
                   onClick={() => handlePageChange(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className={`px-4 py-2 border border-[#B7B7B7] rounded ${poppins.className} disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FF951B] hover:text-white cursor-pointer hover:border-[#FF951B] transition-all duration-200`}
+                  className={`px-4 py-2 border border-[#B7B7B7] rounded ${jost.className} disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#FF951B] hover:text-white cursor-pointer hover:border-[#FF951B] transition-all duration-200`}
                 >
                   Next
                 </button>
