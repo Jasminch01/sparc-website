@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { antiquaFont, jost } from "../utils/font";
+import { antiquaFont } from "../utils/font";
 
 const Card = () => {
   return (
@@ -17,14 +17,12 @@ const Card = () => {
 
         {/* Content Section */}
         <div className="w-full lg:w-1/2 p-8 md:p-12 lg:p-10 xl:p-16 space-y-6">
-          <h2
-            className={`  text-2xl md:text-3xl lg:text-4xl font-bold ${jost.className}`}
-          >
+          <h2 className="font-bold text-2xl md:text-3xl lg:text-4xl leading-tight text-gray-900">
             JOIN WITH OUR TEAM AND RESEARCH TOGETHER
           </h2>
 
           <p
-            className={`text-base md:text-lg lg:text-xl text-[#6d6b6b] leading-relaxed ${antiquaFont.className}`}
+            className={`text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed ${antiquaFont.className}`}
           >
             Indigenous young people who are emerging leaders, learners, or
             activists working to preserve their culture and rights.
