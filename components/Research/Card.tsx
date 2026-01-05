@@ -2,6 +2,8 @@ import Image from "next/image";
 import { antiquaFont } from "../utils/font";
 
 const Card = () => {
+
+  
   return (
     <div className="mt-20 pb-20 md:pb-40 md:px-8 lg:px-20">
       <div className="flex flex-col lg:flex-row justify-center items-center border-gray-300 border-2 rounded-lg overflow-hidden bg-white  transition-shadow duration-300">
