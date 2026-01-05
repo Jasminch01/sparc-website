@@ -4,7 +4,7 @@ import Form from "@/components/Partners/Form";
 import Opportunities from "@/components/Partners/Opportunities";
 import Partners from "@/components/Partners/Partners";
 import Partnership from "@/components/Partners/Partnership";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import Image from "next/image";
 // 1. Import useTranslation
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,7 @@ const Page = () => {
 
   return (
     <div>
-      <div className={`w-full relative h-[400px] md:h-[500px] lg:h-screen  ${poppins.className}`}>
+      <div className={`w-full relative h-[400px] md:h-[500px] lg:h-screen  ${jost.className}`}>
         <Image
           src={"/Partners/banner.png"}
           width={1920}

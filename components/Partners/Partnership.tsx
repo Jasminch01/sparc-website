@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import { antiquaFont, poppins, rowanFont } from "../utils/font";
+import { antiquaFont, jost, rowanFont } from "../utils/font";
 // 1. Import useTranslation
 import { useTranslation } from 'react-i18next';
 
@@ -27,7 +27,7 @@ const Partnership = () => {
   ];
 
   return (
-    <div className={`w-full md:py-20 px-5 xl:px-0 ${poppins.className}`}>
+    <div className={`w-full md:py-20 px-5 xl:px-0 ${jost.className}`}>
       <div className="xl:ml-32">
         <h1 className="font-bold text-3xl lg:text-4xl mb-16 text-center lg:text-left">
           {/* Translate main title */}

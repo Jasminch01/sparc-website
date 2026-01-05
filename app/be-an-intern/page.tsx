@@ -1,7 +1,7 @@
 "use client";
 import { useTranslation, Trans } from "react-i18next";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import hero from "@/public/be-a-intern/be-a-inter-hero.png";
 import careergroup from "@/public/be-a-intern/career-group.png";
 import icon from "@/public/fellowship/icon.png";
@@ -55,7 +55,7 @@ const Page = () => {
         <section className="flex flex-col lg:flex-row justify-between gap-8 lg:gap-20 px-4 lg:px-0">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-3xl lg:text-5xl max-w-2xl font-extrabold ${poppins.className}`}
+              className={`text-3xl lg:text-5xl max-w-2xl font-extrabold ${jost.className}`}
             >
               {/* Translated Hero Title with embedded styling */}
               <Trans
@@ -69,7 +69,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-[#6d6b6b] text-lg lg:text-xl ${antiquaFont.className}`}
             >
               {/* Translated Hero Description */}
               {heroDescription}
@@ -89,7 +89,7 @@ const Page = () => {
         />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/5 text-center text-white px-4 w-full">
           <h2
-            className={`text-2xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-4xl font-bold mb-3 lg:mb-4 ${jost.className}`}
           >
             {/* Translated Banner Title */}
             {bannerTitle}
@@ -101,7 +101,7 @@ const Page = () => {
             {bannerDescription}
           </p>
           <button
-            className={`bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white px-5 lg:px-7 py-3 lg:py-5 mt-4 rounded-full text-sm lg:text-lg font-semibold transition duration-200 ${poppins.className}`}
+            className={`bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white px-5 lg:px-7 py-3 lg:py-5 mt-4 rounded-full text-sm lg:text-lg font-semibold transition duration-200 ${jost.className}`}
           >
             {/* Translated Button Text */}
             {applyButtonText}
@@ -112,7 +112,7 @@ const Page = () => {
       {/* Career Journey Section */}
       <section className="max-w-6xl mx-auto space-y-6 lg:space-y-10 mt-12 lg:mt-20 px-4 lg:px-0">
         <h2
-          className={`text-2xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}
+          className={`text-2xl lg:text-4xl font-bold mb-3 lg:mb-4 ${jost.className}`}
         >
           {/* Translated Journey Title */}
           {journeyTitle}
@@ -141,7 +141,7 @@ const Page = () => {
       {/* Eligible Section */}
       <section className="max-w-6xl mx-auto mt-12 lg:mt-15 space-y-4 lg:space-y-5 mb-20 lg:mb-30 px-4 lg:px-0">
         <h2
-          className={`text-2xl lg:text-4xl font-bold ${poppins.className}`}
+          className={`text-2xl lg:text-4xl font-bold ${jost.className}`}
         >
           {/* Translated 'What You Can Do' Title */}
           {whatYouCanDoTitle}
@@ -191,7 +191,7 @@ const Page = () => {
         </p>
         <div className="pt-8 lg:pt-12">
           <button
-            className={`flex items-center justify-center hover:bg-orange-400 text-center mx-auto bg-[#FF951B] px-5 lg:py-5 lg:px-7 py-4 text-white rounded-full text-sm lg:text-lg font-semibold cursor-pointer ${poppins.className}`}
+            className={`flex items-center justify-center hover:bg-orange-400 text-center mx-auto bg-[#FF951B] px-5 lg:py-5 lg:px-7 py-4 text-white rounded-full text-sm lg:text-lg font-semibold cursor-pointer ${jost.className}`}
           >
             {/* Translated Final Button Text */}
             {finalCtaButtonText}

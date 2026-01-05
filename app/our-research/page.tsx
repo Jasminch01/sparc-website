@@ -2,7 +2,7 @@ import Container from "@/components/Container";
 import Card from "@/components/Research/Card";
 import ResearchPartners from "@/components/Research/ResearchPartners";
 import ResearchProjects from "@/components/Research/ResearchProjects";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import Image from "next/image";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
@@ -23,12 +23,12 @@ const page = () => {
         {/* Center Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-30 mt-20">
           <h1
-            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${poppins.className}`}
+            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${jost.className}`}
           >
             OUR RESEARCH
           </h1>
           <p
-            className={`text-base md:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
+            className={`text-base md:text-xl  text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
           >
             Our research amplifies Indigenous voices, documents cultural wisdom,
             and supports evidence-based advocacy for equality and sustainability
@@ -43,7 +43,7 @@ const page = () => {
 
       <Container>
         <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
-          <section className={`flex text-sm gap-5  ${poppins.className} font-semibold`}>
+          <section className={`flex text-sm gap-5  ${jost.className} font-semibold`}>
             <Link href="/">HOME</Link> <span>||</span>
             <p className="text-[#818181] uppercase">Our Research</p>
           </section>

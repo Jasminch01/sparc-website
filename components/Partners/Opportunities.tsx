@@ -1,6 +1,6 @@
 "use client"
 import Container from "../Container";
-import { antiquaFont } from "../utils/font";
+import { antiquaFont, jost } from "../utils/font";
 // 1. Import useTranslation
 import { useTranslation } from 'react-i18next';
 
@@ -19,7 +19,7 @@ const Opportunities = () => {
   return (
     <div className=" bg-[#36133B] py-10 xl:py-20 my-20 px-5 md:px-0">
       <div>
-        <p className="text-3xl lg:text-4xl font-bold text-center text-white px-4 mb-5">
+        <p className={`text-3xl lg:text-4xl font-bold text-center text-white px-4 mb-5 ${jost.className}`}>
           {/* Translate the main title */}
           {t('partnership_opportunities.title', 'Partnership Opportunities')}
         </p>
@@ -33,12 +33,12 @@ const Opportunities = () => {
                   key={index}
                   className="text-white space-y-5 bg-white/10 border border-white/30 p-6 md:p-10 rounded-xl flex flex-col h-full"
                 >
-                  <p className="font-bold text-xl md:text-2xl">
+                  <p className={`font-bold text-xl md:text-2xl ${jost.className}`}>
                     {/* Use translated title */}
                     {opportunity.title}
                   </p>
                   <p
-                    className={`${antiquaFont.className} text-lg lg:text-xl grow`}
+                    className={`${antiquaFont.className} text-lg lg:text-lg grow`}
                   >
                     {/* Use translated description */}
                     {opportunity.description}

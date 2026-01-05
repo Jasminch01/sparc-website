@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -152,7 +152,7 @@ const Page = () => {
       <Container>
         <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center">
           <div className="text-red-500 text-5xl mb-4">⚠️</div>
-          <h1 className={`text-2xl font-bold ${poppins.className}`}>
+          <h1 className={`text-2xl font-bold ${jost.className}`}>
             Error Loading Content
           </h1>
           <p className={`text-gray-600 ${antiquaFont.className} max-w-md`}>
@@ -160,7 +160,7 @@ const Page = () => {
           </p>
           <Link
             href="/sparc-update"
-            className={`mt-4 inline-block bg-[#FF951B] text-white px-6 py-3 rounded-full hover:bg-orange-400 transition-colors ${poppins.className}`}
+            className={`mt-4 inline-block bg-[#FF951B] text-white px-6 py-3 rounded-full hover:bg-orange-400 transition-colors ${jost.className}`}
           >
             Back to SPARC Updates
           </Link>
@@ -175,7 +175,7 @@ const Page = () => {
       <Container>
         <div className="flex flex-col items-center justify-center min-h-screen gap-4 text-center">
           <div className="text-gray-400 text-6xl mb-4">📄</div>
-          <h1 className={`text-2xl font-bold ${poppins.className}`}>
+          <h1 className={`text-2xl font-bold ${jost.className}`}>
             Content Not Found
           </h1>
           <p className={`text-gray-600 ${antiquaFont.className} max-w-md`}>
@@ -183,7 +183,7 @@ const Page = () => {
           </p>
           <Link
             href="/sparc-update"
-            className={`mt-4 inline-block bg-[#FF951B] text-white px-6 py-3 rounded-full hover:bg-orange-400 transition-colors ${poppins.className}`}
+            className={`mt-4 inline-block bg-[#FF951B] text-white px-6 py-3 rounded-full hover:bg-orange-400 transition-colors ${jost.className}`}
           >
             Back to SPARC Updates
           </Link>
@@ -202,7 +202,7 @@ const Page = () => {
         {/* Breadcrumb */}
         <nav
           aria-label="Breadcrumb"
-          className={`flex uppercase items-center gap-2 sm:gap-3 lg:gap-5 my-5 lg:my-10 ${poppins.className} text-[8px] sm:text-xs lg:text-base flex-wrap`}
+          className={`flex uppercase items-center gap-2 sm:gap-3 lg:gap-5 my-5 lg:my-10 ${jost.className} text-[8px] sm:text-xs lg:text-base flex-wrap`}
         >
           <Link
             href="/"
@@ -249,13 +249,13 @@ const Page = () => {
           {/* Header */}
           <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-5 mt-6 sm:mt-8 lg:mt-10">
             <h1
-              className={`${poppins.className} text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight`}
+              className={`${jost.className} text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold leading-tight`}
             >
               {contentItem.title}
             </h1>
             <time
               dateTime={contentItem.date}
-              className={`${poppins.className} text-xs sm:text-sm text-gray-600 whitespace-nowrap`}
+              className={`${jost.className} text-xs sm:text-sm text-gray-600 whitespace-nowrap`}
             >
               {formatDate(contentItem.date)}
             </time>
@@ -266,7 +266,7 @@ const Page = () => {
             {isProject && projectData && (
               <>
                 <span
-                  className={`${poppins.className} inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                  className={`${jost.className} inline-block px-3 py-1 text-xs font-medium rounded-full ${
                     projectData.status === "Ongoing"
                       ? "bg-[#F26522] text-white"
                       : "bg-[#018F44] text-white"
@@ -275,7 +275,7 @@ const Page = () => {
                   {projectData.status}
                 </span>
                 <span
-                  className={`${poppins.className} inline-block px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 rounded-full`}
+                  className={`${jost.className} inline-block px-3 py-1 text-xs font-medium bg-gray-200 text-gray-700 rounded-full`}
                 >
                   Funded by: {projectData.fundedBy}
                 </span>
@@ -285,7 +285,7 @@ const Page = () => {
             {!isProject && eventData && (
               <>
                 <span
-                  className={`${poppins.className} inline-block px-3 py-1 text-xs font-medium rounded-full ${
+                  className={`${jost.className} inline-block px-3 py-1 text-xs font-medium rounded-full ${
                     eventData.status === "Upcoming"
                       ? "bg-[#36133B] text-white"
                       : "bg-[#018F44] text-white"
@@ -295,7 +295,7 @@ const Page = () => {
                 </span>
                 {eventData.timeLeft && (
                   <span
-                    className={`${poppins.className} inline-block px-3 py-1 text-xs font-medium bg-[#FF951B] text-white rounded-full`}
+                    className={`${jost.className} inline-block px-3 py-1 text-xs font-medium bg-[#FF951B] text-white rounded-full`}
                   >
                     {eventData.timeLeft} Left
                   </span>
@@ -306,7 +306,7 @@ const Page = () => {
 
           {/* Description */}
           <div
-            className={`${antiquaFont.className} text-sm sm:text-base lg:text-lg leading-relaxed mt-6 sm:mt-8 text-gray-700`}
+            className={`${antiquaFont.className} text-sm sm:text-base lg:text-lg leading-relaxed mt-6 sm:mt-8 text-[#6d6b6b]`}
           >
             <PortableText value={contentItem.description} />
           </div>
@@ -316,7 +316,7 @@ const Page = () => {
         {isProject && relatedProjects.length > 0 && (
           <section className="mb-12 sm:mb-16 lg:mb-20">
             <h2
-              className={`${poppins.className} text-xl sm:text-2xl font-semibold mb-6`}
+              className={`${jost.className} text-xl sm:text-2xl font-semibold mb-6`}
             >
               Related Projects
             </h2>
@@ -341,7 +341,7 @@ const Page = () => {
 
                   <div className="p-4">
                     <h3
-                      className={`${poppins.className} font-medium text-base mb-2 group-hover:text-[#FF951B]`}
+                      className={`${jost.className} font-medium text-base mb-2 group-hover:text-[#FF951B]`}
                     >
                       {project.title}
                     </h3>
@@ -352,11 +352,11 @@ const Page = () => {
                     </div>
 
                     <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span className={poppins.className}>
+                      <span className={jost.className}>
                         {formatDate(project.date)}
                       </span>
                       <span
-                        className={`${poppins.className} px-2 py-1 rounded ${
+                        className={`${jost.className} px-2 py-1 rounded ${
                           project.status === "Ongoing"
                             ? "bg-orange-100 text-orange-600"
                             : "bg-green-100 text-green-600"
@@ -376,7 +376,7 @@ const Page = () => {
         {!isProject && relatedEvents.length > 0 && (
           <section className="mb-20 sm:mb-32 lg:mb-40">
             <h2
-              className={`${poppins.className} text-xl sm:text-2xl font-semibold mb-6`}
+              className={`${jost.className} text-xl sm:text-2xl font-semibold mb-6`}
             >
               More Events
             </h2>
@@ -401,7 +401,7 @@ const Page = () => {
 
                   <div className="p-4">
                     <h3
-                      className={`${poppins.className} font-medium text-base mb-2 group-hover:text-[#FF951B]`}
+                      className={`${jost.className} font-medium text-base mb-2 group-hover:text-[#FF951B]`}
                     >
                       {event.title}
                     </h3>
@@ -412,12 +412,12 @@ const Page = () => {
                     </div>
 
                     <div className="flex items-center justify-between text-xs">
-                      <span className={`${poppins.className} text-gray-500`}>
+                      <span className={`${jost.className} text-gray-500`}>
                         {formatDate(event.date)}
                       </span>
                       {event.timeLeft && (
                         <span
-                          className={`${poppins.className} px-2 py-1 bg-[#FF951B] text-white rounded`}
+                          className={`${jost.className} px-2 py-1 bg-[#FF951B] text-white rounded`}
                         >
                           {event.timeLeft}
                         </span>

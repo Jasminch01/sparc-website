@@ -1,7 +1,7 @@
 "use client";
 // Import useTranslation and Trans
 import { useTranslation, Trans } from "react-i18next";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost, } from "@/components/utils/font";
 // import vector from "../../public/Volunteer/vector.png";
 import hero from "../../public/Volunteer/banner.png";
 import countryimage from "../../public/Volunteer/country-image.png";
@@ -50,7 +50,7 @@ const Page = () => {
             {/* Left Content */}
             <div className="w-full lg:w-1/2 lg:pr-8 px-5 lg:px-0">
               <h2
-                className={`uppercase font-black text-3xl sm:text-4xl lg:text-[51px] text-black mb-4 sm:mb-6 max-w-xl ${poppins.className}`}
+                className={`uppercase font-black text-3xl sm:text-4xl lg:text-[48px] mb-4 sm:mb-6 max-w-xl ${jost.className}`}
               >
                 {/* Translated Hero Title with styling */}
                 <Trans
@@ -86,7 +86,7 @@ const Page = () => {
                 className="relative lg:absolute z-30 bg-white rounded-xl px-6 lg:px-12 py-8 lg:py-10 border border-gray-200 w-full sm:max-w-md lg:w-[500px] shadow-lg"
               >
                 <h2
-                  className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${poppins.className}`}
+                  className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${jost.className}`}
                 >
                   {/* Translated Form Heading */}
                   {formHeading}
@@ -165,18 +165,18 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5 lg:mt-20">
             <h2
-              className={`${poppins.className} text-2xl lg:text-4xl font-extrabold`}
+              className={`${jost.className} text-2xl lg:text-4xl font-extrabold`}
             >
               {whyTitle} {/* Translated */}
             </h2>
             <p
-              className={`${antiquaFont.className} text-[#2B2B2B] leading-relaxed text-lg xl:text-xl`}
+              className={`${antiquaFont.className} text-[#6d6b6b] leading-relaxed text-lg xl:text-xl`}
             >
               {whyDescription} {/* Translated */}
             </p>
             <div className="space-y-4 lg:space-y-5 pt-4">
               <h2
-                className={`font-semibold ${poppins.className} text-xl lg:text-2xl`}
+                className={`font-semibold ${jost.className} text-xl lg:text-2xl`}
               >
                 {whySubtitle} {/* Translated */}
               </h2>
@@ -191,7 +191,7 @@ const Page = () => {
                       className="mt-1 shrink-0"
                     />
                     <p
-                      className={`${antiquaFont.className} text-lg lg:text-xl`}
+                      className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl`}
                     >
                       {op.title}
                     </p>
@@ -208,18 +208,18 @@ const Page = () => {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
           <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5 order-2 lg:order-1">
             <h2
-              className={`${poppins.className} text-2xl lg:text-4xl font-black`}
+              className={`${jost.className} text-2xl lg:text-4xl font-black`}
             >
               {gainTitle} {/* Translated */}
             </h2>
             <p
-              className={`${antiquaFont.className} text-[#2B2B2B] text-lg lg:text-xl leading-relaxed`}
+              className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl leading-relaxed`}
             >
               {gainDescription} {/* Translated */}
             </p>
             <div className="space-y-4 sm:space-y-5 pt-4">
               <h2
-                className={`font-semibold ${poppins.className} text-xl lg:text-2xl`}
+                className={`font-semibold ${jost.className} text-xl lg:text-2xl`}
               >
                 {gainSubtitle} {/* Translated */}
               </h2>
@@ -234,7 +234,7 @@ const Page = () => {
                       className="mt-1 shrink-0"
                     />
                     <p
-                      className={`${antiquaFont.className} text-[#2B2B2B] text-lg lg:text-xl`}
+                      className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl`}
                     >
                       {op.title}
                     </p>
@@ -258,7 +258,7 @@ const Page = () => {
       {/* Final Call to Action Button - Now using translated text */}
       <div className="flex items-center justify-center mb-12 sm:mb-15 px-4">
         <button
-          className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-400 transition duration-200 ${poppins.className}`}
+          className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-400 transition duration-200 ${jost.className}`}
         >
           {ctaButtonText} {/* Translated */}
         </button>

@@ -1,7 +1,7 @@
 "use client";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Container from "@/components/Container";
@@ -103,7 +103,7 @@ const Page = () => {
       <Container>
         <div className="max-w-7xl mx-auto py-20 text-center">
           <h1
-            className={`text-3xl font-bold text-gray-800 mb-4 ${poppins.className}`}
+            className={`text-3xl font-bold text-gray-800 mb-4 ${jost.className}`}
           >
             Content Not Found
           </h1>
@@ -113,7 +113,7 @@ const Page = () => {
           </p>
           <Link
             href="/reports-publications"
-            className={`inline-flex items-center gap-2 bg-[#36133B] text-white px-6 py-3 rounded-full hover:bg-[#4a1a50] transition-colors ${poppins.className} font-semibold`}
+            className={`inline-flex items-center gap-2 bg-[#36133B] text-white px-6 py-3 rounded-full hover:bg-[#4a1a50] transition-colors ${jost.className} font-semibold`}
           >
             <IoArrowBack /> Back to Reports & Publications
           </Link>
@@ -127,7 +127,7 @@ const Page = () => {
       <div className="max-w-7xl mx-auto py-10 md:py-16 lg:py-20">
         {/* Breadcrumb */}
         <div
-          className={`flex gap-3 sm:gap-5 mb-6 lg:mb-8 text-xs sm:text-sm ${poppins.className} font-semibold flex-wrap items-center`}
+          className={`flex gap-3 sm:gap-5 mb-6 lg:mb-8 text-xs sm:text-sm ${jost.className} font-semibold flex-wrap items-center`}
         >
           <Link
             href="/"
@@ -155,7 +155,7 @@ const Page = () => {
                 data.category === "reports"
                   ? "bg-blue-100 text-blue-600"
                   : "bg-purple-100 text-purple-600"
-              } rounded-full text-sm font-semibold uppercase ${poppins.className}`}
+              } rounded-full text-sm font-semibold uppercase ${jost.className}`}
             >
               {data.category}
             </span>
@@ -163,14 +163,14 @@ const Page = () => {
 
           {/* Title */}
           <h1
-            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${poppins.className}`}
+            className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${jost.className}`}
           >
             {data.title}
           </h1>
 
           {/* Meta Info */}
           <div
-            className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-6 border-b border-gray-200 ${poppins.className}`}
+            className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 pb-6 border-b border-gray-200 ${jost.className}`}
           >
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm">
               <span className="text-gray-600">
@@ -184,7 +184,7 @@ const Page = () => {
 
           {/* Description */}
           <div
-            className={`text-lg lg:text-xl leading-relaxed text-gray-700 ${antiquaFont.className} whitespace-pre-line`}
+            className={`text-lg lg:text-xl leading-relaxed text-[#6d6b6b] ${antiquaFont.className} whitespace-pre-line`}
           >
             <PortableText value={data.description} />
           </div>
@@ -214,7 +214,7 @@ const Page = () => {
           {data.category === "publications" && (
             <div className="bg-gray-50 rounded-lg p-6 lg:p-8 space-y-4 border border-gray-200">
               <h2
-                className={`text-xl lg:text-2xl font-bold mb-4 ${poppins.className}`}
+                className={`text-xl lg:text-2xl font-bold mb-4 ${jost.className}`}
               >
                 Publication Details
               </h2>
@@ -277,14 +277,14 @@ const Page = () => {
           <div className="mt-16 lg:mt-20 pt-12 border-t border-gray-200">
             <div className="flex items-center justify-between mb-8">
               <h2
-                className={`text-2xl lg:text-3xl font-bold ${poppins.className}`}
+                className={`text-2xl lg:text-3xl font-bold ${jost.className}`}
               >
                 Related{" "}
                 {data.category === "reports" ? "Reports" : "Publications"}
               </h2>
               <Link
                 href="/reports-publications"
-                className={`inline-flex items-center gap-2 text-[#36133B] hover:text-[#FF951B] transition-colors ${poppins.className} font-semibold text-sm md:text-base`}
+                className={`inline-flex items-center gap-2 text-[#36133B] hover:text-[#FF951B] transition-colors ${jost.className} font-semibold text-sm md:text-base`}
               >
                 <IoArrowBack /> View All
               </Link>
@@ -314,12 +314,12 @@ const Page = () => {
                           item.category === "reports"
                             ? "bg-blue-100 text-blue-600"
                             : "bg-purple-100 text-purple-600"
-                        } rounded-full text-xs font-semibold mb-2 uppercase ${poppins.className} self-start`}
+                        } rounded-full text-xs font-semibold mb-2 uppercase ${jost.className} self-start`}
                       >
                         {item.category}
                       </span>
                       <h3
-                        className={`text-lg font-bold mb-2 group-hover:text-[#FF951B] transition-colors line-clamp-2 ${poppins.className}`}
+                        className={`text-lg font-bold mb-2 group-hover:text-[#FF951B] transition-colors line-clamp-2 ${jost.className}`}
                       >
                         {item.title}
                       </h3>
@@ -329,7 +329,7 @@ const Page = () => {
                         <PortableText value={data.description} />
                       </div>
                       <p
-                        className={`text-xs text-gray-500 mt-3 ${poppins.className}`}
+                        className={`text-xs text-gray-500 mt-3 ${jost.className}`}
                       >
                         {formatDate(item.writtenOn)}
                       </p>

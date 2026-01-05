@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Container from "@/components/Container";
 import Image from "next/image";
 import { PortableText } from "@portabletext/react";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import {
   getResearchProjectBySlug,
   ResearchProject,
@@ -95,14 +95,14 @@ const ResearchDetailsPage = () => {
   // Render project details
   return (
     <div className="pb-48">
-      <div className={`py-8 md:py-12 lg:py-16 ${poppins.className}`}>
+      <div className={`py-8 md:py-12 lg:py-16 ${jost.className}`}>
         <p className="text-center font-bold text-4xl">
           ONGOING RESEARCH PROJECTS
         </p>
         <Container>
           <div className="my-20">
             <section
-              className={`flex gap-5 uppercase text-sm font-semibold ${poppins.className}`}
+              className={`flex gap-5 uppercase text-sm font-semibold ${jost.className}`}
             >
               <Link href="/">Home</Link> <span>||</span>
               <Link href="/our-research">Our Research</Link>

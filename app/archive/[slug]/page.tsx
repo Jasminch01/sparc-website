@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost } from "@/components/utils/font";
 import {
   ArchiveData,
   fetchArchiveBySlug,
@@ -85,13 +85,13 @@ const Page = () => {
     <div className="lg:my-20 my-10">
       <Container>
         <span
-          className={`text-xl lg:text-3xl uppercase text-center font-semibold flex items-center justify-center ${poppins.className}`}
+          className={`text-xl lg:text-3xl uppercase text-center font-semibold flex items-center justify-center ${jost.className}`}
         >
           {archive.category}
         </span>
 
         <section
-          className={`flex justify-between uppercase text-xs md:text-base font-semibold ${poppins.className} py-10 lg:py-15`}
+          className={`flex justify-between uppercase text-xs md:text-base font-semibold ${jost.className} py-10 lg:py-15`}
         >
           <div className="flex gap-2 lg:gap-5 ">
             <Link href="/" className="hover:underline">
@@ -107,12 +107,12 @@ const Page = () => {
 
       <article className="max-w-7xl mx-auto px-4">
         <h1
-          className={`text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4 ${poppins.className}`}
+          className={`text-2xl md:text-3xl lg:text-4xl font-bold mt-2 mb-4 ${jost.className}`}
         >
           {archive.title}
         </h1>
 
-        <p className={`text-gray-500 mb-6 ${poppins.className}`}>
+        <p className={`text-gray-500 mb-6 ${jost.className}`}>
           {formatDate(archive.date)}
         </p>
 
@@ -125,7 +125,7 @@ const Page = () => {
         />
 
         <div
-          className={`text-[#252525] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line text-[#252525]`}
+          className={`text-[#6d6b6b] xl:text-xl text-lg ${antiquaFont.className} py-5 whitespace-pre-line `}
         >
           <PortableText
             value={archive.description}
@@ -140,7 +140,7 @@ const Page = () => {
         {/* Related Stories */}
         <div className="mt-16 mb-40">
           <h2
-            className={`text-2xl font-semibold mb-8 text-center ${poppins.className}`}
+            className={`text-2xl font-semibold mb-8 text-center ${jost.className}`}
           >
             Related Stories
           </h2>
@@ -164,13 +164,13 @@ const Page = () => {
 
                 <div className="mt-4 space-y-2">
                   <h3
-                    className={`text-lg group-hover:text-[#ff951b] duration-300 font-semibold leading-snug transition-colors ${poppins.className}`}
+                    className={`text-lg group-hover:text-[#ff951b] duration-300 font-semibold leading-snug transition-colors ${jost.className}`}
                   >
                     {story.title}
                   </h3>
 
                   <p
-                    className={`text-lg text-[#252525] ${antiquaFont.className}`}
+                    className={`text-lg text-[#6d6b6b] ${antiquaFont.className}`}
                   >
                     {story.subtitle}
                   </p>

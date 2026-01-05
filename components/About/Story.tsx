@@ -62,7 +62,7 @@ const Story = () => {
 
             {/* Text Content - Using i18n data */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <p className="text-2xl md:text-3xl font-black mb-3 md:mb-4">
+              <p className="text-2xl md:text-3xl xl:text-4xl font-black mb-3 md:mb-4">
                 {storyTitle}
               </p>
               <p
@@ -98,7 +98,7 @@ const Story = () => {
                     height={50}
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
-                  <p className="text-xl md:text-2xl font-black">
+                  <p className="text-xl md:text-2xl xl:text-4xl font-black">
                     {standForTitle}
                   </p>
                 </div>
@@ -119,7 +119,7 @@ const Story = () => {
                     height={50}
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
-                  <p className="text-xl md:text-2xl font-black">
+                  <p className="text-xl md:text-2xl font-black xl:text-4xl">
                     {headedTitle}
                   </p>
                 </div>

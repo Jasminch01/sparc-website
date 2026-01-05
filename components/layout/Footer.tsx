@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
-import { antiquaFont, jost, } from "../utils/font";
+import { antiquaFont } from "../utils/font";
 import Container from "../Container";
 // Import TFunction for type safety instead of using 'any'
 import { useTranslation } from "react-i18next";
@@ -74,9 +74,9 @@ const Footer = () => {
   const navs = createNavsFromI18n(t);
   const bottomBar = createBottomBarFromI18n(t);
 
-  const subscribeHeading = t('footer.subscribe.heading', 'Get the freshest news from us');
-  const subscribePlaceholder = t('footer.subscribe.placeholder', 'Your email address');
-  const subscribeButton = t('footer.subscribe.button', 'Subscribe');
+  // const subscribeHeading = t('footer.subscribe.heading', 'Get the freshest news from us');
+  // const subscribePlaceholder = t('footer.subscribe.placeholder', 'Your email address');
+  // const subscribeButton = t('footer.subscribe.button', 'Subscribe');
   const copyrightText = t('footer.copyright', 'Sparc 2025. All rights reserved.');
 
 
@@ -160,7 +160,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Subscription Section */}
-            <div className={`w-full lg:w-auto ${jost.className}`}>
+            {/* <div className={`w-full lg:w-auto ${jost.className}`}>
               <h2 className={`font-semibold mb-3 text-base sm:text-lg `}>
                 {subscribeHeading}
               </h2>
@@ -179,7 +179,7 @@ const Footer = () => {
                   </button>
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
 
           {/* Bottom Section: Legal Links and Copyright */}
