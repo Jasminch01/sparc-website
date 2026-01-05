@@ -2,7 +2,7 @@
 import React from "react";
 import Container from "../Container";
 import Image from "next/image";
-import { antiquaFont, poppins } from "../utils/font";
+import { antiquaFont, jost} from "../utils/font";
 import Link from "next/link";
 // Import useTranslation for internationalization
 import { useTranslation } from "react-i18next";
@@ -28,11 +28,11 @@ const Story = () => {
 
 
   return (
-    <div className={`my-20 ${poppins.className}`}>
+    <div className={`my-20 ${jost.className}`}>
       <Container>
         <div className="flex justify-between items-center my-20">
           <section
-            className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
+            className={`flex gap-5 text-sm uppercase font-semibold ${jost.className}`}
           >
             {/* Breadcrumb - Using i18n data */}
             <Link href="/">{homeLinkText}</Link> <span>||</span>
@@ -66,7 +66,7 @@ const Story = () => {
                 {storyTitle}
               </p>
               <p
-                className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
               >
                 {storyDescription}
               </p>
@@ -103,7 +103,7 @@ const Story = () => {
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
                 >
                   {standForDescription}
                 </p>
@@ -124,7 +124,7 @@ const Story = () => {
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
                 >
                   {headedDescription}
                 </p>

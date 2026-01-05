@@ -8,7 +8,6 @@ import {
   FolderIcon,
 } from "@sanity/icons";
 
-// https://www.sanity.io/docs/structure-builder-cheat-sheet
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("Content")

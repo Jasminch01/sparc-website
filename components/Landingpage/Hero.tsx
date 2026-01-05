@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import Container from "../Container";
-import { antiquaFont, jost, poppins } from "../utils/font";
+import { antiquaFont, jost, } from "../utils/font";
 import hero from '../../public/Hero/hero.png'
 import { Trans, useTranslation } from "react-i18next";
 
@@ -15,13 +15,12 @@ const Hero = () => {
   const heroDescription = t('hero.description');
 
   return (
-    <div className={`my-5 relative ${poppins.className}`}>
+    <div className={`my-5 relative ${jost.className}`}>
       {/* Top Section with Title and Description */}
       <Container>
         <section className="flex flex-col lg:flex-row items-center md:items-start lg:justify-between lg:space-x-25 mt-10 mb-5">
           <div className="lg:max-w-xl text-center lg:text-left flex-1">
             <h2 className={`${jost.className} font-black text-2xl lg:text-[51px]`}>
-              {/* Replace t('header.title') with Trans component */}
               <Trans
                 i18nKey="header.title" 
                 components={{
