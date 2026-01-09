@@ -1,4 +1,4 @@
-import { Poppins } from "next/font/google";
+import { Noto_Sans_Bengali, Poppins } from "next/font/google";
 import localFont from "next/font/local";
 
 export const poppins = Poppins({
@@ -20,6 +20,7 @@ export const antiquaFont = localFont({
     },
   ],
 });
+
 export const rowanFont = localFont({
   src: [
     {
@@ -28,4 +29,9 @@ export const rowanFont = localFont({
       style: "bold",
     },
   ],
+});
+export const notoBengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
+  weight: ["400", "700"],
+  variable: "--font-bengali",
 });
