@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { antiquaFont, jost, poppins } from "../utils/font";
+import { antiquaFont, jost, poppins, notoBengali } from "../utils/font";
 import vector from "../../public/Whatwedo/Frame1.png";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import Container from "../Container";
@@ -18,7 +18,8 @@ const Highlights = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isBn = i18n.language === 'BN';
 
   const componentTitle = t("highlight.title", "HIGHLIGHTS");
   const readMoreText = t("button.read_more", "Read More");
@@ -55,7 +56,7 @@ const Highlights = () => {
         <Container>
           <div className="mt-20 sm:mt-24 md:mt-30">
             <h2
-              className={`${poppins.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
+              className={`${jost.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
             >
               {componentTitle}
             </h2>
@@ -74,7 +75,7 @@ const Highlights = () => {
         <Container>
           <div className="mt-20 sm:mt-24 md:mt-30">
             <h2
-              className={`${poppins.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
+              className={`${jost.className} text-center font-black xl:text-4xl md:text-3xl text-2xl xl:mb-5`}
             >
               {componentTitle}
             </h2>
@@ -111,7 +112,7 @@ const Highlights = () => {
       <Container>
         <div className="mt-20 sm:mt-24 md:mt-30">
           <h2
-            className={`${jost.className} text-center font-black xl:text-5xl md:text-3xl text-2xl xl:mb-5`}
+            className={`${isBn?notoBengali.className:jost.className} text-center font-black xl:text-5xl md:text-3xl text-2xl xl:mb-5`}
           >
             {componentTitle}
           </h2>

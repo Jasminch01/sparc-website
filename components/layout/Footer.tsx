@@ -3,13 +3,12 @@ import { useState } from 'react';
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
-import { antiquaFont } from "../utils/font";
+// Added notoBengali to the imports
+import { antiquaFont, notoBengali } from "../utils/font";
 import Container from "../Container";
-// Import TFunction for type safety instead of using 'any'
 import { useTranslation } from "react-i18next";
-import { TFunction } from "i18next"; 
+import { TFunction } from "i18next";
 
-// --- Interface Definitions for Component Data ---
 interface FooterLinkItem {
   title: string;
   href: string;
@@ -26,8 +25,6 @@ interface NavItem {
   dropdown?: DropdownItem[];
 }
 
-// Manually map the i18n structure to the required component structure (navs)
-// FIX: Changed t: any to t: TFunction
 const createNavsFromI18n = (t: TFunction): NavItem[] => [
   { title: t('footer.menu_links.who_we_are', 'আমরা কারা'), href: "/who-we-are" },
   { title: t('footer.menu_links.stories', 'গল্পসমূহ'), href: "/stories-news" },
@@ -51,8 +48,6 @@ const createNavsFromI18n = (t: TFunction): NavItem[] => [
   }
 ];
 
-// Manually map the i18n legal links to the required component structure (bottomBar)
-// FIX: Changed t: any to t: TFunction
 const createBottomBarFromI18n = (t: TFunction): FooterLinkItem[] => [
   { title: t('footer.legal_links.terms', 'শর্তাবলী'), href: "/terms-conditions" },
   { title: t('footer.legal_links.privacy', 'গোপনীয়তা নীতি'), href: "/privacy-policy" },
@@ -62,27 +57,23 @@ const createBottomBarFromI18n = (t: TFunction): FooterLinkItem[] => [
 
 
 const Footer = () => {
-  // Destructure t from useTranslation
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+
+  // Determine if the current language is Bengali
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   const toggleDropdown = (index: number) => {
     setOpenDropdown(openDropdown === index ? null : index);
   };
 
-  // Load all translated data
   const navs = createNavsFromI18n(t);
   const bottomBar = createBottomBarFromI18n(t);
-
-  // const subscribeHeading = t('footer.subscribe.heading', 'Get the freshest news from us');
-  // const subscribePlaceholder = t('footer.subscribe.placeholder', 'Your email address');
-  // const subscribeButton = t('footer.subscribe.button', 'Subscribe');
   const copyrightText = t('footer.copyright', 'Sparc 2025. All rights reserved.');
 
-
   return (
-    <div className="bg-[#36133B] text-white relative h-full md:mt-24 mt-12 lg:pb-20">
-      {/* Background Vector Image */}
+    // Applied conditional font to the root div
+    <div className={`bg-[#36133B] text-white relative h-full md:mt-24 mt-12 lg:pb-20 ${isBn ? notoBengali.className : ""}`}>
       <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[4.3rem] md:-top-11 -top-7 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
         <Image
           className="w-full h-auto object-cover"
@@ -94,7 +85,6 @@ const Footer = () => {
       </div>
       <Container>
         <div className=" py-10 flex flex-col gap-8 lg:gap-10">
-          {/* Logo */}
           <Image
             src={logo}
             alt="logo"
@@ -103,20 +93,16 @@ const Footer = () => {
             className="object-contain h-16 sm:h-20 w-auto"
           />
 
-          {/* Main Content Section: Navigation and Newsletter */}
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8 lg:gap-6">
-
-            {/* Navigation Links Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-5 w-full lg:w-auto">
               {navs.map((nav, index) => (
                 <div key={index} className="relative">
-                  {/* Dropdown Links (Work with us, Resources) */}
                   {nav.dropdown ? (
                     <div>
                       <button
                         onClick={() => toggleDropdown(index)}
-                        style={{ fontFamily: '"Nunito", serif' }}
-                        className="text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300 flex items-center gap-1"
+                        // Use class instead of hardcoded fontFamily
+                        className={`text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300 flex items-center gap-1 ${isBn ? notoBengali.className : ""}`}
                       >
                         {nav.title}
                         <svg
@@ -136,8 +122,7 @@ const Footer = () => {
                               key={subIndex}
                               href={item.href}
                               onClick={() => setOpenDropdown(null)}
-                              style={{ fontFamily: '"Nunito", serif' }}
-                              className="block text-sm sm:text-base text-gray-300 hover:text-[#FF951B] transition-colors duration-300 py-2 pl-2 border-l-2 border-gray-600 hover:border-[#FF951B]"
+                              className={`block text-sm sm:text-base text-gray-300 hover:text-[#FF951B] transition-colors duration-300 py-2 pl-2 border-l-2 border-gray-600 hover:border-[#FF951B] ${isBn ? notoBengali.className : ""}`}
                             >
                               {item.title}
                             </Link>
@@ -146,11 +131,9 @@ const Footer = () => {
                       )}
                     </div>
                   ) : (
-                    /* Simple Links (Who we are, Stories, etc.) */
                     <Link
-                      style={{ fontFamily: '"Nunito", serif' }}
                       href={nav.href || "#"}
-                      className="text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300"
+                      className={`text-base sm:text-lg lg:text-xl hover:text-[#FF951B] transition-colors duration-300 ${isBn ? notoBengali.className : ""}`}
                     >
                       {nav.title}
                     </Link>
@@ -158,43 +141,19 @@ const Footer = () => {
                 </div>
               ))}
             </div>
-
-            {/* Newsletter Subscription Section */}
-            {/* <div className={`w-full lg:w-auto ${jost.className}`}>
-              <h2 className={`font-semibold mb-3 text-base sm:text-lg `}>
-                {subscribeHeading}
-              </h2>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="flex flex-row rounded overflow-hidden gap-2 sm:gap-0">
-                  <input
-                    type="email"
-                    placeholder={subscribePlaceholder}
-                    className={`px-3 py-2 w-full sm:w-64 outline-none bg-white text-gray-500 rounded sm:rounded-none sm:rounded-l`}
-                  />
-                  <button
-                    type="submit"
-                    className={`bg-[#FF951B] border border-[#FF951B] text-white px-4 py-2 hover:bg-[#e8851a] transition rounded sm:rounded-none xl:rounded-r`}
-                  >
-                    {subscribeButton}
-                  </button>
-                </div>
-              </form>
-            </div> */}
           </div>
 
-          {/* Bottom Section: Legal Links and Copyright */}
           <div
-            className={`flex flex-col sm:flex-row justify-between items-start w-full sm:items-center gap-4 xl:gap-2 mt-4 lg:mt-8 ${antiquaFont.className}`}
+            className={`flex flex-col sm:flex-row justify-between items-start w-full sm:items-center gap-4 xl:gap-2 mt-4 lg:mt-8 ${isBn ? notoBengali.className : antiquaFont.className}`}
           >
-            {/* Legal Links */}
             <div className={`flex flex-col lg:flex-row gap-5 w-full`}>
               {bottomBar.map((bottom, index) => (
                 <Link
                   key={index}
                   href={bottom.href}
                   className={`xl:text-base ${index !== bottomBar.length - 1
-                      ? "xl:border-r-2 xl:pr-4"
-                      : ""
+                    ? "xl:border-r-2 xl:pr-4"
+                    : ""
                     } hover:text-[#FF951B] transition-colors duration-300`}
                 >
                   {bottom.title}
@@ -202,13 +161,11 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Copyright */}
             <div className="flex items-center justify-center mt-10 gap-2 w-full md:justify-start xl:justify-end">
               <p className="text-base">{copyrightText}</p>
             </div>
           </div>
 
-          {/* Divider */}
           <hr className="border-gray-600" />
         </div>
       </Container>

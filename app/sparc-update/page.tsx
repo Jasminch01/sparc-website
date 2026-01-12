@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, jost } from "@/components/utils/font";
+import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "@/public/rebuild/hero.png";
 import frame from "@/public/rebuild/Frame 51.png";
 import Image from "next/image";
@@ -45,9 +45,10 @@ const Page = () => {
   const [projectsLoading, setProjectsLoading] = useState(false);
   const [eventsLoading, setEventsLoading] = useState(false);
 
-  const {t} = useTranslation()
+  const { t, i18n } = useTranslation();
 
-  
+  // Detect if current language is Bengali
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
 
   // Fetch initial data
   useEffect(() => {
@@ -135,14 +136,13 @@ const Page = () => {
   }, [activeEventCategory]);
 
   // Helper functions
-
   const formatDate = (dateString: string): string => {
-    if (!dateString) return "Date unavailable";
+    if (!dateString) return isBn ? "তারিখ উপলব্ধ নেই" : "Date unavailable";
     try {
       const date = new Date(dateString);
       if (isNaN(date.getTime())) return dateString;
 
-      return date.toLocaleDateString("en-US", {
+      return date.toLocaleDateString(isBn ? "bn-BD" : "en-US", {
         day: "2-digit",
         month: "long",
         year: "numeric",
@@ -176,13 +176,12 @@ const Page = () => {
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`px-4 py-2 rounded ${
-            currentPage === 1
+          className={`px-4 py-2 rounded ${currentPage === 1
               ? "bg-gray-200 text-gray-400 cursor-not-allowed"
               : "bg-[#FF951B] text-white hover:bg-orange-400"
-          } ${jost.className}`}
+            } ${isBn ? notoBengali.className : jost.className}`}
         >
-          Previous
+          {isBn ? "পূর্ববর্তী" : "Previous"}
         </button>
 
         <div className="flex gap-2">
@@ -190,13 +189,12 @@ const Page = () => {
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              className={`px-4 py-2 rounded ${
-                currentPage === page
+              className={`px-4 py-2 rounded ${currentPage === page
                   ? "bg-[#FF951B] text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-              } ${jost.className}`}
+                } ${isBn ? notoBengali.className : jost.className}`}
             >
-              {page}
+              {isBn ? page.toLocaleString('bn-BD') : page}
             </button>
           ))}
         </div>
@@ -204,35 +202,34 @@ const Page = () => {
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`px-4 py-2 rounded ${
-            currentPage === totalPages
+          className={`px-4 py-2 rounded ${currentPage === totalPages
               ? "bg-gray-200 text-gray-400 cursor-not-allowed"
               : "bg-[#FF951B] text-white hover:bg-orange-400"
-          } ${jost.className}`}
+            } ${isBn ? notoBengali.className : jost.className}`}
         >
-          Next
+          {isBn ? "পরবর্তী" : "Next"}
         </button>
       </div>
     );
   };
 
   return (
-    <div className="mt-10 sm:mt-12 md:mt-15">
+    <div className={`mt-10 sm:mt-12 md:mt-15 ${isBn ? notoBengali.className : ""}`}>
       <Container>
         {/* Top Section */}
         <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${jost.className}`}
+              className={`text-2xl text-center lg:text-start lg:text-5xl max-w-2xl font-extrabold leading-tight ${isBn ? notoBengali.className : jost.className}`}
             >
-             {t('sparc_update_page.title')}
+              {t('sparc_update_page.title')}
             </h2>
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#6d6b6b] ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg lg:text-xl text-[#6d6b6b] ${isBn ? notoBengali.className : antiquaFont.className}`}
             >
-             {t('sparc_update_page.description')}
+              {t('sparc_update_page.description')}
             </p>
           </div>
         </section>
@@ -250,19 +247,19 @@ const Page = () => {
         />
         <div className="absolute top-2/3 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-2xl lg:text-5xl font-bold mb-3 ${jost.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 ${isBn ? notoBengali.className : jost.className}`}
           >
-          {t("sparc_update_page.hero.title")} 
+            {t("sparc_update_page.hero.title")}
           </h2>
           <p
-            className={`mb-3 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+            className={`mb-3 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${isBn ? notoBengali.className : antiquaFont.className}`}
           >
             {t("sparc_update_page.hero.description")}
           </p>
           <div className="flex flex-col items-center justify-center mt-6 sm:mt-8 md:mt-10">
             <button
               onClick={handleScrollToProjects}
-              className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${jost.className}`}
+              className={`bg-[#FF951B] px-6 md:px-10 py-3 sm:py-4 md:py-5 rounded-full cursor-pointer text-xs lg:text-lg font-semibold hover:bg-orange-400 transition-colors ${isBn ? notoBengali.className : jost.className}`}
             >
               {t("sparc_update_page.hero.button")}
             </button>
@@ -273,7 +270,7 @@ const Page = () => {
       {/* Breadcrumb Section */}
       <Container>
         <section
-          className={`flex gap-3 sm:gap-5 text-xs sm:text-base font-semibold mt-5 sm:mt-10 ${jost.className}`}
+          className={`flex gap-3 sm:gap-5 text-xs sm:text-base font-semibold mt-5 sm:mt-10 ${isBn ? notoBengali.className : jost.className}`}
         >
           <Link
             href="/"
@@ -292,14 +289,14 @@ const Page = () => {
           <div className="flex justify-center items-center h-64 my-20">
             <div className="flex flex-col items-center gap-4">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-              <p className={`text-xl ${jost.className}`}>
-                Loading updates...
+              <p className={`text-xl ${isBn ? notoBengali.className : jost.className}`}>
+                {isBn ? "আপডেট লোড হচ্ছে..." : "Loading updates..."}
               </p>
             </div>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-64 my-20">
-            <p className={`text-xl text-red-600 ${jost.className}`}>
+            <p className={`text-xl text-red-600 ${isBn ? notoBengali.className : jost.className}`}>
               {error}
             </p>
           </div>
@@ -315,9 +312,9 @@ const Page = () => {
                 }}
               >
                 <h3
-                  className={`text-xs sm:text-sm font-semibold tracking-wider ${jost.className}`}
+                  className={`text-xs sm:text-sm font-semibold tracking-wider ${isBn ? notoBengali.className : jost.className}`}
                 >
-                  HIGHLIGHT EVENT
+                  {isBn ? "হাইলাইট ইভেন্ট" : "HIGHLIGHT EVENT"}
                 </h3>
               </div>
 
@@ -339,31 +336,31 @@ const Page = () => {
                       </div>
                     )}
                     <h2
-                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${jost.className}`}
+                      className={`text-xl lg:text-2xl font-bold mb-3 group-hover:text-[#FF951B] leading-tight ${isBn ? notoBengali.className : jost.className}`}
                     >
                       {highlightedEvent.title}
                     </h2>
                     <p
-                      className={`text-xs text-[#4D4D4D] mb-4 uppercase ${jost.className}`}
+                      className={`text-xs text-[#4D4D4D] mb-4 uppercase ${isBn ? notoBengali.className : jost.className}`}
                     >
                       {formatDate(highlightedEvent.date)}
                     </p>
                     <div
-                      className={`text-lg lg:text-xl text-[#6d6b6b] mb-4 leading-relaxed ${antiquaFont.className}`}
+                      className={`text-lg lg:text-xl text-[#6d6b6b] mb-4 leading-relaxed ${isBn ? notoBengali.className : antiquaFont.className}`}
                     >
                       <PortableText value={highlightedEvent.description} />
                     </div>
                     <button
-                      className={`${jost.className} group-hover:text-[#FF951B] transition-colors`}
+                      className={`${isBn ? notoBengali.className : jost.className} group-hover:text-[#FF951B] transition-colors`}
                     >
-                      Read More <span>→</span>
+                      {isBn ? "আরও পড়ুন" : "Read More"} <span>→</span>
                     </button>
                   </Link>
                 ) : (
                   <p
-                    className={`text-center text-[#4D4D4D] ${jost.className}`}
+                    className={`text-center text-[#4D4D4D] ${isBn ? notoBengali.className : jost.className}`}
                   >
-                    No highlighted event available
+                    {isBn ? "কোনো হাইলাইট ইভেন্ট উপলব্ধ নেই" : "No highlighted event available"}
                   </p>
                 )}
               </div>
@@ -379,9 +376,9 @@ const Page = () => {
                 }}
               >
                 <h3
-                  className={`text-xs sm:text-sm font-semibold tracking-wider ${jost.className}`}
+                  className={`text-xs sm:text-sm font-semibold tracking-wider ${isBn ? notoBengali.className : jost.className}`}
                 >
-                  HIGHLIGHTED PROJECTS
+                  {isBn ? "হাইলাইট প্রজেক্টস" : "HIGHLIGHTED PROJECTS"}
                 </h3>
               </div>
 
@@ -389,9 +386,8 @@ const Page = () => {
                 highlightedProjects.map((project, index) => (
                   <div
                     key={project._id}
-                    className={`p-6 lg:pt-8 ${
-                      index === 0 ? "" : "border-t border-gray-300"
-                    }`}
+                    className={`p-6 lg:pt-8 ${index === 0 ? "" : "border-t border-gray-300"
+                      }`}
                   >
                     <Link
                       href={`/sparc-update/${project.title}`}
@@ -409,25 +405,25 @@ const Page = () => {
                         </div>
                       )}
                       <h3
-                        className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${jost.className}`}
+                        className={`text-base group-hover:text-[#FF951B] lg:text-2xl font-bold mb-2 leading-tight ${isBn ? notoBengali.className : jost.className}`}
                       >
                         {project.title}
                       </h3>
                       <div
-                        className={`text-lg text-[#6d6b6b] mb-3 line-clamp-3 ${antiquaFont.className}`}
+                        className={`text-lg text-[#6d6b6b] mb-3 line-clamp-3 ${isBn ? notoBengali.className : antiquaFont.className}`}
                       >
                         <PortableText value={project.description} />
                       </div>
                       <div className="flex justify-between items-center">
                         <p
-                          className={`text-xs text-[#6d6b6b] uppercase ${jost.className}`}
+                          className={`text-xs text-[#6d6b6b] uppercase ${isBn ? notoBengali.className : jost.className}`}
                         >
                           {formatDate(project.date)}
                         </p>
                         <button
-                          className={`${jost.className} group-hover:text-[#FF951B] transition-colors`}
+                          className={`${isBn ? notoBengali.className : jost.className} group-hover:text-[#FF951B] transition-colors`}
                         >
-                          Read More <span>→</span>
+                          {isBn ? "আরও পড়ুন" : "Read More"} <span>→</span>
                         </button>
                       </div>
                     </Link>
@@ -436,9 +432,9 @@ const Page = () => {
               ) : (
                 <div className="p-6 pt-8">
                   <p
-                    className={`text-center text-[#6d6b6b] ${jost.className}`}
+                    className={`text-center text-[#6d6b6b] ${isBn ? notoBengali.className : jost.className}`}
                   >
-                    No highlighted projects available
+                    {isBn ? "কোনো হাইলাইট প্রজেক্ট উপলব্ধ নেই" : "No highlighted projects available"}
                   </p>
                 </div>
               )}
@@ -452,12 +448,12 @@ const Page = () => {
         <section id="projects" className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
             <h2
-              className={`text-2xl lg:text-5xl font-bold mb-3 ${jost.className}`}
+              className={`text-2xl lg:text-5xl font-bold mb-3 ${isBn ? notoBengali.className : jost.className}`}
             >
               {t("sparc_update_page.updates_section.projects_header")}
             </h2>
             <p
-              className={`mb-3 lg:mb-4 text-base lg:text-lg ${antiquaFont.className} text-[#4D4D4D]`}
+              className={`mb-3 lg:mb-4 text-base lg:text-lg ${isBn ? notoBengali.className : antiquaFont.className} text-[#4D4D4D]`}
             >
               {t("sparc_update_page.updates_section.projects_description")}
             </p>
@@ -471,11 +467,10 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveProjectCategory(index)}
-                  className={`${jost.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
-                    activeProjectCategory === index
+                  className={`${isBn ? notoBengali.className : jost.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeProjectCategory === index
                       ? "border-b-2 border-black"
                       : ""
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>
@@ -511,39 +506,38 @@ const Page = () => {
                         )}
                         <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
                           <h2
-                            className={`${jost.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
+                            className={`${isBn ? notoBengali.className : jost.className} text-base sm:text-lg font-semibold group-hover:text-[#FF951B]`}
                           >
                             {project.title}
                           </h2>
                           <div
-                            className={`${antiquaFont.className} text-sm text-[#6d6b6b] sm:text-base text-justify line-clamp-3`}
+                            className={`${isBn ? notoBengali.className : antiquaFont.className} text-sm text-[#6d6b6b] sm:text-base text-justify line-clamp-3`}
                           >
                             <PortableText value={project.description} />
                           </div>
                           <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#6d6b6b] text-xs">
                             <p
-                              className={`font-bold ${
-                                project.status === "Ongoing"
+                              className={`font-bold ${project.status === "Ongoing"
                                   ? "text-[#F26522]"
                                   : "text-[#018F44]"
-                              } ${jost.className}`}
+                                } ${isBn ? notoBengali.className : jost.className}`}
                             >
                               {project.status}
                             </p>
                             <span className="hidden sm:inline">|</span>
-                            <p className={`${jost.className}`}>
+                            <p className={`${isBn ? notoBengali.className : jost.className}`}>
                               {formatDate(project.date)}
                             </p>
                             <span className="hidden sm:inline">|</span>
-                            <p className={`${jost.className}`}>
-                              Funded By {project.fundedBy}
+                            <p className={`${isBn ? notoBengali.className : jost.className}`}>
+                              {isBn ? "অর্থায়নে " : "Funded By "}{project.fundedBy}
                             </p>
                           </div>
                           <div className="h-10">
                             <button
-                              className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${jost.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
+                              className={`text-sm sm:text-md mt-3 sm:mt-5 cursor-pointer ${isBn ? notoBengali.className : jost.className} flex items-center gap-2 group-hover:text-[#FF951B] transition-all duration-400`}
                             >
-                              View Report <IoIosArrowRoundForward size={20} />
+                              {isBn ? "রিপোর্ট দেখুন" : "View Report"} <IoIosArrowRoundForward size={20} />
                             </button>
                           </div>
                         </div>
@@ -552,8 +546,8 @@ const Page = () => {
                   ))
                 ) : (
                   <div className="col-span-full text-center py-10">
-                    <p className={`text-gray-500 ${jost.className}`}>
-                      No projects available
+                    <p className={`text-gray-500 ${isBn ? notoBengali.className : jost.className}`}>
+                      {isBn ? "কোনো প্রজেক্ট উপলব্ধ নেই" : "No projects available"}
                     </p>
                   </div>
                 )}
@@ -575,14 +569,14 @@ const Page = () => {
         <section className="my-12 sm:my-16 md:my-20">
           <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
             <h2
-              className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${jost.className}`}
+              className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 ${isBn ? notoBengali.className : jost.className}`}
             >
               {t("sparc_update_page.updates_section.events_header")}
             </h2>
             <p
-              className={`mb-3 sm:mb-4 text-base sm:text-lg ${antiquaFont.className} text-gray-500`}
+              className={`mb-3 sm:mb-4 text-base sm:text-lg ${isBn ? notoBengali.className : antiquaFont.className} text-gray-500`}
             >
-               {t("sparc_update_page.updates_section.events_description")}
+              {t("sparc_update_page.updates_section.events_description")}
             </p>
           </div>
 
@@ -594,11 +588,10 @@ const Page = () => {
               >
                 <button
                   onClick={() => setActiveEventCategory(index)}
-                  className={`${jost.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${
-                    activeEventCategory === index
+                  className={`${isBn ? notoBengali.className : jost.className} cursor-pointer py-3 sm:py-4 md:py-5 text-base sm:text-lg md:text-xl font-semibold hover:text-[#FF951B] transition-colors ${activeEventCategory === index
                       ? "border-b-2 border-black"
                       : ""
-                  }`}
+                    }`}
                 >
                   {cat}
                 </button>
@@ -634,43 +627,42 @@ const Page = () => {
                         )}
                         <div className="mt-4 sm:mt-5 space-y-2 sm:space-y-3">
                           <h2
-                            className={`${jost.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
+                            className={`${isBn ? notoBengali.className : jost.className} text-base group-hover:text-[#ff951b] lg:text-lg font-semibold`}
                           >
                             {event.title}
                           </h2>
                           <div
-                            className={`${antiquaFont.className} text-sm text-[#6d6b6b] lg:text-base text-justify line-clamp-3`}
+                            className={`${isBn ? notoBengali.className : antiquaFont.className} text-sm text-[#6d6b6b] lg:text-base text-justify line-clamp-3`}
                           >
                             <PortableText value={event.description} />
                           </div>
                           <div className="flex flex-wrap items-center gap-2 lg:gap-3 text-[#6d6b6b] text-xs">
                             <p
-                              className={`font-bold ${
-                                event.status === "Upcoming"
+                              className={`font-bold ${event.status === "Upcoming"
                                   ? "text-[#36133B]"
                                   : "text-[#018F44]"
-                              } ${jost.className}`}
+                                } ${isBn ? notoBengali.className : jost.className}`}
                             >
                               {event.status}
                             </p>
                             <span className="hidden sm:inline">|</span>
-                            <p className={`${jost.className}`}>
+                            <p className={`${isBn ? notoBengali.className : jost.className}`}>
                               {formatDate(event.date)}
                             </p>
                             {event.timeLeft && (
                               <>
                                 <span className="hidden sm:inline">|</span>
-                                <p className={`${jost.className}`}>
-                                  {event.timeLeft} Left
+                                <p className={`${isBn ? notoBengali.className : jost.className}`}>
+                                  {event.timeLeft} {isBn ? "বাকি" : "Left"}
                                 </p>
                               </>
                             )}
                           </div>
                           <div className="h-10">
                             <button
-                              className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${jost.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
+                              className={`transition-all duration-400 text-sm lg:text-md mt-3 sm:mt-5 cursor-pointer ${isBn ? notoBengali.className : jost.className} flex items-center gap-2 group-hover:text-[#ff951b]`}
                             >
-                              View Report <IoIosArrowRoundForward size={20} />
+                              {isBn ? "রিপোর্ট দেখুন" : "View Report"} <IoIosArrowRoundForward size={20} />
                             </button>
                           </div>
                         </div>
@@ -679,8 +671,8 @@ const Page = () => {
                   ))
                 ) : (
                   <div className="col-span-full text-center py-10">
-                    <p className={`text-gray-500 ${jost.className}`}>
-                      No events available
+                    <p className={`text-gray-500 ${isBn ? notoBengali.className : jost.className}`}>
+                      {isBn ? "কোনো ইভেন্ট উপলব্ধ নেই" : "No events available"}
                     </p>
                   </div>
                 )}

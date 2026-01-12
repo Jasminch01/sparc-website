@@ -1,8 +1,7 @@
 "use client";
-// Import useTranslation and Trans
+// Added notoBengali to the imports
 import { useTranslation, Trans } from "react-i18next";
-import { antiquaFont, jost, } from "@/components/utils/font";
-// import vector from "../../public/Volunteer/vector.png";
+import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "../../public/Volunteer/banner.png";
 import countryimage from "../../public/Volunteer/country-image.png";
 import Image from "next/image";
@@ -11,12 +10,15 @@ import icon from "../../public/Volunteer/icon.png";
 import whatyouwillgainimage from "../../public/Volunteer/gain-image.png";
 
 const Page = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Detect if the active language is Bengali
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   // --- Fetch Translations ---
   const heroTitleKey = 'volunteer_page.hero_section.title';
   const heroDescription = t('volunteer_page.hero_section.description');
-  
+
   const formHeading = t('volunteer_page.form.heading');
   const namePlaceholder = t('volunteer_page.form.name_placeholder');
   const emailPlaceholder = t('volunteer_page.form.email_placeholder');
@@ -36,23 +38,19 @@ const Page = () => {
   const gainList = t('volunteer_page.gain_section.list', { returnObjects: true }) as string[];
 
   const ctaButtonText = t('volunteer_page.final_call_to_action');
-  // --- End Fetch Translations ---
-  // Reformat list data to use icon path, matching the original structure
+
   const opinions = whyList.map(title => ({ title, icon }));
   const gain = gainList.map(title => ({ title, icon }));
 
   return (
-    <div className="relative mt-8 lg:mt-15">
-      {/* Top Part - Hero Section with Form */}
+    <div className={`relative mt-8 lg:mt-15 ${isBn ? notoBengali.className : ""}`}>
       <Container>
-        <div className="">
+        <div>
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-0">
-            {/* Left Content */}
             <div className="w-full lg:w-1/2 lg:pr-8 px-5 lg:px-0">
               <h2
-                className={`uppercase font-black text-3xl sm:text-4xl lg:text-[48px] mb-4 sm:mb-6 max-w-xl ${jost.className}`}
+                className={`uppercase font-black text-3xl sm:text-4xl lg:text-[48px] mb-4 sm:mb-6 max-w-xl ${isBn ? notoBengali.className : jost.className}`}
               >
-                {/* Translated Hero Title with styling */}
                 <Trans
                   i18nKey={heroTitleKey}
                   defaults="Apply today to become a <1>volunteer</1>"
@@ -62,12 +60,12 @@ const Page = () => {
                 />
               </h2>
               <p
-                className={`text-[#4E4E4E] ${antiquaFont.className} text-lg leading-relaxed lg:text-xl`}
+                className={`text-[#4E4E4E] ${isBn ? notoBengali.className : antiquaFont.className} text-lg leading-relaxed lg:text-xl`}
               >
-                {/* Translated Hero Description */}
                 {heroDescription}
               </p>
             </div>
+
             <div className=" lg:hidden w-full">
               <Image
                 src={hero}
@@ -78,60 +76,47 @@ const Page = () => {
               />
             </div>
 
-            {/* Right Form - Now using translated placeholders/heading */}
             <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
               <form
                 id="form"
-                action=""
                 className="relative lg:absolute z-30 bg-white rounded-xl px-6 lg:px-12 py-8 lg:py-10 border border-gray-200 w-full sm:max-w-md lg:w-[500px] shadow-lg"
               >
                 <h2
-                  className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${jost.className}`}
+                  className={`text-center mb-6 lg:mb-8 text-lg lg:text-xl font-bold text-gray-800 uppercase tracking-wide ${isBn ? notoBengali.className : jost.className}`}
                 >
-                  {/* Translated Form Heading */}
                   {formHeading}
                 </h2>
-                <div className="space-y-4">
-                  <div>
-                    <input
-                      type="text"
-                      placeholder={namePlaceholder} // Translated
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="email"
-                      placeholder={emailPlaceholder} // Translated
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="tel"
-                      placeholder={phonePlaceholder} // Translated
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder={addressPlaceholder} // Translated
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white text-sm"
-                    />
-                  </div>
-                  <div>
-                    <textarea
-                      placeholder={messagePlaceholder} // Translated
-                      rows={4}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition duration-200 bg-white resize-none text-sm"
-                    />
-                  </div>
+                <div className={`space-y-4 ${isBn ? notoBengali.className : ""}`}>
+                  <input
+                    type="text"
+                    placeholder={namePlaceholder}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white text-sm"
+                  />
+                  <input
+                    type="email"
+                    placeholder={emailPlaceholder}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white text-sm"
+                  />
+                  <input
+                    type="tel"
+                    placeholder={phonePlaceholder}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white text-sm"
+                  />
+                  <input
+                    type="text"
+                    placeholder={addressPlaceholder}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white text-sm"
+                  />
+                  <textarea
+                    placeholder={messagePlaceholder}
+                    rows={4}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white resize-none text-sm"
+                  />
                   <button
                     type="submit"
-                    className="w-full bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm transition duration-200"
+                    className={`w-full bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white font-semibold py-3 px-6 rounded-full uppercase tracking-wide text-sm transition duration-200 ${isBn ? notoBengali.className : ""}`}
                   >
-                    {submitButtonText} {/* Translated */}
+                    {submitButtonText}
                   </button>
                 </div>
               </form>
@@ -140,18 +125,16 @@ const Page = () => {
         </div>
       </Container>
 
-      {/* Banner Images Section (No translation needed here) */}
       <div className="relative w-full">
         <Image
           src={hero}
           alt="hero-img"
           height={800}
           width={1000}
-          className="w-full hidden lg:flex h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-"
+          className="w-full hidden lg:flex h-[300px] md:h-[500px] lg:h-[600px] xl:h-[700px] object-cover"
         />
       </div>
 
-      {/* Why Volunteers - Now using translated text */}
       <Container>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 py-12 lg:py-20">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
@@ -164,35 +147,21 @@ const Page = () => {
             />
           </div>
           <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5 lg:mt-20">
-            <h2
-              className={`${jost.className} text-2xl lg:text-4xl font-extrabold`}
-            >
-              {whyTitle} {/* Translated */}
+            <h2 className={`${isBn ? notoBengali.className : jost.className} text-2xl lg:text-4xl font-extrabold`}>
+              {whyTitle}
             </h2>
-            <p
-              className={`${antiquaFont.className} text-[#6d6b6b] leading-relaxed text-lg xl:text-xl`}
-            >
-              {whyDescription} {/* Translated */}
+            <p className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] leading-relaxed text-lg xl:text-xl`}>
+              {whyDescription}
             </p>
             <div className="space-y-4 lg:space-y-5 pt-4">
-              <h2
-                className={`font-semibold ${jost.className} text-xl lg:text-2xl`}
-              >
-                {whySubtitle} {/* Translated */}
+              <h2 className={`font-semibold ${isBn ? notoBengali.className : jost.className} text-xl lg:text-2xl`}>
+                {whySubtitle}
               </h2>
               <ul className="space-y-3 sm:space-y-5">
                 {opinions.map((op, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <Image
-                      src={op.icon}
-                      alt={op.title}
-                      height={20}
-                      width={20}
-                      className="mt-1 shrink-0"
-                    />
-                    <p
-                      className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl`}
-                    >
+                    <Image src={op.icon} alt={op.title} height={20} width={20} className="mt-1 shrink-0" />
+                    <p className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl`}>
                       {op.title}
                     </p>
                   </div>
@@ -203,39 +172,24 @@ const Page = () => {
         </div>
       </Container>
 
-      {/* What you will gain - Now using translated text */}
       <Container>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12 sm:mb-16 lg:mb-20">
           <div className="w-full lg:w-1/2 space-y-4 sm:space-y-5 order-2 lg:order-1">
-            <h2
-              className={`${jost.className} text-2xl lg:text-4xl font-black`}
-            >
-              {gainTitle} {/* Translated */}
+            <h2 className={`${isBn ? notoBengali.className : jost.className} text-2xl lg:text-4xl font-black`}>
+              {gainTitle}
             </h2>
-            <p
-              className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl leading-relaxed`}
-            >
-              {gainDescription} {/* Translated */}
+            <p className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl leading-relaxed`}>
+              {gainDescription}
             </p>
             <div className="space-y-4 sm:space-y-5 pt-4">
-              <h2
-                className={`font-semibold ${jost.className} text-xl lg:text-2xl`}
-              >
-                {gainSubtitle} {/* Translated */}
+              <h2 className={`font-semibold ${isBn ? notoBengali.className : jost.className} text-xl lg:text-2xl`}>
+                {gainSubtitle}
               </h2>
               <ul className="space-y-3 sm:space-y-5">
                 {gain.map((op, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <Image
-                      src={op.icon}
-                      alt={op.title}
-                      height={10}
-                      width={20}
-                      className="mt-1 shrink-0"
-                    />
-                    <p
-                      className={`${antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl`}
-                    >
+                    <Image src={op.icon} alt={op.title} height={10} width={20} className="mt-1 shrink-0" />
+                    <p className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-lg lg:text-xl`}>
                       {op.title}
                     </p>
                   </div>
@@ -255,12 +209,11 @@ const Page = () => {
         </div>
       </Container>
 
-      {/* Final Call to Action Button - Now using translated text */}
       <div className="flex items-center justify-center mb-12 sm:mb-15 px-4">
         <button
-          className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-400 transition duration-200 ${jost.className}`}
+          className={`bg-[#FF951B] px-6 py-4 lg:px-8 lg:py-5 font-semibold text-sm lg:text-lg text-white rounded-full cursor-pointer hover:bg-orange-400 transition duration-200 ${isBn ? notoBengali.className : jost.className}`}
         >
-          {ctaButtonText} {/* Translated */}
+          {ctaButtonText}
         </button>
       </div>
     </div>

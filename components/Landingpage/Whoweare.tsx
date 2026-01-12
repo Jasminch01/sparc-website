@@ -1,4 +1,4 @@
-"use client" // Assuming this component needs to be client-side due to i18n hooks and potential interactivity
+"use client"
 
 import iconOne from "../../public/Whoweare/icon.png";
 import iconTwo from "../../public/Whoweare/icon 2.png";
@@ -7,34 +7,35 @@ import imageTwo from "../../public/Whoweare/Image 2.png";
 import imageThree from "../../public/Whoweare/Image 3.png";
 import imageFour from "../../public/Whoweare/Image 4.png";
 import Image from "next/image";
-import { useTranslation } from "react-i18next"; // Import useTranslation
-import { antiquaFont, jost} from "../utils/font";
+import { useTranslation } from "react-i18next";
+// Added notoBengali to imports
+import { antiquaFont, jost, notoBengali } from "../utils/font";
 import Container from "../Container";
 
 const images = [imageFour, imageOne];
 const imagesTwo = [imageThree, imageTwo];
 
 const Whoweare = () => {
-    // 1. Initialize the translation hook
-    const { t } = useTranslation();
+    // 1. Initialize the translation hook and language check
+    const { t, i18n } = useTranslation();
+    const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
     return (
         <Container>
-            <div className="flex flex-col lg:flex-row my-10 md:my-16 lg:my-20 gap-10 lg:gap-20">
+            {/* Applied conditional font class to the main wrapper */}
+            <div className={`flex flex-col lg:flex-row my-10 md:my-16 lg:my-20 gap-10 lg:gap-20 ${isBn ? notoBengali.className : ""}`}>
                 {/* Left Section */}
                 <section className="space-y-6 md:space-y-8 lg:space-y-10 w-full lg:w-1/2">
                     {/* First Div (WHO WE ARE) */}
                     <div className="space-y-6">
                         <h2
-                            className={`${jost.className} font-extrabold text-2xl md:text-4xl xl:text-5xl`}
+                            className={`${isBn ? notoBengali.className : jost.className} font-extrabold text-2xl md:text-4xl xl:text-5xl`}
                         >
-                            {/* Translated: WHO WE ARE */}
                             {t('whoweare.title')}
                         </h2>
                         <p
-                            className={`text-lg lg:text-xl text-justify text-[#6d6b6b] ${antiquaFont.className}`}
+                            className={`text-lg lg:text-xl text-justify text-[#6d6b6b] ${isBn ? notoBengali.className : antiquaFont.className}`}
                         >
-                            {/* Translated: WHO WE ARE description */}
                             {t('whoweare.description')}
                         </p>
                     </div>
@@ -50,16 +51,14 @@ const Whoweare = () => {
                                 className="object-contain h-10 md:h-12 w-10 md:w-12"
                             />
                             <h2
-                                className={`${jost.className} font-extrabold text-xl md:text-2xl lg:text-4xl`}
+                                className={`${isBn ? notoBengali.className : jost.className} font-extrabold text-xl md:text-2xl lg:text-4xl`}
                             >
-                                {/* Translated: WHAT WE STAND FOR */}
                                 {t('whatwestandfor.title')}
                             </h2>
                         </div>
                         <p
-                            className={`text-lg lg:text-xl text-[#6d6b6b]  ${antiquaFont.className}`}
+                            className={`text-lg lg:text-xl text-[#6d6b6b] ${isBn ? notoBengali.className : antiquaFont.className}`}
                         >
-                            {/* Translated: WHAT WE STAND FOR description */}
                             {t('whatwestandfor.description')}
                         </p>
                     </div>
@@ -75,27 +74,25 @@ const Whoweare = () => {
                                 className="object-contain h-10 md:h-12 w-10 md:w-12"
                             />
                             <h2
-                                className={`${jost.className} font-extrabold text-xl md:text-2xl lg:text-4xl`}
+                                className={`${isBn ? notoBengali.className : jost.className} font-extrabold text-xl md:text-2xl lg:text-4xl`}
                             >
-                                {/* Translated: WHERE WE ARE HEADED */}
                                 {t('whatweareheaded.title')}
                             </h2>
                         </div>
-                        <p className={`text-lg lg:text-xl text-[#6d6b6b] ${antiquaFont.className}`}>
-                            {/* Translated: WHERE WE ARE HEADED description */}
+                        <p className={`text-lg lg:text-xl text-[#6d6b6b] ${isBn ? notoBengali.className : antiquaFont.className}`}>
                             {t('whatweareheaded.description')}
                         </p>
                     </div>
                 </section>
 
-                {/* Right Section (Image Gallery - no text translation needed here) */}
+                {/* Right Section (Image Gallery) */}
                 <section className="flex gap-2 md:gap-3 w-full lg:w-1/2">
                     <div className="flex flex-col gap-2 md:gap-3 w-1/2">
                         {images.map((img, index) => (
                             <div key={index}>
                                 <Image
                                     src={img}
-                                    alt="images"
+                                    alt="gallery-image-1"
                                     height={600}
                                     width={600}
                                     className="object-cover w-full h-auto rounded-sm"
@@ -109,7 +106,7 @@ const Whoweare = () => {
                             <div key={index}>
                                 <Image
                                     src={img}
-                                    alt="images"
+                                    alt="gallery-image-2"
                                     height={600}
                                     width={600}
                                     className="object-cover w-full h-auto rounded-sm"

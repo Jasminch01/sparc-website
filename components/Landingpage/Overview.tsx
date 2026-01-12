@@ -3,13 +3,14 @@ import Image from "next/image";
 import overview from "../../public/Overview/overview.png";
 import logo from "../../public/Overview/logocopy.png";
 import { useTranslation } from "react-i18next";
+import { antiquaFont, notoBengali } from "../utils/font";
 
 const Overview = () => {
-    const { t } = useTranslation();
-
+    const { t, i18n } = useTranslation();
+    const isBn = i18n.language === 'BN'
     // Use 'overview.title' to fetch the long descriptive text from the JSON.
     const description = t(
-        'overview.title', 
+        'overview.title',
         "We're an Indigenous feminist organization with a specific focus on indigenous women, girls, and communities who are often ignored, have limited access to resources, and are survivors of attack, conflict, Violence Against Women, Gender-Based Violence, and systemic & structural oppression."
     );
 
@@ -33,12 +34,12 @@ const Overview = () => {
                     className="object-contain w-16 md:size-24 lg:size-32 mb-4 md:mb-6 lg:mb-8"
                 />
                 <p
-                    style={{ fontFamily: '"Book Antiqua", serif' }}
-                    className="max-w-xs md:max-w-lg lg:max-w-2xl xl:max-w-3xl leading-relaxed text-lg md:text-lg lg:text-xl"
+                    className={`
+    ${isBn ? notoBengali.className : antiquaFont.className} 
+    max-w-xs md:max-w-lg lg:max-w-2xl xl:max-w-3xl 
+    leading-relaxed text-lg md:text-lg lg:text-xl
+  `}
                 >
-                    {/* This will now display the translated text: 
-                        "আমরা একটি আদিবাসী নারীবাদী সংগঠন যারা বিশেষভাবে আদিবাসী নারী, মেয়ে এবং সম্প্রদায়কে নিয়ে কাজ করি যারা প্রায়শই উপেক্ষিত, সীমিত সম্পদপ্রাপ্ত, এবং আক্রমণ, সংঘাত, নারী নির্যাতন (Violence Against Women), লিঙ্গভিত্তিক সহিংসতা (Gender-Based Violence), এবং পদ্ধতিগত ও কাঠামোগত নিপীড়নের শিকার।" 
-                    */}
                     {description}
                 </p>
             </div>

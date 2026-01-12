@@ -1,13 +1,16 @@
 "use client";
 import Image from "next/image";
-import { antiquaFont, jost } from "../utils/font";
+// Added notoBengali to the imports
+import { antiquaFont, jost, notoBengali } from "../utils/font";
 import { FaAnglesDown } from "react-icons/fa6";
-// Import useTranslation to access i18n data
 import { useTranslation } from "react-i18next";
 
 const Banner = () => {
-  // 1. Fetch translations
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Detect if the active language is Bengali
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
+
   const title = t("banner.title", "WHO WE ARE");
   const description = t(
     "banner.description",
@@ -33,30 +36,33 @@ const Banner = () => {
         priority
       />
 
-      {/* Center Content - Now using translated text */}
+      {/* Center Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4 sm:px-6 md:px-8">
         <h1
-          className={`text-2xl lg:text-5xl font-black mb-4 md:mb-6 text-center ${jost.className}`}
+          className={`text-2xl lg:text-5xl font-black mb-4 md:mb-6 text-center ${isBn ? notoBengali.className : jost.className
+            }`}
         >
-          {title} {/* Replaced 'WHO WE ARE' */}
+          {title}
         </h1>
         <p
-          className={`text-lg lg:text-xl text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
+          className={`text-lg lg:text-xl text-center max-w-2xl lg:max-w-3xl ${isBn ? notoBengali.className : antiquaFont.className
+            }`}
         >
-          {description} {/* Replaced hardcoded description */}
+          {description}
         </p>
       </div>
 
-      {/* Scroll Down Button - Now using translated text */}
+      {/* Scroll Down Button */}
       <button
         onClick={scrollToContent}
         className="absolute bottom-8 md:bottom-12 lg:bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center text-white cursor-pointer z-10"
         aria-label="Scroll down"
       >
         <span
-          className={`text-sm text-[#FF951B] font-bold lg:text-xl mb-2 ${jost.className}`}
+          className={`text-sm text-[#FF951B] font-bold lg:text-xl mb-2 ${isBn ? notoBengali.className : jost.className
+            }`}
         >
-          {buttonText} {/* Replaced 'SCROLL DOWN' */}
+          {buttonText}
         </span>
 
         <FaAnglesDown size={24} className="animate-bounce" />

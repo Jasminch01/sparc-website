@@ -2,9 +2,10 @@
 import React, { useState, useEffect } from "react";
 import leaf from "../../public/Team/Leaf.png";
 import Image from "next/image";
-import { antiquaFont, jost, poppins } from "../utils/font";
+// Added notoBengali to the imports
+import { antiquaFont, jost, poppins, notoBengali } from "../utils/font";
 import Container from "../Container";
-import { getAllTeams } from "@/sanity/queries/teamQueries"; // Import the query function
+import { getAllTeams } from "@/sanity/queries/teamQueries";
 import { useTranslation } from "react-i18next";
 
 interface TeamMember {
@@ -16,7 +17,9 @@ interface TeamMember {
 }
 
 const Team = () => {
-  const { t } = useTranslation();
+  // Destructured i18n to check the current language
+  const { t, i18n } = useTranslation();
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   // Fetch translated static texts
   const teamTitle = t("team.title", "MEET THE TEAM");
@@ -35,7 +38,6 @@ const Team = () => {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [categories, setCategories] = useState<string[]>([categoryAll]);
 
-  // Fetch team members using the query function
   useEffect(() => {
     const fetchTeamMembers = async () => {
       try {
@@ -43,12 +45,10 @@ const Team = () => {
         const data = await getAllTeams();
         setTeamMembers(data);
 
-        // Extract unique categories
         const uniqueCategories = Array.from(
           new Set(data.map((member: TeamMember) => member.category))
         ) as string[];
 
-        // Set categories with the translated "All" button first
         setCategories([categoryAll, ...uniqueCategories]);
       } catch (error) {
         console.error("Error fetching team members:", error);
@@ -68,13 +68,14 @@ const Team = () => {
     activeCategory === categoryAll
       ? teamMembers
       : teamMembers.filter(
-          (member) =>
-            member.category?.toLowerCase() === activeCategory.toLowerCase()
-        );
+        (member) =>
+          member.category?.toLowerCase() === activeCategory.toLowerCase()
+      );
 
   return (
     <Container>
-      <div className="my-12 md:my-16 lg:my-20">
+      {/* Added conditional font class to the main wrapper */}
+      <div className={`my-12 md:my-16 lg:my-20 ${isBn ? notoBengali.className : ""}`}>
         {/* Top Section */}
         <section className="flex flex-col xl:flex-row items-start xl:items-center gap-8 lg:gap-12 mb-12 md:mb-16 lg:mb-20">
           <div className="w-full lg:w-1/2">
@@ -96,7 +97,7 @@ const Team = () => {
               </div>
               <hr className="border-gray-400 border" />
               <p
-                className={`${jost.className} font-bold xl:text-4xl md:text-3xl text-2xl leading-tight`}
+                className={`${isBn ? notoBengali.className : jost.className} font-bold xl:text-4xl md:text-3xl text-2xl leading-tight`}
               >
                 {teamTitle}
               </p>
@@ -105,7 +106,7 @@ const Team = () => {
 
           <div className="w-full xl:w-1/2">
             <p
-              className={`text-justify text-lg lg:text-xl leading-relaxed text-[#6d6b6b] ${antiquaFont.className}`}
+              className={`text-justify text-lg lg:text-xl leading-relaxed text-[#6d6b6b] ${isBn ? notoBengali.className : antiquaFont.className}`}
             >
               {teamDescription}
             </p>
@@ -118,11 +119,10 @@ const Team = () => {
             <button
               key={index}
               onClick={() => handleCategoryClick(ct)}
-              className={`${poppins.className} px-4 md:px-6 py-2 rounded-full text-lg transition-all duration-200 cursor-pointer ${
-                activeCategory === ct
+              className={`${isBn ? notoBengali.className : poppins.className} px-4 md:px-6 py-2 rounded-full text-lg transition-all duration-200 cursor-pointer ${activeCategory === ct
                   ? "bg-[#772E82] text-white"
                   : "bg-gray-200 text-gray-700 hover:bg-[#772E82] hover:text-white"
-              }`}
+                }`}
             >
               {ct}
             </button>
@@ -132,7 +132,6 @@ const Team = () => {
         {/* Team Grid */}
         <div className="min-h-[500px]">
           {loading ? (
-            // Loading State
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-6">
               {[1, 2, 3, 4].map((skeleton) => (
                 <div key={skeleton} className="flex flex-col animate-pulse">
@@ -145,7 +144,6 @@ const Team = () => {
               ))}
             </section>
           ) : filteredTeam.length > 0 ? (
-            // Team Members Grid
             <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-6">
               {filteredTeam.map((team, index) => (
                 <div
@@ -165,13 +163,13 @@ const Team = () => {
                   </div>
                   <div className="mt-3 md:mt-4">
                     <h2
-                      className={`${jost.className} font-bold text-lg md:text-xl`}
+                      className={`${isBn ? notoBengali.className : jost.className} font-bold text-lg md:text-xl`}
                     >
                       {team.name}
                     </h2>
                     <p
-                      className="text-sm md:text-base text-gray-600"
-                      style={{ fontFamily: '"Book Antiqua", serif' }}
+                      className={`text-sm md:text-base text-gray-600 ${isBn ? notoBengali.className : ""}`}
+                      style={!isBn ? { fontFamily: '"Book Antiqua", serif' } : {}}
                     >
                       {team.title}
                     </p>
@@ -180,10 +178,9 @@ const Team = () => {
               ))}
             </section>
           ) : (
-            // No Data Found State
             <div className="text-center py-32">
               <p
-                className={`text-center text-gray-500 font-medium text-sm ${poppins.className}`}
+                className={`text-center text-gray-500 font-medium text-sm ${isBn ? notoBengali.className : poppins.className}`}
               >
                 {noMembersFound}
               </p>

@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "@/components/Container";
-import { antiquaFont, jost } from "@/components/utils/font";
+import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "@/public/Archive/hero.png";
 import {
   ArchiveData,
@@ -33,7 +33,10 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation();
+
+  // Detect if current language is Bengali
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
 
   const pageDescription = t("indegenous_archive_page.description");
   const heroTitle = t("indegenous_archive_page.hero.title");
@@ -131,7 +134,7 @@ const Page = () => {
   // Format date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+    return date.toLocaleDateString(isBn ? "bn-BD" : "en-US", {
       day: "2-digit",
       month: "long",
       year: "numeric",
@@ -184,13 +187,13 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-10 md:mt-15">
+    <div className={`mt-10 md:mt-15 ${isBn ? notoBengali.className : ""}`}>
       <Container>
         {/* Top Section */}
         <section className="flex flex-col lg:flex-row justify-between gap-6 lg:gap-10">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-xl md:text-3xl lg:text-[45px] text-center lg:text-start max-w-2xl font-extrabold leading-tight ${jost.className}`}
+              className={`text-xl md:text-3xl lg:text-[45px] text-center lg:text-start max-w-2xl font-extrabold leading-tight ${isBn ? notoBengali.className : jost.className}`}
             >
               <Trans
                 i18nKey="indegenous_archive_page.title"
@@ -203,7 +206,7 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify text-lg text-[#6d6b6b] lg:text-xl ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify text-lg text-[#6d6b6b] lg:text-xl ${isBn ? notoBengali.className : antiquaFont.className}`}
             >
               {pageDescription}
             </p>
@@ -222,12 +225,12 @@ const Page = () => {
         />
         <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-2xl lg:text-4xl font-bold mb-2 lg:mb-4 ${jost.className}`}
+            className={`text-2xl lg:text-4xl font-bold mb-2 lg:mb-4 ${isBn ? notoBengali.className : jost.className}`}
           >
             {heroTitle}
           </h2>
           <p
-            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${isBn ? notoBengali.className : antiquaFont.className}`}
           >
             {heroDescription}
           </p>
@@ -240,7 +243,7 @@ const Page = () => {
             className="flex flex-col items-center justify-center lg:mt-30 cursor-pointer"
           >
             <button
-              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${jost.className}`}
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${isBn ? notoBengali.className : jost.className}`}
             >
               {heroButton}
             </button>
@@ -252,7 +255,7 @@ const Page = () => {
       {/* Breadcrumb & Search Section */}
       <Container>
         <section
-          className={`flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 ${jost.className} my-5 lg:my-20 font-semibold`}
+          className={`flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 ${isBn ? notoBengali.className : jost.className} my-5 lg:my-20 font-semibold`}
         >
           <div className="flex gap-3 md:gap-5 text-xs md:text-base py-5 lg:py-0">
             <Link href="/" className="hover:text-[#FF951B] transition-colors">
@@ -283,13 +286,11 @@ const Page = () => {
                 <div
                   key={index}
                   onClick={() => handleCategoryChange(index, item)}
-                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${
-                    jost.className
-                  } ${
-                    activeIndex === index
+                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${isBn ? notoBengali.className : jost.className
+                    } ${activeIndex === index
                       ? "border-gray-700 border bg-gray-200"
                       : "border-gray-200 bg-gray-100 hover:bg-gray-200"
-                  }`}
+                    }`}
                 >
                   {item}
                 </div>
@@ -302,7 +303,7 @@ const Page = () => {
       <Container>
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 py-6 md:py-8 lg:py-10">
           <h2
-            className={`flex items-center gap-2 text-2xl md:text-3xl lg:text-4xl font-semibold ${jost.className}`}
+            className={`flex items-center gap-2 text-2xl md:text-3xl lg:text-4xl font-semibold ${isBn ? notoBengali.className : jost.className}`}
           >
             {activeCategory}
           </h2>
@@ -311,7 +312,7 @@ const Page = () => {
               <select
                 value={selectedYearRange}
                 onChange={(e) => setSelectedYearRange(e.target.value)}
-                className={`${jost.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm lg:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
+                className={`${isBn ? notoBengali.className : jost.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm lg:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
               >
                 {availableYears.length > 0 ? (
                   availableYears.map((year) => {
@@ -344,7 +345,7 @@ const Page = () => {
           {loading ? (
             <div className="text-center h-screen flex justify-center items-center">
               <p
-                className={`text-gray-500 text-lg md:text-xl ${jost.className}`}
+                className={`text-gray-500 text-lg md:text-xl ${isBn ? notoBengali.className : jost.className}`}
               >
                 Loading...
               </p>
@@ -352,7 +353,7 @@ const Page = () => {
           ) : error ? (
             <div className="text-center h-screen flex justify-center items-center">
               <p
-                className={`text-red-500 text-lg md:text-xl ${jost.className}`}
+                className={`text-red-500 text-lg md:text-xl ${isBn ? notoBengali.className : jost.className}`}
               >
                 {error}
               </p>
@@ -374,22 +375,22 @@ const Page = () => {
                         </div>
                         <div className="mt-4 lg:mt-5 space-y-2 lg:space-y-3 grow flex flex-col">
                           <h2
-                            className={`${jost.className} text-base lg:text-lg font-semibold line-clamp-2`}
+                            className={`${isBn ? notoBengali.className : jost.className} text-base lg:text-lg font-semibold line-clamp-2`}
                           >
                             {project.title}
                           </h2>
                           <p
-                            className={`${jost.className} text-[#6d6b6b] text-xs lg:text-sm`}
+                            className={`${isBn ? notoBengali.className : jost.className} text-[#6d6b6b] text-xs lg:text-sm`}
                           >
                             {formatDate(project.date)}
                           </p>
                           <p
-                            className={`${antiquaFont.className} text-justify text-[#6d6b6b] text-sm md:text-base line-clamp-3 grow`}
+                            className={`${isBn ? notoBengali.className : antiquaFont.className} text-justify text-[#6d6b6b] text-sm md:text-base line-clamp-3 grow`}
                           >
                             {project.subtitle}
                           </p>
                           <button
-                            className={`${jost.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer group-hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
+                            className={`${isBn ? notoBengali.className : jost.className} flex items-center gap-2 mt-3 lg:mt-5 text-[#36133B] cursor-pointer group-hover:text-[#ff951b] transition-colors text-sm md:text-base pt-auto`}
                           >
                             Read More <IoIosArrowRoundForward size={20} />
                           </button>
@@ -403,17 +404,16 @@ const Page = () => {
               {/* Pagination */}
               {totalPages > 1 && (
                 <div
-                  className={`flex flex-col items-center gap-4 mt-8 ${jost.className}`}
+                  className={`flex flex-col items-center gap-4 mt-8 ${isBn ? notoBengali.className : jost.className}`}
                 >
                   <div className="flex justify-center items-center gap-2 flex-wrap">
                     <button
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className={`px-3 py-2 rounded border text-sm md:text-base ${
-                        currentPage === 1
+                      className={`px-3 py-2 rounded border text-sm md:text-base ${currentPage === 1
                           ? "border-gray-300 text-gray-400 cursor-not-allowed"
                           : "border-gray-400 text-gray-700 hover:bg-gray-100"
-                      }`}
+                        }`}
                     >
                       Previous
                     </button>
@@ -427,11 +427,10 @@ const Page = () => {
                         <button
                           key={page}
                           onClick={() => handlePageChange(page as number)}
-                          className={`px-4 py-2 rounded border text-sm md:text-base ${
-                            currentPage === page
+                          className={`px-4 py-2 rounded border text-sm md:text-base ${currentPage === page
                               ? "bg-[#FF951B] text-white border-[#FF951B]"
                               : "border-gray-400 text-gray-700 hover:bg-gray-100"
-                          }`}
+                            }`}
                         >
                           {page}
                         </button>
@@ -441,11 +440,10 @@ const Page = () => {
                     <button
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className={`px-3 py-2 rounded border text-sm md:text-base ${
-                        currentPage === totalPages
+                      className={`px-3 py-2 rounded border text-sm md:text-base ${currentPage === totalPages
                           ? "border-gray-300 text-gray-400 cursor-not-allowed"
                           : "border-gray-400 text-gray-700 hover:bg-gray-100"
-                      }`}
+                        }`}
                     >
                       Next
                     </button>
@@ -456,7 +454,7 @@ const Page = () => {
           ) : (
             <div className="text-center h-screen flex justify-center items-center">
               <p
-                className={`text-gray-500 text-lg md:text-xl ${jost.className}`}
+                className={`text-gray-500 text-lg md:text-xl ${isBn ? notoBengali.className : jost.className}`}
               >
                 No projects found for {activeCategory} in {selectedYearRange}.
               </p>

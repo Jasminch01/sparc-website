@@ -3,16 +3,20 @@ import Container from "@/components/Container";
 import Card from "@/components/Research/Card";
 import ResearchPartners from "@/components/Research/ResearchPartners";
 import ResearchProjects from "@/components/Research/ResearchProjects";
-import { antiquaFont, jost } from "@/components/utils/font";
+import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { IoSearch } from "react-icons/io5";
 
 const Page = () => {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation();
+
+  // Detect if current language is Bengali
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
+
   return (
-    <div>
+    <div className={isBn ? notoBengali.className : ""}>
       <div className="w-full relative h-[400px] md:h-[500px] lg:h-screen ">
         <Image
           src={"/Partners/banner.png"}
@@ -26,17 +30,17 @@ const Page = () => {
         {/* Center Content */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4  md:px-0 xl:mt-30 mt-20">
           <h1
-            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${jost.className}`}
+            className={`text-2xl md:text-4xl font-black md:mb-4 text-center ${isBn ? notoBengali.className : jost.className}`}
           >
             {t("research_page.hero.title")}
           </h1>
           <p
-            className={`text-base md:text-xl  text-center max-w-2xl lg:max-w-3xl ${antiquaFont.className}`}
+            className={`text-base md:text-xl  text-center max-w-2xl lg:max-w-3xl ${isBn ? notoBengali.className : antiquaFont.className}`}
           >
             {t("research_page.hero.description")}
           </p>
           <div className="md:mt-10 mt-5">
-            <button className="px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-semibold rounded-full cursor-pointer bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg">
+            <button className={`px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-semibold rounded-full cursor-pointer bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg ${isBn ? notoBengali.className : ""}`}>
               {t("research_page.hero.button")}
             </button>
           </div>
@@ -45,7 +49,7 @@ const Page = () => {
 
       <Container>
         <div className="flex lg:flex-row flex-col justify-between space-y-3 lg:items-center mt-10">
-          <section className={`flex text-sm gap-5  ${jost.className} font-semibold`}>
+          <section className={`flex text-sm gap-5  ${isBn ? notoBengali.className : jost.className} font-semibold`}>
             <Link href="/">HOME</Link> <span>||</span>
             <p className="text-[#818181] uppercase">Our Research</p>
           </section>
@@ -55,7 +59,7 @@ const Page = () => {
             <input
               type="text"
               placeholder="Search research..."
-              className="w-full pr-8 focus:outline-none border-none"
+              className={`w-full pr-8 focus:outline-none border-none ${isBn ? notoBengali.className : ""}`}
             />
             <IoSearch className="absolute right-3 top-1/2 transform -translate-y-1/2" />
           </div>

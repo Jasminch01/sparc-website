@@ -1,5 +1,6 @@
 "use client";
-import { antiquaFont, jost } from "../utils/font";
+// Added notoBengali to imports
+import { antiquaFont, jost, notoBengali } from "../utils/font";
 import Container from "../Container";
 import { useTranslation } from "react-i18next";
 import { Suspense } from "react";
@@ -18,24 +19,28 @@ const DynamicMap = dynamic(() => import("./Map"), {
 });
 
 const Wherewework = () => {
-  const { t } = useTranslation();
+  // Destructure i18n to check the current language
+  const { t, i18n } = useTranslation();
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   const componentTitle = t("wherewework.title", "WHERE WE WORK");
   const componentDescription = t(
     "wherewework.description",
     "Community development is often linked with community work or community planning, and may involve stakeholders, foundations,"
   );
+
   return (
-    <div className="my-20">
+    // Added conditional font class to the main wrapper
+    <div className={`my-20 ${isBn ? notoBengali.className : ""}`}>
       <Container>
         <div className="text-center mx-auto mb-20 space-y-5">
           <h2
-            className={`${jost.className} font-black xl:text-5xl md:text-3xl text-2xl`}
+            className={`${isBn ? notoBengali.className : jost.className} font-black xl:text-5xl md:text-3xl text-2xl`}
           >
             {componentTitle}
           </h2>
           <p
-            className={`text-[#6D6D6D] lg:text-xl text-lg max-w-xl mx-auto ${antiquaFont.className}`}
+            className={`text-[#6D6D6D] lg:text-xl text-lg max-w-xl mx-auto ${isBn ? notoBengali.className : antiquaFont.className}`}
           >
             {componentDescription}
           </p>
@@ -44,7 +49,9 @@ const Wherewework = () => {
         {/* Interactive Map with Suspense boundary */}
         <Suspense
           fallback={
-            <div className="w-full h-[600px] md:h-[500px] lg:h-[600px] bg-gray-100 animate-pulse rounded-lg" />
+            <div className="w-full h-[600px] md:h-[500px] lg:h-[600px] bg-gray-100 animate-pulse rounded-lg flex items-center justify-center">
+              <p className={isBn ? notoBengali.className : ""}>Loading...</p>
+            </div>
           }
         >
           <DynamicMap />

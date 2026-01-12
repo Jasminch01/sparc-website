@@ -1,3 +1,4 @@
+import { Noto_Sans_Bengali } from "next/font/google";
 import { Poppins, Jost } from "next/font/google";
 import localFont from "next/font/local";
 
@@ -24,6 +25,7 @@ export const antiquaFont = localFont({
     },
   ],
 });
+
 export const rowanFont = localFont({
   src: [
     {
@@ -32,4 +34,9 @@ export const rowanFont = localFont({
       style: "bold",
     },
   ],
+});
+export const notoBengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
+  weight: ["400", "700"],
+  variable: "--font-bengali",
 });
