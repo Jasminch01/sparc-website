@@ -1,5 +1,5 @@
 "use client";
-import { poppins } from "../utils/font";
+import { jost, notoBengali } from "../utils/font"; // 1. Import notoBengali
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import Container from "../Container";
@@ -29,9 +29,14 @@ const parseStatisticTitle = (rawTitle: string | null | undefined) => {
 };
 
 const Statistic = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation(); // 2. Destructure i18n
+
+  // 3. Logical check for Bengali language
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
+
   const statisticsTitle = t('statistic.title', 'VARIOUS STATISTICS THAT WE HAVE');
   const statisticsRawData = (t('statistic.data', { returnObjects: true }) || []) as StatisticItem[];
+
   const parsedStatistics: ParsedStatisticItem[] = statisticsRawData
     .filter((item: StatisticItem) => item && item.title)
     .map((item: StatisticItem) => {
@@ -52,18 +57,21 @@ const Statistic = () => {
   return (
     <div
       ref={ref}
-      className={`my-16 md:my-20 lg:my-24 space-y-8 md:space-y-10 lg:space-y-12 ${poppins.className}`}>
+      // 4. Apply conditional className to the wrapper
+      className={`my-20 space-y-8 md:space-y-10 lg:space-y-12 ${isBn ? notoBengali.className : jost.className
+        }`}
+    >
       <Container>
         <h2 className="text-center font-extrabold text-2xl md:text-3xl lg:text-4xl">
           {statisticsTitle}
         </h2>
 
         <div className="grid grid-cols-1 mt-10 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12">
-          {/* **FIX 2 applied here: Explicitly type the sta parameter** */}
           {parsedStatistics.map((sta: ParsedStatisticItem, index: number) => (
             <div
               key={index}
-              className="flex flex-col items-center gap-2 md:gap-3 p-6 hover:scale-105 transition-transform duration-300">
+              className="flex flex-col items-center gap-2 md:gap-3 p-6 hover:scale-105 transition-transform duration-300"
+            >
               <h2 className="font-bold text-[#772E82] text-4xl md:text-5xl lg:text-6xl">
                 {inView ? (
                   <CountUp

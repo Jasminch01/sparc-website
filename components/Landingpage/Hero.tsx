@@ -1,13 +1,13 @@
 "use client"
 import Image from "next/image";
 import Container from "../Container";
-import { antiquaFont, poppins, notoBengali } from "../utils/font";
+import { antiquaFont, notoBengali, jost } from "../utils/font";
 import hero from '../../public/Hero/hero.png'
 import { Trans, useTranslation } from "react-i18next";
 
 const Hero = () => {
   const { t, i18n } = useTranslation();
-  
+
   // Logical check: Is the current language Bengali?
   const isBn = i18n.language === 'BN';
 
@@ -17,14 +17,14 @@ const Hero = () => {
 
   return (
     /* Swap Poppins for Noto Sans globally for this section if isBn is true */
-    <div className={`my-5 relative ${isBn ? notoBengali.className : poppins.className}`}>
-      
+    <div className={`my-5 relative ${isBn ? notoBengali.className : jost.className}`}>
+
       <Container>
         <section className="flex flex-col lg:flex-row items-center md:items-start lg:justify-between lg:space-x-25 mt-10 mb-5">
           <div className="lg:max-w-xl text-center lg:text-left flex-1">
             <h2 className="font-black text-2xl lg:text-[51px]">
               <Trans
-                i18nKey="header.title" 
+                i18nKey="header.title"
                 components={{
                   1: <span className="text-[#FF951B]" />,
                 }}
@@ -32,11 +32,9 @@ const Hero = () => {
             </h2>
           </div>
           <div className="lg:flex-1 justify-end mt-5 text-center">
-            {/* Logic: If Bengali, use Noto. If English, use Antiqua */}
             <p
-              className={`text-lg lg:text-xl text-wrap lg:text-right hero-text ${
-                isBn ? notoBengali.className : antiquaFont.className
-              }`}
+              className={`text-lg lg:text-xl text-wrap lg:text-right hero-text ${isBn ? notoBengali.className : antiquaFont.className
+                }`}
             >
               {headerDescription}
             </p>
@@ -45,6 +43,7 @@ const Hero = () => {
       </Container>
 
       <div className="relative w-full">
+        {/* Desktop Image */}
         <Image
           src={hero}
           alt="hero-img"
@@ -53,6 +52,7 @@ const Hero = () => {
           className="w-full hidden lg:flex h-[300px] md:h-[700px] object-cover"
         />
 
+        {/* Mobile Image */}
         <Image
           src={"/Hero/banner.png"}
           alt="hero-img"
@@ -65,19 +65,23 @@ const Hero = () => {
 
         <div className="absolute inset-x-0 bottom-0 pb-6 lg:pb-24">
           <Container>
+            {/* Added missing closing tag for this div and cleaned up structure */}
             <div className="text-white max-w-2xl">
-                {/* Titles: They will inherit Noto from the top-level div, but we can be explicit */}
-                <p className={`font-extrabold text-2xl lg:text-5xl mb-2 lg:mb-4 ${isBn ? notoBengali.className : ''}`}>
-                  {heroTitle}
-                </p>
+              {/* Hero Title (Large Screens) */}
+              <p className={` ${jost.className} font-extrabold hidden lg:flex text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl mb-2 sm:mb-3 lg:mb-4`}>
+                {heroTitle}
+              </p>
+              {/* Hero Title (Small Screens) */}
+              <p className={`${jost.className} font-extrabold lg:hidden text-2xl sm:text-2xl lg:text-4xl xl:text-4xl mb-2 lg:mb-4`}>
+                {heroTitle}
+              </p>
 
-                <p
-                  className={`text-lg lg:text-xl mb-3 lg:mb-5 ${
-                    isBn ? notoBengali.className : antiquaFont.className
+              <p
+                className={`text-lg lg:text-xl mb-3 lg:mb-5 ${isBn ? notoBengali.className : antiquaFont.className
                   }`}
-                >
-                  {heroDescription}
-                </p>
+              >
+                {heroDescription}
+              </p>
             </div>
           </Container>
         </div>

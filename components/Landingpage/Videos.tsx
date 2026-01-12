@@ -5,12 +5,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Container from "../Container";
-import { antiquaFont, poppins } from "../utils/font";
-import { useTranslation } from "react-i18next"; // Import useTranslation
+// Added notoBengali to imports
+import { antiquaFont, jost, notoBengali } from "../utils/font";
+import { useTranslation } from "react-i18next";
 
-// NOTE: The video data is hardcoded here. If the video URLs and titles
-// were meant to be translated/dynamic, they would need a separate key in the JSON,
-// but based on your JSON, only the main title and description are available.
 const videos = [
     {
         id: 1,
@@ -35,27 +33,26 @@ const videos = [
 ];
 
 const Videos = () => {
-    const { t } = useTranslation();
+    // Destructure i18n to check current language
+    const { t, i18n } = useTranslation();
+    const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
-    // Fetch translated texts
     const componentTitle = t('videos.title', 'VIDEOS');
     const componentDescription = t('videos.description', 'Strong voices. Bold visions. Meet the women and allies driving equality and empowerment forward. Our strength lies in unity.');
 
     return (
-        <div className="bg-[#36133B] py-10 md:py-16 lg:py-24 xl:py-32 lg:mt-10 relative">
+        <div className={`bg-[#36133B] py-10 md:py-16 lg:py-24 xl:py-32 lg:mt-10 relative ${isBn ? notoBengali.className : ""}`}>
             <Container>
                 <div className="text-center text-white">
-                    <div className="mb-8 md:mb-10 lg:mb-12">
+                    <div className="mb-8 md:mb-10 lg:mb-12 space-y-6">
                         <h2
-                            className={`font-black mb-3 md:mb-4 xl:text-4xl md:text-3xl text-2xl ${poppins.className}`}
+                            className={`font-black xl:text-5xl md:text-3xl text-2xl ${isBn ? notoBengali.className : jost.className}`}
                         >
-                            {/* Display Translated Title */}
                             {componentTitle}
                         </h2>
                         <p
-                            className={`text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed ${antiquaFont.className}`}
+                            className={`text-lg lg:text-xl mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed ${isBn ? notoBengali.className : antiquaFont.className}`}
                         >
-                            {/* Display Translated Description */}
                             {componentDescription}
                         </p>
                     </div>

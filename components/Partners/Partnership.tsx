@@ -1,12 +1,11 @@
 "use client"
 import Image from "next/image";
-import { antiquaFont, poppins, rowanFont } from "../utils/font";
-// 1. Import useTranslation
+import { antiquaFont, jost, rowanFont, notoBengali } from "../utils/font"; // 1. Added notoBengali
 import { useTranslation } from 'react-i18next';
 
 const Partnership = () => {
-  // 2. Initialize useTranslation
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation(); // 2. Extract i18n
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
 
   const steps = [
     {
@@ -27,29 +26,28 @@ const Partnership = () => {
   ];
 
   return (
-    <div className={`w-full md:py-20 px-5 xl:px-0 ${poppins.className}`}>
+    // 3. Apply conditional font to the main container
+    <div className={`w-full md:py-20 px-5 xl:px-0 ${isBn ? notoBengali.className : jost.className}`}>
       <div className="xl:ml-32">
         <h1 className="font-bold text-3xl lg:text-4xl mb-16 text-center lg:text-left">
-          {/* Translate main title */}
           {t('partnership_steps.title', 'HOW TO BECOME A PARTNER')}
         </h1>
 
         <div className="space-y-10 lg:space-y-0">
-
-          {/* Map through the steps for cleaner rendering */}
           {steps.map((step, index) => (
             <div
               key={step.key}
               className="flex flex-col lg:flex-row items-center lg:items-start xl:space-x-24"
             >
-              {/* Step Number and Vertical Line (only shown on large screens) */}
+              {/* Step Number */}
               <div className="lg:flex hidden lg:flex-col items-center lg:items-center">
                 <span
-                  className={`text-6xl font-black text-orange-400 ${rowanFont.className}`}
+                  className={`text-6xl font-black text-orange-400 ${isBn ? notoBengali.className : rowanFont.className}`}
                 >
+                  {/* Translate numbers if needed using i18n features or simply index */}
                   {index + 1}
                 </span>
-                {/* Only render the line for Step 1 and 2 */}
+                
                 {index < steps.length - 1 && (
                   <div
                     className="hidden lg:block w-0.5 h-32 xl:h-60"
@@ -75,12 +73,12 @@ const Partnership = () => {
 
               {/* Step Content */}
               <div className="flex-1 text-center lg:text-left lg:pt-8 mt-10 lg:mt-0">
-                {/* Step Heading */}
                 <h2 className="font-bold text-2xl xl:text-3xl lg:mb-3">
                   {t(`partnership_steps.${step.key}.heading`)}
                 </h2>
-                {/* Step Description */}
-                <p className={`text-gray-600 text-lg xl:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 ${antiquaFont.className}`}>
+                
+                {/* 4. Apply conditional font for description (toggling off antiquaFont for Bengali) */}
+                <p className={`text-gray-600 text-lg xl:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0 ${isBn ? '' : antiquaFont.className}`}>
                   {t(`partnership_steps.${step.key}.description`)}
                 </p>
               </div>

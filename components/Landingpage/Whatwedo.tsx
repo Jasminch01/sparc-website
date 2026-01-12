@@ -1,69 +1,64 @@
 "use client";
-import { poppins } from "../utils/font";
+// Added notoBengali to imports
+import { jost, poppins, notoBengali } from "../utils/font";
 import wwdOne from "../../public/Whatwedo/wwd 1.png";
 import wwdTwo from "../../public/Whatwedo/wwd 2.png";
 import wwdThree from "../../public/Whatwedo/wwd 3.png";
 import vectorImage from "../../public/Whatwedo/white1.png";
-import Image, { StaticImageData } from "next/image"; // Import StaticImageData for image types
+import Image, { StaticImageData } from "next/image";
 import Container from "../Container";
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import { useTranslation } from "react-i18next";
 
-// Define the interface for a single item coming from the translation JSON
 interface TranslatedWhatWeDoItem {
     title: string;
 }
 
-// Define the final data structure, combining the translated title and the static image path
 interface WhatWeDoItem {
     img: StaticImageData;
     title: string;
 }
 
 const Whatwedo = () => {
-    const { t } = useTranslation();
+    // Destructure i18n to check the active language
+    const { t, i18n } = useTranslation();
+    const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
-    // 1. Fetch translated header texts
     const title = t('whatwedo.title', 'WHAT WE DO');
     const description = t('whatwedo.description', 'To create a world where all living beings enjoy their rights with dignity.');
-    
-    // 2. Fetch the data array and assert the type for safety
+
     const translatedData = (t('whatwedo.data', { returnObjects: true }) || []) as TranslatedWhatWeDoItem[];
 
-    // 3. Combine the static image imports with the dynamic translated titles
     const staticImages: StaticImageData[] = [wwdOne, wwdTwo, wwdThree];
-    
-    // Map the translated data to include the static image paths
+
     const whatwedoes: WhatWeDoItem[] = translatedData
-        .slice(0, staticImages.length) // Use only up to the number of available images
+        .slice(0, staticImages.length)
         .map((item, index) => ({
-            img: staticImages[index], // Assign image based on index
-            title: item.title,       // Use the translated title
+            img: staticImages[index],
+            title: item.title,
         }));
 
     return (
-        <div className="bg-[#36133B] py-12 md:py-15 lg:py-20 relative">
+        // Applied notoBengali class to the main wrapper conditionally
+        <div className={`bg-[#36133B] py-12 md:py-15 lg:py-20 relative ${isBn ? notoBengali.className : ""}`}>
             <Container>
                 <div className="flex flex-col gap-8 md:gap-10 pb-0 lg:pb-10">
                     {/* Header Section */}
-                    <div className="text-center text-white space-y-3 md:space-y-4">
+                    <div className="text-center text-white space-y-3 md:space-y-6">
                         <h2
-                            className={`${poppins.className} font-black text-3xl sm:text-4xl md:text-5xl lg:text-4xl`}
+                            className={`${isBn ? notoBengali.className : jost.className} font-black text-3xl sm:text-4xl md:text-5xl lg:text-5xl`}
                         >
-                            {/* Display Translated Title */}
                             {title}
                         </h2>
                         <p
-                            style={{ fontFamily: '"Book Antiqua", serif' }}
-                            className="text-lg lg:text-xl max-w-3xl mx-auto px-4"
+                            className={`text-lg lg:text-xl max-w-3xl mx-auto px-4 ${isBn ? notoBengali.className : ""}`}
+                            style={!isBn ? { fontFamily: '"Book Antiqua", serif' } : {}}
                         >
-                            {/* Display Translated Description */}
                             {description}
                         </p>
                     </div>
 
                     {/* Cards Section */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 lg:gap-6">
-                        {/* Map over the combined data array */}
                         {whatwedoes.map((wwd: WhatWeDoItem, index: number) => (
                             <div
                                 key={index}
@@ -79,9 +74,8 @@ const Whatwedo = () => {
                                     />
                                 </div>
                                 <h3
-                                    className={`text-white text-sm sm:text-base md:text-lg font-semibold leading-snug ${poppins.className}`}
+                                    className={`text-white text-sm sm:text-base md:text-lg font-semibold leading-snug ${isBn ? notoBengali.className : poppins.className}`}
                                 >
-                                    {/* Display Translated Card Title */}
                                     {wwd.title}
                                 </h3>
                             </div>
@@ -89,7 +83,7 @@ const Whatwedo = () => {
                     </div>
                 </div>
             </Container>
-            
+
             {/* Bottom Vector Image */}
             <div className="absolute vector-image left-0 right-0 w-full pointer-events-none overflow-hidden bottom">
                 <Image

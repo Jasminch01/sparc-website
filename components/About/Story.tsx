@@ -2,17 +2,20 @@
 import React from "react";
 import Container from "../Container";
 import Image from "next/image";
-import { antiquaFont, poppins } from "../utils/font";
+// Added notoBengali to the imports
+import { antiquaFont, jost, notoBengali } from "../utils/font";
 import Link from "next/link";
-// Import useTranslation for internationalization
 import { useTranslation } from "react-i18next";
 
 const Story = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  // Detect if the active language is Bengali
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   // 1. Fetch Breadcrumb Text
   const homeLinkText = t('ourstory.breadcrumb.title', 'Home');
-  const whoWeAreBreadcrumb = t('footer.menu_links.who_we_are', 'WHO WE ARE'); // Reusing existing key or defining a new one if necessary
+  const whoWeAreBreadcrumb = t('footer.menu_links.who_we_are', 'WHO WE ARE');
 
   // 2. Fetch Story Section Text
   const storyTitle = t('ourstory.title', 'OUR STORY');
@@ -22,17 +25,17 @@ const Story = () => {
   const standForTitle = t('whatwestandforTwo.title', 'WHAT WE STAND FOR');
   const standForDescription = t('whatwestandforTwo.description', 'To ensure women and girls\' social, cultural...');
 
-  // 4. Fetch Where We're Headed Text
+  // 4. Fetch Where We\'re Headed Text
   const headedTitle = t('whatweareheadedtwo.title', 'WHERE WE\'RE HEADED');
   const headedDescription = t('whatweareheadedtwo.description', 'To create a world where all living beings...');
 
-
   return (
-    <div className={`my-20 ${poppins.className}`}>
+    // Apply conditional font to the root div to handle general text rendering
+    <div className={`my-20 ${isBn ? notoBengali.className : jost.className}`}>
       <Container>
         <div className="flex justify-between items-center my-20">
           <section
-            className={`flex gap-5 text-sm uppercase font-semibold ${poppins.className}`}
+            className={`flex gap-5 text-sm uppercase font-semibold ${isBn ? notoBengali.className : jost.className}`}
           >
             {/* Breadcrumb - Using i18n data */}
             <Link href="/">{homeLinkText}</Link> <span>||</span>
@@ -42,7 +45,6 @@ const Story = () => {
         <div className="flex flex-col gap-y-8 md:gap-y-10 lg:gap-y-5">
           {/* First Section: Our Story */}
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
-            {/* Images (Path remains hardcoded as requested) */}
             <div className="flex flex-col xl:flex-row gap-5 w-full lg:w-1/2">
               <Image
                 src={"/About/our-story1.png"}
@@ -60,13 +62,13 @@ const Story = () => {
               />
             </div>
 
-            {/* Text Content - Using i18n data */}
+            {/* Text Content */}
             <div className="w-full lg:w-1/2 flex flex-col justify-center">
-              <p className="text-2xl md:text-3xl font-black mb-3 md:mb-4">
+              <p className={`text-2xl md:text-3xl xl:text-4xl font-black mb-3 md:mb-4 ${isBn ? notoBengali.className : ""}`}>
                 {storyTitle}
               </p>
               <p
-                className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                className={`${isBn ? notoBengali.className : antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
               >
                 {storyDescription}
               </p>
@@ -75,7 +77,6 @@ const Story = () => {
 
           {/* Second Section: What We Stand For / Where We're Headed */}
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
-            {/* Image (Path remains hardcoded) */}
             <div className="w-full lg:w-1/2">
               <Image
                 src={"/About/our-story3.png"}
@@ -86,7 +87,7 @@ const Story = () => {
               />
             </div>
 
-            {/* Text Content - Using i18n data */}
+            {/* Text Content */}
             <div className="w-full lg:w-1/2 space-y-5 md:space-y-6 lg:space-y-17">
               {/* WHAT WE STAND FOR */}
               <div>
@@ -98,12 +99,12 @@ const Story = () => {
                     height={50}
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
-                  <p className="text-xl md:text-2xl font-black">
+                  <p className={`text-xl md:text-2xl xl:text-4xl font-black ${isBn ? notoBengali.className : ""}`}>
                     {standForTitle}
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${isBn ? notoBengali.className : antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
                 >
                   {standForDescription}
                 </p>
@@ -119,12 +120,12 @@ const Story = () => {
                     height={50}
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
-                  <p className="text-xl md:text-2xl font-black">
+                  <p className={`text-xl md:text-2xl font-black xl:text-4xl ${isBn ? notoBengali.className : ""}`}>
                     {headedTitle}
                   </p>
                 </div>
                 <p
-                  className={`${antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#2B2B2B] text-justify`}
+                  className={`${isBn ? notoBengali.className : antiquaFont.className} leading-relaxed text-lg lg:text-xl text-[#6d6b6b] text-justify`}
                 >
                   {headedDescription}
                 </p>

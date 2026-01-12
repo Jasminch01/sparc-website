@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
-import { useTranslation } from "react-i18next";
+import { jost } from "../utils/font";
 
 const partners = [
   {
@@ -22,11 +22,11 @@ const partners = [
 ];
 
 const ResearchPartners = () => {
-  const {t} = useTranslation()
+
   return (
     <div className="w-full py-10">
-      <p className="font-bold xl:text-4xl text-center lg:text-3xl text-2xl mb-20">
-        {t("partners.title")}
+      <p className={`font-bold xl:text-4xl text-center lg:text-3xl text-2xl mb-20 ${jost.className}`}>
+        RESEARCH PARTNERS
       </p>
       <Marquee
         gradient={false}

@@ -3,14 +3,10 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { IoIosArrowDown } from "react-icons/io";
-import { Poppins } from "next/font/google";
 import { useTranslation } from "react-i18next";
 import DonationModal from "@/components/Landingpage/DonationModal";
+import { jost } from "@/components/utils/font";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
 
 interface LanguageOption {
   code: string;
@@ -80,7 +76,7 @@ const Buttons = () => {
 
   return (
     <>
-      <div className={`flex items-center gap-3 relative ${poppins.className}`}>
+      <div className={`flex items-center gap-3 relative ${jost.className}`}>
         {/* Language Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button
@@ -88,7 +84,7 @@ const Buttons = () => {
             aria-haspopup="listbox"
             aria-expanded={isOpen}
             aria-label={`Selected language: ${selectedLanguage.name}. Press to change language`}
-            className="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#FF951B]"
+            className="px-3 py-2 rounded-md text-sm font-medium flex items-center gap-2 transition-all duration-200 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#FF951B] cursor-pointer"
           >
             <Image
               src={selectedLanguage.flag}
@@ -154,7 +150,7 @@ const Buttons = () => {
         {/* Donate Button */}
         <button
           onClick={() => setIsDonationModalOpen(true)}
-          className="lg:px-10 px-3 py-2 lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617]"
+          className="lg:px-10 px-3 py-2 lg:py-4 bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] cursor-pointer"
           aria-label={t("donate_now")}
         >
           {t("donate_now")}

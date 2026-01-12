@@ -1,12 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { poppins } from "../utils/font";
-// 1. Import useTranslation
+import { jost, notoBengali } from "../utils/font"; // 1. Added notoBengali
 import { useTranslation } from 'react-i18next';
 
 const Form = () => {
-  // 2. Initialize useTranslation
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,17 +24,16 @@ const Form = () => {
 
   const handleSubmit = () => {
     console.log("Form submitted:", formData);
-    // Handle form submission here
-    // 3. Translate the success message
     alert(t('partnership_form.success_message', 'Message sent successfully!'));
   };
 
   return (
-    <div className={`md:pt-20 xl:mb-40 mb-20 md:px-20 px-5 md:pb-32 ${poppins.className}`}>
+    // 2. Applied conditional font to the main wrapper
+    <div className={`md:pt-20 xl:mb-40 mb-20 md:px-20 px-5 md:pb-32 ${isBn ? notoBengali.className : jost.className}`}>
       <p className="lg:text-4xl text-3xl font-bold text-center md:mb-20 mb-14">
-        {/* 4. Translate the main title */}
         {t('partnership_form.title', 'PARTNERSHIP PROPOSAL')}
       </p>
+      
       <div className="space-y-6">
         <div className="flex flex-col lg:flex-row xl:space-x-6">
           {/* Left side - Form fields */}
@@ -45,7 +43,6 @@ const Form = () => {
                 htmlFor="name"
                 className="block text-sm font-semibold text-gray-700 mb-2 uppercase"
               >
-                {/* 5. Translate Name label */}
                 {t('partnership_form.fields.name_label', 'Your Name')}
               </label>
               <input
@@ -54,7 +51,8 @@ const Form = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border bg-[#F0F0F0] border-gray-300 rounded-lg outline-none focus:outline-none transition-all"
+                // 3. Applying font to input for consistent typing experience
+                className={`w-full px-4 py-3 border bg-[#F0F0F0] border-gray-300 rounded-lg outline-none focus:outline-none transition-all ${isBn ? notoBengali.className : ''}`}
               />
             </div>
 
@@ -63,7 +61,6 @@ const Form = () => {
                 htmlFor="company"
                 className="block text-sm font-semibold text-gray-700 uppercase"
               >
-                {/* 6. Translate Company Name label */}
                 {t('partnership_form.fields.company_label', 'Company Name')}
               </label>
               <input
@@ -72,7 +69,7 @@ const Form = () => {
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-[#F0F0F0] border border-gray-300 rounded-lg   focus:outline-none transition-all"
+                className={`w-full px-4 py-3 bg-[#F0F0F0] border border-gray-300 rounded-lg focus:outline-none transition-all ${isBn ? notoBengali.className : ''}`}
               />
             </div>
 
@@ -81,7 +78,6 @@ const Form = () => {
                 htmlFor="email"
                 className="block text-sm font-semibold text-gray-700 mb-2 uppercase"
               >
-                {/* 7. Translate Email label */}
                 {t('partnership_form.fields.email_label', 'Email')}
               </label>
               <input
@@ -101,7 +97,6 @@ const Form = () => {
               htmlFor="message"
               className="block text-sm font-semibold text-gray-700 mb-2 uppercase"
             >
-              {/* 8. Translate Message label */}
               {t('partnership_form.fields.message_label', 'Leave a Message')}
             </label>
             <textarea
@@ -109,16 +104,17 @@ const Form = () => {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full flex-1 bg-[#F0F0F0] min-h-[260px] px-4 py-3 border border-gray-300 rounded-lg  focus:outline-none transition-all resize-none"
+              // 4. Applying font to textarea
+              className={`w-full flex-1 bg-[#F0F0F0] min-h-[260px] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition-all resize-none ${isBn ? notoBengali.className : ''}`}
             />
           </div>
         </div>
+
         <div className="flex justify-start">
           <button
             onClick={handleSubmit}
             className="md:px-8 md:py-5 px-5 py-4 text-sm md:text-base bg-[#36133B] text-white font-semibold rounded-full hover:bg-[#52195b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer uppercase"
           >
-            {/* 9. Translate Button text */}
             {t('partnership_form.button', 'SUBMIT PROPOSAL')}
           </button>
         </div>

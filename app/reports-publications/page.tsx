@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, poppins } from "@/components/utils/font";
+import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "@/public/reports/reports-hero.png";
 import {
   fetchReportDataPaginated,
@@ -29,7 +29,10 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation();
+
+  // Detect if current language is Bengali
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
 
   useEffect(() => {
     const fetchYears = async () => {
@@ -105,13 +108,13 @@ const Page = () => {
   };
 
   return (
-    <div className="mt-10 sm:mt-12 md:mt-15">
+    <div className={`mt-10 sm:mt-12 md:mt-15 ${isBn ? notoBengali.className : ""}`}>
       <Container>
         {/* Top Section */}
         <section className="flex flex-col lg:flex-row justify-between gap-6 sm:gap-8 lg:gap-20">
           <div className="w-full lg:w-1/2">
             <h2
-              className={`text-3xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${poppins.className}`}
+              className={`text-3xl sm:text-4xl text-center lg:text-start md:text-4xl lg:text-[51px] max-w-2xl font-extrabold leading-tight ${isBn ? notoBengali.className : jost.className}`}
             >
               <Trans
                 i18nKey="reports_publications_page.title"
@@ -123,9 +126,9 @@ const Page = () => {
           </div>
           <div className="w-full lg:w-1/2">
             <p
-              className={`lg:ml-30 text-justify lg:text-xl text-[#4E4E4E] text-lg ${antiquaFont.className}`}
+              className={`lg:ml-30 text-justify lg:text-xl text-[#6d6b6b] text-lg ${isBn ? notoBengali.className : antiquaFont.className}`}
             >
-             {t("reports_publications_page.description")}
+              {t("reports_publications_page.description")}
             </p>
           </div>
         </section>
@@ -143,12 +146,12 @@ const Page = () => {
         />
         <div className="absolute top-2/3 sm:top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
-            className={`text-2xl lg:text-5xl font-bold mb-3 sm:mb-4 ${poppins.className}`}
+            className={`text-2xl lg:text-5xl font-bold mb-3 sm:mb-4 ${isBn ? notoBengali.className : jost.className}`}
           >
             {t("reports_publications_page.hero.title")}
           </h2>
           <p
-            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${antiquaFont.className}`}
+            className={`lg:mb-4 text-lg lg:text-xl max-w-2xl mx-auto px-2 ${isBn ? notoBengali.className : antiquaFont.className}`}
           >
             {t("reports_publications_page.hero.description")}
           </p>
@@ -157,9 +160,9 @@ const Page = () => {
             className="flex flex-col items-center justify-center lg:mt-30 cursor-pointer"
           >
             <button
-              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${poppins.className}`}
+              className={`text-[#FF951B] px-6 py-2 lg:px-8 lg:py-3 rounded-full text-sm lg:text-lg font-semibold ${isBn ? notoBengali.className : jost.className}`}
             >
-           {t("reports_publications_page.hero.button")}
+              {t("reports_publications_page.hero.button")}
             </button>
             <FaAnglesDown className="animate-bounce" size={24} />
           </div>
@@ -171,7 +174,7 @@ const Page = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 my-6 lg:my-20">
           {/* Breadcrumb */}
           <section
-            className={`flex gap-3 sm:gap-5 py-5 lg:py-0 text-xs sm:text-base font-semibold ${poppins.className}`}
+            className={`flex gap-3 sm:gap-5 py-5 lg:py-0 text-xs sm:text-base font-semibold ${isBn ? notoBengali.className : jost.className}`}
           >
             <Link
               href="/"
@@ -189,7 +192,7 @@ const Page = () => {
               <select
                 onChange={(e) => handleCategoryChange(e.target.value)}
                 value={activeCategory}
-                className={`border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none cursor-pointer appearance-none ${poppins.className}`}
+                className={`border border-[#B7B7B7] rounded-sm py-2 pl-3 md:pl-4 pr-8 md:pr-10 text-sm md:text-base w-full md:w-auto focus:outline-none cursor-pointer appearance-none ${isBn ? notoBengali.className : jost.className}`}
               >
                 <option value="reports">ANNUAL REPORTS</option>
                 <option value="publications">PUBLICATIONS</option>
@@ -208,7 +211,7 @@ const Page = () => {
               <select
                 value={selectedYearRange}
                 onChange={(e) => setSelectedYearRange(e.target.value)}
-                className={`${poppins.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm lg:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
+                className={`${isBn ? notoBengali.className : jost.className} border border-gray-300 rounded-sm pl-3 md:pl-4 pr-8 md:pr-10 py-2 text-sm lg:text-base focus:outline-none w-full md:w-auto cursor-pointer appearance-none`}
               >
                 {availableYears.length > 0 ? (
                   availableYears.map((year) => {
@@ -247,21 +250,21 @@ const Page = () => {
           <div className="flex justify-center items-center h-64">
             <div className="flex flex-col items-center gap-4">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF951B]"></div>
-              <p className={`text-xl ${poppins.className}`}>
+              <p className={`text-xl ${isBn ? notoBengali.className : jost.className}`}>
                 Loading reports...
               </p>
             </div>
           </div>
         ) : error ? (
           <div className="flex justify-center items-center h-64">
-            <p className={`text-xl text-red-600 ${poppins.className}`}>
+            <p className={`text-xl text-red-600 ${isBn ? notoBengali.className : jost.className}`}>
               {error}
             </p>
           </div>
         ) : reportsData.length === 0 ? (
           <div className="flex justify-center items-center h-64">
             <span
-              className={`text-center block text-lg sm:text-xl ${poppins.className}`}
+              className={`text-center block text-lg sm:text-xl ${isBn ? notoBengali.className : jost.className}`}
             >
               No Data Found!
             </span>
@@ -276,13 +279,13 @@ const Page = () => {
                 {rep.category === "publications" ? (
                   <div className="space-y-4 lg:space-y-5">
                     <h2
-                      className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 ${poppins.className}`}
+                      className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 lg:mb-4 ${isBn ? notoBengali.className : jost.className}`}
                     >
                       {rep.title}
                     </h2>
-                    <p className={`uppercase text-sm ${poppins.className}`}>
+                    <p className={`uppercase text-sm ${isBn ? notoBengali.className : jost.className}`}>
                       <span className="text-[#6B6B6B]">Written on</span>{" "}
-                      {new Date(rep.writtenOn).toLocaleDateString("en-US", {
+                      {new Date(rep.writtenOn).toLocaleDateString(isBn ? "bn-BD" : "en-US", {
                         day: "2-digit",
                         month: "long",
                         year: "numeric",
@@ -301,7 +304,7 @@ const Page = () => {
                         )}
                       </div>
                       <div
-                        className={`w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${antiquaFont.className}`}
+                        className={`w-full md:w-1/2 space-y-4 md:space-y-5 text-base md:text-lg lg:text-base ${isBn ? notoBengali.className : antiquaFont.className}`}
                       >
                         {rep.publisher && (
                           <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
@@ -352,11 +355,11 @@ const Page = () => {
                           </div>
                         )}
                         <div className="mt-6 md:mt-10">
-                          <div className="text-base text-[#4E4E4E] md:text-lg lg:text-xl text-justify leading-relaxed">
+                          <div className="text-base text-[#6d6b6b] md:text-lg lg:text-xl text-justify leading-relaxed">
                             <PortableText value={rep.description} />
                           </div>
 
-                          <div className={`mt-6 md:mt-10 ${poppins.className}`}>
+                          <div className={`mt-6 md:mt-10 ${isBn ? notoBengali.className : jost.className}`}>
                             <Link
                               href={`/reports-publications/${rep.title}`}
                               className="inline-block bg-[#36133B] rounded-full cursor-pointer text-white text-sm md:text-base transition-colors uppercase py-3 md:py-4 font-semibold px-6 md:px-7 hover:bg-[#4a1a50]"
@@ -371,19 +374,19 @@ const Page = () => {
                 ) : (
                   <div className="space-y-3 md:space-y-4">
                     <h2
-                      className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 ${poppins.className}`}
+                      className={`text-2xl md:text-3xl lg:text-4xl font-bold mb-3 ${isBn ? notoBengali.className : jost.className}`}
                     >
                       {rep.title}
                     </h2>
-                    <p className={`text-base ${poppins.className}`}>
-                      {new Date(rep.writtenOn).toLocaleDateString("en-US", {
+                    <p className={`text-base ${isBn ? notoBengali.className : jost.className}`}>
+                      {new Date(rep.writtenOn).toLocaleDateString(isBn ? "bn-BD" : "en-US", {
                         day: "2-digit",
                         month: "long",
                         year: "numeric",
                       })}
                     </p>
                     <div
-                      className={`mb-4 text-base md:text-lg text-[#4E4E4E] text-justify ${antiquaFont.className}`}
+                      className={`mb-4 text-base md:text-lg text-[#4E4E4E] text-justify ${isBn ? notoBengali.className : antiquaFont.className}`}
                     >
                       <PortableText value={rep.description} />
                     </div>
@@ -398,14 +401,14 @@ const Page = () => {
                     )}
                     {rep.imgDes && (
                       <p
-                        className={`mt-5 mb-6 text-sm md:text-base text-gray-600 italic ${antiquaFont.className}`}
+                        className={`mt-5 mb-6 text-sm md:text-base text-gray-600 italic ${isBn ? notoBengali.className : antiquaFont.className}`}
                       >
                         {rep.imgDes}
                       </p>
                     )}
                     <Link
                       href={`/reports-publications/${rep.title}`}
-                      className={`inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50] ${poppins.className}`}
+                      className={`inline-block bg-[#36133B] cursor-pointer text-white px-6 md:px-7 py-3 md:py-4 uppercase font-semibold rounded-full text-sm md:text-base transition-colors hover:bg-[#4a1a50] ${isBn ? notoBengali.className : jost.className}`}
                     >
                       Read More
                     </Link>
@@ -416,7 +419,7 @@ const Page = () => {
 
             {pagination.totalPages > 1 && (
               <div
-                className={`flex justify-center items-center space-x-5 mt-20 ${poppins.className}`}
+                className={`flex justify-center items-center space-x-5 mt-20 ${isBn ? notoBengali.className : jost.className}`}
               >
                 <button
                   onClick={() => handlePageChange(pagination.page - 1)}
@@ -434,10 +437,11 @@ const Page = () => {
                     <button
                       key={page}
                       onClick={() => handlePageChange(page)}
-                      className={`transition-colors font-semibold ${pagination.page === page
+                      className={`transition-colors font-semibold ${
+                        pagination.page === page
                           ? " text-black cursor-not-allowed"
                           : "text-[#818181] cursor-pointer"
-                        }`}
+                      }`}
                     >
                       {page}
                     </button>

@@ -90,6 +90,8 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     if (isOpen) {
       fetchPaymentMethods();
       setShowDetails(false);
+      // Reset submitting state when modal opens
+      setIsSubmitting(false);
     }
   }, [isOpen]);
 
@@ -294,11 +296,29 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Close modal
-      onClose();
+      // Reset form data
+      setFormData({
+        name: "",
+        transactionId: "",
+        honoreeName: "",
+        message: "",
+        bankName: "",
+        branchName: "",
+        referenceNumber: "",
+        email: "",
+        paypalTransactionId: "",
+        selectedMobileAccount: "",
+      });
 
-      // Navigate to thank you page
+      // Navigate to thank you page first
       router.push("/thank-you");
+
+      // Then close modal and reset state
+      // Small delay to ensure navigation starts before closing
+      setTimeout(() => {
+        onClose();
+        setIsSubmitting(false);
+      }, 100);
     } catch (error) {
       console.error("Error submitting donation:", error);
       alert("Something went wrong. Please try again.");
@@ -426,7 +446,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                 Choose Payment Method
               </h2>
             </div>
-            <div className="justify-center flex items-center">
+            <div className="flex items-center">
               <div className={`px-6 md:px-14 mt-10 pb-10 ${poppins.className}`}>
                 {isLoading ? (
                   <div className="text-center py-8">
@@ -437,7 +457,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                     No payment methods available
                   </div>
                 ) : (
-                  <>
+                  <div>
                     {/* Mobile Banking */}
                     {mobileBankingMethods.length > 0 && (
                       <div className="mb-6">
@@ -459,9 +479,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                                 src={getPaymentLogo(payment)}
                                 alt={getPaymentName(payment)}
                                 width={80}
-                                height={100}
+                                height={80}
                                 sizes="500px"
-                                className="object-contain"
+                                className="object-contain size-12"
                               />
                             </button>
                           ))}
@@ -530,7 +550,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                         </div>
                       </div>
                     )}
-                  </>
+                  </div>
                 )}
               </div>
             </div>
