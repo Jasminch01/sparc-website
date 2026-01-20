@@ -10,6 +10,7 @@ import {
   getResearchProjectBySlug,
   ResearchProject,
 } from "@/sanity/queries/researchQueries";
+import { MdOutlineFileDownload } from "react-icons/md";
 
 const ResearchDetailsPage = () => {
   const { slug } = useParams();
@@ -293,6 +294,12 @@ const ResearchDetailsPage = () => {
                     </p>
                   </div>
                 </div>
+              </div>
+              <div className="flex items-center justify-center mt-10">
+                <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border hover:bg-[#36133B] hover:text-white cursor-pointer rounded-full text-sm font-semibold transition-colors flex items-center space-x-0 lg:space-x-5">
+                  <p>Download PDF</p>
+                  <MdOutlineFileDownload size={20} />
+                </button>
               </div>
             </section>
           </div>

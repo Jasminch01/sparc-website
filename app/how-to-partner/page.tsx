@@ -6,6 +6,7 @@ import Partners from "@/components/Partners/Partners";
 import Partnership from "@/components/Partners/Partnership";
 import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslation } from 'react-i18next';
 
 const Page = () => {
@@ -39,9 +40,9 @@ const Page = () => {
           </p>
 
           <div className="md:mt-10 mt-5">
-            <button className="md:py-5 md:px-10 cursor-pointer hover:bg-orange-400 p-3 font-semibold rounded-full bg-[#FF951B] text-sm md:text-lg">
+            <Link href="#partnership-form" className="md:py-5 md:px-10 cursor-pointer hover:bg-orange-400 p-3 font-semibold rounded-full bg-[#FF951B] text-sm md:text-lg">
               {t('partners_page.hero_section.button', 'BECOME A PARTNER')}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -11,6 +11,8 @@ import { Partners } from "./parthnerSchema";
 import { socialWorkerTeamSchema } from "./teamSchema";
 import paymentMethod from "./paymentMethod";
 import testimonialSchema from "./testimonialSchema";
+import videoSchema from "./videoSchema";
+import { fromSchema } from "./fromSchema";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -23,6 +25,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Projects,
     Events,
     Partners,
+    videoSchema,
+    fromSchema,
     socialWorkerTeamSchema,
     paymentMethod,
     testimonialSchema

@@ -7,10 +7,32 @@ import hero from "@/public/be-a-intern/be-a-inter-hero.png";
 import careergroup from "@/public/be-a-intern/career-group.png";
 import icon from "@/public/fellowship/icon.png";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { From, getFormsByCategory } from "@/sanity/queries/formQueries";
 
 
 const Page = () => {
   const { t, i18n } = useTranslation();
+    const [form, setFrom] = useState<From>({} as From);
+    const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (formUrl) {
+        window.open(formUrl, "_blank");
+      }
+    };
+  
+    useEffect(() => {
+      const fetchFroms = async () => {
+        try {
+          const data = await getFormsByCategory("internship");
+          setFrom(data);
+        } catch (error) {
+          console.error("Error fetching videos:", error);
+        }
+      };
+  
+      fetchFroms();
+    }, []);
 
   // Detect if the active language is Bengali
   const isBn = i18n.language === 'BN' || i18n.language === 'bn';
@@ -99,6 +121,7 @@ const Page = () => {
             {bannerDescription}
           </p>
           <button
+                      onClick={(e) => handleEnrollClick(form.form, e)}
             className={`bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white px-5 lg:px-7 py-3 lg:py-5 mt-4 rounded-full text-sm lg:text-lg font-semibold transition duration-200 ${isBn ? notoBengali.className : jost.className}`}
           >
             {applyButtonText}
@@ -180,6 +203,7 @@ const Page = () => {
         </p>
         <div className="pt-8 lg:pt-12">
           <button
+            onClick={(e) => handleEnrollClick(form.form, e)}
             className={`flex items-center justify-center hover:bg-orange-400 text-center mx-auto bg-[#FF951B] px-5 lg:py-5 lg:px-7 py-4 text-white rounded-full text-sm lg:text-lg font-semibold cursor-pointer ${isBn ? notoBengali.className : jost.className}`}
           >
             {finalCtaButtonText}

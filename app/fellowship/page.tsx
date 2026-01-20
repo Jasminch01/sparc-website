@@ -9,15 +9,38 @@ import fellowshipHero from "@/public/fellowship/fellowship-hero.png";
 import aboutOne from "@/public/fellowship/about.png";
 import aboutTwo from "@/public/fellowship/abouttwo.png";
 import icon from "@/public/fellowship/icon.png";
-import follower from "@/public/fellowship/follower.png";
 import women from "@/public/fellowship/women.png";
 import Image from "next/image";
+import { From, getFormsByCategory } from "@/sanity/queries/formQueries";
+import { useEffect, useState } from "react";
+
 
 const Page = () => {
   const { t, i18n } = useTranslation();
+  const [form, setFrom] = useState<From>({} as From);
+
+  const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (formUrl) {
+      window.open(formUrl, "_blank");
+    }
+  };
+
+  useEffect(() => {
+    const fetchFroms = async () => {
+      try {
+        const data = await getFormsByCategory("fellowship");
+        setFrom(data);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      }
+    };
+
+    fetchFroms();
+  }, []);
 
   // Detect if the active language is Bengali
-  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
+  const isBn = i18n.language === "BN" || i18n.language === "bn";
 
   // --- Fetch Translations ---
   const topSectionTitleKey = "fellowship_page.top_section.title";
@@ -34,15 +57,15 @@ const Page = () => {
   const programDescription = t("fellowship_page.program_section.description");
 
   const eligibilityTitle = t("fellowship_page.eligibility_section.title");
-  const eligibilityDescription = t("fellowship_page.eligibility_section.description");
+  const eligibilityDescription = t(
+    "fellowship_page.eligibility_section.description",
+  );
   const eligibilitySubtitle = t("fellowship_page.eligibility_section.subtitle");
 
   const requirementsList = t(
     "fellowship_page.eligibility_section.requirements",
-    { returnObjects: true }
+    { returnObjects: true },
   ) as string[];
-
-  const meetFellowsTitle = t("fellowship_page.meet_the_fellows_section.title");
 
   const ctaTitle = t("fellowship_page.cta_section.title");
   const ctaDescription = t("fellowship_page.cta_section.description");
@@ -100,6 +123,7 @@ const Page = () => {
             {heroDescription}
           </p>
           <button
+            onClick={(e) => handleEnrollClick(form.form, e)}
             className={`bg-[#FF951B] hover:bg-orange-400 cursor-pointer text-sm lg:text-lg text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full font-semibold ${isBn ? notoBengali.className : jost.className}`}
           >
             {applyNowButton}
@@ -110,7 +134,9 @@ const Page = () => {
       {/* About Section */}
       <section className="mt-12 lg:mt-25 max-w-6xl mx-auto space-y-6 lg:space-y-10 px-4 lg:px-0">
         <div className="space-y-4 lg:space-y-5">
-          <h2 className={`text-2xl lg:text-4xl font-bold ${isBn ? notoBengali.className : jost.className}`}>
+          <h2
+            className={`text-2xl lg:text-4xl font-bold ${isBn ? notoBengali.className : jost.className}`}
+          >
             {aboutTitle}
           </h2>
           <p
@@ -120,14 +146,28 @@ const Page = () => {
           </p>
         </div>
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-5">
-          <Image src={aboutOne} alt="aboutone" width={600} height={400} className="w-full lg:w-auto h-auto" />
-          <Image src={aboutTwo} alt="abouttwo" width={530} height={400} className="w-full lg:w-auto h-auto" />
+          <Image
+            src={aboutOne}
+            alt="aboutone"
+            width={600}
+            height={400}
+            className="w-full lg:w-auto h-auto"
+          />
+          <Image
+            src={aboutTwo}
+            alt="abouttwo"
+            width={530}
+            height={400}
+            className="w-full lg:w-auto h-auto"
+          />
         </div>
       </section>
 
       {/* Program Section */}
       <section className="mt-12 lg:mt-15 max-w-6xl mx-auto space-y-4 lg:space-y-5 px-4 lg:px-0">
-        <h2 className={`${isBn ? notoBengali.className : jost.className} text-2xl lg:text-4xl font-bold`}>
+        <h2
+          className={`${isBn ? notoBengali.className : jost.className} text-2xl lg:text-4xl font-bold`}
+        >
           {programTitle}
         </h2>
         <p
@@ -139,7 +179,9 @@ const Page = () => {
 
       <div className="max-w-6xl mx-auto px-4 lg:px-0 ">
         <section className=" mt-12 lg:mt-15 space-y-4 lg:space-y-5 ">
-          <h2 className={`text-2xl lg:text-4xl font-bold ${isBn ? notoBengali.className : jost.className}`}>
+          <h2
+            className={`text-2xl lg:text-4xl font-bold ${isBn ? notoBengali.className : jost.className}`}
+          >
             {eligibilityTitle}
           </h2>
           <p
@@ -177,31 +219,30 @@ const Page = () => {
           </div>
         </section>
 
-        <section className=" mt-12 lg:mt-15 space-y-6 lg:space-y-10">
-          <h2 className={`text-2xl lg:text-4xl font-bold ${isBn ? notoBengali.className : jost.className}`}>
-            {meetFellowsTitle}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-20">
-            <Image src={follower} alt="fellow image 1" width={333} height={200} className="w-full h-auto" />
-            <Image src={follower} alt="fellow image 2" width={333} height={200} className="w-full h-auto" />
-            <Image src={follower} alt="fellow image 3" width={333} height={200} className="w-full h-auto" />
-          </div>
-          <hr className="border-gray-300" />
-        </section>
-
         <section className="mt-12 lg:mt-15 mb-20 lg:mb-30 rounded-md bg-gray-100 flex flex-col lg:flex-row items-center border border-gray-200 overflow-hidden">
           <div className="w-full lg:w-1/2">
-            <Image src={women} alt="women" width={450} height={300} className="w-full h-auto object-cover" />
+            <Image
+              src={women}
+              alt="women"
+              width={450}
+              height={300}
+              className="w-full h-auto object-cover"
+            />
           </div>
           <div className="w-full lg:w-1/2 space-y-6 lg:space-y-10 p-6 lg:p-8">
-            <h2 className={`text-[#2D2D2D] ${isBn ? notoBengali.className : jost.className} font-bold text-xl lg:text-3xl`}>
+            <h2
+              className={`text-[#2D2D2D] ${isBn ? notoBengali.className : jost.className} font-bold text-xl lg:text-3xl`}
+            >
               {ctaTitle}
             </h2>
-            <p className={`${isBn ? notoBengali.className : antiquaFont.className} text-justify text-lg lg:text-xl text-[#6d6b6b]`}>
+            <p
+              className={`${isBn ? notoBengali.className : antiquaFont.className} text-justify text-lg lg:text-xl text-[#6d6b6b]`}
+            >
               {ctaDescription}
             </p>
             <div className="text-center lg:text-left">
               <button
+                onClick={(e) => handleEnrollClick(form.form, e)}
                 className={`${isBn ? notoBengali.className : jost.className} bg-[#36133B] text-white cursor-pointer px-6 py-2 lg:px-8 lg:py-3 rounded-full uppercase hover:bg-[#ff951b] transition duration-200`}
               >
                 {ctaButton}

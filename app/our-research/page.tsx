@@ -40,9 +40,9 @@ const Page = () => {
             {t("research_page.hero.description")}
           </p>
           <div className="md:mt-10 mt-5">
-            <button className={`px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-semibold rounded-full cursor-pointer bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg ${isBn ? notoBengali.className : ""}`}>
+            <Link href={'mailto:sparc.backup001@gmail.com'} className={`px-6 sm:px-8 md:px-10 py-3 sm:py-4 md:py-5 font-semibold rounded-full cursor-pointer bg-[#FF951B] hover:bg-orange-400 text-sm md:text-lg ${isBn ? notoBengali.className : ""}`}>
               {t("research_page.hero.button")}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

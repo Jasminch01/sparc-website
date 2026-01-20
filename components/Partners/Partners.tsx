@@ -4,14 +4,8 @@ import { jost, notoBengali } from "../utils/font"; // 1. Import notoBengali
 import Link from "next/link";
 import Marquee from "react-fast-marquee";
 import { useTranslation } from "react-i18next";
-
-const partners = [
-  { logo: "/how-to-partner/logo1.png" },
-  { logo: "/how-to-partner/logo22.png" },
-  { logo: "/how-to-partner/logo33.png" },
-  { logo: "/how-to-partner/logo44.png" },
-  { logo: "/how-to-partner/logo5.png" },
-];
+import { getAllPartners, Partner } from "@/sanity/queries/parthnerQueries";
+  const partners = await getAllPartners();
 
 const Partners = () => {
   // 2. Extract i18n to check the current language
@@ -33,7 +27,7 @@ const Partners = () => {
             pauseOnHover={true}
             className="overflow-hidden"
           >
-            {partners.map((partner, index) => (
+            {partners.map((partner : Partner, index : number) => (
               <div
                 key={index}
                 className={`mx-6 md:mx-8 xl:mx-12 flex items-center justify-center ${partner.logo === "/how-to-partner/logo22.png" ||

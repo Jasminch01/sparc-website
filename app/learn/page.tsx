@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container";
-import { antiquaFont, jost, notoBengali } from "@/components/utils/font"; // Added notoBengali
+import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "@/public/Learn/hero.png";
 import icon from "@/public/Learn/icon.png";
 import banner from "@/public/Learn/ggds 1.png";
@@ -10,21 +10,19 @@ import { useEffect, useRef, useState } from "react";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { Course, getCoursesByCategory } from "@/sanity/queries/courseQueries";
-
-const learnCategory = [
-  "Culture and Advocacy",
-  "Indigenous History",
-  "Sovereignty and Resilience",
-  "Anthropology",
-];
+import {
+  Course,
+  getCoursesByCategory,
+  getCourseCategories,
+} from "@/sanity/queries/courseQueries";
 
 const Page = () => {
   const router = useRouter();
-  const { t, i18n } = useTranslation(); // Added i18n
-  const isBn = i18n.language === "bn" || i18n.language === "BN"; // Language check
+  const { t, i18n } = useTranslation();
+  const isBn = i18n.language === "bn" || i18n.language === "BN";
 
   const [courses, setCourses] = useState<Course[]>([]);
+  const [learnCategory, setLearnCategory] = useState<string[]>([]);
   const [activeCategory, setActiveCategory] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isHoveringPopup, setIsHoveringPopup] = useState(false);
@@ -34,6 +32,7 @@ const Page = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [totalCourses, setTotalCourses] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
 
   // Helper Function
   const renderStyledTitle = (key: string) => {
@@ -66,15 +65,34 @@ const Page = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Fetch categories on mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setIsCategoriesLoading(true);
+      try {
+        const categories = await getCourseCategories();
+        setLearnCategory(categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsCategoriesLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   useEffect(() => {
     const fetchCourses = async () => {
+      if (learnCategory.length === 0) return;
+
       setIsLoading(true);
       try {
         const selectedCategory = learnCategory[activeCategory];
         const data = await getCoursesByCategory(
           selectedCategory,
           currentPage,
-          coursesPerPage
+          coursesPerPage,
         );
         setCourses(data.courses);
         setTotalCourses(data.total);
@@ -86,7 +104,7 @@ const Page = () => {
     };
 
     fetchCourses();
-  }, [activeCategory, currentPage]);
+  }, [activeCategory, currentPage, learnCategory]);
 
   const totalPages = Math.ceil(totalCourses / coursesPerPage);
 
@@ -193,18 +211,31 @@ const Page = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 my-5 lg:my-10">
-            {learnCategory.map((cat, index) => (
-              <div key={index} className="border-b-2 border-gray-300">
-                <button
-                  onClick={() => setActiveCategory(index)}
-                  className={`cursor-pointer py-5 text-sm lg:text-xl font-semibold transition-all duration-300 ${isBn ? notoBengali.className : jost.className} ${activeCategory === index ? "border-b-2 border-[#FF951B] text-[#FF951B]" : "hover:text-[#FF951B]"}`}
-                >
-                  {t(`categories.${cat.replace(/\s/g, "_").toLowerCase()}`, cat)}
-                </button>
-              </div>
-            ))}
-          </div>
+          {isCategoriesLoading ? (
+            <div className="grid grid-cols-1 lg:grid-cols-4 my-5 lg:my-10 border-b-2 border-gray-300">
+              {[...Array(4)].map((_, index) => (
+                <div key={index}>
+                  <div className="py-5 bg-gray-200 animate-pulse h-12 rounded"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-4 my-5 lg:my-10 border-b-2 border-gray-300">
+              {learnCategory.map((cat, index) => (
+                <div key={index}>
+                  <button
+                    onClick={() => setActiveCategory(index)}
+                    className={`cursor-pointer py-5 text-sm lg:text-xl font-semibold transition-all duration-300 ${isBn ? notoBengali.className : jost.className} ${activeCategory === index ? "border-b-2 border-[#FF951B] text-[#FF951B]" : "hover:text-[#FF951B]"}`}
+                  >
+                    {t(
+                      `categories.${cat.replace(/\s/g, "_").toLowerCase()}`,
+                      cat,
+                    )}
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
           {totalCourses > coursesPerPage && (
             <div className="flex justify-end items-center gap-4 mb-10">
@@ -259,7 +290,9 @@ const Page = () => {
                 >
                   No Courses Found
                 </h3>
-                <p className={`text-gray-500 ${isBn ? notoBengali.className : antiquaFont.className}`}>
+                <p
+                  className={`text-gray-500 ${isBn ? notoBengali.className : antiquaFont.className}`}
+                >
                   There are currently no courses available in this category.
                 </p>
               </div>
@@ -272,10 +305,11 @@ const Page = () => {
                 return (
                   <div key={course._id} className="relative">
                     <div
-                      className={`border p-4 cursor-pointer rounded-lg transition-all duration-300 ${isHovered
-                        ? "border-[#FF951B] shadow-lg scale-105 bg-orange-50/30"
-                        : "border-gray-200 hover:border-gray-400"
-                        }`}
+                      className={`border p-4 cursor-pointer rounded-lg transition-all duration-300 ${
+                        isHovered
+                          ? "border-[#FF951B] shadow-lg scale-105 bg-orange-50/30"
+                          : "border-gray-200 hover:border-gray-400"
+                      }`}
                       onClick={() => handleCourseClick(course)}
                       onMouseEnter={() => !isMobile && setHoveredIndex(index)}
                       onMouseLeave={() => {
@@ -305,12 +339,20 @@ const Page = () => {
                           {course.subtitle}
                         </p>
                         <div className="flex items-center gap-5">
-                          <p className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${isBn ? notoBengali.className : jost.className}`}>{course.rating}</p>
-                          <p className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${isBn ? notoBengali.className : jost.className}`}>
+                          <p
+                            className={`bg-[#FFE8CE] border-2 rounded-sm border-[#FFE8CE] font-bold text-sm text-[#F26522] px-6 py-1 ${isBn ? notoBengali.className : jost.className}`}
+                          >
+                            {course.rating}
+                          </p>
+                          <p
+                            className={`border-2 border-gray-300 px-6 py-1 rounded-sm text-sm ${isBn ? notoBengali.className : jost.className}`}
+                          >
                             {course.itemsSold} {t("course.sold", "Sold")}
                           </p>
                         </div>
-                        <p className={`${isBn ? notoBengali.className : jost.className} font-bold`}>
+                        <p
+                          className={`${isBn ? notoBengali.className : jost.className} font-bold`}
+                        >
                           {course.price} {t("common.currency", "BDT")}
                         </p>
                       </div>
@@ -320,7 +362,8 @@ const Page = () => {
                       <div
                         className={`absolute py-10 z-50 hidden lg:block top-[-3] ${isLastInRow ? "right-full mr-4" : "left-full ml-4"} w-80 p-5 bg-white shadow-2xl rounded-lg border-2 border-[#FF951B] transition-all duration-300 ${isHovered ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"}`}
                         onMouseEnter={() => {
-                          if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+                          if (hoverTimeoutRef.current)
+                            clearTimeout(hoverTimeoutRef.current);
                           setIsHoveringPopup(true);
                         }}
                         onMouseLeave={() => {
@@ -328,13 +371,33 @@ const Page = () => {
                           setHoveredIndex(null);
                         }}
                       >
-                        <h2 className={`${isBn ? notoBengali.className : jost.className} text-xl font-bold mb-2 text-[#5B1E63]`}>{course.title}</h2>
-                        <p className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-justify mb-3`}>{course.subtitle}</p>
-                        <h3 className={`${isBn ? notoBengali.className : jost.className} font-semibold text-sm mb-1`}>What you&apos;ll learn</h3>
+                        <h2
+                          className={`${isBn ? notoBengali.className : jost.className} text-xl font-bold mb-2 text-[#5B1E63]`}
+                        >
+                          {course.title}
+                        </h2>
+                        <p
+                          className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-justify mb-3`}
+                        >
+                          {course.subtitle}
+                        </p>
+                        <h3
+                          className={`${isBn ? notoBengali.className : jost.className} font-semibold text-sm mb-1`}
+                        >
+                          What you&apos;ll learn
+                        </h3>
                         <div className="space-y-1">
                           {course.whatYouLearn?.map((item, i) => (
-                            <div key={i} className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-sm flex items-center gap-2`}>
-                              <Image src={icon} alt="icon" height={10} width={15} />
+                            <div
+                              key={i}
+                              className={`${isBn ? notoBengali.className : antiquaFont.className} text-[#6d6b6b] text-sm flex items-center gap-2`}
+                            >
+                              <Image
+                                src={icon}
+                                alt="icon"
+                                height={10}
+                                width={15}
+                              />
                               <p>{item}</p>
                             </div>
                           ))}
@@ -355,7 +418,13 @@ const Page = () => {
         </section>
 
         <section className="mb-20">
-          <Image src={banner} alt="banner" width={1000} height={1000} className="w-full" />
+          <Image
+            src={banner}
+            alt="banner"
+            width={1000}
+            height={1000}
+            className="w-full"
+          />
         </section>
       </Container>
     </div>

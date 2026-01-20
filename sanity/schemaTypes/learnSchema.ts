@@ -33,18 +33,6 @@ export const Learn = {
       name: "category",
       title: "Category",
       type: "string",
-      options: {
-        list: [
-          { title: "Culture and Advocacy", value: "Culture and Advocacy" },
-          { title: "Indigenous History", value: "Indigenous History" },
-          {
-            title: "Sovereignty and Resilience",
-            value: "Sovereignty and Resilience",
-          },
-          { title: "Anthropology", value: "Anthropology" },
-        ],
-        layout: "dropdown",
-      },
       validation: (Rule: Rule) => Rule.required(),
     },
     {
