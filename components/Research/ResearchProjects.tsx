@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MdOutlineFileDownload } from "react-icons/md";
 import { antiquaFont, jost } from "../utils/font";
 import {
   getResearchCategories,
@@ -23,7 +22,7 @@ const ResearchProjects = () => {
   const [tabs, setTabs] = useState<Tab[]>([]);
   const [ongoingProjects, setOngoingProjects] = useState<ResearchProject[]>([]);
   const [completedProjects, setCompletedProjects] = useState<ResearchProject[]>(
-    []
+    [],
   );
   const [loading, setLoading] = useState(true);
   const [currentOngoingPage, setCurrentOngoingPage] = useState(1);
@@ -129,7 +128,7 @@ const ResearchProjects = () => {
           block.children
             ?.filter((child: any) => child._type === "span")
             .map((child: any) => child.text)
-            .join("") || ""
+            .join("") || "",
       )
       .join(" ");
   };
@@ -196,7 +195,9 @@ const ResearchProjects = () => {
         {/* Ongoing Projects - Only render if there are ongoing projects */}
         {totalOngoing > 0 && (
           <div className="mb-16">
-            <h3 className={`text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide ${jost.className}`}>
+            <h3
+              className={`text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide ${jost.className}`}
+            >
               Ongoing Research Projects
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -243,10 +244,6 @@ const ResearchProjects = () => {
                       <button className="cursor-pointer group-hover:bg-[#ff951b] lg:px-6 lg:py-3 p-4 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors duration-300">
                         View Report →
                       </button>
-                      <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border hover:bg-[#36133B] hover:text-white cursor-pointer rounded-full text-sm font-semibold transition-colors flex items-center space-x-0 lg:space-x-5">
-                        <p>Download PDF</p>
-                        <MdOutlineFileDownload size={20} />
-                      </button>
                     </div>
                   </div>
                 </Link>
@@ -279,7 +276,7 @@ const ResearchProjects = () => {
                     >
                       {page}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button
@@ -299,7 +296,9 @@ const ResearchProjects = () => {
         {/* Completed Projects - Only render if there are completed projects */}
         {totalCompleted > 0 && (
           <div>
-            <h3 className={`text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide ${jost.className}`}>
+            <h3
+              className={`text-2xl font-bold text-gray-900 mb-6 uppercase tracking-wide ${jost.className}`}
+            >
               Completed Research Projects
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -346,10 +345,7 @@ const ResearchProjects = () => {
                       <button className="px-6 duration-300 group-hover:text-white group-hover:bg-[#ff951b] py-3 bg-[#36133B] rounded-full text-sm font-semibold text-white transition-colors">
                         View Report →
                       </button>
-                      <button className="px-6 py-3 border-[#36133B] border rounded-full text-sm font-semibold transition-colors flex items-center gap-x-5">
-                        <p>Download PDF</p>
-                        <MdOutlineFileDownload size={20} />
-                      </button>
+
                     </div>
                   </div>
                 </Link>
@@ -371,7 +367,7 @@ const ResearchProjects = () => {
 
                 {Array.from(
                   { length: totalCompletedPages },
-                  (_, i) => i + 1
+                  (_, i) => i + 1,
                 ).map((page) => (
                   <button
                     key={page}

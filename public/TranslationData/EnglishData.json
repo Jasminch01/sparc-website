@@ -28,8 +28,8 @@
             "hasDropdown": true,
             "dropdownItems": [
                 {
-                    "title": "Indespeak",
-                    "path": "/indespeak"
+                    "title": "Indispeak",
+                    "path": "/indispeak"
                 },
                 {
                     "title": "Sparc Update",

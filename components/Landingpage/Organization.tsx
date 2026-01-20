@@ -1,25 +1,14 @@
+import { getAllPartners, Partner } from "@/sanity/queries/parthnerQueries";
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
 
-const partners = [
-  {
-    logo: "/how-to-partner/logo1.png",
-  },
-  {
-    logo: "/how-to-partner/logo22.png",
-  },
-  {
-    logo: "/how-to-partner/logo33.png",
-  },
-  {
-    logo: "/how-to-partner/logo44.png",
-  },
-  {
-    logo: "/how-to-partner/logo5.png",
-  },
-];
+const Organization = async () => {
+  const partners = await getAllPartners();
 
-const Organization = () => {
+  if (!partners || partners.length === 0) {
+    return null;
+  }
+
   return (
     <div className="border-b border-gray-300 pb-7">
       <Marquee
@@ -28,13 +17,11 @@ const Organization = () => {
         pauseOnHover={true}
         className="overflow-hidden"
       >
-        {partners.map((partner, index) => (
+        {partners.map((partner: Partner, index: number) => (
           <div
-            key={index}
+            key={partner._id}
             className={`mx-8 md:mx-12 lg:mx-16 flex items-center justify-center ${
-              partner.logo === "/how-to-partner/logo22.png" ||
-              partner.logo === "/how-to-partner/logo33.png" ||
-              partner.logo === "/how-to-partner/logo44.png"
+              index === 1 || index === 2 || index === 3
                 ? "w-28 h-28 md:w-28 md:h-28"
                 : "w-32 h-32 md:w-40 md:h-40"
             }`}
@@ -43,7 +30,7 @@ const Organization = () => {
               width={300}
               height={300}
               src={partner.logo}
-              alt={`Partner ${index + 1}`}
+              alt={partner.name}
               className="w-full h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
             />
           </div>

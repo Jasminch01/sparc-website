@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { antiquaFont, jost } from "../utils/font";
 import { useTranslation } from "react-i18next";
+import Link from "next/link";
 
 const Card = () => {
   const { t } = useTranslation()
@@ -32,9 +33,9 @@ const Card = () => {
             {t("card.description")}
           </p>
           <div className="text-center lg:text-left">
-            <button className="rounded-full cursor-pointer hover:bg-[#FF951B] px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base transition-colors duration-300 shadow-md">
+            <Link href={'mailto:sparc.backup001@gmail.com'} className="rounded-full cursor-pointer hover:bg-[#FF951B] px-8 py-3 md:px-10 md:py-4 bg-[#36133B] text-white uppercase font-semibold text-sm md:text-base transition-colors duration-300 shadow-md">
               {t("card.button")}
-            </button>
+            </Link>
           </div>
         </div>
       </div>

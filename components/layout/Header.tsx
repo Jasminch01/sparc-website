@@ -237,7 +237,7 @@ const Header = () => {
                 {/* Donate Button */}
                 <button
                   onClick={() => setIsDonationModalOpen(true)}
-                  className="px-10 py-4 bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50 cursor-pointer"
+                  className="px-10 py-4 font-bold bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50 cursor-pointer"
                   aria-label="Donate now"
                 >
                   DONATE NOW
@@ -249,7 +249,7 @@ const Header = () => {
                 {/* Mobile Donate Button */}
                 <button
                   onClick={() => setIsDonationModalOpen(true)}
-                  className="px-3 sm:px-4 py-2 bg-[#FF951B] text-[12px] sm:text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] cursor-pointer"
+                  className="px-5 sm:px-4 py-3 bg-[#FF951B] text-[12px] sm:text-[14px] text-white rounded-full transition-all duration-200 font-bold hover:bg-[#E88617] cursor-pointer"
                   aria-label="Donate now"
                 >
                   DONATE

@@ -171,13 +171,13 @@ const Page = () => {
             onChange={(e) => setActiveYear(e.target.value)}
             className={`border border-[#B7B7B7] py-2 px-4 rounded focus:outline-none focus:border-[#FF951B] ${isBn ? notoBengali.className : jost.className}`}
           >
-            <option value="2024-2025">2024-2025</option>
-            <option value="2023-2024">2023-2024</option>
-            <option value="2022-2023">2022-2023</option>
-            <option value="2021-2022">2021-2022</option>
-            <option value="2020-2021">2020-2021</option>
-            <option value="2017-2018">2017-2018</option>
-            <option value="2016-2017">2016-2017</option>
+            <option value="2024-2025">2024 - 2025</option>
+            <option value="2023-2024">2023 - 2024</option>
+            <option value="2022-2023">2022 - 2023</option>
+            <option value="2021-2022">2021 - 2022</option>
+            <option value="2020-2021">2020 - 2021</option>
+            <option value="2017-2018">2017 - 2018</option>
+            <option value="2016-2017">2016 - 2017</option>
           </select>
         </div>
       </Container>
