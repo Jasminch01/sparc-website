@@ -29,6 +29,12 @@ export interface ResearchProject {
   researchers: string[];
   methodology: string;
   impact: string;
+  pdfReport?: {
+    asset: {
+      url: string;
+      originalFilename?: string;
+    };
+  };
 }
 
 export interface ResearchFilters {
@@ -50,7 +56,7 @@ export interface ResearchResponse {
 }
 
 export async function getResearchProjects(
-  filters: ResearchFilters = {}
+  filters: ResearchFilters = {},
 ): Promise<ResearchResponse> {
   const {
     search = "",
@@ -81,18 +87,18 @@ export async function getResearchProjects(
   // Search filter (searches in title, methodology, and impact)
   if (search) {
     conditions.push(
-      `(title match "${search}*" || methodology match "${search}*" || impact match "${search}*")`
+      `(title match "${search}*" || methodology match "${search}*" || impact match "${search}*")`,
     );
   }
 
   // Year range filter
   if (startYear && endYear) {
     conditions.push(
-      `dateTime(date) >= dateTime("${startYear}-01-01T00:00:00Z") && dateTime(date) <= dateTime("${endYear}-12-31T23:59:59Z")`
+      `dateTime(date) >= dateTime("${startYear}-01-01T00:00:00Z") && dateTime(date) <= dateTime("${endYear}-12-31T23:59:59Z")`,
     );
   } else if (startYear) {
     conditions.push(
-      `dateTime(date) >= dateTime("${startYear}-01-01T00:00:00Z")`
+      `dateTime(date) >= dateTime("${startYear}-01-01T00:00:00Z")`,
     );
   } else if (endYear) {
     conditions.push(`dateTime(date) <= dateTime("${endYear}-12-31T23:59:59Z")`);
@@ -208,6 +214,12 @@ export async function getResearchProjectBySlug(slug: string) {
       fundedBy,
       methodology,
       impact,
+pdfReport {
+      asset->{
+        url,
+        originalFilename
+      }
+    },
       authors,
       researchers,
       objectives

@@ -17,6 +17,7 @@ const ResearchDetailsPage = () => {
   const [project, setProject] = useState<ResearchProject | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -29,11 +30,9 @@ const ResearchDetailsPage = () => {
           return;
         }
 
-        // Get the slug string and clean it
         const slugString = Array.isArray(slug) ? slug[0] : slug.toString();
         const cleanedSlug = slugString.split("/").pop() || "";
         const decodedSlug = decodeURIComponent(cleanedSlug);
-
         const titleFromSlug = decodedSlug.replace(/-/g, " ");
 
         const fetchedProject = await getResearchProjectBySlug(titleFromSlug);
@@ -54,6 +53,44 @@ const ResearchDetailsPage = () => {
 
     fetchProject();
   }, [slug]);
+
+  // Function to handle PDF download
+  const handleDownloadPDF = async () => {
+    if (!project?.pdfReport?.asset?.url) {
+      alert("No PDF report available for this project.");
+      return;
+    }
+
+    setIsDownloading(true);
+
+    try {
+      const pdfUrl = project.pdfReport.asset.url;
+      const filename =
+        project.pdfReport.asset.originalFilename ||
+        `${project.title.replace(/\s+/g, "-")}-report.pdf`;
+
+      // Fetch the PDF
+      const response = await fetch(pdfUrl);
+      const blob = await response.blob();
+
+      // Create a download link
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+      alert("Failed to download PDF. Please try again.");
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   // Loading state
   if (loading) {
@@ -295,12 +332,24 @@ const ResearchDetailsPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-center mt-10">
-                <button className="lg:px-6 lg:py-3 p-4 border-[#36133B] border hover:bg-[#36133B] hover:text-white cursor-pointer rounded-full text-sm font-semibold transition-colors flex items-center space-x-0 lg:space-x-5">
-                  <p>Download PDF</p>
-                  <MdOutlineFileDownload size={20} />
-                </button>
-              </div>
+
+              {/* Download PDF Button */}
+              {project.pdfReport?.asset?.url && (
+                <div className="flex items-center justify-center mt-10">
+                  <button
+                    onClick={handleDownloadPDF}
+                    disabled={isDownloading}
+                    className={`lg:px-6 lg:py-3 p-4 border-[#36133B] border rounded-full text-sm font-semibold transition-colors flex items-center space-x-0 lg:space-x-5 ${
+                      isDownloading
+                        ? "opacity-50 cursor-not-allowed bg-gray-100"
+                        : "hover:bg-[#36133B] hover:text-white cursor-pointer"
+                    }`}
+                  >
+                    <p>{isDownloading ? "Downloading..." : "Download PDF"}</p>
+                    <MdOutlineFileDownload size={20} />
+                  </button>
+                </div>
+              )}
             </section>
           </div>
         </Container>

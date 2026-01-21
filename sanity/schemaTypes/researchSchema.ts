@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Rule } from "@sanity/types";
 
-
 export const Research = {
   name: "research",
   title: "Research Project",
@@ -138,12 +137,12 @@ export const Research = {
       description: "Project impact and outcomes",
       validation: (Rule: Rule) => Rule.required(),
     },
-        {
+    {
       name: "pdfReport",
       title: "Research Report (PDF)",
       type: "file",
       options: {
-        hotspot: true,
+        accept: "application/pdf",
       },
       validation: (Rule: Rule) => Rule.required(),
     },
