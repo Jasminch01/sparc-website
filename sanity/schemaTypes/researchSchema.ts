@@ -138,6 +138,15 @@ export const Research = {
       description: "Project impact and outcomes",
       validation: (Rule: Rule) => Rule.required(),
     },
+        {
+      name: "pdfReport",
+      title: "Research Report (PDF)",
+      type: "file",
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule: Rule) => Rule.required(),
+    },
   ],
   preview: {
     select: {

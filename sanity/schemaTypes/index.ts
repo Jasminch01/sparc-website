@@ -13,6 +13,9 @@ import paymentMethod from "./paymentMethod";
 import testimonialSchema from "./testimonialSchema";
 import videoSchema from "./videoSchema";
 import { fromSchema } from "./fromSchema";
+import { donation } from "./DonationSchema";
+import { partnershipProposal } from "./partneerShip";
+import volunteer from "./volunteer";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -25,7 +28,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     Projects,
     Events,
     Partners,
+    partnershipProposal,
     videoSchema,
+    volunteer,
+    donation,
     fromSchema,
     socialWorkerTeamSchema,
     paymentMethod,
