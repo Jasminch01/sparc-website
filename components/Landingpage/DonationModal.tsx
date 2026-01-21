@@ -9,6 +9,9 @@ import paypal from "../../public/donation/paypal.png";
 import Image, { StaticImageData } from "next/image";
 import { getAllPaymentMethods, PaymentMethod } from "@/sanity/queries/queries";
 import { antiquaFont, poppins } from "../utils/font";
+import emailjs from "@emailjs/browser";
+import toast, { Toaster } from "react-hot-toast";
+
 
 interface FormData {
   name: string;
@@ -38,11 +41,11 @@ interface DonationModalProps {
 const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(
-    null
+    null,
   );
   const [showDetails, setShowDetails] = useState(false);
   const [sanityPaymentData, setSanityPaymentData] = useState<PaymentMethod[]>(
-    []
+    [],
   );
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -108,6 +111,95 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
       }));
     }
   }, [selectedPayment]);
+
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      // Prepare the data for both EmailJS and Sanity
+      const donationData = {
+        paymentMethod: selectedPayment?.paymentType,
+        paymentProvider:
+          selectedPayment?.mobileProvider ||
+          selectedPayment?.bankName ||
+          "PayPal",
+        name: formData.name,
+        transactionId: formData.transactionId,
+        honoreeName: formData.honoreeName || "N/A",
+        message: formData.message || "No message",
+        bankName: formData.bankName || "N/A",
+        branchName: formData.branchName || "N/A",
+        referenceNumber: formData.referenceNumber || "N/A",
+        email: formData.email || "N/A",
+        paypalTransactionId: formData.paypalTransactionId || "N/A",
+        selectedMobileAccount: formData.selectedMobileAccount || "N/A",
+        submittedAt: new Date().toISOString(),
+      };
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!, 
+        process.env.NEXT_PUBLIC_EMAILJS_DONATION_TEMPLATE_ID!,
+        {
+          to_name: "Admin",
+          from_name: donationData.name,
+          payment_method: donationData.paymentMethod,
+          payment_provider: donationData.paymentProvider,
+          transaction_id: donationData.transactionId,
+          honoree_name: donationData.honoreeName,
+          message: donationData.message,
+          bank_name: donationData.bankName,
+          branch_name: donationData.branchName,
+          reference_number: donationData.referenceNumber,
+          email: donationData.email,
+          paypal_transaction_id: donationData.paypalTransactionId,
+          mobile_account: donationData.selectedMobileAccount,
+          submitted_at: new Date().toLocaleString(),
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+      );
+
+      // 2. Save to Sanity
+      const sanityResponse = await fetch("/api/save-donation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(donationData),
+      });
+
+      if (!sanityResponse.ok) {
+        toast.error("Failed to save donation to database");
+      }
+
+      // Reset form data
+      setFormData({
+        name: "",
+        transactionId: "",
+        honoreeName: "",
+        message: "",
+        bankName: "",
+        branchName: "",
+        referenceNumber: "",
+        email: "",
+        paypalTransactionId: "",
+        selectedMobileAccount: "",
+      });
+
+      // Navigate to thank you page first
+      router.push("/thank-you");
+
+      // Then close modal and reset state
+      setTimeout(() => {
+        onClose();
+        setIsSubmitting(false);
+      }, 100);
+    } catch (error) {
+      console.error("Error submitting donation:", error);
+      toast.error("Something went wrong. Please try again.");
+      setIsSubmitting(false);
+    }
+  };
 
   // ESC key closes modal
   useEffect(() => {
@@ -237,7 +329,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
   // Input change handler
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -281,51 +373,6 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     return true;
   };
 
-  const handleSubmit = async () => {
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-
-    try {
-      // Here you can add your API call to save donation data
-      console.log("Form submitted:", {
-        paymentMethod: selectedPayment,
-        formData,
-      });
-
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Reset form data
-      setFormData({
-        name: "",
-        transactionId: "",
-        honoreeName: "",
-        message: "",
-        bankName: "",
-        branchName: "",
-        referenceNumber: "",
-        email: "",
-        paypalTransactionId: "",
-        selectedMobileAccount: "",
-      });
-
-      // Navigate to thank you page first
-      router.push("/thank-you");
-
-      // Then close modal and reset state
-      // Small delay to ensure navigation starts before closing
-      setTimeout(() => {
-        onClose();
-        setIsSubmitting(false);
-      }, 100);
-    } catch (error) {
-      console.error("Error submitting donation:", error);
-      alert("Something went wrong. Please try again.");
-      setIsSubmitting(false);
-    }
-  };
-
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
   };
@@ -341,13 +388,13 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
 
   // Group payments by type
   const mobileBankingMethods = sanityPaymentData.filter(
-    (p) => p.paymentType === "mobileBanking"
+    (p) => p.paymentType === "mobileBanking",
   );
   const bankTransferMethods = sanityPaymentData.filter(
-    (p) => p.paymentType === "bankTransfer"
+    (p) => p.paymentType === "bankTransfer",
   );
   const paypalMethods = sanityPaymentData.filter(
-    (p) => p.paymentType === "paypal"
+    (p) => p.paymentType === "paypal",
   );
 
   const renderFormField = (fieldName: keyof FormData) => {
@@ -411,6 +458,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onClick={handleBackdropClick}
     >
+      <Toaster/>
       {/* Close Button */}
       <button
         onClick={onClose}
@@ -630,7 +678,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                                 </p>
                               </div>
                             );
-                          }
+                          },
                         )}
                       </div>
                     ) : (
@@ -648,7 +696,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                           >
                             {detail}
                           </p>
-                        )
+                        ),
                       )
                     )}
                   </div>
@@ -656,7 +704,7 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                   {/* FORM FIELDS */}
                   <div className={`space-y-4 ${poppins.className}`}>
                     {getFormFields(selectedPayment).map((fieldName) =>
-                      renderFormField(fieldName)
+                      renderFormField(fieldName),
                     )}
                   </div>
 

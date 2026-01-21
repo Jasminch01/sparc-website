@@ -1,7 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { jost, notoBengali } from "../utils/font"; // 1. Added notoBengali
-import { useTranslation } from 'react-i18next';
+import { jost, notoBengali } from "../utils/font";
+import { useTranslation } from "react-i18next";
+import emailjs from "@emailjs/browser";
+import toast, { Toaster } from "react-hot-toast";
 
 const Form = () => {
   const { t, i18n } = useTranslation();
@@ -14,7 +16,11 @@ const Form = () => {
     message: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -22,18 +28,106 @@ const Form = () => {
     }));
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    alert(t('partnership_form.success_message', 'Message sent successfully!'));
+  const handleSubmit = async () => {
+    // Validation
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error(
+        t(
+          "partnership_form.validation_error",
+          "Please fill in all required fields.",
+        ),
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const submissionDate = new Date().toLocaleString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZoneName: "short",
+      });
+
+      // Send email using EmailJS with type indicator
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const emailResult = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!, // Same template for both
+        {
+          submission_type: "partnership",
+          submission_type_label: "Partnership Proposal",
+          email_icon: "🤝",
+          email_subtitle: "New partnership opportunity!",
+          from_name: formData.name,
+          from_email: formData.email,
+          company: formData.company || "Not provided",
+          message: formData.message,
+          submission_date: submissionDate,
+          to_email: process.env.NEXT_PUBLIC_RECIPIENT_EMAIL,
+          // Conditional flags
+          if_volunteer: false,
+          if_partnership: true,
+          if_company: formData.company ? true : false,
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+      );
+
+      // Save to Sanity
+      const sanityResponse = await fetch("/api/submit-proposal", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!sanityResponse.ok) {
+        throw new Error("Failed to save to Sanity");
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const sanityResult = await sanityResponse.json();
+      toast.success(
+        t(
+          "partnership_form.success_message",
+          "Your message has been sent successfully!",
+        ),
+      );
+
+      setFormData({
+        name: "",
+        company: "",
+        email: "",
+        message: "",
+      });
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
+      toast.error(
+        t(
+          "partnership_form.error_message",
+          "An error occurred while submitting the form. Please try again later.",
+        ),
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    // 2. Applied conditional font to the main wrapper
-    <div id="partnership-form" className={`md:pt-20 xl:mb-40 mb-20 md:px-20 px-5 md:pb-32 ${isBn ? notoBengali.className : jost.className}`}>
+    <div
+      id="partnership-form"
+      className={`md:pt-20 xl:mb-40 mb-20 md:px-20 px-5 md:pb-32 ${isBn ? notoBengali.className : jost.className}`}
+    >
+      <Toaster />
       <p className="lg:text-4xl text-3xl font-bold text-center md:mb-20 mb-14">
-        {t('partnership_form.title', 'PARTNERSHIP PROPOSAL')}
+        {t("partnership_form.title", "PARTNERSHIP PROPOSAL")}
       </p>
-      
+
       <div className="space-y-6">
         <div className="flex flex-col lg:flex-row xl:space-x-6">
           {/* Left side - Form fields */}
@@ -43,7 +137,8 @@ const Form = () => {
                 htmlFor="name"
                 className="block text-sm font-semibold text-gray-700 mb-2 uppercase"
               >
-                {t('partnership_form.fields.name_label', 'Your Name')}
+                {t("partnership_form.fields.name_label", "Your Name")}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -51,8 +146,8 @@ const Form = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                // 3. Applying font to input for consistent typing experience
-                className={`w-full px-4 py-3 border bg-[#F0F0F0] border-gray-300 rounded-lg outline-none focus:outline-none transition-all ${isBn ? notoBengali.className : ''}`}
+                required
+                className={`w-full px-4 py-3 border bg-[#F0F0F0] border-gray-300 rounded-lg outline-none focus:outline-none transition-all ${isBn ? notoBengali.className : ""}`}
               />
             </div>
 
@@ -61,7 +156,7 @@ const Form = () => {
                 htmlFor="company"
                 className="block text-sm font-semibold text-gray-700 uppercase"
               >
-                {t('partnership_form.fields.company_label', 'Company Name')}
+                {t("partnership_form.fields.company_label", "Company Name")}
               </label>
               <input
                 type="text"
@@ -69,7 +164,7 @@ const Form = () => {
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-[#F0F0F0] border border-gray-300 rounded-lg focus:outline-none transition-all ${isBn ? notoBengali.className : ''}`}
+                className={`w-full px-4 py-3 bg-[#F0F0F0] border border-gray-300 rounded-lg focus:outline-none transition-all ${isBn ? notoBengali.className : ""}`}
               />
             </div>
 
@@ -78,7 +173,8 @@ const Form = () => {
                 htmlFor="email"
                 className="block text-sm font-semibold text-gray-700 mb-2 uppercase"
               >
-                {t('partnership_form.fields.email_label', 'Email')}
+                {t("partnership_form.fields.email_label", "Email")}{" "}
+                <span className="text-red-500">*</span>
               </label>
               <input
                 type="email"
@@ -86,6 +182,7 @@ const Form = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                required
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-[#F0F0F0] focus:outline-none transition-all"
               />
             </div>
@@ -97,15 +194,16 @@ const Form = () => {
               htmlFor="message"
               className="block text-sm font-semibold text-gray-700 mb-2 uppercase"
             >
-              {t('partnership_form.fields.message_label', 'Leave a Message')}
+              {t("partnership_form.fields.message_label", "Leave a Message")}{" "}
+              <span className="text-red-500">*</span>
             </label>
             <textarea
               id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}
-              // 4. Applying font to textarea
-              className={`w-full flex-1 bg-[#F0F0F0] min-h-[260px] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition-all resize-none ${isBn ? notoBengali.className : ''}`}
+              required
+              className={`w-full flex-1 bg-[#F0F0F0] min-h-[260px] px-4 py-3 border border-gray-300 rounded-lg focus:outline-none transition-all resize-none ${isBn ? notoBengali.className : ""}`}
             />
           </div>
         </div>
@@ -113,9 +211,14 @@ const Form = () => {
         <div className="flex justify-start">
           <button
             onClick={handleSubmit}
-            className="md:px-8 md:py-5 px-5 py-4 text-sm md:text-base bg-[#36133B] text-white font-semibold rounded-full hover:bg-[#52195b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer uppercase"
+            disabled={isSubmitting}
+            className={`md:px-8 md:py-5 px-5 py-4 text-sm md:text-base bg-[#36133B] text-white font-semibold rounded-full hover:bg-[#52195b] transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer uppercase ${
+              isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            {t('partnership_form.button', 'SUBMIT PROPOSAL')}
+            {isSubmitting
+              ? t("partnership_form.submitting", "SUBMITTING...")
+              : t("partnership_form.button", "SUBMIT PROPOSAL")}
           </button>
         </div>
       </div>
