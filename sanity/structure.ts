@@ -75,6 +75,28 @@ export const structure: StructureResolver = (S) =>
                 .child(S.documentTypeList("research").title("Research")),
             ])
         ),
+      // Resources folder
+      S.listItem()
+        .title("FORM COLLECTION DATA")
+        .icon(ArchiveIcon as unknown as React.ComponentType)
+        .child(
+          S.list()
+            .title("FORM COLLECTION DATA")
+            .items([
+              S.listItem()
+                .title("Partnership Proposals")
+                .icon(DocumentIcon as unknown as React.ComponentType)
+                .child(S.documentTypeList("partnershipProposal").title("Partnership Proposals")),
+              S.listItem()
+                .title("Donations")
+                .icon(ArchiveIcon as unknown as React.ComponentType)
+                .child(S.documentTypeList("donation").title("Donations")),
+              S.listItem()
+                .title("Volunteer Applications")
+                .icon(SearchIcon as unknown as React.ComponentType)
+                .child(S.documentTypeList("volunteer").title("Volunteer Applications")),
+            ])
+        ),
 
       // All other document types
       ...S.documentTypeListItems().filter(
@@ -87,6 +109,9 @@ export const structure: StructureResolver = (S) =>
             "reports",
             "archive",
             "research",
+            "volunteer",
+            "donation",
+            "partnershipProposal",
           ].includes(listItem.getId() || "")
       ),
     ]);
