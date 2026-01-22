@@ -24,7 +24,7 @@ export async function fetchArchiveDataPaginated(
   startDate?: string,
   endDate?: string,
   page: number = 1,
-  pageSize: number = 9
+  pageSize: number = 9,
 ): Promise<PaginatedArchiveResult> {
   try {
     // Build filter conditions
@@ -103,7 +103,7 @@ export async function fetchArchiveYears(): Promise<string[]> {
 }
 
 export async function fetchArchiveBySlug(
-  slug: string
+  slug: string,
 ): Promise<ArchiveData | null> {
   try {
     const query = `*[_type == "archive" && lower(title) match $slug][0] {
@@ -127,7 +127,7 @@ export async function fetchArchiveBySlug(
 export async function fetchRelatedArchives(
   currentArchiveId: string,
   category?: string,
-  limit: number = 3
+  limit: number = 3,
 ): Promise<ArchiveData[]> {
   try {
     const query = `*[
@@ -157,3 +157,21 @@ export async function fetchRelatedArchives(
     return [];
   }
 }
+
+export const fetchArchiveCategories = async (): Promise<string[]> => {
+  const query = `*[_type == "archive" && defined(category)] | order(category asc) {
+    "category": category
+  }`;
+
+  try {
+    const results = await client.fetch(query);
+    // Extract unique categories
+    const uniqueCategories = [
+      ...new Set(results.map((item: { category: string }) => item.category)),
+    ];
+    return uniqueCategories as string[];
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return [];
+  }
+};

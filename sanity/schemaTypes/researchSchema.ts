@@ -42,18 +42,6 @@ export const Research = {
       name: "category",
       title: "Category",
       type: "string",
-      options: {
-        list: [
-          { title: "Building Movements", value: "Building Movements" },
-          {
-            title: "Gender & Social Justice",
-            value: "Gender & Social Justice",
-          },
-          { title: "Training & Workshop", value: "Training & Workshop" },
-          { title: "Language & Education", value: "Language & Education" },
-        ],
-        layout: "dropdown",
-      },
       validation: (Rule: Rule) => Rule.required(),
     },
     {

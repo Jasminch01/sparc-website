@@ -5,6 +5,7 @@ import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "@/public/Archive/hero.png";
 import {
   ArchiveData,
+  fetchArchiveCategories,
   fetchArchiveDataPaginated,
   fetchArchiveYears,
   PaginatedArchiveResult,
@@ -17,17 +18,11 @@ import { FaSearch } from "react-icons/fa";
 import { FaAnglesDown } from "react-icons/fa6";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-const categories: string[] = [
-  "All Categories",
-  "Historical Records",
-  "Community Stories",
-  "News and Update",
-];
-
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeCategory, setActiveCategory] =
     useState<string>("All Categories");
+  const [categories, setCategories] = useState<string[]>(["All Categories"]);
   const [data, setData] = useState<ArchiveData[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,16 +39,31 @@ const Page = () => {
   const heroButton = t("indegenous_archive_page.hero.button");
   const homeButton = t("indegenous_archive_page.breadcrumb.title");
 
-  // Fetch data from Sanity
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [total, setTotal] = useState(0);
   const pageSize = 9;
+
   // Year filter state
   const [availableYears, setAvailableYears] = useState<string[]>([]);
   const [selectedYearRange, setSelectedYearRange] = useState<string>("");
+
+  // Fetch categories on mount
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const fetchedCategories = await fetchArchiveCategories();
+        // Add "All Categories" at the beginning
+        setCategories(["All Categories", ...fetchedCategories]);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+      }
+    };
+
+    loadCategories();
+  }, []);
 
   // Fetch available years on mount
   useEffect(() => {
@@ -98,7 +108,7 @@ const Page = () => {
           startDate,
           endDate,
           currentPage,
-          pageSize
+          pageSize,
         );
 
         setData(result.data);
@@ -198,11 +208,10 @@ const Page = () => {
               <Trans
                 i18nKey="indegenous_archive_page.title"
                 components={{
-                  1: <span className="text-[#FF951B]" />
+                  1: <span className="text-[#FF951B]" />,
                 }}
               />
             </h2>
-
           </div>
           <div className="w-full lg:w-1/2">
             <p
@@ -279,18 +288,20 @@ const Page = () => {
 
       <Container>
         <section id="data" className="my-6 md:my-8 lg:my-10">
-          {/* Category container */}
+          {/* Category container - dynamically rendered */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 overflow-hidden transition-all duration-300 items-center">
             {categories.map((item, index) => {
               return (
                 <div
                   key={index}
                   onClick={() => handleCategoryChange(index, item)}
-                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${isBn ? notoBengali.className : jost.className
-                    } ${activeIndex === index
+                  className={`px-4 md:px-6 lg:px-8 py-2 md:py-3 rounded-full cursor-pointer transition flex items-center justify-center gap-2 text-sm md:text-base ${
+                    isBn ? notoBengali.className : jost.className
+                  } ${
+                    activeIndex === index
                       ? "border-gray-700 border bg-gray-200"
                       : "border-gray-200 bg-gray-100 hover:bg-gray-200"
-                    }`}
+                  }`}
                 >
                   {item}
                 </div>
@@ -410,10 +421,11 @@ const Page = () => {
                     <button
                       onClick={() => handlePageChange(currentPage - 1)}
                       disabled={currentPage === 1}
-                      className={`px-3 py-2 rounded border text-sm md:text-base ${currentPage === 1
+                      className={`px-3 py-2 rounded border text-sm md:text-base ${
+                        currentPage === 1
                           ? "border-gray-300 text-gray-400 cursor-not-allowed"
                           : "border-gray-400 text-gray-700 hover:bg-gray-100"
-                        }`}
+                      }`}
                     >
                       Previous
                     </button>
@@ -427,23 +439,25 @@ const Page = () => {
                         <button
                           key={page}
                           onClick={() => handlePageChange(page as number)}
-                          className={`px-4 py-2 rounded border text-sm md:text-base ${currentPage === page
+                          className={`px-4 py-2 rounded border text-sm md:text-base ${
+                            currentPage === page
                               ? "bg-[#FF951B] text-white border-[#FF951B]"
                               : "border-gray-400 text-gray-700 hover:bg-gray-100"
-                            }`}
+                          }`}
                         >
                           {page}
                         </button>
-                      )
+                      ),
                     )}
 
                     <button
                       onClick={() => handlePageChange(currentPage + 1)}
                       disabled={currentPage === totalPages}
-                      className={`px-3 py-2 rounded border text-sm md:text-base ${currentPage === totalPages
+                      className={`px-3 py-2 rounded border text-sm md:text-base ${
+                        currentPage === totalPages
                           ? "border-gray-300 text-gray-400 cursor-not-allowed"
                           : "border-gray-400 text-gray-700 hover:bg-gray-100"
-                        }`}
+                      }`}
                     >
                       Next
                     </button>

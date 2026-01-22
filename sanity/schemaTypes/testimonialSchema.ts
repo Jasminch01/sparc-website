@@ -1,9 +1,9 @@
-// schemas/testimonial.ts
+
 import { defineField, defineType } from "sanity";
 
 export default defineType({
   name: "testimonial",
-  title: "Testimonial",
+  title: "TESTIMONIALS SECTION",
   type: "document",
   fields: [
     defineField({

@@ -4,7 +4,7 @@ import { MdOutlinePayment } from "react-icons/md";
 
 export default defineType({
   name: "paymentMethod",
-  title: "PAYMENT METHODS",
+  title: "DONATION PAYMENT METHODS",
   icon : MdOutlinePayment,
   type: "document",
   fields: [

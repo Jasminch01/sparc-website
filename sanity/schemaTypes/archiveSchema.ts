@@ -56,14 +56,6 @@ const archiveSchema = {
       name: "category",
       title: "Category",
       type: "string",
-      options: {
-        list: [
-          { title: "Historical Records", value: "Historical Records" },
-          { title: "Community Stories", value: "Community Stories" },
-          { title: "News and Update", value: "News and Update" },
-        ],
-        layout: "dropdown",
-      },
       validation: (Rule: { required: () => any }) => Rule.required(),
     },
     {
