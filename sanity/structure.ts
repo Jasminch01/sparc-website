@@ -26,8 +26,8 @@ export const structure: StructureResolver = (S) =>
                 .icon(DocumentIcon as unknown as React.ComponentType)
                 .child(
                   S.documentTypeList("indispeakStories").title(
-                    "Indispeak Stories"
-                  )
+                    "Indispeak Stories",
+                  ),
                 ),
 
               // SPARC Update category
@@ -46,11 +46,11 @@ export const structure: StructureResolver = (S) =>
                         .title("Projects")
                         .icon(FolderIcon as unknown as React.ComponentType)
                         .child(
-                          S.documentTypeList("projects").title("Projects")
+                          S.documentTypeList("projects").title("Projects"),
                         ),
-                    ])
+                    ]),
                 ),
-            ])
+            ]),
         ),
 
       // Resources folder
@@ -73,7 +73,7 @@ export const structure: StructureResolver = (S) =>
                 .title("Research")
                 .icon(SearchIcon as unknown as React.ComponentType)
                 .child(S.documentTypeList("research").title("Research")),
-            ])
+            ]),
         ),
       // Resources folder
       S.listItem()
@@ -86,7 +86,11 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title("Partnership Proposals")
                 .icon(DocumentIcon as unknown as React.ComponentType)
-                .child(S.documentTypeList("partnershipProposal").title("Partnership Proposals")),
+                .child(
+                  S.documentTypeList("partnershipProposal").title(
+                    "Partnership Proposals",
+                  ),
+                ),
               S.listItem()
                 .title("Donations")
                 .icon(ArchiveIcon as unknown as React.ComponentType)
@@ -94,8 +98,41 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title("Volunteer Applications")
                 .icon(SearchIcon as unknown as React.ComponentType)
-                .child(S.documentTypeList("volunteer").title("Volunteer Applications")),
-            ])
+                .child(
+                  S.documentTypeList("volunteer").title(
+                    "Volunteer Applications",
+                  ),
+                ),
+            ]),
+        ),
+      S.listItem()
+        .title("OPPORTUNITY")
+        .icon(ArchiveIcon as unknown as React.ComponentType)
+        .child(
+          S.list()
+            .title("OPPORTUNITY")
+            .items([
+              S.listItem()
+                .title("Opportunity Froms")
+                .icon(DocumentIcon as unknown as React.ComponentType)
+                .child(S.documentTypeList("forms").title("Opportunity Froms")),
+              S.listItem()
+                .title("Followship Section")
+                .icon(ArchiveIcon as unknown as React.ComponentType)
+                .child(
+                  S.documentTypeList("fellowshipSection").title(
+                    "followship Section",
+                  ),
+                ),
+              S.listItem()
+                .title("Followship Members")
+                .icon(ArchiveIcon as unknown as React.ComponentType)
+                .child(
+                  S.documentTypeList("fellowshipMember").title(
+                    "followship Members",
+                  ),
+                ),
+            ]),
         ),
 
       // All other document types
@@ -112,6 +149,9 @@ export const structure: StructureResolver = (S) =>
             "volunteer",
             "donation",
             "partnershipProposal",
-          ].includes(listItem.getId() || "")
+            "forms",
+            "fellowshipSection",
+            "fellowshipMember",
+          ].includes(listItem.getId() || ""),
       ),
     ]);
