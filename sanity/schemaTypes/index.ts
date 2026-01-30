@@ -16,6 +16,7 @@ import { fromSchema } from "./fromSchema";
 import { donation } from "./DonationSchema";
 import { partnershipProposal } from "./partneerShip";
 import volunteer from "./volunteer";
+import { fellowshipMember, fellowshipSection } from "./followshipOfTheYear";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -34,6 +35,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     donation,
     fromSchema,
     socialWorkerTeamSchema,
+    fellowshipSection,
+    fellowshipMember,
     paymentMethod,
     testimonialSchema
 

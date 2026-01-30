@@ -13,6 +13,7 @@ import women from "@/public/fellowship/women.png";
 import Image from "next/image";
 import { From, getFormsByCategory } from "@/sanity/queries/formQueries";
 import { useEffect, useState } from "react";
+import FollowshipYear from "@/components/Followship/FollowshipYear";
 
 
 const Page = () => {
@@ -176,6 +177,8 @@ const Page = () => {
           {programDescription}
         </p>
       </section>
+
+      <FollowshipYear/>
 
       <div className="max-w-6xl mx-auto px-4 lg:px-0 ">
         <section className=" mt-12 lg:mt-15 space-y-4 lg:space-y-5 ">

@@ -24,7 +24,7 @@ export const fromSchema = {
           { title: "Internship", value: "internship" },
           { title: "Fellowship", value: "fellowship" },
         ],
-        layout: "radio", // radio buttons
+        layout: "radio",
       },
     },
     {
@@ -38,34 +38,6 @@ export const fromSchema = {
         }),
     },
   ],
-  validation: (Rule: Rule) =>
-    Rule.custom(async (document: any, context: any) => {
-      const { getClient } = context;
-      const client = getClient({ apiVersion: "2023-01-01" });
-      
-      // Get the category of the current document
-      const category = document?.category;
-      
-      if (!category) {
-        return true; // Allow if no category is set yet
-      }
-
-      // Query for existing documents with the same category
-      const query = `count(*[_type == "forms" && category == $category && _id != $id])`;
-      const params = {
-        category: category,
-        id: document._id || "",
-      };
-
-      const count = await client.fetch(query, params);
-
-      // If there's already a form with this category, prevent creation/update
-      if (count >= 1) {
-        return `Only one form per category is allowed. A ${category} form already exists.`;
-      }
-
-      return true;
-    }),
   preview: {
     select: {
       title: "formName",
