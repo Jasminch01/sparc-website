@@ -132,7 +132,7 @@ const FollowshipYear = () => {
               pagination={{ clickable: true }}
               autoplay={{
                 delay: 3000,
-                disableOnInteraction: false,
+                pauseOnMouseEnter : true
               }}
               loop={true}
               breakpoints={{
@@ -154,7 +154,7 @@ const FollowshipYear = () => {
               {fellowshipMembers.map((member) => (
                 <SwiperSlide key={member._id}>
                   <div className="flex flex-col items-center text-center group">
-                    <div className="relative w-full aspect-3/4 mb-4 overflow-hidden transition-transform duration-300 hover:scale-105">
+                    <div className="relative w-full aspect-3/4 mb-4 overflow-hidden transition-transform duration-300">
                       <Image
                         src={member.image}
                         alt={member.name}
