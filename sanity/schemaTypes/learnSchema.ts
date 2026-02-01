@@ -36,7 +36,7 @@ export const Learn = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: "form",
+      name: "googleUrlForm",
       title: "Form Link",
       type: "url",
       description: "Google form  URL",

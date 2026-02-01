@@ -8,34 +8,34 @@ import careergroup from "@/public/be-a-intern/career-group.png";
 import icon from "@/public/fellowship/icon.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { From, getFormsByCategory } from "@/sanity/queries/formQueries";
-
+import { Form, getFormsByCategory } from "@/sanity/queries/formQueries";
 
 const Page = () => {
   const { t, i18n } = useTranslation();
-    const [form, setFrom] = useState<From>({} as From);
-    const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
-      e.stopPropagation();
-      if (formUrl) {
-        window.open(formUrl, "_blank");
+  const [form, setFrom] = useState<Form>({} as Form);
+  console.log(form);
+  const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (formUrl) {
+      window.open(formUrl, "_blank");
+    }
+  };
+
+  useEffect(() => {
+    const fetchFroms = async () => {
+      try {
+        const data = await getFormsByCategory("internship");
+        setFrom(data);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
       }
     };
-  
-    useEffect(() => {
-      const fetchFroms = async () => {
-        try {
-          const data = await getFormsByCategory("internship");
-          setFrom(data);
-        } catch (error) {
-          console.error("Error fetching videos:", error);
-        }
-      };
-  
-      fetchFroms();
-    }, []);
+
+    fetchFroms();
+  }, []);
 
   // Detect if the active language is Bengali
-  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
+  const isBn = i18n.language === "BN" || i18n.language === "bn";
 
   // --- Fetch Translations ---
   const heroTitleKey = "internship_page.top_section.title";
@@ -47,26 +47,25 @@ const Page = () => {
 
   const journeyTitle = t("internship_page.career_journey_section.title");
   const journeyDescription1 = t(
-    "internship_page.career_journey_section.description_part1"
+    "internship_page.career_journey_section.description_part1",
   );
   const journeyDescription2 = t(
-    "internship_page.career_journey_section.description_part2"
+    "internship_page.career_journey_section.description_part2",
   );
 
   const whatYouCanDoTitle = t("internship_page.eligible_section.title");
   const whatYouCanDoDescription = t(
-    "internship_page.eligible_section.description_part1"
+    "internship_page.eligible_section.description_part1",
   );
   const requirementsSubtitle = t("internship_page.eligible_section.subtitle");
 
-  const requirementsList = t(
-    "internship_page.eligible_section.requirements",
-    {
-      returnObjects: true,
-    }
-  ) as string[];
+  const requirementsList = t("internship_page.eligible_section.requirements", {
+    returnObjects: true,
+  }) as string[];
 
-  const finalParagraph = t("internship_page.eligible_section.description_part2");
+  const finalParagraph = t(
+    "internship_page.eligible_section.description_part2",
+  );
   const finalCtaButtonText = t("internship_page.final_call_to_action");
   // --- End Fetch Translations ---
 
@@ -121,7 +120,7 @@ const Page = () => {
             {bannerDescription}
           </p>
           <button
-                      onClick={(e) => handleEnrollClick(form.form, e)}
+            onClick={(e) => handleEnrollClick(form.googleUrlForm, e)}
             className={`bg-[#FF951B] cursor-pointer hover:bg-orange-400 text-white px-5 lg:px-7 py-3 lg:py-5 mt-4 rounded-full text-sm lg:text-lg font-semibold transition duration-200 ${isBn ? notoBengali.className : jost.className}`}
           >
             {applyButtonText}
@@ -203,7 +202,7 @@ const Page = () => {
         </p>
         <div className="pt-8 lg:pt-12">
           <button
-            onClick={(e) => handleEnrollClick(form.form, e)}
+            onClick={(e) => handleEnrollClick(form.googleUrlForm, e)}
             className={`flex items-center justify-center hover:bg-orange-400 text-center mx-auto bg-[#FF951B] px-5 lg:py-5 lg:px-7 py-4 text-white rounded-full text-sm lg:text-lg font-semibold cursor-pointer ${isBn ? notoBengali.className : jost.className}`}
           >
             {finalCtaButtonText}

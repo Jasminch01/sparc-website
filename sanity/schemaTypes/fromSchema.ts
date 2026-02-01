@@ -15,6 +15,12 @@ export const fromSchema = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      name: "googleUrlForm",
+      title: "Google Form URL",
+      type: "string",
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
       name: "category",
       title: "Category",
       type: "string",
@@ -26,16 +32,6 @@ export const fromSchema = {
         ],
         layout: "radio",
       },
-    },
-    {
-      name: "form",
-      title: "Form Link",
-      type: "url",
-      description: "Google Form URL",
-      validation: (Rule: Rule) =>
-        Rule.required().uri({
-          scheme: ["http", "https"],
-        }),
     },
   ],
   preview: {

@@ -113,23 +113,23 @@ export const structure: StructureResolver = (S) =>
             .title("OPPORTUNITY")
             .items([
               S.listItem()
-                .title("Opportunity Froms")
+                .title("Opportunity Forms")
                 .icon(DocumentIcon as unknown as React.ComponentType)
-                .child(S.documentTypeList("forms").title("Opportunity Froms")),
+                .child(S.documentTypeList("forms").title("Opportunity Forms")),
               S.listItem()
-                .title("Followship Section")
+                .title("Fellowship Section Title")
                 .icon(ArchiveIcon as unknown as React.ComponentType)
                 .child(
                   S.documentTypeList("fellowshipSection").title(
-                    "followship Section",
+                    "Fellowship Section Title",
                   ),
                 ),
               S.listItem()
-                .title("Followship Members")
+                .title("Fellowship Members")
                 .icon(ArchiveIcon as unknown as React.ComponentType)
                 .child(
                   S.documentTypeList("fellowshipMember").title(
-                    "followship Members",
+                    "Fellowship Members",
                   ),
                 ),
             ]),
