@@ -175,7 +175,7 @@ const CourseDetailPage = () => {
 
             {/* Enroll Button */}
             <button
-              onClick={() => course.form && window.open(course.form, "_blank")}
+              onClick={() => course.googleUrlForm && window.open(course.googleUrlForm, "_blank")}
               className={`bg-[#5B1E63] rounded-full px-12 py-4 text-white text-lg font-semibold hover:bg-[#7a2887] transition-all duration-300 transform hover:scale-105 ${poppins.className}`}
             >
               Enroll Now

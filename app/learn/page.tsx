@@ -402,7 +402,7 @@ const Page = () => {
                             </div>
                           ))}
                           <button
-                            onClick={(e) => handleEnrollClick(course.form, e)}
+                            onClick={(e) => handleEnrollClick(course.googleUrlForm, e)}
                             className={`flex justify-center mx-auto bg-[#5B1E63] rounded-full px-10 py-2 text-white mt-5 cursor-pointer hover:bg-[#7a2887] transition-all ${isBn ? notoBengali.className : jost.className}`}
                           >
                             Enroll Now

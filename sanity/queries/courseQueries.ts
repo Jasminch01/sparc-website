@@ -7,7 +7,7 @@ export interface Course {
   subtitle: string;
   description: any[];
   category: string;
-  form: string;
+  googleUrlForm: string;
   img: string;
   imgAlt?: string;
   price: string;
@@ -38,7 +38,7 @@ export async function getAllCourses(
       subtitle,
       description,
       category,
-      form,
+      googleUrlForm,
       "img": img.asset->url,
       "imgAlt": img.alt,
       price,
@@ -79,7 +79,7 @@ export async function getCoursesByCategory(
       subtitle,
       description,
       category,
-      form,
+      googleUrlForm,
       "img": img.asset->url,
       "imgAlt": img.alt,
       price,

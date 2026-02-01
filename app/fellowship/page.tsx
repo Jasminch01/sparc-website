@@ -11,14 +11,16 @@ import aboutTwo from "@/public/fellowship/abouttwo.png";
 import icon from "@/public/fellowship/icon.png";
 import women from "@/public/fellowship/women.png";
 import Image from "next/image";
-import { From, getFormsByCategory } from "@/sanity/queries/formQueries";
+import { Form, getFormsByCategory } from "@/sanity/queries/formQueries";
 import { useEffect, useState } from "react";
 import FollowshipYear from "@/components/Followship/FollowshipYear";
 
 
 const Page = () => {
   const { t, i18n } = useTranslation();
-  const [form, setFrom] = useState<From>({} as From);
+  const [form, setFrom] = useState<Form>({} as Form
+
+  );
 
   const handleEnrollClick = (formUrl: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -124,7 +126,7 @@ const Page = () => {
             {heroDescription}
           </p>
           <button
-            onClick={(e) => handleEnrollClick(form.form, e)}
+            onClick={(e) => handleEnrollClick(form.googleUrlForm, e)}
             className={`bg-[#FF951B] hover:bg-orange-400 cursor-pointer text-sm lg:text-lg text-white px-6 lg:px-7 py-3 lg:py-4 mt-4 lg:mt-10 rounded-full font-semibold ${isBn ? notoBengali.className : jost.className}`}
           >
             {applyNowButton}
@@ -245,7 +247,7 @@ const Page = () => {
             </p>
             <div className="text-center lg:text-left">
               <button
-                onClick={(e) => handleEnrollClick(form.form, e)}
+                onClick={(e) => handleEnrollClick(form.googleUrlForm, e)}
                 className={`${isBn ? notoBengali.className : jost.className} bg-[#36133B] text-white cursor-pointer px-6 py-2 lg:px-8 lg:py-3 rounded-full uppercase hover:bg-[#ff951b] transition duration-200`}
               >
                 {ctaButton}
