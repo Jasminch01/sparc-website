@@ -1,16 +1,37 @@
-"use client"
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { jost, notoBengali } from "../utils/font"; // 1. Import notoBengali
 import Link from "next/link";
 import Marquee from "react-fast-marquee";
 import { useTranslation } from "react-i18next";
 import { getAllPartners, Partner } from "@/sanity/queries/parthnerQueries";
-  const partners = await getAllPartners();
 
 const Partners = () => {
   // 2. Extract i18n to check the current language
   const { t, i18n } = useTranslation();
   const isBn = i18n.language === "bn" || i18n.language === "BN";
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPartners = async () => {
+      try {
+        setLoading(true);
+        const data = await getAllPartners();
+        setPartners(data);
+      } catch (error) {
+        console.error("Error fetching partners:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPartners();
+  }, []);
+
+  if (loading) {
+    return <div className="w-full py-12 text-center">Loading partners...</div>;
+  }
 
   return (
     <div className="w-full py-12 px-4 lg:px-0">
@@ -27,21 +48,24 @@ const Partners = () => {
             pauseOnHover={true}
             className="overflow-hidden"
           >
-            {partners.map((partner : Partner, index : number) => (
+            {partners.map((partner: Partner, index: number) => (
               <div
-                key={index}
+                key={partner._id}
                 className={`mx-6 md:mx-8 xl:mx-12 flex items-center justify-center ${partner.logo === "/how-to-partner/logo22.png" ||
-                    partner.logo === "/how-to-partner/logo33.png" ||
-                    partner.logo === "/how-to-partner/logo44.png"
-                    ? "w-20 h-20 md:w-28 md:h-28 xl:w-28 xl:h-28"
-                    : "w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
+                  partner.logo === "/how-to-partner/logo33.png" ||
+                  partner.logo === "/how-to-partner/logo44.png"
+                  ? "w-20 h-20 md:w-28 md:h-28 xl:w-28 xl:h-28"
+                  : "w-24 h-24 md:w-32 md:h-32 xl:w-40 xl:h-40"
                   }`}
               >
                 <Image
                   width={300}
                   height={300}
                   src={partner.logo}
-                  alt={`Partner ${index + 1}`}
+                  alt={partner.name}
+                  placeholder="blur"
+                  blurDataURL={partner.logoLqip}
+                  sizes="(max-width: 768px) 120px, 160px"
                   className="w-full h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                 />
               </div>
@@ -51,7 +75,6 @@ const Partners = () => {
       </div>
 
       <div className="flex justify-between items-center mt-10">
-        {/* 4. Conditional font for the breadcrumb section */}
         <section
           className={`flex gap-5 text-sm uppercase font-semibold ${isBn ? notoBengali.className : jost.className}`}
         >

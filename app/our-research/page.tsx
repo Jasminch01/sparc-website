@@ -17,7 +17,7 @@ const Page = () => {
 
   return (
     <div className={isBn ? notoBengali.className : ""}>
-      <div className="w-full relative h-[400px] md:h-[500px] lg:h-screen ">
+      <div className="w-full relative h-[400px] md:h-[500px] lg:h-[600px] xl:h-screen ">
         <Image
           src={"/Partners/banner.png"}
           width={1920}
@@ -25,6 +25,7 @@ const Page = () => {
           alt="about-image"
           className="w-full h-full object-cover"
           priority
+          sizes="100vw"
         />
 
         {/* Center Content */}

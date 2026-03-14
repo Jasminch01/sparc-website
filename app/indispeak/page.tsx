@@ -4,7 +4,7 @@ import Container from "@/components/Container";
 // Added notoBengali to the imports
 import { antiquaFont, jost, notoBengali } from "@/components/utils/font";
 import hero from "@/public/indespeak/hero.png";
-import { getIndiSpeakStories } from "@/sanity/queries/indispeakQueries";
+import { getIndiSpeakStories, getIndiSpeakYears } from "@/sanity/queries/indispeakQueries";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ interface Indespeak {
   title: string;
   des: string;
   imgUrl: string;
+  imgLqip?: string;
   writtenOn: string;
   imgAlt: string;
   autorName: string;
@@ -36,6 +37,7 @@ const Page = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [availableYears, setAvailableYears] = useState<string[]>([]);
 
   const { t, i18n } = useTranslation();
 
@@ -82,6 +84,22 @@ const Page = () => {
     fetchData();
   }, [activeYear, currentPage]);
 
+  // Fetch available years
+  useEffect(() => {
+    const fetchYears = async () => {
+      try {
+        const years = await getIndiSpeakYears();
+        setAvailableYears(years);
+        if (years.length > 0 && !years.includes(activeYear)) {
+          setActiveYear(years[0]);
+        }
+      } catch (error) {
+        console.error("Error fetching years:", error);
+      }
+    };
+    fetchYears();
+  }, []);
+
   useEffect(() => {
     setCurrentPage(1);
     setExpandedIndex(null);
@@ -126,6 +144,9 @@ const Page = () => {
           alt="indispeak hero"
           width={1200}
           height={700}
+          priority
+          placeholder="blur"
+          sizes="100vw"
           className="w-full h-[350px] md:h-[500px] lg:h-[600px] object-cover"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
@@ -171,13 +192,15 @@ const Page = () => {
             onChange={(e) => setActiveYear(e.target.value)}
             className={`border border-[#B7B7B7] py-2 px-4 rounded focus:outline-none focus:border-[#FF951B] ${isBn ? notoBengali.className : jost.className}`}
           >
-            <option value="2024-2025">2024 - 2025</option>
-            <option value="2023-2024">2023 - 2024</option>
-            <option value="2022-2023">2022 - 2023</option>
-            <option value="2021-2022">2021 - 2022</option>
-            <option value="2020-2021">2020 - 2021</option>
-            <option value="2017-2018">2017 - 2018</option>
-            <option value="2016-2017">2016 - 2017</option>
+            {availableYears.length > 0 ? (
+              availableYears.map((year) => (
+                <option key={year} value={year}>
+                  {isBn ? year.split('-').map(y => parseInt(y).toLocaleString('bn-BD')).join(' - ') : year.replace('-', ' - ')}
+                </option>
+              ))
+            ) : (
+              <option value={activeYear}>{activeYear.replace('-', ' - ')}</option>
+            )}
           </select>
         </div>
       </Container>
@@ -270,6 +293,9 @@ const Page = () => {
                             alt={ids.title}
                             width={500}
                             height={500}
+                            placeholder="blur"
+                            blurDataURL={ids.imgLqip}
+                            sizes="(max-width: 1280px) 100vw, 33vw"
                             className="w-full h-auto rounded-lg shadow-md"
                           />
                         )}

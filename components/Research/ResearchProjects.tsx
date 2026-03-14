@@ -226,6 +226,9 @@ const ResearchProjects = () => {
                           src={project.image?.asset?.url || "/placeholder.jpg"}
                           alt={project.image?.alt || project.title}
                           fill
+                          placeholder="blur"
+                          blurDataURL={project.image?.asset?.metadata?.lqip}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                           className="object-cover rounded"
                         />
                       </div>
@@ -331,6 +334,9 @@ const ResearchProjects = () => {
                           src={project.image?.asset?.url || "/placeholder.jpg"}
                           alt={project.image?.alt || project.title}
                           fill
+                          placeholder="blur"
+                          blurDataURL={project.image?.asset?.metadata?.lqip}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
                           className="object-cover rounded"
                         />
                       </div>

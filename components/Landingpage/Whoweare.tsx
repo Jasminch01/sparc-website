@@ -93,8 +93,8 @@ const Whoweare = () => {
                                 <Image
                                     src={img}
                                     alt="gallery-image-1"
-                                    height={600}
-                                    width={600}
+                                    placeholder="blur"
+                                    sizes="(max-width: 1024px) 50vw, 25vw"
                                     className="object-cover w-full h-auto rounded-sm"
                                 />
                             </div>
@@ -107,8 +107,8 @@ const Whoweare = () => {
                                 <Image
                                     src={img}
                                     alt="gallery-image-2"
-                                    height={600}
-                                    width={600}
+                                    placeholder="blur"
+                                    sizes="(max-width: 1024px) 50vw, 25vw"
                                     className="object-cover w-full h-auto rounded-sm"
                                 />
                             </div>

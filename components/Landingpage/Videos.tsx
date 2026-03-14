@@ -9,6 +9,7 @@ import { antiquaFont, jost, notoBengali } from "../utils/font";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { getAllVideos, Video } from "@/sanity/queries/videoQueries";
+import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 
 
 const Videos = () => {
@@ -90,17 +91,29 @@ const Videos = () => {
             </p>
           </div>
 
-          {/* Video Slider */}
-          <div className="relative px-12">
+          {/* Video Slider Wrapper */}
+          <div className="relative px-4 sm:px-12 lg:px-20 group">
+            {/* Custom Navigation Buttons */}
+            <div className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer text-[#FF951B] hover:text-white transition-all hidden md:flex items-center justify-center">
+              <IoChevronBack size={48} />
+            </div>
+            <div className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-10 cursor-pointer text-[#FF951B] hover:text-white transition-all hidden md:flex items-center justify-center">
+              <IoChevronForward size={48} />
+            </div>
+
             <Swiper
               modules={[Navigation, Pagination, Autoplay]}
               spaceBetween={30}
               slidesPerView={1}
-              navigation
+              navigation={{
+                nextEl: ".swiper-button-next-custom",
+                prevEl: ".swiper-button-prev-custom",
+              }}
               pagination={{ clickable: true }}
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
               }}
               loop={videos.length > 1}
               breakpoints={{
@@ -119,8 +132,8 @@ const Videos = () => {
               className="video-swiper"
             >
               {videos.map((video) => (
-                <SwiperSlide key={video._id}>
-                  <div className="w-full aspect-video">
+                <SwiperSlide key={video._id} className="pb-10">
+                  <div className="w-full aspect-video rounded-xl overflow-hidden shadow-2xl border-4 border-white/10">
                     <iframe
                       width="100%"
                       height="100%"
@@ -129,7 +142,7 @@ const Videos = () => {
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
-                      className="rounded-md shadow-lg w-full h-full"
+                      className="w-full h-full"
                     ></iframe>
                   </div>
                 </SwiperSlide>
@@ -141,17 +154,8 @@ const Videos = () => {
 
       {/* Global Styles */}
       <style jsx global>{`
-        .video-swiper .swiper-button-next,
-        .video-swiper .swiper-button-prev {
-          color: #ff951b;
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-        }
-
-        .video-swiper .swiper-button-next:after,
-        .video-swiper .swiper-button-prev:after {
-          font-size: 20px;
+        .video-swiper .swiper-pagination-bullet {
+          background: rgba(255, 255, 255, 0.5);
         }
         .video-swiper .swiper-pagination-bullet-active {
           background: #ff951b;
@@ -159,7 +163,12 @@ const Videos = () => {
         }
 
         .video-swiper {
-          padding-bottom: 50px;
+          padding-bottom: 20px;
+        }
+
+        .swiper-button-disabled {
+          opacity: 0.3;
+          cursor: not-allowed !important;
         }
       `}</style>
     </div>

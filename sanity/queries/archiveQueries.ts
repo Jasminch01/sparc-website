@@ -6,6 +6,7 @@ export interface ArchiveData {
   title: string;
   subtitle: string;
   img: string;
+  imgLqip?: string;
   description: any[];
   date: string;
   category: string;
@@ -53,6 +54,7 @@ export async function fetchArchiveDataPaginated(
       title,
       subtitle,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       description,
       date,
       category
@@ -111,6 +113,7 @@ export async function fetchArchiveBySlug(
       title,
       subtitle,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       description,
       date,
       category
@@ -139,6 +142,7 @@ export async function fetchRelatedArchives(
       title,
       subtitle,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       description,
       date,
       category

@@ -9,6 +9,7 @@ export interface EventData {
   timeLeft?: string;
   description: any[];
   img: string;
+  imgLqip?: string;
   isHighlighted?: boolean;
 }
 
@@ -52,6 +53,7 @@ export async function fetchEventsPaginated(
       timeLeft,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -93,6 +95,7 @@ export async function fetchEventByTitle(
       timeLeft,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -115,6 +118,7 @@ export async function fetchHighlightedEvent(): Promise<EventData | null> {
       timeLeft,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -145,6 +149,7 @@ export async function fetchRelatedEvents(
       timeLeft,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -188,6 +193,7 @@ export async function fetchUpcomingEvents(
       timeLeft,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       isHighlighted
     }`;
 

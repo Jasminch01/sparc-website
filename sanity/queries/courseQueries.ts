@@ -9,6 +9,7 @@ export interface Course {
   category: string;
   googleUrlForm: string;
   img: string;
+  imgLqip?: string;
   imgAlt?: string;
   price: string;
   rating: string;
@@ -40,6 +41,7 @@ export async function getAllCourses(
       category,
       googleUrlForm,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       "imgAlt": img.alt,
       price,
       rating,
@@ -81,6 +83,7 @@ export async function getCoursesByCategory(
       category,
       googleUrlForm,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       "imgAlt": img.alt,
       price,
       rating,

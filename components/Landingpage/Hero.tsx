@@ -9,7 +9,7 @@ const Hero = () => {
   const { t, i18n } = useTranslation();
 
   // Logical check: Is the current language Bengali?
-  const isBn = i18n.language === 'BN';
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   const headerDescription = t('header.description');
   const heroTitle = t('hero.title');
@@ -42,23 +42,25 @@ const Hero = () => {
         </section>
       </Container>
 
-      <div className="relative w-full">
+      <div className="relative w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px] xl:h-[700px]">
         {/* Desktop Image */}
         <Image
           src={hero}
           alt="hero-img"
-          height={800}
-          width={1000}
-          className="w-full hidden lg:flex h-[300px] md:h-[700px] object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="hidden lg:block object-cover"
         />
 
         {/* Mobile Image */}
         <Image
           src={"/Hero/banner.png"}
           alt="hero-img"
-          height={800}
-          width={1000}
-          className="w-full lg:hidden h-[300px] md:h-[700px] object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="lg:hidden object-cover"
         />
 
         <div className="absolute lg:hidden inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent"></div>

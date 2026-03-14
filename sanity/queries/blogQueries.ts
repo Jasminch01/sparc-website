@@ -8,6 +8,7 @@ export interface Blog {
   date: string;
   writtenBy: string;
   img: string;
+  imgLqip?: string;
   category: string;
 }
 
@@ -74,6 +75,7 @@ export const fetchBlogs = async ({
       date,
       writtenBy,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       category
     }`;
 
@@ -106,6 +108,7 @@ export async function fetchBlogByTitle(title: string) {
       date,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       writtenBy,
       category
     }
@@ -126,6 +129,7 @@ export async function fetchBlogByTitle(title: string) {
         date,
         description,
         "img": img.asset->url,
+        "imgLqip": img.asset->metadata.lqip,
         writtenBy,
         category
       }

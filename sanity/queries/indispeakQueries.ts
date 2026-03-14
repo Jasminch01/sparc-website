@@ -23,6 +23,7 @@ export async function getIndiSpeakStories(
       writtenOn,
       des,
       "imgUrl": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       autorName,
       imgAlt
     },
@@ -46,7 +47,8 @@ export async function getIndiSpeakStory(id: string) {
       asset->{
         url,
         metadata {
-          dimensions
+          dimensions,
+          lqip
         }
       }
     },
@@ -78,7 +80,8 @@ export async function getFeaturedStories(limit: number = 3) {
       asset->{
         url,
         metadata {
-          dimensions
+          dimensions,
+          lqip
         }
       }
     },
@@ -88,4 +91,34 @@ export async function getFeaturedStories(limit: number = 3) {
   }`;
 
   return await client.fetch(query);
+}
+
+// Fetch all available years to generate dynamic ranges
+export async function getIndiSpeakYears() {
+  const query = `*[_type == "indispeakStories" && defined(writtenOn)] { 
+    "year": writtenOn
+  }`;
+  
+  try {
+    const results = await client.fetch(query) as { year: string }[];
+    const years = results.map((item) => new Date(item.year).getFullYear());
+    const uniqueYears = Array.from(new Set(years)).sort((a, b) => b - a);
+    
+    const ranges: string[] = [];
+    uniqueYears.forEach((year: number) => {
+      const range = `${year}-${year + 1}`;
+      if (!ranges.includes(range)) {
+        ranges.push(range);
+      }
+      const prevRange = `${year - 1}-${year}`;
+      if (!ranges.includes(prevRange)) {
+        ranges.push(prevRange);
+      }
+    });
+
+    return Array.from(new Set(ranges)).sort((a, b) => b.localeCompare(a));
+  } catch (error) {
+    console.error("Error fetching indispeak years:", error);
+    return [];
+  }
 }

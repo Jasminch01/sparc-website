@@ -7,7 +7,7 @@ import { antiquaFont, notoBengali } from "../utils/font";
 
 const Overview = () => {
     const { t, i18n } = useTranslation();
-    const isBn = i18n.language === 'BN'
+    const isBn = i18n.language === 'BN' || i18n.language === 'bn';
     // Use 'overview.title' to fetch the long descriptive text from the JSON.
     const description = t(
         'overview.title',
@@ -22,6 +22,8 @@ const Overview = () => {
                 fill
                 className="object-cover"
                 priority
+                placeholder="blur"
+                sizes="100vw"
             />
             <div className="absolute inset-0 bg-black/60 z-10"></div>
 
@@ -31,6 +33,8 @@ const Overview = () => {
                     alt="sparc-logo"
                     width={100}
                     height={100}
+                    placeholder="blur"
+                    sizes="(max-width: 768px) 64px, (max-width: 1024px) 96px, 128px"
                     className="object-contain w-16 md:size-24 lg:size-32 mb-4 md:mb-6 lg:mb-8"
                 />
                 <p

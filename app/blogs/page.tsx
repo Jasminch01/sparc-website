@@ -400,6 +400,9 @@ const BlogPage = () => {
                           alt={blog.title}
                           height={400}
                           width={280}
+                          placeholder={blog.imgLqip ? "blur" : undefined}
+                          blurDataURL={blog.imgLqip}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 300px"
                           className="object-cover w-full h-60 lg:h-auto rounded"
                         />
                       )}

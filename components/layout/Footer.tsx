@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image from "next/image";
 import logo from "../../public/Overview/logocopy.png";
 import Link from "next/link";
+import vectorBg from "../../public/Whatwedo/Frame1.png";
 // Added notoBengali to the imports
 import { antiquaFont, notoBengali } from "../utils/font";
 import Container from "../Container";
@@ -77,10 +78,12 @@ const Footer = () => {
       <div className="absolute -z-10 2xl:-top-32 xl:-top-24 lg:-top-[4.3rem] md:-top-11 -top-7 left-0 right-0 w-full pointer-events-none overflow-hidden top-4xl">
         <Image
           className="w-full h-auto object-cover"
-          src={"/Whatwedo/Frame1.png"}
+          src={vectorBg}
           alt="vector-image"
           width={1920}
           height={700}
+          placeholder="blur"
+          sizes="100vw"
         />
       </div>
       <Container>
@@ -90,6 +93,8 @@ const Footer = () => {
             alt="logo"
             height={80}
             width={180}
+            placeholder="blur"
+            sizes="(max-width: 640px) 160px, 180px"
             className="object-contain h-16 sm:h-20 w-auto"
           />
 

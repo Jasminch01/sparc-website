@@ -13,6 +13,7 @@ interface TeamMember {
   name: string;
   title: string;
   image: string;
+  lqip?: string;
   category: string;
 }
 
@@ -92,6 +93,8 @@ const Team = () => {
                   alt="team-leaf"
                   width={80}
                   height={80}
+                  placeholder="blur"
+                  sizes="120px"
                   className="object-contain lg:size-28 size-14 md:size-20"
                 />
               </div>
@@ -157,6 +160,8 @@ const Team = () => {
                       alt={team.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      placeholder={team.lqip ? "blur" : undefined}
+                      blurDataURL={team.lqip}
                       className="object-cover"
                       priority={index < 4}
                     />

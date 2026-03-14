@@ -19,7 +19,7 @@ const Highlights = () => {
   const [error, setError] = useState<string | null>(null);
 
   const { t, i18n } = useTranslation();
-  const isBn = i18n.language === 'BN';
+  const isBn = i18n.language === 'BN' || i18n.language === 'bn';
 
   const componentTitle = t("highlight.title", "HIGHLIGHTS");
   const readMoreText = t("button.read_more", "Read More");
@@ -125,7 +125,9 @@ const Highlights = () => {
                 alt={highlightData.title}
                 width={600}
                 height={700}
-                sizes=""
+                placeholder={highlightData.imgLqip ? "blur" : undefined}
+                blurDataURL={highlightData.imgLqip}
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] rounded-lg"
               />
             </div>
@@ -133,12 +135,12 @@ const Highlights = () => {
             {/* Content Section - Dynamic from Sanity */}
             <div className="space-y-4 md:space-y-10 w-full lg:w-1/2 flex flex-col justify-center">
               <h2
-                className={`${jost.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}
+                className={`${isBn ? notoBengali.className : jost.className} font-bold text-2xl sm:text-3xl md:text-4xl lg:text-[40px] leading-tight`}
               >
                 {highlightData.title}
               </h2>
               <div
-                className={`text-lg xl:text-xl leading-relaxed line-clamp-6 text-[#4D4D4D] ${antiquaFont.className}`}
+                className={`text-lg xl:text-xl leading-relaxed line-clamp-6 text-[#4D4D4D] ${isBn ? notoBengali.className : antiquaFont.className}`}
               >
                 <PortableText value={highlightData.description}></PortableText>
               </div>

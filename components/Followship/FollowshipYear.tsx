@@ -159,6 +159,9 @@ const FollowshipYear = () => {
                         src={member.image}
                         alt={member.name}
                         fill
+                        placeholder="blur"
+                        blurDataURL={member.lqip}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover"
                       />
                     </div>

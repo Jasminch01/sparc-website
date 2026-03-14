@@ -168,6 +168,9 @@ const Page = () => {
           alt="fellowship-hero"
           width={1000}
           height={600}
+          priority
+          placeholder="blur"
+          sizes="100vw"
           className="w-full h-[300px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
         />
         <div className="absolute top-1/2 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/4 text-center text-white w-full px-4">
@@ -325,6 +328,9 @@ const Page = () => {
                         alt={course.imgAlt || course.title}
                         height={400}
                         width={400}
+                        placeholder={course.imgLqip ? "blur" : undefined}
+                        blurDataURL={course.imgLqip}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="h-[187px] object-cover rounded"
                       />
                       <div className="mt-5 flex flex-col gap-3">
@@ -397,6 +403,7 @@ const Page = () => {
                                 alt="icon"
                                 height={10}
                                 width={15}
+                                sizes="15px"
                               />
                               <p>{item}</p>
                             </div>
@@ -423,6 +430,8 @@ const Page = () => {
             alt="banner"
             width={1000}
             height={1000}
+            placeholder="blur"
+            sizes="100vw"
             className="w-full"
           />
         </section>

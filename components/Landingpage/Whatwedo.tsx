@@ -70,7 +70,9 @@ const Whatwedo = () => {
                                         alt={wwd.title}
                                         width={80}
                                         height={80}
-                                        className="object-contain w-16 h-16 sm:w-20 sm:h-20 md:w-20 md:h-20"
+                                        placeholder="blur"
+                                        sizes="80px"
+                                        className="object-contain w-16 h-16 sm:w-20 sm:h-20"
                                     />
                                 </div>
                                 <h3
@@ -92,6 +94,7 @@ const Whatwedo = () => {
                     alt="vector-image"
                     width={1920}
                     height={600}
+                    sizes="100vw"
                 />
             </div>
         </div>

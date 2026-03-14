@@ -242,8 +242,10 @@ const Page = () => {
           alt="fellowship-hero"
           width={1000}
           height={600}
-          className="w-full h-[350px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
           priority
+          placeholder="blur"
+          sizes="100vw"
+          className="w-full h-[350px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
         />
         <div className="absolute top-2/3 lg:top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
@@ -330,6 +332,8 @@ const Page = () => {
                           src={highlightedEvent.img}
                           alt={highlightedEvent.title || "Highlight event"}
                           fill
+                          placeholder={highlightedEvent.imgLqip ? "blur" : undefined}
+                          blurDataURL={highlightedEvent.imgLqip}
                           sizes="(max-width: 768px) 100vw, 50vw"
                           className="object-cover"
                         />
@@ -399,6 +403,8 @@ const Page = () => {
                             src={project.projectImage}
                             alt={project.title || "Highlighted project"}
                             fill
+                            placeholder={project.imgLqip ? "blur" : undefined}
+                            blurDataURL={project.imgLqip}
                             sizes="(max-width: 768px) 100vw, 50vw"
                             className="object-cover"
                           />
@@ -499,6 +505,8 @@ const Page = () => {
                               src={project.projectImage}
                               alt={project.title || "Project image"}
                               fill
+                              placeholder={project.imgLqip ? "blur" : undefined}
+                              blurDataURL={project.imgLqip}
                               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               className="object-cover"
                             />
@@ -620,6 +628,8 @@ const Page = () => {
                               src={event.img}
                               alt={event.title || "Event image"}
                               fill
+                              placeholder={event.imgLqip ? "blur" : undefined}
+                              blurDataURL={event.imgLqip}
                               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                               className="object-cover"
                             />
@@ -692,6 +702,8 @@ const Page = () => {
           alt="frame"
           width={2000}
           height={2000}
+          placeholder="blur"
+          sizes="100vw"
           className="w-full my-16 sm:my-20 md:my-30"
         />
       </Container>

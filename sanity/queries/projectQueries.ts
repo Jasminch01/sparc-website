@@ -9,6 +9,7 @@ export interface ProjectData {
   fundedBy: string;
   description: any[];
   projectImage: string;
+  imgLqip?: string;
   isHighlighted?: boolean;
 }
 
@@ -52,6 +53,7 @@ export async function fetchProjectsPaginated(
       fundedBy,
       description,
       "projectImage": projectImage.asset->url,
+      "imgLqip": projectImage.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -93,6 +95,7 @@ export async function fetchProjectByTitle(
       fundedBy,
       description,
       "projectImage": projectImage.asset->url,
+      "imgLqip": projectImage.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -115,6 +118,7 @@ export async function fetchHighlightedProjects(): Promise<ProjectData[]> {
       fundedBy,
       description,
       "projectImage": projectImage.asset->url,
+      "imgLqip": projectImage.asset->metadata.lqip,
       isHighlighted
     }`;
 
@@ -145,6 +149,7 @@ export async function fetchRelatedProjects(
       fundedBy,
       description,
       "projectImage": projectImage.asset->url,
+      "imgLqip": projectImage.asset->metadata.lqip,
       isHighlighted
     }`;
 

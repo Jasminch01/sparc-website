@@ -9,12 +9,13 @@ export interface ResearchProject {
   image: {
     asset: {
       url: string;
-      metadata?: {
-        dimensions?: {
-          width: number;
-          height: number;
-        };
-      };
+          metadata?: {
+            dimensions?: {
+              width: number;
+              height: number;
+            };
+            lqip?: string;
+          };
     };
     alt?: string;
   };
@@ -140,7 +141,8 @@ export async function getResearchProjects(
         asset->{
           url,
           metadata {
-            dimensions
+            dimensions,
+            lqip
           }
         },
         alt
@@ -202,7 +204,8 @@ export async function getResearchProjectBySlug(slug: string) {
             dimensions {
               width,
               height
-            }
+            },
+            lqip
           }
         },
         alt

@@ -31,6 +31,9 @@ const Organization = async () => {
               height={300}
               src={partner.logo}
               alt={partner.name}
+              placeholder={partner.logoLqip ? "blur" : undefined}
+              blurDataURL={partner.logoLqip}
+              sizes="(max-width: 768px) 120px, 160px"
               className="w-full h-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
             />
           </div>

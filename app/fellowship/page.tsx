@@ -112,6 +112,9 @@ const Page = () => {
           alt="fellowship-hero"
           width={1000}
           height={600}
+          priority
+          placeholder="blur"
+          sizes="100vw"
           className="w-full h-[400px] lg:h-auto object-cover"
         />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/5 text-center text-white px-4 w-full">
@@ -154,6 +157,8 @@ const Page = () => {
             alt="aboutone"
             width={600}
             height={400}
+            placeholder="blur"
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="w-full lg:w-auto h-auto"
           />
           <Image
@@ -161,6 +166,8 @@ const Page = () => {
             alt="abouttwo"
             width={530}
             height={400}
+            placeholder="blur"
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="w-full lg:w-auto h-auto"
           />
         </div>
@@ -231,6 +238,8 @@ const Page = () => {
               alt="women"
               width={450}
               height={300}
+              placeholder="blur"
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="w-full h-auto object-cover"
             />
           </div>

@@ -6,6 +6,9 @@ export interface Video {
   url: string;
   order?: number;
   isActive: boolean;
+  thumbnail?: string;
+  thumbnailLqip?: string;
+  description?: string;
 }
 
 export async function getAllVideos(): Promise<Video[]> {
@@ -32,6 +35,7 @@ export async function getVideoById(id: string): Promise<Video | null> {
     title,
     url,
     "thumbnail": thumbnail.asset->url,
+    "thumbnailLqip": thumbnail.asset->metadata.lqip,
     description,
     order,
     isActive
