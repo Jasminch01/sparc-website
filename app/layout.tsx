@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import '../i18n';
+import { notoBengali } from "@/components/utils/font";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -24,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <link rel="icon" href="/Overview/logocopy.png" sizes="64*64"></link>
       <body
-        className={`${poppins.variable} font-sans `}
+        className={`${poppins.variable} ${notoBengali.variable} font-sans `}
       >
         <LayoutWrapper>
           {children}

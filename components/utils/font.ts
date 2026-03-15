@@ -1,4 +1,4 @@
-import { Noto_Sans_Bengali } from "next/font/google";
+import { Hind_Siliguri } from "next/font/google";
 import { Poppins, Jost } from "next/font/google";
 import localFont from "next/font/local";
 
@@ -35,8 +35,9 @@ export const rowanFont = localFont({
     },
   ],
 });
-export const notoBengali = Noto_Sans_Bengali({
-  subsets: ["bengali"],
-  weight: ["400", "700"],
+
+export const notoBengali = Hind_Siliguri({
+  subsets: ["bengali", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-bengali",
 });

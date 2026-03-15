@@ -3,7 +3,8 @@
 import Image from "next/image";
 import logo from "../../public/Header/Sparce-logo.png";
 import Navbar from "./Nav/Navbar";
-import { IoClose, IoMenu } from "react-icons/io5";
+import { IoClose, IoMenu, IoHeart } from "react-icons/io5";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { poppins } from "../utils/font";
@@ -149,6 +150,8 @@ const Header = () => {
                   height={84}
                   className="w-20 h-11 lg:w-32 lg:h-18 xl:w-[140px] xl:h-20"
                   priority
+                  placeholder="blur"
+                  sizes="(max-width: 1024px) 80px, (max-width: 1280px) 128px, 140px"
                 />
               </div>
 
@@ -182,6 +185,7 @@ const Header = () => {
                       alt=""
                       width={20}
                       height={20}
+                      sizes="20px"
                       className="rounded-full h-5 w-5 object-cover"
                       role="presentation"
                     />
@@ -216,6 +220,7 @@ const Header = () => {
                             alt=""
                             width={18}
                             height={18}
+                            sizes="20px"
                             className="rounded-full h-5 w-5 object-cover"
                             role="presentation"
                           />
@@ -235,25 +240,30 @@ const Header = () => {
                 </div>
 
                 {/* Donate Button */}
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={() => setIsDonationModalOpen(true)}
-                  className="px-10 py-4 font-bold bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50 cursor-pointer"
+                  className="px-8 py-3.5 font-bold bg-[#FF951B] text-[14px] text-white rounded-full transition-all duration-200 hover:bg-[#E88617] focus:outline-none focus:ring-2 focus:ring-[#FF951B] focus:ring-opacity-50 cursor-pointer flex items-center gap-2 shadow-lg hover:shadow-[#FF951B]/20"
                   aria-label="Donate now"
                 >
+                  <IoHeart className="text-white text-lg animate-pulse" />
                   DONATE NOW
-                </button>
+                </motion.button>
               </div>
 
               {/* Mobile Buttons & Menu Toggle */}
               <div className="flex xl:hidden items-center gap-2">
                 {/* Mobile Donate Button */}
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
                   onClick={() => setIsDonationModalOpen(true)}
-                  className="px-5 sm:px-4 py-3 bg-[#FF951B] text-[12px] sm:text-[14px] text-white rounded-full transition-all duration-200 font-bold hover:bg-[#E88617] cursor-pointer"
+                  className="px-4 py-2.5 bg-[#FF951B] text-[12px] sm:text-[14px] text-white rounded-full transition-all duration-200 font-bold hover:bg-[#E88617] cursor-pointer flex items-center gap-1.5 shadow-md"
                   aria-label="Donate now"
                 >
+                  <IoHeart className="text-white text-sm" />
                   DONATE
-                </button>
+                </motion.button>
 
                 {/* Mobile Menu Toggle */}
                 <button
@@ -289,6 +299,8 @@ const Header = () => {
                     alt="sparc-logo"
                     width={149}
                     height={84}
+                    placeholder="blur"
+                    sizes="(max-width: 640px) 80px, 96px"
                     className="w-20 h-11 sm:w-24 sm:h-14 cursor-pointer"
                     onClick={() => {
                       router.push("/");
@@ -327,6 +339,7 @@ const Header = () => {
                             alt=""
                             width={20}
                             height={20}
+                            sizes="20px"
                             className="rounded-full h-5 w-5 object-cover"
                             role="presentation"
                           />
@@ -367,6 +380,7 @@ const Header = () => {
                                 alt=""
                                 width={18}
                                 height={18}
+                                sizes="20px"
                                 className="rounded-full h-5 w-5 object-cover"
                                 role="presentation"
                               />

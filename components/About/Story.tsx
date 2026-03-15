@@ -6,6 +6,11 @@ import Image from "next/image";
 import { antiquaFont, jost, notoBengali } from "../utils/font";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import storyImg1 from "../../public/About/our-story1.png";
+import storyImg2 from "../../public/About/our-story2.png";
+import storyImg3 from "../../public/About/our-story3.png";
+import storyIcon1 from "../../public/About/story-icon1.png";
+import storyIcon2 from "../../public/About/story-icon2.png";
 
 const Story = () => {
   const { t, i18n } = useTranslation();
@@ -47,17 +52,21 @@ const Story = () => {
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
             <div className="flex flex-col xl:flex-row gap-5 w-full lg:w-1/2">
               <Image
-                src={"/About/our-story1.png"}
+                src={storyImg1}
                 alt="our-story-image"
                 width={500}
                 height={500}
+                placeholder="blur"
+                sizes="(max-width: 1280px) 100vw, 25vw"
                 className="w-full xl:w-full h-[250px] md:h-[350px]"
               />
               <Image
-                src={"/About/our-story2.png"}
+                src={storyImg2}
                 alt="our-story-image"
                 width={500}
                 height={500}
+                placeholder="blur"
+                sizes="(max-width: 1280px) 100vw, 25vw"
                 className="w-full xl:w-full h-[250px] md:h-[350px]"
               />
             </div>
@@ -79,10 +88,12 @@ const Story = () => {
           <div className="flex flex-col lg:flex-row lg:space-x-20 gap-y-6 lg:gap-y-0">
             <div className="w-full lg:w-1/2">
               <Image
-                src={"/About/our-story3.png"}
+                src={storyImg3}
                 alt="our-story-image"
                 width={500}
                 height={500}
+                placeholder="blur"
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="w-full rounded-lg h-[250px] md:h-[350px] lg:h-[380px] object-cover"
               />
             </div>
@@ -93,10 +104,12 @@ const Story = () => {
               <div>
                 <div className="flex items-center space-x-3 md:space-x-5 mb-2 md:mb-3">
                   <Image
-                    src={"/About/story-icon1.png"}
+                    src={storyIcon1}
                     alt="icon"
                     width={50}
                     height={50}
+                    placeholder="blur"
+                    sizes="48px"
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
                   <p className={`text-xl md:text-2xl xl:text-4xl font-black ${isBn ? notoBengali.className : ""}`}>
@@ -114,10 +127,12 @@ const Story = () => {
               <div>
                 <div className="flex items-center space-x-3 md:space-x-5 mb-2 md:mb-3">
                   <Image
-                    src={"/About/story-icon2.png"}
+                    src={storyIcon2}
                     alt="icon"
                     width={50}
                     height={50}
+                    placeholder="blur"
+                    sizes="48px"
                     className="object-contain h-10 md:h-12 w-10 md:w-12"
                   />
                   <p className={`text-xl md:text-2xl font-black xl:text-4xl ${isBn ? notoBengali.className : ""}`}>

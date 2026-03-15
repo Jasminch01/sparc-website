@@ -6,6 +6,7 @@ export interface FellowshipMember {
   name: string;
   title: string;
   image: string;
+  lqip?: string;
 }
 
 export interface FellowshipSection {
@@ -25,6 +26,7 @@ export async function getAllFellowshipMembers() {
     name,
     title,
     "image": image.asset->url,
+    "lqip": image.asset->metadata.lqip,
   }`;
 
   return await client.fetch(query);

@@ -6,6 +6,7 @@ export async function getAllTeams() {
     name,
     title,
     "image": image.asset->url,
+    "lqip": image.asset->metadata.lqip,
     category
   }`;
 

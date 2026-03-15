@@ -1,4 +1,7 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { IoHeart, IoArrowBack, IoClose } from "react-icons/io5";
+import { FaSpinner } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import bikashLogo from "../../public/donation/bikash.svg";
 import nagadLogo from "../../public/donation/nagad.svg";
@@ -451,37 +454,36 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
     );
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-      onClick={handleBackdropClick}
-    >
-      <Toaster/>
-      {/* Close Button */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 z-60 flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
-        aria-label="Close modal"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-gray-700"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={handleBackdropClick}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
+          <Toaster />
+          {/* Close Button */}
+          <motion.button
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={onClose}
+            className="absolute top-4 right-4 z-60 flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+            aria-label="Close modal"
+          >
+            <IoClose className="h-6 w-6 text-gray-700" />
+          </motion.button>
 
-      <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+            className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto hidden-scrollbar"
+          >
         <div className="flex w-full gap-4 flex-col lg:flex-row">
           {/* LEFT SIDE — PAYMENT LIST */}
           <div
@@ -497,8 +499,9 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
             <div className="flex items-center">
               <div className={`px-6 md:px-14 mt-10 pb-10 ${poppins.className}`}>
                 {isLoading ? (
-                  <div className="text-center py-8">
-                    Loading payment methods...
+                  <div className="flex flex-col items-center justify-center py-12 gap-4">
+                    <FaSpinner className="animate-spin text-4xl text-[#FF951B]" />
+                    <p className="text-gray-500 animate-pulse">Fetching Secure Methods...</p>
                   </div>
                 ) : sanityPaymentData.length === 0 ? (
                   <div className="text-center py-8 text-gray-500">
@@ -514,13 +517,15 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                         </h3>
                         <div className="flex gap-3 flex-wrap">
                           {mobileBankingMethods.map((payment) => (
-                            <button
+                            <motion.button
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
                               key={payment._id}
                               onClick={() => handlePaymentSelect(payment)}
-                              className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition ${
+                              className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition shadow-sm ${
                                 selectedPayment?._id === payment._id
-                                  ? "border-[#FF951B]"
-                                  : "border-gray-200 hover:border-gray-300"
+                                  ? "border-[#FF951B] bg-[#FF951B]/5 ring-2 ring-[#FF951B]/20"
+                                  : "border-gray-200 hover:border-[#FF951B]/50 hover:bg-gray-50"
                               }`}
                             >
                               <Image
@@ -528,10 +533,10 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                                 alt={getPaymentName(payment)}
                                 width={80}
                                 height={80}
-                                sizes="500px"
+                                sizes="48px"
                                 className="object-contain size-12"
                               />
-                            </button>
+                            </motion.button>
                           ))}
                         </div>
                       </div>
@@ -545,13 +550,15 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                         </h3>
                         <div className="flex gap-3 flex-wrap">
                           {bankTransferMethods.map((payment) => (
-                            <button
+                            <motion.button
+                              whileHover={{ scale: 1.02, y: -2 }}
+                              whileTap={{ scale: 0.98 }}
                               key={payment._id}
                               onClick={() => handlePaymentSelect(payment)}
-                              className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition ${
+                              className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition shadow-sm ${
                                 selectedPayment?._id === payment._id
-                                  ? "border-[#FF951B]"
-                                  : "border-gray-200 hover:border-gray-300"
+                                  ? "border-[#FF951B] bg-[#FF951B]/5 ring-2 ring-[#FF951B]/20"
+                                  : "border-gray-200 hover:border-[#FF951B]/50 hover:bg-gray-50"
                               }`}
                             >
                               <Image
@@ -559,10 +566,10 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                                 alt={getPaymentName(payment)}
                                 width={80}
                                 height={80}
-                                sizes="500px"
+                                sizes="80px"
                                 className="object-contain"
                               />
-                            </button>
+                            </motion.button>
                           ))}
                         </div>
                       </div>
@@ -576,13 +583,15 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                         </h3>
                         <div className="flex gap-3 flex-wrap">
                           {paypalMethods.map((payment) => (
-                            <button
+                            <motion.button
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
                               key={payment._id}
                               onClick={() => handlePaymentSelect(payment)}
-                              className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition ${
+                              className={`flex items-center gap-2 rounded-lg border px-4 py-3 transition shadow-sm ${
                                 selectedPayment?._id === payment._id
-                                  ? "border-[#FF951B]"
-                                  : "border-gray-200 hover:border-gray-300"
+                                  ? "border-[#FF951B] bg-[#FF951B]/5 ring-2 ring-[#FF951B]/20"
+                                  : "border-gray-200 hover:border-[#FF951B]/50 hover:bg-gray-50"
                               }`}
                             >
                               <Image
@@ -590,10 +599,10 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                                 alt={getPaymentName(payment)}
                                 width={120}
                                 height={120}
-                                sizes="500px"
+                                sizes="120px"
                                 className="object-contain"
                               />
-                            </button>
+                            </motion.button>
                           ))}
                         </div>
                       </div>
@@ -611,35 +620,23 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
             {selectedPayment ? (
               <div className="">
                 {/* Back Button (Mobile only) */}
-                <button
+                <motion.button
+                  whileHover={{ x: -2 }}
                   onClick={handleBackToList}
-                  className="lg:hidden flex items-center gap-2 px-6 py-4 text-gray-700 hover:text-gray-900 transition-colors"
+                  className="lg:hidden flex items-center gap-2 px-6 py-4 text-[#FF951B] font-semibold transition-colors"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
-                  </svg>
+                  <IoArrowBack className="h-5 w-5" />
                   <span className={poppins.className}>
                     Back to payment methods
                   </span>
-                </button>
+                </motion.button>
 
                 <div className="mb-6 flex flex-col items-center justify-center gap-2 py-5">
                   <Image
                     src={getPaymentLogo(selectedPayment)}
                     width={120}
                     height={120}
-                    sizes="2000px"
+                    sizes="120px"
                     alt={getPaymentName(selectedPayment)}
                     className="object-contain h-[100px]"
                   />
@@ -708,28 +705,43 @@ const DonationModal: React.FC<DonationModalProps> = ({ isOpen, onClose }) => {
                     )}
                   </div>
 
-                  <button
+                  <motion.button
+                    whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className={`mt-6 w-full rounded-lg py-4 md:py-5 font-semibold text-white transition ${
+                    className={`mt-6 w-full rounded-lg py-4 md:py-5 font-bold text-white transition flex items-center justify-center gap-3 shadow-lg ${
                       isSubmitting
                         ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-[#FF951B] hover:bg-[#d57f1d]"
+                        : "bg-[#FF951B] hover:bg-[#d57f1d] hover:shadow-[#FF951B]/30"
                     }`}
                   >
-                    {isSubmitting ? "SUBMITTING..." : "SUBMIT"}
-                  </button>
+                    {isSubmitting ? (
+                      <>
+                        <FaSpinner className="animate-spin text-xl" />
+                        PROCESSING...
+                      </>
+                    ) : (
+                      <>
+                        <IoHeart className="text-xl" />
+                        CONFIRM DONATION
+                      </>
+                    )}
+                  </motion.button>
                 </div>
               </div>
             ) : (
-              <div className="flex items-center justify-center h-full text-gray-500 py-20">
-                Please select a payment method
+              <div className="flex flex-col items-center justify-center h-full text-gray-400 py-20 gap-4">
+                <IoHeart className="text-6xl opacity-10" />
+                <p className={poppins.className}>Please select a payment method</p>
               </div>
             )}
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 

@@ -143,6 +143,8 @@ const Testimonials = () => {
                       alt="quote icon"
                       width={50}
                       height={50}
+                      placeholder="blur"
+                      sizes="50px"
                       className="object-contain w-10 h-10 md:w-12 md:h-12"
                     />
                     <p

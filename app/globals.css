@@ -15,6 +15,22 @@
   scroll-behavior: smooth;
 }
 
+/* Premium Bengali Typography Refinements */
+[class*="notoBengali"], 
+.font-bengali,
+[lang="bn"] {
+  line-height: 1.65 !important;
+  letter-spacing: 0.01em;
+  word-spacing: 0.05em;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Adjusting visual parity for Bengali text which often looks smaller than Latin */
+.text-lg[lang="bn"], .lg\:text-xl[lang="bn"] {
+  font-size: 1.1em;
+}
+
 /* Volunteer Vector image responsive */
 @media (min-width: 1400px) and (max-width: 1500px) {
   #volunteer-vector-image {

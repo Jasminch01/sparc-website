@@ -2,6 +2,9 @@
 import Image from "next/image";
 import { antiquaFont, jost, rowanFont, notoBengali } from "../utils/font"; // 1. Added notoBengali
 import { useTranslation } from 'react-i18next';
+import step1Img from "../../public/how-to-partner/step1.png";
+import step2Img from "../../public/how-to-partner/step2.png";
+import step3Img from "../../public/how-to-partner/step3.png";
 
 const Partnership = () => {
   const { t, i18n } = useTranslation(); // 2. Extract i18n
@@ -10,17 +13,17 @@ const Partnership = () => {
   const steps = [
     {
       key: 'step_1',
-      imageSrc: "/how-to-partner/step1.png",
+      imageSrc: step1Img,
       altText: t('partnership_steps.step_1.heading', 'Submit a Partnership Proposal'),
     },
     {
       key: 'step_2',
-      imageSrc: "/how-to-partner/step2.png",
+      imageSrc: step2Img,
       altText: t('partnership_steps.step_2.heading', 'Consultation & Review'),
     },
     {
       key: 'step_3',
-      imageSrc: "/how-to-partner/step3.png",
+      imageSrc: step3Img,
       altText: t('partnership_steps.step_3.heading', 'Agreement & Implementation'),
     },
   ];
@@ -66,6 +69,8 @@ const Partnership = () => {
                     src={step.imageSrc}
                     fill
                     alt={step.altText}
+                    placeholder="blur"
+                    sizes="(max-width: 640px) 128px, 176px"
                     className="object-contain"
                   />
                 </div>

@@ -4,7 +4,9 @@ export interface Partner {
   _id: string;
   name: string;
   logo: string;
+  logoLqip?: string;
   image: string;
+  imageLqip?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   about: any[]; // Sanity block content
   link: string;
@@ -16,7 +18,9 @@ export async function getAllPartners() {
     _id,
     name,
     "logo": logo.asset->url,
+    "logoLqip": logo.asset->metadata.lqip,
     "image": image.asset->url,
+    "imageLqip": image.asset->metadata.lqip,
     about,
     link
   }`;

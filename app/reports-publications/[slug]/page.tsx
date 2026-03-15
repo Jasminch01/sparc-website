@@ -199,6 +199,9 @@ const Page = () => {
                 height={600}
                 className="w-full h-auto object-cover"
                 priority
+                placeholder={data.imgLqip ? "blur" : undefined}
+                blurDataURL={data.imgLqip}
+                sizes="100vw"
               />
               {data.imgDes && (
                 <p
@@ -303,6 +306,8 @@ const Page = () => {
                           src={item.img}
                           alt={item.title}
                           fill
+                          placeholder={item.imgLqip ? "blur" : undefined}
+                          blurDataURL={item.imgLqip}
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
                         />

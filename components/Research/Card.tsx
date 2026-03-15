@@ -3,6 +3,7 @@ import Image from "next/image";
 import { antiquaFont, jost } from "../utils/font";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import cardImg from "../../public/how-to-partner/image1.png";
 
 const Card = () => {
   const { t } = useTranslation()
@@ -12,8 +13,10 @@ const Card = () => {
         {/* Image Section */}
         <div className="w-full lg:w-1/2 relative h-64 md:h-80 lg:h-[500px]">
           <Image
-            src={"/how-to-partner/image1.png"}
+            src={cardImg}
             fill
+            placeholder="blur"
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
             alt="Partnership collaboration"
           />

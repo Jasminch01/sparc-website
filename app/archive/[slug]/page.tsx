@@ -121,7 +121,11 @@ const Page = () => {
           alt={archive.title}
           width={1000}
           height={1000}
-          className="w-full object-cover max-h-[60vh]"
+          priority
+          placeholder="blur"
+          blurDataURL={archive.imgLqip}
+          sizes="100vw"
+          className="w-full object-cover max-h-[60vh] rounded-lg"
         />
 
         <div
@@ -158,6 +162,9 @@ const Page = () => {
                     alt={story.title}
                     width={400}
                     height={300}
+                    placeholder="blur"
+                    blurDataURL={story.imgLqip}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full h-auto rounded-sm object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>

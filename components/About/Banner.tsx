@@ -29,11 +29,12 @@ const Banner = () => {
     <div className="w-full relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen">
       <Image
         src={"/about-hero.png"}
-        width={1920}
-        height={1080}
+        fill
         alt="about-image"
         className="w-full h-full object-cover"
         priority
+        sizes="100vw"
+        quality={90}
       />
 
       {/* Center Content */}

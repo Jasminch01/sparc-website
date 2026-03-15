@@ -9,6 +9,7 @@ export interface ReportData {
   date: string;
   description: any[];
   img: string;
+  imgLqip?: string;
   imgDes?: string;
   // Publications-specific fields
   publisher?: string;
@@ -64,6 +65,7 @@ export async function fetchReportDataPaginated(
       date,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       imgDes,
       publisher,
       author,
@@ -129,6 +131,7 @@ export async function fetchReportBySlug(
       date,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       imgDes,
       publisher,
       author,
@@ -164,6 +167,7 @@ export async function fetchRelatedReports(
       date,
       description,
       "img": img.asset->url,
+      "imgLqip": img.asset->metadata.lqip,
       imgDes,
       publisher,
       author,

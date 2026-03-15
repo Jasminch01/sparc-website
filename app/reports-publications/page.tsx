@@ -141,8 +141,10 @@ const Page = () => {
           alt="fellowship-hero"
           width={1000}
           height={600}
-          className="w-full h-[300px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
           priority
+          placeholder="blur"
+          sizes="100vw"
+          className="w-full h-[300px] sm:h-[500px] md:h-[600px] lg:h-full object-cover"
         />
         <div className="absolute top-2/3 sm:top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
           <h2
@@ -299,6 +301,9 @@ const Page = () => {
                             alt={rep.title}
                             height={500}
                             width={500}
+                            placeholder={rep.imgLqip ? "blur" : undefined}
+                            blurDataURL={rep.imgLqip}
+                            sizes="(max-width: 768px) 100vw, 550px"
                             className="w-full md:w-[550px] h-auto md:h-[500px] rounded-lg object-cover"
                           />
                         )}
@@ -396,6 +401,9 @@ const Page = () => {
                         alt={rep.title}
                         height={600}
                         width={1000}
+                        placeholder={rep.imgLqip ? "blur" : undefined}
+                        blurDataURL={rep.imgLqip}
+                        sizes="100vw"
                         className="w-full h-auto rounded-lg shadow-md"
                       />
                     )}

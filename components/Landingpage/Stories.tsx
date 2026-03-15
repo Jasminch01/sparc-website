@@ -67,7 +67,8 @@ const Stories = () => {
             asset->{
               url,
               metadata {
-                dimensions
+                dimensions,
+                lqip
               }
             }
           },
@@ -117,11 +118,20 @@ const Stories = () => {
   };
 
   // Get image URL based on type
-  const getImageUrl = (item: CombinedItem): string => {
+  const getImageUrl = (item: any): string => {
     if (item.type === "blog") {
       return item.img;
     } else {
       return item.img?.asset?.url || "";
+    }
+  };
+
+  // Get blur data URL based on type
+  const getBlurDataUrl = (item: any): string | undefined => {
+    if (item.type === "blog") {
+      return item.lqip;
+    } else {
+      return item.img?.asset?.metadata?.lqip;
     }
   };
 
@@ -188,6 +198,9 @@ const Stories = () => {
                       src={getImageUrl(item)}
                       alt={item.title}
                       fill
+                      placeholder={getBlurDataUrl(item) ? "blur" : undefined}
+                      blurDataURL={getBlurDataUrl(item)}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover"
                     />
                   </div>

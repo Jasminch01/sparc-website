@@ -230,6 +230,9 @@ const Page = () => {
           alt="indospeak-hero"
           width={1000}
           height={600}
+          priority
+          placeholder="blur"
+          sizes="100vw"
           className="w-full h-[350px] md:h-[500px] lg:h-full object-cover"
         />
         <div className="absolute top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white w-full px-4">
@@ -381,6 +384,9 @@ const Page = () => {
                             src={project.img}
                             alt={project.title}
                             fill
+                            placeholder={project.imgLqip ? "blur" : undefined}
+                            blurDataURL={project.imgLqip}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                             className="object-cover rounded-lg"
                           />
                         </div>
